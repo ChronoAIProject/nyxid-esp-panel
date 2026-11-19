@@ -1,0 +1,2520 @@
+{
+  "sources": {
+    "4090-c161-signed-forward-v1.json": "0a7b75788f0c601a5b751dc47de81bf09292091cdef4e0ec31b3c9f43cbab67f",
+    "4090-c161-v5-household-rooms-plan.json": "6c21269f7c73bbce9fe5189222550f3239b4ef831f477916f4711cdace45be15",
+    "4090-c161-v5-playback-reference-guard.json": "0748ee16a64b4491094cd32779cefcfddfd81c88e4b473f7209e68c956424e29",
+    "4090-c161-lexical-p4-q8-packing.json": "518d3df2344a0cc8e10a88ec474f3a4067f1c1166b27f3f41ef0a6952d094273",
+    "4090-c161-bot-replies-v1.json": "134e7dfa1be6a5abb598061dad12e42399055d7a1a414f25271426833f42d6df",
+    "4090-c161-midlevel-pocketsphinx-v1.json": "eeb9a1afadf9ff6104495e937e5f10b1ba04e4977eed8a07925eace2b4e981b1"
+  },
+  "qemu_sha256": "053a4ad154c61fb3bb5d545b9c4411eb89ea12448e675b1d2abe6b1f7b1c1308",
+  "elf_sha256": "834e535a050a4dc39d87f8ef0aa9122dfa1f50d67d15cb71e7551d71b3a54e22",
+  "uart_archive_sha256": "c8f3d721b70287b2ab70b91424660366b9c5dce239620a6ec576add3393e121b",
+  "model_sha256": {
+    "c161": "c16154040378b8acccdb57c19917c46cea0a9ea6a39f105004b964ddd093ab81",
+    "midlevel": "217f1a10a31eef92a8ca0baf95f0c41f0bbf72ae2335071c96423d3a1d4cb331"
+  },
+  "asr": {
+    "model.bin": "62b2a45b05ee59acb4a5341b33ee35e041395d378d418a18acfe4c9e768ee37a",
+    "config.json": "666a9605530ac1f61fa8177f3702b4dacec9966749e42610839fcc32661d5fae",
+    "tokenizer.json": "929c5252409436dce1b38a75d1abbcb5e132d170d8e324e4e04ed915fa2d22df",
+    "vocabulary.txt": "ff77588746d3a2595d32ab5b69ffd7b95ce2441ac57533cb66fc3eb575a115cf"
+  },
+  "device": "NVIDIA GeForce RTX 4090",
+  "fir_taps": 2048,
+  "fit_history": 48000,
+  "fit_hop": 8000,
+  "ridge_ratio": 0.001,
+  "records": [
+    {
+      "key": "af_kore_digital-0-self",
+      "source": {
+        "role": "self",
+        "bot": "af_kore_digital",
+        "external_voice": "af_aoede",
+        "room": "16khz/h012_Kitchen_22txts.wav",
+        "external_id": 0,
+        "echo_gain": 1.6318234372270788,
+        "common_gain": 0.7102743249806293,
+        "mic_sha256": "1c3d27e58f46c984ee77056faf3e740156a2f8036dc9d1d3b06f86af9e1e6a9c",
+        "ref_sha256": "fbeb9f2999088cfc77a1e90b6fb8b88f7be2c53747d9b7a946bf878b0c04b8e7",
+        "start": 80000,
+        "external_end": 118400,
+        "self_end": 118400,
+        "external_command": "lower the fan speed.",
+        "external_first_phone": 92400
+      },
+      "uart_sha256": "a90ef420948efe086c0e96343b65ac8b1744fa6e2667a85d698dc29982cee050",
+      "residual_clipped": 0,
+      "stages": {
+        "mic": {
+          "pcm_sha256": "1c3d27e58f46c984ee77056faf3e740156a2f8036dc9d1d3b06f86af9e1e6a9c",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 118400
+        },
+        "p4_agc": {
+          "pcm_sha256": "cf525163d9c7de8379b8cf56725363c280654ca7f2141c6587d2ea031c099e77",
+          "target_hits": [],
+          "evaluated_start": 81440,
+          "evaluated_end": 119840
+        },
+        "fir": {
+          "pcm_sha256": "bcd4f3eb05965bd3975cdbf2bde116faf2c5a5826fb77ad66511509698d1bb85",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 118400
+        }
+      }
+    },
+    {
+      "key": "af_kore_digital-0-same_mic_external",
+      "source": {
+        "role": "same_mic_external",
+        "bot": "af_kore_digital",
+        "external_voice": "af_aoede",
+        "room": "16khz/h012_Kitchen_22txts.wav",
+        "external_id": 0,
+        "echo_gain": 1.6318234372270788,
+        "common_gain": 0.7102743249806293,
+        "mic_sha256": "1c3d27e58f46c984ee77056faf3e740156a2f8036dc9d1d3b06f86af9e1e6a9c",
+        "ref_sha256": "ac2878215ad33205d1732578c89f25ededaad1b676911c540825bcf4baa42d9b",
+        "start": 80000,
+        "external_end": 118400,
+        "self_end": 118400,
+        "external_command": "lower the fan speed.",
+        "external_first_phone": 92400
+      },
+      "uart_sha256": "6a7c43cecbd3f0fa63aece5f8e94bc1c4075ce5f879526e1405ed0ad515638d4",
+      "residual_clipped": 0,
+      "stages": {
+        "mic": {
+          "pcm_sha256": "1c3d27e58f46c984ee77056faf3e740156a2f8036dc9d1d3b06f86af9e1e6a9c",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 118400
+        },
+        "p4_agc": {
+          "pcm_sha256": "7f288f6c844fc8848c8965a607702661922fa83c1c3405b3b83242d2f9053c1d",
+          "target_hits": [],
+          "evaluated_start": 81440,
+          "evaluated_end": 119840
+        },
+        "fir": {
+          "pcm_sha256": "1c3d27e58f46c984ee77056faf3e740156a2f8036dc9d1d3b06f86af9e1e6a9c",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 118400
+        }
+      }
+    },
+    {
+      "key": "af_kore_digital-0-external_only",
+      "source": {
+        "role": "external_only",
+        "bot": "af_kore_digital",
+        "external_voice": "af_aoede",
+        "room": "16khz/h012_Kitchen_22txts.wav",
+        "external_id": 0,
+        "echo_gain": 1.6318234372270788,
+        "common_gain": 0.7102743249806293,
+        "mic_sha256": "8d2b9592ad46f44f381c78d449e4ae2a0def1d079b1acfe08e72805d8b2048a3",
+        "ref_sha256": "ac2878215ad33205d1732578c89f25ededaad1b676911c540825bcf4baa42d9b",
+        "start": 80000,
+        "external_end": 118400,
+        "self_end": 118400,
+        "external_command": "lower the fan speed.",
+        "external_first_phone": 92400
+      },
+      "uart_sha256": "3c5c85c63d44695af49a4357b50865e6ef9b7676c8cd0e1a3f9e5e7349fff824",
+      "residual_clipped": 0,
+      "stages": {
+        "mic": {
+          "pcm_sha256": "8d2b9592ad46f44f381c78d449e4ae2a0def1d079b1acfe08e72805d8b2048a3",
+          "target_hits": [
+            {
+              "sample": 93600,
+              "origin": "verified"
+            }
+          ],
+          "evaluated_start": 80000,
+          "evaluated_end": 118400,
+          "first_sample": 61600,
+          "transcript_pcm": "881920262a7b07cd74cca43a910fe6115c538714de7977a42ee0b73f8d8f8e08",
+          "exact_command_suffix": true
+        },
+        "p4_agc": {
+          "pcm_sha256": "7b51036e74864921dcc46a52aa588461b42d3514cfadccaecbfd5b0058494296",
+          "target_hits": [],
+          "evaluated_start": 81440,
+          "evaluated_end": 119840
+        },
+        "fir": {
+          "pcm_sha256": "8d2b9592ad46f44f381c78d449e4ae2a0def1d079b1acfe08e72805d8b2048a3",
+          "target_hits": [
+            {
+              "sample": 93600,
+              "origin": "verified"
+            }
+          ],
+          "evaluated_start": 80000,
+          "evaluated_end": 118400,
+          "first_sample": 61600,
+          "transcript_pcm": "881920262a7b07cd74cca43a910fe6115c538714de7977a42ee0b73f8d8f8e08",
+          "exact_command_suffix": true
+        }
+      }
+    },
+    {
+      "key": "af_kore_digital-0-external_over_reply",
+      "source": {
+        "role": "external_over_reply",
+        "bot": "af_kore_digital",
+        "external_voice": "af_aoede",
+        "room": "16khz/h012_Kitchen_22txts.wav",
+        "external_id": 0,
+        "echo_gain": 1.6318234372270788,
+        "common_gain": 0.7102743249806293,
+        "mic_sha256": "c7a31e3e51ec80800de352d124b62187603ffb023448b4022bdd5a88d887bc31",
+        "ref_sha256": "acbc2a6e5a0b4fac76bdd19fe1c96bb61fa7d3e5be332d28519704b46c682438",
+        "start": 80000,
+        "external_end": 118400,
+        "self_end": 118400,
+        "external_command": "lower the fan speed.",
+        "external_first_phone": 92400
+      },
+      "uart_sha256": "81cf58ba4e81f071a8d8758d69b2fdd3ea9d5d973220b2d517fed906f7d143f8",
+      "residual_clipped": 0,
+      "stages": {
+        "mic": {
+          "pcm_sha256": "c7a31e3e51ec80800de352d124b62187603ffb023448b4022bdd5a88d887bc31",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 118400
+        },
+        "p4_agc": {
+          "pcm_sha256": "2ca7191c6b833c634bc308612057ab0b33f6cb56e66ea3488475098ee337879a",
+          "target_hits": [],
+          "evaluated_start": 81440,
+          "evaluated_end": 119840
+        },
+        "fir": {
+          "pcm_sha256": "bc8dfae97b42b4abc584f38c7a04c4cf1d6770ed4f42709546b1560e0824c5af",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 118400
+        }
+      }
+    },
+    {
+      "key": "af_kore_digital-0-simultaneous_mentions",
+      "source": {
+        "role": "simultaneous_mentions",
+        "bot": "af_kore_digital",
+        "external_voice": "af_aoede",
+        "room": "16khz/h012_Kitchen_22txts.wav",
+        "external_id": 0,
+        "echo_gain": 1.6318234372270788,
+        "common_gain": 0.7102743249806293,
+        "mic_sha256": "986d0d2be086cc9a5868c989f5e44262daf399fc1cc2302a7dfabc24368dbf84",
+        "ref_sha256": "fbeb9f2999088cfc77a1e90b6fb8b88f7be2c53747d9b7a946bf878b0c04b8e7",
+        "start": 80000,
+        "external_end": 118400,
+        "self_end": 118400,
+        "external_command": "lower the fan speed.",
+        "external_first_phone": 92400
+      },
+      "uart_sha256": "259ca88d0f5afb9d63d841ac1675bc924fbb4808a0851dbb548804a006f6670a",
+      "residual_clipped": 0,
+      "stages": {
+        "mic": {
+          "pcm_sha256": "986d0d2be086cc9a5868c989f5e44262daf399fc1cc2302a7dfabc24368dbf84",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 118400
+        },
+        "p4_agc": {
+          "pcm_sha256": "81b3f610471bd9c1cf3cc6f8a0b8f41be1c66533f7094272a0a463e1e8242092",
+          "target_hits": [],
+          "evaluated_start": 81440,
+          "evaluated_end": 119840
+        },
+        "fir": {
+          "pcm_sha256": "ca69afe22167255cb73d70af2e80d0672932943a13a7677ff2ea4c885ed46783",
+          "target_hits": [
+            {
+              "sample": 93600,
+              "origin": "verified"
+            }
+          ],
+          "evaluated_start": 80000,
+          "evaluated_end": 118400,
+          "first_sample": 61600,
+          "transcript_pcm": "28ae3f27c544eb2609e7fa0c72b34ed475e82d64cbf0610db17aeee53cd64680",
+          "exact_command_suffix": true
+        }
+      }
+    },
+    {
+      "key": "af_kore_digital-0-reply_only",
+      "source": {
+        "role": "reply_only",
+        "bot": "af_kore_digital",
+        "external_voice": "af_aoede",
+        "room": "16khz/h012_Kitchen_22txts.wav",
+        "external_id": 0,
+        "echo_gain": 1.6318234372270788,
+        "common_gain": 0.7102743249806293,
+        "mic_sha256": "205c8e1217b319f904b74a1df6d1dfb193347d1a547875645fedb5242295f68c",
+        "ref_sha256": "acbc2a6e5a0b4fac76bdd19fe1c96bb61fa7d3e5be332d28519704b46c682438",
+        "start": 80000,
+        "external_end": 118400,
+        "self_end": 118400,
+        "external_command": "lower the fan speed.",
+        "external_first_phone": 92400
+      },
+      "uart_sha256": "53b9f9ce99be3f7ea0f9468ba8eb07121f815208baeeca07f6aadfd8dd4eaea7",
+      "residual_clipped": 0,
+      "stages": {
+        "mic": {
+          "pcm_sha256": "205c8e1217b319f904b74a1df6d1dfb193347d1a547875645fedb5242295f68c",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 118400
+        },
+        "p4_agc": {
+          "pcm_sha256": "fac4486dcd4159d80182e7f0e1682821b2fb40b8c53fc8d9582f5f3534ddb469",
+          "target_hits": [],
+          "evaluated_start": 81440,
+          "evaluated_end": 119840
+        },
+        "fir": {
+          "pcm_sha256": "32e096ea0e07566903e12255ba0eb1b7238b0ee01341e9976c4027e68bf6a10a",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 118400
+        }
+      }
+    },
+    {
+      "key": "af_kore_digital-1-self",
+      "source": {
+        "role": "self",
+        "bot": "af_kore_digital",
+        "external_voice": "af_aoede",
+        "room": "16khz/h004_LivingRoom_Large_48txts.wav",
+        "external_id": 0,
+        "echo_gain": 1.7120335183630775,
+        "common_gain": 0.6985470335578629,
+        "mic_sha256": "5404ff0811033912cc817ebca967f79931988fe395139398916198d446f24a46",
+        "ref_sha256": "a41278cabf67ee0dff10c9b9ba15a3b4dfa47f6a4abfe41b8c08e6d8278490be",
+        "start": 80000,
+        "external_end": 118400,
+        "self_end": 118400,
+        "external_command": "lower the fan speed.",
+        "external_first_phone": 92400
+      },
+      "uart_sha256": "0f073c44e7d489db7d5e97a59774599b2c690e8367c9abd815db32f2dbf3f4f0",
+      "residual_clipped": 0,
+      "stages": {
+        "mic": {
+          "pcm_sha256": "5404ff0811033912cc817ebca967f79931988fe395139398916198d446f24a46",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 118400
+        },
+        "p4_agc": {
+          "pcm_sha256": "d4e65795cd4dd01c2b9d7c7e862b1ec05cdea2f3b98cc903a2caa2ce609d22b9",
+          "target_hits": [],
+          "evaluated_start": 81440,
+          "evaluated_end": 119840
+        },
+        "fir": {
+          "pcm_sha256": "5e42968fc1e4e791e9196ffc1cc3bfb8fffc1dd942fdd5a332922fe9fc9218b2",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 118400
+        }
+      }
+    },
+    {
+      "key": "af_kore_digital-1-same_mic_external",
+      "source": {
+        "role": "same_mic_external",
+        "bot": "af_kore_digital",
+        "external_voice": "af_aoede",
+        "room": "16khz/h004_LivingRoom_Large_48txts.wav",
+        "external_id": 0,
+        "echo_gain": 1.7120335183630775,
+        "common_gain": 0.6985470335578629,
+        "mic_sha256": "5404ff0811033912cc817ebca967f79931988fe395139398916198d446f24a46",
+        "ref_sha256": "ac2878215ad33205d1732578c89f25ededaad1b676911c540825bcf4baa42d9b",
+        "start": 80000,
+        "external_end": 118400,
+        "self_end": 118400,
+        "external_command": "lower the fan speed.",
+        "external_first_phone": 92400
+      },
+      "uart_sha256": "201de472b1b898e7feabe82742dfb89c73ff810039226466b439482bbdd15de3",
+      "residual_clipped": 0,
+      "stages": {
+        "mic": {
+          "pcm_sha256": "5404ff0811033912cc817ebca967f79931988fe395139398916198d446f24a46",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 118400
+        },
+        "p4_agc": {
+          "pcm_sha256": "5186742eabcb875a2e896c136652b3239b396b024c8441f5eddfb7d68ea2676d",
+          "target_hits": [],
+          "evaluated_start": 81440,
+          "evaluated_end": 119840
+        },
+        "fir": {
+          "pcm_sha256": "5404ff0811033912cc817ebca967f79931988fe395139398916198d446f24a46",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 118400
+        }
+      }
+    },
+    {
+      "key": "af_kore_digital-1-external_only",
+      "source": {
+        "role": "external_only",
+        "bot": "af_kore_digital",
+        "external_voice": "af_aoede",
+        "room": "16khz/h004_LivingRoom_Large_48txts.wav",
+        "external_id": 0,
+        "echo_gain": 1.7120335183630775,
+        "common_gain": 0.6985470335578629,
+        "mic_sha256": "fb3bda7a72765e53fd88d47dcbc3ea093d140c7f92973a6351dfc9d5c89cf8d7",
+        "ref_sha256": "ac2878215ad33205d1732578c89f25ededaad1b676911c540825bcf4baa42d9b",
+        "start": 80000,
+        "external_end": 118400,
+        "self_end": 118400,
+        "external_command": "lower the fan speed.",
+        "external_first_phone": 92400
+      },
+      "uart_sha256": "f42ac258b43b352f49ab6498d073a1374c7775bcdaa75837e83bdaa29853da6b",
+      "residual_clipped": 0,
+      "stages": {
+        "mic": {
+          "pcm_sha256": "fb3bda7a72765e53fd88d47dcbc3ea093d140c7f92973a6351dfc9d5c89cf8d7",
+          "target_hits": [
+            {
+              "sample": 93600,
+              "origin": "verified"
+            }
+          ],
+          "evaluated_start": 80000,
+          "evaluated_end": 118400,
+          "first_sample": 61600,
+          "transcript_pcm": "9704971ad18c85e150f1743919b93dcdc4a86284d1f30d88b156393aa5349561",
+          "exact_command_suffix": true
+        },
+        "p4_agc": {
+          "pcm_sha256": "f295a12c816df1e855b7536be580dd3a9a9695dd90b4c92e19a7a76eb689d56c",
+          "target_hits": [],
+          "evaluated_start": 81440,
+          "evaluated_end": 119840
+        },
+        "fir": {
+          "pcm_sha256": "fb3bda7a72765e53fd88d47dcbc3ea093d140c7f92973a6351dfc9d5c89cf8d7",
+          "target_hits": [
+            {
+              "sample": 93600,
+              "origin": "verified"
+            }
+          ],
+          "evaluated_start": 80000,
+          "evaluated_end": 118400,
+          "first_sample": 61600,
+          "transcript_pcm": "9704971ad18c85e150f1743919b93dcdc4a86284d1f30d88b156393aa5349561",
+          "exact_command_suffix": true
+        }
+      }
+    },
+    {
+      "key": "af_kore_digital-1-external_over_reply",
+      "source": {
+        "role": "external_over_reply",
+        "bot": "af_kore_digital",
+        "external_voice": "af_aoede",
+        "room": "16khz/h004_LivingRoom_Large_48txts.wav",
+        "external_id": 0,
+        "echo_gain": 1.7120335183630775,
+        "common_gain": 0.6985470335578629,
+        "mic_sha256": "955b957e36b566491204a93159fbbf15c08e11f72f524f86c3c5a8e4655a170b",
+        "ref_sha256": "b68150cc42fa4cae953eea33fc8183a477257c31848c59830bbc622f46717100",
+        "start": 80000,
+        "external_end": 118400,
+        "self_end": 118400,
+        "external_command": "lower the fan speed.",
+        "external_first_phone": 92400
+      },
+      "uart_sha256": "8348e398096f52ab71c20e77740ca0bc597973f2540f98b0bacd40b0072a4701",
+      "residual_clipped": 0,
+      "stages": {
+        "mic": {
+          "pcm_sha256": "955b957e36b566491204a93159fbbf15c08e11f72f524f86c3c5a8e4655a170b",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 118400
+        },
+        "p4_agc": {
+          "pcm_sha256": "4dbea0909af9b52588d70f0790c0a3ede8e0bb2c4b54ca2636176c62cf831ed4",
+          "target_hits": [],
+          "evaluated_start": 81440,
+          "evaluated_end": 119840
+        },
+        "fir": {
+          "pcm_sha256": "b3b51e548fee1a4374c624da71c3f853f52041babc188cb656f3a8a0f66153c5",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 118400
+        }
+      }
+    },
+    {
+      "key": "af_kore_digital-1-simultaneous_mentions",
+      "source": {
+        "role": "simultaneous_mentions",
+        "bot": "af_kore_digital",
+        "external_voice": "af_aoede",
+        "room": "16khz/h004_LivingRoom_Large_48txts.wav",
+        "external_id": 0,
+        "echo_gain": 1.7120335183630775,
+        "common_gain": 0.6985470335578629,
+        "mic_sha256": "a2d9c1afd02bbea7befcdcf68c829f94cdfff084e03500caf73d179e5e995039",
+        "ref_sha256": "a41278cabf67ee0dff10c9b9ba15a3b4dfa47f6a4abfe41b8c08e6d8278490be",
+        "start": 80000,
+        "external_end": 118400,
+        "self_end": 118400,
+        "external_command": "lower the fan speed.",
+        "external_first_phone": 92400
+      },
+      "uart_sha256": "b28f9c261a5a1c9053ebb40a65686e73883e9a88908601e6c0de0dbce3f86faf",
+      "residual_clipped": 0,
+      "stages": {
+        "mic": {
+          "pcm_sha256": "a2d9c1afd02bbea7befcdcf68c829f94cdfff084e03500caf73d179e5e995039",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 118400
+        },
+        "p4_agc": {
+          "pcm_sha256": "abe68371e3ee614d46bab79ceb3bd7994db220b7c7ca511c8d4247efe4d403be",
+          "target_hits": [],
+          "evaluated_start": 81440,
+          "evaluated_end": 119840
+        },
+        "fir": {
+          "pcm_sha256": "f0534b0f212259f2ba87627ed8a375eb66f84ba98f20047ce5f2d2f5abc0d8ca",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 118400
+        }
+      }
+    },
+    {
+      "key": "af_kore_digital-1-reply_only",
+      "source": {
+        "role": "reply_only",
+        "bot": "af_kore_digital",
+        "external_voice": "af_aoede",
+        "room": "16khz/h004_LivingRoom_Large_48txts.wav",
+        "external_id": 0,
+        "echo_gain": 1.7120335183630775,
+        "common_gain": 0.6985470335578629,
+        "mic_sha256": "483e8c06ab8af6fc8e55bd852a8ea385d89d6d565762371994585f473f66c3f6",
+        "ref_sha256": "b68150cc42fa4cae953eea33fc8183a477257c31848c59830bbc622f46717100",
+        "start": 80000,
+        "external_end": 118400,
+        "self_end": 118400,
+        "external_command": "lower the fan speed.",
+        "external_first_phone": 92400
+      },
+      "uart_sha256": "516d470e1aeb33e185907cdeded640ac86069ef21314e6cf5f440b3c66045428",
+      "residual_clipped": 0,
+      "stages": {
+        "mic": {
+          "pcm_sha256": "483e8c06ab8af6fc8e55bd852a8ea385d89d6d565762371994585f473f66c3f6",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 118400
+        },
+        "p4_agc": {
+          "pcm_sha256": "b51a15572c19895d33ca46879be98a5d3ff27702720fd879652daab67800e65e",
+          "target_hits": [],
+          "evaluated_start": 81440,
+          "evaluated_end": 119840
+        },
+        "fir": {
+          "pcm_sha256": "0d091844c877bbccbeece08caaeba71b983c4551385f11dd693d7d814dcf8370",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 118400
+        }
+      }
+    },
+    {
+      "key": "bm_fable_digital-0-self",
+      "source": {
+        "role": "self",
+        "bot": "bm_fable_digital",
+        "external_voice": "bf_lily",
+        "room": "16khz/h012_Kitchen_22txts.wav",
+        "external_id": 12,
+        "echo_gain": 2.3763477414519936,
+        "common_gain": 0.433553626140664,
+        "mic_sha256": "0be23f8e5593a3a35ba22f2f62493c42281ca507266cc318417ce0137ec77353",
+        "ref_sha256": "23869fa12d94c4868a172e63bcb73c6b76cdfd3fb200279966e3f5ed74760d81",
+        "start": 80000,
+        "external_end": 124400,
+        "self_end": 129600,
+        "external_command": "lower the fan speed.",
+        "external_first_phone": 96800
+      },
+      "uart_sha256": "b17098766e77080c1f112966bb835bef297fea50e838185824d810b20fdfee59",
+      "residual_clipped": 0,
+      "stages": {
+        "mic": {
+          "pcm_sha256": "0be23f8e5593a3a35ba22f2f62493c42281ca507266cc318417ce0137ec77353",
+          "target_hits": [
+            {
+              "sample": 96960,
+              "origin": "verified"
+            }
+          ],
+          "evaluated_start": 80000,
+          "evaluated_end": 129600,
+          "first_sample": 64960,
+          "transcript_pcm": "e4433952104e1b075318547a01a77238c4743d835b4681b6cff14fc3ecc0cf94",
+          "exact_command_suffix": true
+        },
+        "p4_agc": {
+          "pcm_sha256": "2eb834575d7dc6db4f2f830fbf170a99172d92cad52d30012fb7e55795bfceb2",
+          "target_hits": [],
+          "evaluated_start": 81440,
+          "evaluated_end": 131040
+        },
+        "fir": {
+          "pcm_sha256": "dfd3a9471ed5a130a6f94abd22ac91b9a56e1000244a57b470b3cf8ed921ab2b",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 129600
+        }
+      }
+    },
+    {
+      "key": "bm_fable_digital-0-same_mic_external",
+      "source": {
+        "role": "same_mic_external",
+        "bot": "bm_fable_digital",
+        "external_voice": "bf_lily",
+        "room": "16khz/h012_Kitchen_22txts.wav",
+        "external_id": 12,
+        "echo_gain": 2.3763477414519936,
+        "common_gain": 0.433553626140664,
+        "mic_sha256": "0be23f8e5593a3a35ba22f2f62493c42281ca507266cc318417ce0137ec77353",
+        "ref_sha256": "ac2878215ad33205d1732578c89f25ededaad1b676911c540825bcf4baa42d9b",
+        "start": 80000,
+        "external_end": 124400,
+        "self_end": 129600,
+        "external_command": "lower the fan speed.",
+        "external_first_phone": 96800
+      },
+      "uart_sha256": "638cac4615b75e9d1d4f4b347d594d952ff87c23ac50bd05f558bd4045cf4961",
+      "residual_clipped": 0,
+      "stages": {
+        "mic": {
+          "pcm_sha256": "0be23f8e5593a3a35ba22f2f62493c42281ca507266cc318417ce0137ec77353",
+          "target_hits": [
+            {
+              "sample": 96960,
+              "origin": "verified"
+            }
+          ],
+          "evaluated_start": 80000,
+          "evaluated_end": 129600,
+          "first_sample": 64960,
+          "transcript_pcm": "e4433952104e1b075318547a01a77238c4743d835b4681b6cff14fc3ecc0cf94",
+          "exact_command_suffix": true
+        },
+        "p4_agc": {
+          "pcm_sha256": "020152d250aa35602c78c8adcc1b06bf2c29338540101c44bdf3ab5841815015",
+          "target_hits": [],
+          "evaluated_start": 81440,
+          "evaluated_end": 131040
+        },
+        "fir": {
+          "pcm_sha256": "0be23f8e5593a3a35ba22f2f62493c42281ca507266cc318417ce0137ec77353",
+          "target_hits": [
+            {
+              "sample": 96960,
+              "origin": "verified"
+            }
+          ],
+          "evaluated_start": 80000,
+          "evaluated_end": 129600,
+          "first_sample": 64960,
+          "transcript_pcm": "e4433952104e1b075318547a01a77238c4743d835b4681b6cff14fc3ecc0cf94",
+          "exact_command_suffix": true
+        }
+      }
+    },
+    {
+      "key": "bm_fable_digital-0-external_only",
+      "source": {
+        "role": "external_only",
+        "bot": "bm_fable_digital",
+        "external_voice": "bf_lily",
+        "room": "16khz/h012_Kitchen_22txts.wav",
+        "external_id": 12,
+        "echo_gain": 2.3763477414519936,
+        "common_gain": 0.433553626140664,
+        "mic_sha256": "d3a941a131726174bdccde385059db0d9421cc4e8e0651f79ee16d4d81272f77",
+        "ref_sha256": "ac2878215ad33205d1732578c89f25ededaad1b676911c540825bcf4baa42d9b",
+        "start": 80000,
+        "external_end": 124400,
+        "self_end": 129600,
+        "external_command": "lower the fan speed.",
+        "external_first_phone": 96800
+      },
+      "uart_sha256": "068f5af3c490dd531b492521f0e5f2fdb8e71d8d40949caaf502dbd34cd37fe8",
+      "residual_clipped": 0,
+      "stages": {
+        "mic": {
+          "pcm_sha256": "d3a941a131726174bdccde385059db0d9421cc4e8e0651f79ee16d4d81272f77",
+          "target_hits": [
+            {
+              "sample": 97440,
+              "origin": "verified"
+            }
+          ],
+          "evaluated_start": 80000,
+          "evaluated_end": 124400,
+          "first_sample": 65440,
+          "transcript_pcm": "7b7e5865dbe0244d7b02eb61557e00924466bcbbaab828e003e5821d60d8fbc1",
+          "exact_command_suffix": true
+        },
+        "p4_agc": {
+          "pcm_sha256": "d4877dcc41369ba3d296e8ac538f1f0e38dc4bcdc968f9dfff5f9b94b722270d",
+          "target_hits": [],
+          "evaluated_start": 81440,
+          "evaluated_end": 125840
+        },
+        "fir": {
+          "pcm_sha256": "d3a941a131726174bdccde385059db0d9421cc4e8e0651f79ee16d4d81272f77",
+          "target_hits": [
+            {
+              "sample": 97440,
+              "origin": "verified"
+            }
+          ],
+          "evaluated_start": 80000,
+          "evaluated_end": 124400,
+          "first_sample": 65440,
+          "transcript_pcm": "7b7e5865dbe0244d7b02eb61557e00924466bcbbaab828e003e5821d60d8fbc1",
+          "exact_command_suffix": true
+        }
+      }
+    },
+    {
+      "key": "bm_fable_digital-0-external_over_reply",
+      "source": {
+        "role": "external_over_reply",
+        "bot": "bm_fable_digital",
+        "external_voice": "bf_lily",
+        "room": "16khz/h012_Kitchen_22txts.wav",
+        "external_id": 12,
+        "echo_gain": 2.3763477414519936,
+        "common_gain": 0.433553626140664,
+        "mic_sha256": "ce76ef33e5aba073ff22d7e45a78d40dc7fceb185cb1811905cc8338077c59a7",
+        "ref_sha256": "247ca09727e13d51d58714802dfba3962b130f65f7715addae308e5d43b90cee",
+        "start": 80000,
+        "external_end": 124400,
+        "self_end": 129600,
+        "external_command": "lower the fan speed.",
+        "external_first_phone": 96800
+      },
+      "uart_sha256": "ad6daf8c110565b6a8a9e199d41e47bdca0944316f11c7b9f21cfcd771bfb753",
+      "residual_clipped": 0,
+      "stages": {
+        "mic": {
+          "pcm_sha256": "ce76ef33e5aba073ff22d7e45a78d40dc7fceb185cb1811905cc8338077c59a7",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 124400
+        },
+        "p4_agc": {
+          "pcm_sha256": "268fd66c3afac380d362991eaf9693c33cf9fccbf4468f5bcaf27801376db8c3",
+          "target_hits": [],
+          "evaluated_start": 81440,
+          "evaluated_end": 125840
+        },
+        "fir": {
+          "pcm_sha256": "d01b1e70046bd48ea84a2cc0b0801a6ad8d3a8f958d8fe1740ecbb2e5cbcfa39",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 124400
+        }
+      }
+    },
+    {
+      "key": "bm_fable_digital-0-simultaneous_mentions",
+      "source": {
+        "role": "simultaneous_mentions",
+        "bot": "bm_fable_digital",
+        "external_voice": "bf_lily",
+        "room": "16khz/h012_Kitchen_22txts.wav",
+        "external_id": 12,
+        "echo_gain": 2.3763477414519936,
+        "common_gain": 0.433553626140664,
+        "mic_sha256": "666a8b0442fae7d5defc8780eb18bf2adab844e73fafa7f05310c185902a1058",
+        "ref_sha256": "23869fa12d94c4868a172e63bcb73c6b76cdfd3fb200279966e3f5ed74760d81",
+        "start": 80000,
+        "external_end": 124400,
+        "self_end": 129600,
+        "external_command": "lower the fan speed.",
+        "external_first_phone": 96800
+      },
+      "uart_sha256": "c41ab0cb2831e0e30b3ecabc7f7f8933f7c7296263385b16e01797cbea4ee81a",
+      "residual_clipped": 0,
+      "stages": {
+        "mic": {
+          "pcm_sha256": "666a8b0442fae7d5defc8780eb18bf2adab844e73fafa7f05310c185902a1058",
+          "target_hits": [
+            {
+              "sample": 96960,
+              "origin": "verified"
+            }
+          ],
+          "evaluated_start": 80000,
+          "evaluated_end": 124400,
+          "first_sample": 64960,
+          "transcript_pcm": "d7cb57a8f31c4189ed3d43ec2d5b20f761ea9a7140dbdc3698a636aa153e8f47",
+          "exact_command_suffix": false
+        },
+        "p4_agc": {
+          "pcm_sha256": "0410106a00eaf2e5195dc306bffab4dd25aedb397fc344584ef515bbc5ede97f",
+          "target_hits": [],
+          "evaluated_start": 81440,
+          "evaluated_end": 125840
+        },
+        "fir": {
+          "pcm_sha256": "a2aeebe4e1a4c7be839fe094a335fe5352c1ec85c7c21ba39b205dbf9443f666",
+          "target_hits": [
+            {
+              "sample": 97440,
+              "origin": "verified"
+            }
+          ],
+          "evaluated_start": 80000,
+          "evaluated_end": 124400,
+          "first_sample": 65440,
+          "transcript_pcm": "10cccc4d66bae8da88a85f88c22736cc32dbb57334041ed19f0013a4d3a3908f",
+          "exact_command_suffix": true
+        }
+      }
+    },
+    {
+      "key": "bm_fable_digital-0-reply_only",
+      "source": {
+        "role": "reply_only",
+        "bot": "bm_fable_digital",
+        "external_voice": "bf_lily",
+        "room": "16khz/h012_Kitchen_22txts.wav",
+        "external_id": 12,
+        "echo_gain": 2.3763477414519936,
+        "common_gain": 0.433553626140664,
+        "mic_sha256": "7afdc96640dfaa7403041d067b0ef5f8cb3b2bf06ed99d328fbfdff345ffaa41",
+        "ref_sha256": "247ca09727e13d51d58714802dfba3962b130f65f7715addae308e5d43b90cee",
+        "start": 80000,
+        "external_end": 124400,
+        "self_end": 129600,
+        "external_command": "lower the fan speed.",
+        "external_first_phone": 96800
+      },
+      "uart_sha256": "d30d09b0219890af2fac929320b1c66eb4a691f8648a55f235d96ce1e54f1bbb",
+      "residual_clipped": 0,
+      "stages": {
+        "mic": {
+          "pcm_sha256": "7afdc96640dfaa7403041d067b0ef5f8cb3b2bf06ed99d328fbfdff345ffaa41",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 129600
+        },
+        "p4_agc": {
+          "pcm_sha256": "05d42d9acb546f219ebd82e00c8eefb49c786df831707936a52bbb7f478f5fc6",
+          "target_hits": [],
+          "evaluated_start": 81440,
+          "evaluated_end": 131040
+        },
+        "fir": {
+          "pcm_sha256": "784b8bce1a6995c70e3f171e6cbc2dfe36780f10776b6a66ad9cb20ac2e1933b",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 129600
+        }
+      }
+    },
+    {
+      "key": "bm_fable_digital-1-self",
+      "source": {
+        "role": "self",
+        "bot": "bm_fable_digital",
+        "external_voice": "bf_lily",
+        "room": "16khz/h004_LivingRoom_Large_48txts.wav",
+        "external_id": 12,
+        "echo_gain": 2.2160980634529484,
+        "common_gain": 0.5324663023452061,
+        "mic_sha256": "b3e98009f5b7e6ae69a231ce02556a4aa60cdf3a4d9b3a5f55806d99f38dee04",
+        "ref_sha256": "933b314f91ba943b929b08c5eb24a1130c97036411a689c13a74728cf596b4bb",
+        "start": 80000,
+        "external_end": 124400,
+        "self_end": 129600,
+        "external_command": "lower the fan speed.",
+        "external_first_phone": 96800
+      },
+      "uart_sha256": "7dfaa6380d884e6124a001a2f4161d159b351b870bd06a0dea772baaf6e4d172",
+      "residual_clipped": 0,
+      "stages": {
+        "mic": {
+          "pcm_sha256": "b3e98009f5b7e6ae69a231ce02556a4aa60cdf3a4d9b3a5f55806d99f38dee04",
+          "target_hits": [
+            {
+              "sample": 96960,
+              "origin": "verified"
+            }
+          ],
+          "evaluated_start": 80000,
+          "evaluated_end": 129600,
+          "first_sample": 64960,
+          "transcript_pcm": "9fa52b569c9fb513676b20b4c59f693356bdea520836036c412de49bb38c573a",
+          "exact_command_suffix": true
+        },
+        "p4_agc": {
+          "pcm_sha256": "be62da1e3e1f226a1f8c945cea41c90359c7dfb577857abdb06b4d6e7e6b3b58",
+          "target_hits": [],
+          "evaluated_start": 81440,
+          "evaluated_end": 131040
+        },
+        "fir": {
+          "pcm_sha256": "d376ece448c73d1cdecb23207388a763a21dca7fe5f3962c67dc0d6838fa1d62",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 129600
+        }
+      }
+    },
+    {
+      "key": "bm_fable_digital-1-same_mic_external",
+      "source": {
+        "role": "same_mic_external",
+        "bot": "bm_fable_digital",
+        "external_voice": "bf_lily",
+        "room": "16khz/h004_LivingRoom_Large_48txts.wav",
+        "external_id": 12,
+        "echo_gain": 2.2160980634529484,
+        "common_gain": 0.5324663023452061,
+        "mic_sha256": "b3e98009f5b7e6ae69a231ce02556a4aa60cdf3a4d9b3a5f55806d99f38dee04",
+        "ref_sha256": "ac2878215ad33205d1732578c89f25ededaad1b676911c540825bcf4baa42d9b",
+        "start": 80000,
+        "external_end": 124400,
+        "self_end": 129600,
+        "external_command": "lower the fan speed.",
+        "external_first_phone": 96800
+      },
+      "uart_sha256": "ebae38ba3603fa851ae7fee23cc2a24df419104e3a1d2f3519d849a73d3fc175",
+      "residual_clipped": 0,
+      "stages": {
+        "mic": {
+          "pcm_sha256": "b3e98009f5b7e6ae69a231ce02556a4aa60cdf3a4d9b3a5f55806d99f38dee04",
+          "target_hits": [
+            {
+              "sample": 96960,
+              "origin": "verified"
+            }
+          ],
+          "evaluated_start": 80000,
+          "evaluated_end": 129600,
+          "first_sample": 64960,
+          "transcript_pcm": "9fa52b569c9fb513676b20b4c59f693356bdea520836036c412de49bb38c573a",
+          "exact_command_suffix": true
+        },
+        "p4_agc": {
+          "pcm_sha256": "1cba11a071fffa3fb4d72ef6056edb71f617de060af4d876a5596b690ff2f349",
+          "target_hits": [],
+          "evaluated_start": 81440,
+          "evaluated_end": 131040
+        },
+        "fir": {
+          "pcm_sha256": "b3e98009f5b7e6ae69a231ce02556a4aa60cdf3a4d9b3a5f55806d99f38dee04",
+          "target_hits": [
+            {
+              "sample": 96960,
+              "origin": "verified"
+            }
+          ],
+          "evaluated_start": 80000,
+          "evaluated_end": 129600,
+          "first_sample": 64960,
+          "transcript_pcm": "9fa52b569c9fb513676b20b4c59f693356bdea520836036c412de49bb38c573a",
+          "exact_command_suffix": true
+        }
+      }
+    },
+    {
+      "key": "bm_fable_digital-1-external_only",
+      "source": {
+        "role": "external_only",
+        "bot": "bm_fable_digital",
+        "external_voice": "bf_lily",
+        "room": "16khz/h004_LivingRoom_Large_48txts.wav",
+        "external_id": 12,
+        "echo_gain": 2.2160980634529484,
+        "common_gain": 0.5324663023452061,
+        "mic_sha256": "39b4027eeefee23a2b9b2bb48243496f0099bda947fa1f3b58808a353d75738b",
+        "ref_sha256": "ac2878215ad33205d1732578c89f25ededaad1b676911c540825bcf4baa42d9b",
+        "start": 80000,
+        "external_end": 124400,
+        "self_end": 129600,
+        "external_command": "lower the fan speed.",
+        "external_first_phone": 96800
+      },
+      "uart_sha256": "5af3f8b62c3933cbdd511f962ca91f58d74a52cb608575f9997abd89640243e7",
+      "residual_clipped": 0,
+      "stages": {
+        "mic": {
+          "pcm_sha256": "39b4027eeefee23a2b9b2bb48243496f0099bda947fa1f3b58808a353d75738b",
+          "target_hits": [
+            {
+              "sample": 97440,
+              "origin": "verified"
+            }
+          ],
+          "evaluated_start": 80000,
+          "evaluated_end": 124400,
+          "first_sample": 65440,
+          "transcript_pcm": "45b501486256b1615c0e50da74dbaaa64953af1ed63812523e602bc3c3251463",
+          "exact_command_suffix": true
+        },
+        "p4_agc": {
+          "pcm_sha256": "8bd3f505810e39cf973b84e0f46194f9c682ede06a922a7c9ec16d42d0c7e0ad",
+          "target_hits": [],
+          "evaluated_start": 81440,
+          "evaluated_end": 125840
+        },
+        "fir": {
+          "pcm_sha256": "39b4027eeefee23a2b9b2bb48243496f0099bda947fa1f3b58808a353d75738b",
+          "target_hits": [
+            {
+              "sample": 97440,
+              "origin": "verified"
+            }
+          ],
+          "evaluated_start": 80000,
+          "evaluated_end": 124400,
+          "first_sample": 65440,
+          "transcript_pcm": "45b501486256b1615c0e50da74dbaaa64953af1ed63812523e602bc3c3251463",
+          "exact_command_suffix": true
+        }
+      }
+    },
+    {
+      "key": "bm_fable_digital-1-external_over_reply",
+      "source": {
+        "role": "external_over_reply",
+        "bot": "bm_fable_digital",
+        "external_voice": "bf_lily",
+        "room": "16khz/h004_LivingRoom_Large_48txts.wav",
+        "external_id": 12,
+        "echo_gain": 2.2160980634529484,
+        "common_gain": 0.5324663023452061,
+        "mic_sha256": "6d661347a865ae5a430c3914ed9c86650c1e6a4feb220b306ddd7c74a3b01d65",
+        "ref_sha256": "426ed89f5703b2189d9489bbdb78a644487ed3035b3c1d3e986f5c5a023ded1c",
+        "start": 80000,
+        "external_end": 124400,
+        "self_end": 129600,
+        "external_command": "lower the fan speed.",
+        "external_first_phone": 96800
+      },
+      "uart_sha256": "68f0bb9e4347ea383bb6ee9a1bd0d9540d58f84cedafea77c3c2938f293d54df",
+      "residual_clipped": 0,
+      "stages": {
+        "mic": {
+          "pcm_sha256": "6d661347a865ae5a430c3914ed9c86650c1e6a4feb220b306ddd7c74a3b01d65",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 124400
+        },
+        "p4_agc": {
+          "pcm_sha256": "422c81eb4b70ead3285421c13bdd8199e9e0e905e81e89f59cd9a0f1eb2d79d3",
+          "target_hits": [],
+          "evaluated_start": 81440,
+          "evaluated_end": 125840
+        },
+        "fir": {
+          "pcm_sha256": "c0e48d4e1d1bd9423c3181204296a477d9486b7fcea1f83ffaf36665004fcbc0",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 124400
+        }
+      }
+    },
+    {
+      "key": "bm_fable_digital-1-simultaneous_mentions",
+      "source": {
+        "role": "simultaneous_mentions",
+        "bot": "bm_fable_digital",
+        "external_voice": "bf_lily",
+        "room": "16khz/h004_LivingRoom_Large_48txts.wav",
+        "external_id": 12,
+        "echo_gain": 2.2160980634529484,
+        "common_gain": 0.5324663023452061,
+        "mic_sha256": "62ae8a908cff3b663cd57086c33747a2d9e458c9d9c0975eff80a9bad1b19eb4",
+        "ref_sha256": "933b314f91ba943b929b08c5eb24a1130c97036411a689c13a74728cf596b4bb",
+        "start": 80000,
+        "external_end": 124400,
+        "self_end": 129600,
+        "external_command": "lower the fan speed.",
+        "external_first_phone": 96800
+      },
+      "uart_sha256": "090cb7e4d45f365032d4b24546e289024cd0e435fb145cc5415411a89d0b0797",
+      "residual_clipped": 0,
+      "stages": {
+        "mic": {
+          "pcm_sha256": "62ae8a908cff3b663cd57086c33747a2d9e458c9d9c0975eff80a9bad1b19eb4",
+          "target_hits": [
+            {
+              "sample": 96960,
+              "origin": "verified"
+            }
+          ],
+          "evaluated_start": 80000,
+          "evaluated_end": 124400,
+          "first_sample": 64960,
+          "transcript_pcm": "d8030eeb72718143e74e820685a76dd110e187384a06ef355db13937498e49b0",
+          "exact_command_suffix": false
+        },
+        "p4_agc": {
+          "pcm_sha256": "4dc1dbad23c88ce5d4276063299371a202fa118c652868a17063dc6767a7f246",
+          "target_hits": [],
+          "evaluated_start": 81440,
+          "evaluated_end": 125840
+        },
+        "fir": {
+          "pcm_sha256": "2a5699c9cf4c56fcebaa241ee8c17f382a911647cceb03cd14a57075b0d18118",
+          "target_hits": [
+            {
+              "sample": 97440,
+              "origin": "verified"
+            }
+          ],
+          "evaluated_start": 80000,
+          "evaluated_end": 124400,
+          "first_sample": 65440,
+          "transcript_pcm": "40941afbed00276e847a611979bb97a628519c74a5a44cd74a187389df4dfa4a",
+          "exact_command_suffix": true
+        }
+      }
+    },
+    {
+      "key": "bm_fable_digital-1-reply_only",
+      "source": {
+        "role": "reply_only",
+        "bot": "bm_fable_digital",
+        "external_voice": "bf_lily",
+        "room": "16khz/h004_LivingRoom_Large_48txts.wav",
+        "external_id": 12,
+        "echo_gain": 2.2160980634529484,
+        "common_gain": 0.5324663023452061,
+        "mic_sha256": "d380d8ef8f5b0caa2406cfbcf2903eb5c9ba488f0b38495f17beb30fc8393c82",
+        "ref_sha256": "426ed89f5703b2189d9489bbdb78a644487ed3035b3c1d3e986f5c5a023ded1c",
+        "start": 80000,
+        "external_end": 124400,
+        "self_end": 129600,
+        "external_command": "lower the fan speed.",
+        "external_first_phone": 96800
+      },
+      "uart_sha256": "7a2ac631ca60767ae91c69e158d5b90ec8a2c4398dc0ab5c88242cfb398ce5db",
+      "residual_clipped": 0,
+      "stages": {
+        "mic": {
+          "pcm_sha256": "d380d8ef8f5b0caa2406cfbcf2903eb5c9ba488f0b38495f17beb30fc8393c82",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 129600
+        },
+        "p4_agc": {
+          "pcm_sha256": "1a4fe397830729fe5cf9d14bc33591bc54e182fe0d301b40c0761baa0f93984c",
+          "target_hits": [],
+          "evaluated_start": 81440,
+          "evaluated_end": 131040
+        },
+        "fir": {
+          "pcm_sha256": "db4c2d7ec58932dbda7fd0c5fb55496353636beb453cbb4a42d19ea47e052c1e",
+          "target_hits": [],
+          "evaluated_start": 80000,
+          "evaluated_end": 129600
+        }
+      }
+    }
+  ],
+  "scores": {
+    "1c3d27e58f46c984ee77056faf3e740156a2f8036dc9d1d3b06f86af9e1e6a9c": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "cf525163d9c7de8379b8cf56725363c280654ca7f2141c6587d2ea031c099e77": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "bcd4f3eb05965bd3975cdbf2bde116faf2c5a5826fb77ad66511509698d1bb85": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "7f288f6c844fc8848c8965a607702661922fa83c1c3405b3b83242d2f9053c1d": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "8d2b9592ad46f44f381c78d449e4ae2a0def1d079b1acfe08e72805d8b2048a3": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [
+          93600
+        ],
+        "native_proposals": [],
+        "both_proposals": [
+          {
+            "sample": 93600,
+            "origin": "verified"
+          }
+        ]
+      },
+      "checked": [
+        {
+          "proposal": 93600,
+          "start": 69600,
+          "end": 98400,
+          "matches": [
+            {
+              "returned": 93120,
+              "start": 82880,
+              "end": 90560,
+              "prob": 0.861058768747618
+            }
+          ],
+          "confirmed": 93600
+        }
+      ]
+    },
+    "7b51036e74864921dcc46a52aa588461b42d3514cfadccaecbfd5b0058494296": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "c7a31e3e51ec80800de352d124b62187603ffb023448b4022bdd5a88d887bc31": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "2ca7191c6b833c634bc308612057ab0b33f6cb56e66ea3488475098ee337879a": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "bc8dfae97b42b4abc584f38c7a04c4cf1d6770ed4f42709546b1560e0824c5af": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "986d0d2be086cc9a5868c989f5e44262daf399fc1cc2302a7dfabc24368dbf84": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "81b3f610471bd9c1cf3cc6f8a0b8f41be1c66533f7094272a0a463e1e8242092": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "ca69afe22167255cb73d70af2e80d0672932943a13a7677ff2ea4c885ed46783": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [
+          93600
+        ],
+        "native_proposals": [],
+        "both_proposals": [
+          {
+            "sample": 93600,
+            "origin": "verified"
+          }
+        ]
+      },
+      "checked": [
+        {
+          "proposal": 93600,
+          "start": 69600,
+          "end": 98400,
+          "matches": [
+            {
+              "returned": 93120,
+              "start": 83360,
+              "end": 90720,
+              "prob": 0.833692286609352
+            }
+          ],
+          "confirmed": 93600
+        }
+      ]
+    },
+    "205c8e1217b319f904b74a1df6d1dfb193347d1a547875645fedb5242295f68c": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "fac4486dcd4159d80182e7f0e1682821b2fb40b8c53fc8d9582f5f3534ddb469": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "32e096ea0e07566903e12255ba0eb1b7238b0ee01341e9976c4027e68bf6a10a": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "5404ff0811033912cc817ebca967f79931988fe395139398916198d446f24a46": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "d4e65795cd4dd01c2b9d7c7e862b1ec05cdea2f3b98cc903a2caa2ce609d22b9": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "5e42968fc1e4e791e9196ffc1cc3bfb8fffc1dd942fdd5a332922fe9fc9218b2": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "5186742eabcb875a2e896c136652b3239b396b024c8441f5eddfb7d68ea2676d": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "fb3bda7a72765e53fd88d47dcbc3ea093d140c7f92973a6351dfc9d5c89cf8d7": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [
+          93600
+        ],
+        "native_proposals": [],
+        "both_proposals": [
+          {
+            "sample": 93600,
+            "origin": "verified"
+          }
+        ]
+      },
+      "checked": [
+        {
+          "proposal": 93600,
+          "start": 69600,
+          "end": 98400,
+          "matches": [
+            {
+              "returned": 93120,
+              "start": 82880,
+              "end": 90560,
+              "prob": 0.8612309891119553
+            }
+          ],
+          "confirmed": 93600
+        }
+      ]
+    },
+    "f295a12c816df1e855b7536be580dd3a9a9695dd90b4c92e19a7a76eb689d56c": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "955b957e36b566491204a93159fbbf15c08e11f72f524f86c3c5a8e4655a170b": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "4dbea0909af9b52588d70f0790c0a3ede8e0bb2c4b54ca2636176c62cf831ed4": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "b3b51e548fee1a4374c624da71c3f853f52041babc188cb656f3a8a0f66153c5": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "a2d9c1afd02bbea7befcdcf68c829f94cdfff084e03500caf73d179e5e995039": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "abe68371e3ee614d46bab79ceb3bd7994db220b7c7ca511c8d4247efe4d403be": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "f0534b0f212259f2ba87627ed8a375eb66f84ba98f20047ce5f2d2f5abc0d8ca": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "483e8c06ab8af6fc8e55bd852a8ea385d89d6d565762371994585f473f66c3f6": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "b51a15572c19895d33ca46879be98a5d3ff27702720fd879652daab67800e65e": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "0d091844c877bbccbeece08caaeba71b983c4551385f11dd693d7d814dcf8370": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "0be23f8e5593a3a35ba22f2f62493c42281ca507266cc318417ce0137ec77353": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [
+          96960
+        ],
+        "native_proposals": [],
+        "both_proposals": [
+          {
+            "sample": 96960,
+            "origin": "verified"
+          }
+        ]
+      },
+      "checked": [
+        {
+          "proposal": 96960,
+          "start": 72960,
+          "end": 101760,
+          "matches": [
+            {
+              "returned": 96960,
+              "start": 84160,
+              "end": 94560,
+              "prob": 0.8542835406164255
+            }
+          ],
+          "confirmed": 96960
+        }
+      ]
+    },
+    "2eb834575d7dc6db4f2f830fbf170a99172d92cad52d30012fb7e55795bfceb2": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "dfd3a9471ed5a130a6f94abd22ac91b9a56e1000244a57b470b3cf8ed921ab2b": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "020152d250aa35602c78c8adcc1b06bf2c29338540101c44bdf3ab5841815015": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "d3a941a131726174bdccde385059db0d9421cc4e8e0651f79ee16d4d81272f77": {
+      "events": {
+        "c161": [],
+        "original": [
+          97920
+        ],
+        "expanded": [
+          97440
+        ],
+        "native_proposals": [
+          {
+            "sample": 97920,
+            "origin": "verified"
+          }
+        ],
+        "both_proposals": [
+          {
+            "sample": 97440,
+            "origin": "verified"
+          }
+        ]
+      },
+      "checked": [
+        {
+          "proposal": 97440,
+          "start": 73440,
+          "end": 102240,
+          "matches": [
+            {
+              "returned": 96480,
+              "start": 83200,
+              "end": 94240,
+              "prob": 0.8455300158539952
+            }
+          ],
+          "confirmed": 97440
+        },
+        {
+          "proposal": 97920,
+          "start": 73920,
+          "end": 102720,
+          "matches": [
+            {
+              "returned": 96480,
+              "start": 83200,
+              "end": 94240,
+              "prob": 0.8455300158539952
+            }
+          ],
+          "confirmed": 97920
+        }
+      ]
+    },
+    "d4877dcc41369ba3d296e8ac538f1f0e38dc4bcdc968f9dfff5f9b94b722270d": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "ce76ef33e5aba073ff22d7e45a78d40dc7fceb185cb1811905cc8338077c59a7": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "268fd66c3afac380d362991eaf9693c33cf9fccbf4468f5bcaf27801376db8c3": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "d01b1e70046bd48ea84a2cc0b0801a6ad8d3a8f958d8fe1740ecbb2e5cbcfa39": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "666a8b0442fae7d5defc8780eb18bf2adab844e73fafa7f05310c185902a1058": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [
+          96960
+        ],
+        "native_proposals": [],
+        "both_proposals": [
+          {
+            "sample": 96960,
+            "origin": "verified"
+          }
+        ]
+      },
+      "checked": [
+        {
+          "proposal": 96960,
+          "start": 72960,
+          "end": 101760,
+          "matches": [
+            {
+              "returned": 96960,
+              "start": 83360,
+              "end": 94560,
+              "prob": 0.8486641147179165
+            }
+          ],
+          "confirmed": 96960
+        }
+      ]
+    },
+    "0410106a00eaf2e5195dc306bffab4dd25aedb397fc344584ef515bbc5ede97f": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "a2aeebe4e1a4c7be839fe094a335fe5352c1ec85c7c21ba39b205dbf9443f666": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [
+          97440
+        ],
+        "native_proposals": [],
+        "both_proposals": [
+          {
+            "sample": 97440,
+            "origin": "verified"
+          }
+        ]
+      },
+      "checked": [
+        {
+          "proposal": 97440,
+          "start": 73440,
+          "end": 102240,
+          "matches": [
+            {
+              "returned": 96960,
+              "start": 83360,
+              "end": 94400,
+              "prob": 0.8445160390407254
+            }
+          ],
+          "confirmed": 97440
+        }
+      ]
+    },
+    "7afdc96640dfaa7403041d067b0ef5f8cb3b2bf06ed99d328fbfdff345ffaa41": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "05d42d9acb546f219ebd82e00c8eefb49c786df831707936a52bbb7f478f5fc6": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "784b8bce1a6995c70e3f171e6cbc2dfe36780f10776b6a66ad9cb20ac2e1933b": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "b3e98009f5b7e6ae69a231ce02556a4aa60cdf3a4d9b3a5f55806d99f38dee04": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [
+          96960
+        ],
+        "native_proposals": [],
+        "both_proposals": [
+          {
+            "sample": 96960,
+            "origin": "verified"
+          }
+        ]
+      },
+      "checked": [
+        {
+          "proposal": 96960,
+          "start": 72960,
+          "end": 101760,
+          "matches": [
+            {
+              "returned": 96960,
+              "start": 84160,
+              "end": 94720,
+              "prob": 0.8778377605147777
+            }
+          ],
+          "confirmed": 96960
+        }
+      ]
+    },
+    "be62da1e3e1f226a1f8c945cea41c90359c7dfb577857abdb06b4d6e7e6b3b58": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "d376ece448c73d1cdecb23207388a763a21dca7fe5f3962c67dc0d6838fa1d62": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "1cba11a071fffa3fb4d72ef6056edb71f617de060af4d876a5596b690ff2f349": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "39b4027eeefee23a2b9b2bb48243496f0099bda947fa1f3b58808a353d75738b": {
+      "events": {
+        "c161": [],
+        "original": [
+          97920
+        ],
+        "expanded": [
+          97440
+        ],
+        "native_proposals": [
+          {
+            "sample": 97920,
+            "origin": "verified"
+          }
+        ],
+        "both_proposals": [
+          {
+            "sample": 97440,
+            "origin": "verified"
+          }
+        ]
+      },
+      "checked": [
+        {
+          "proposal": 97440,
+          "start": 73440,
+          "end": 102240,
+          "matches": [
+            {
+              "returned": 96480,
+              "start": 83200,
+              "end": 94080,
+              "prob": 0.8461220644559928
+            }
+          ],
+          "confirmed": 97440
+        },
+        {
+          "proposal": 97920,
+          "start": 73920,
+          "end": 102720,
+          "matches": [
+            {
+              "returned": 96480,
+              "start": 83200,
+              "end": 94080,
+              "prob": 0.8461220644559928
+            }
+          ],
+          "confirmed": 97920
+        }
+      ]
+    },
+    "8bd3f505810e39cf973b84e0f46194f9c682ede06a922a7c9ec16d42d0c7e0ad": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "6d661347a865ae5a430c3914ed9c86650c1e6a4feb220b306ddd7c74a3b01d65": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "422c81eb4b70ead3285421c13bdd8199e9e0e905e81e89f59cd9a0f1eb2d79d3": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "c0e48d4e1d1bd9423c3181204296a477d9486b7fcea1f83ffaf36665004fcbc0": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "62ae8a908cff3b663cd57086c33747a2d9e458c9d9c0975eff80a9bad1b19eb4": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [
+          96960
+        ],
+        "native_proposals": [],
+        "both_proposals": [
+          {
+            "sample": 96960,
+            "origin": "verified"
+          }
+        ]
+      },
+      "checked": [
+        {
+          "proposal": 96960,
+          "start": 72960,
+          "end": 101760,
+          "matches": [
+            {
+              "returned": 96960,
+              "start": 83360,
+              "end": 94560,
+              "prob": 0.8734597447691139
+            }
+          ],
+          "confirmed": 96960
+        }
+      ]
+    },
+    "4dc1dbad23c88ce5d4276063299371a202fa118c652868a17063dc6767a7f246": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "2a5699c9cf4c56fcebaa241ee8c17f382a911647cceb03cd14a57075b0d18118": {
+      "events": {
+        "c161": [],
+        "original": [
+          97920
+        ],
+        "expanded": [
+          97440
+        ],
+        "native_proposals": [
+          {
+            "sample": 97920,
+            "origin": "verified"
+          }
+        ],
+        "both_proposals": [
+          {
+            "sample": 97440,
+            "origin": "verified"
+          }
+        ]
+      },
+      "checked": [
+        {
+          "proposal": 97440,
+          "start": 73440,
+          "end": 102240,
+          "matches": [
+            {
+              "returned": 96480,
+              "start": 83840,
+              "end": 94080,
+              "prob": 0.8361969934177031
+            }
+          ],
+          "confirmed": 97440
+        },
+        {
+          "proposal": 97920,
+          "start": 73920,
+          "end": 102720,
+          "matches": [
+            {
+              "returned": 96480,
+              "start": 83840,
+              "end": 94080,
+              "prob": 0.8361969934177031
+            }
+          ],
+          "confirmed": 97920
+        }
+      ]
+    },
+    "d380d8ef8f5b0caa2406cfbcf2903eb5c9ba488f0b38495f17beb30fc8393c82": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "1a4fe397830729fe5cf9d14bc33591bc54e182fe0d301b40c0761baa0f93984c": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    },
+    "db4c2d7ec58932dbda7fd0c5fb55496353636beb453cbb4a42d19ea47e052c1e": {
+      "events": {
+        "c161": [],
+        "original": [],
+        "expanded": [],
+        "native_proposals": [],
+        "both_proposals": []
+      },
+      "checked": []
+    }
+  },
+  "transcripts": {
+    "881920262a7b07cd74cca43a910fe6115c538714de7977a42ee0b73f8d8f8e08": {
+      "text": "Hey next lower the fan speed",
+      "words": [
+        {
+          "word": " Hey",
+          "start": 0.96,
+          "end": 1.5
+        },
+        {
+          "word": " next",
+          "start": 1.5,
+          "end": 1.76
+        },
+        {
+          "word": " lower",
+          "start": 1.76,
+          "end": 2.04
+        },
+        {
+          "word": " the",
+          "start": 2.04,
+          "end": 2.22
+        },
+        {
+          "word": " fan",
+          "start": 2.22,
+          "end": 2.42
+        },
+        {
+          "word": " speed",
+          "start": 2.42,
+          "end": 2.78
+        }
+      ]
+    },
+    "28ae3f27c544eb2609e7fa0c72b34ed475e82d64cbf0610db17aeee53cd64680": {
+      "text": "Hey next, lower the fan speed.",
+      "words": [
+        {
+          "word": " Hey",
+          "start": 0.98,
+          "end": 1.5
+        },
+        {
+          "word": " next,",
+          "start": 1.5,
+          "end": 1.74
+        },
+        {
+          "word": " lower",
+          "start": 2.02,
+          "end": 2.04
+        },
+        {
+          "word": " the",
+          "start": 2.04,
+          "end": 2.22
+        },
+        {
+          "word": " fan",
+          "start": 2.22,
+          "end": 2.42
+        },
+        {
+          "word": " speed.",
+          "start": 2.42,
+          "end": 2.76
+        }
+      ]
+    },
+    "9704971ad18c85e150f1743919b93dcdc4a86284d1f30d88b156393aa5349561": {
+      "text": "Hey next lower the fan speed",
+      "words": [
+        {
+          "word": " Hey",
+          "start": 0.96,
+          "end": 1.5
+        },
+        {
+          "word": " next",
+          "start": 1.5,
+          "end": 1.76
+        },
+        {
+          "word": " lower",
+          "start": 1.76,
+          "end": 2.04
+        },
+        {
+          "word": " the",
+          "start": 2.04,
+          "end": 2.22
+        },
+        {
+          "word": " fan",
+          "start": 2.22,
+          "end": 2.42
+        },
+        {
+          "word": " speed",
+          "start": 2.42,
+          "end": 2.78
+        }
+      ]
+    },
+    "e4433952104e1b075318547a01a77238c4743d835b4681b6cff14fc3ecc0cf94": {
+      "text": "appointment stop. Hey Nick's turn on the kitchen lights.",
+      "words": [
+        {
+          "word": " appointment",
+          "start": 0.0,
+          "end": 0.56
+        },
+        {
+          "word": " stop.",
+          "start": 0.56,
+          "end": 1.0
+        },
+        {
+          "word": " Hey",
+          "start": 1.4,
+          "end": 1.42
+        },
+        {
+          "word": " Nick's",
+          "start": 1.42,
+          "end": 1.84
+        },
+        {
+          "word": " turn",
+          "start": 1.84,
+          "end": 2.1
+        },
+        {
+          "word": " on",
+          "start": 2.1,
+          "end": 2.32
+        },
+        {
+          "word": " the",
+          "start": 2.32,
+          "end": 2.46
+        },
+        {
+          "word": " kitchen",
+          "start": 2.46,
+          "end": 2.68
+        },
+        {
+          "word": " lights.",
+          "start": 2.68,
+          "end": 3.02
+        }
+      ]
+    },
+    "7b7e5865dbe0244d7b02eb61557e00924466bcbbaab828e003e5821d60d8fbc1": {
+      "text": "Hay next, lower the fan speed.",
+      "words": [
+        {
+          "word": " Hay",
+          "start": 0.8399999999999999,
+          "end": 1.4
+        },
+        {
+          "word": " next,",
+          "start": 1.4,
+          "end": 1.68
+        },
+        {
+          "word": " lower",
+          "start": 1.96,
+          "end": 2.12
+        },
+        {
+          "word": " the",
+          "start": 2.12,
+          "end": 2.34
+        },
+        {
+          "word": " fan",
+          "start": 2.34,
+          "end": 2.56
+        },
+        {
+          "word": " speed.",
+          "start": 2.56,
+          "end": 3.04
+        }
+      ]
+    },
+    "d7cb57a8f31c4189ed3d43ec2d5b20f761ea9a7140dbdc3698a636aa153e8f47": {
+      "text": "appointment stop hey next turn on the kitchen light",
+      "words": [
+        {
+          "word": " appointment",
+          "start": 0.0,
+          "end": 0.58
+        },
+        {
+          "word": " stop",
+          "start": 0.58,
+          "end": 1.0
+        },
+        {
+          "word": " hey",
+          "start": 1.0,
+          "end": 1.42
+        },
+        {
+          "word": " next",
+          "start": 1.42,
+          "end": 1.74
+        },
+        {
+          "word": " turn",
+          "start": 1.74,
+          "end": 2.12
+        },
+        {
+          "word": " on",
+          "start": 2.12,
+          "end": 2.32
+        },
+        {
+          "word": " the",
+          "start": 2.32,
+          "end": 2.42
+        },
+        {
+          "word": " kitchen",
+          "start": 2.42,
+          "end": 2.72
+        },
+        {
+          "word": " light",
+          "start": 2.72,
+          "end": 3.0
+        }
+      ]
+    },
+    "10cccc4d66bae8da88a85f88c22736cc32dbb57334041ed19f0013a4d3a3908f": {
+      "text": "Hey Nicks, lower the fan speed.",
+      "words": [
+        {
+          "word": " Hey",
+          "start": 0.74,
+          "end": 1.38
+        },
+        {
+          "word": " Nicks,",
+          "start": 1.38,
+          "end": 1.78
+        },
+        {
+          "word": " lower",
+          "start": 1.98,
+          "end": 2.1
+        },
+        {
+          "word": " the",
+          "start": 2.1,
+          "end": 2.34
+        },
+        {
+          "word": " fan",
+          "start": 2.34,
+          "end": 2.56
+        },
+        {
+          "word": " speed.",
+          "start": 2.56,
+          "end": 3.0
+        }
+      ]
+    },
+    "9fa52b569c9fb513676b20b4c59f693356bdea520836036c412de49bb38c573a": {
+      "text": "appointment stop. Hey Nick's turn on the kitchen lights.",
+      "words": [
+        {
+          "word": " appointment",
+          "start": 0.0,
+          "end": 0.58
+        },
+        {
+          "word": " stop.",
+          "start": 0.58,
+          "end": 1.02
+        },
+        {
+          "word": " Hey",
+          "start": 1.4,
+          "end": 1.44
+        },
+        {
+          "word": " Nick's",
+          "start": 1.44,
+          "end": 1.84
+        },
+        {
+          "word": " turn",
+          "start": 1.84,
+          "end": 2.1
+        },
+        {
+          "word": " on",
+          "start": 2.1,
+          "end": 2.32
+        },
+        {
+          "word": " the",
+          "start": 2.32,
+          "end": 2.46
+        },
+        {
+          "word": " kitchen",
+          "start": 2.46,
+          "end": 2.7
+        },
+        {
+          "word": " lights.",
+          "start": 2.7,
+          "end": 3.02
+        }
+      ]
+    },
+    "45b501486256b1615c0e50da74dbaaa64953af1ed63812523e602bc3c3251463": {
+      "text": "Hay next, lower the fan speed.",
+      "words": [
+        {
+          "word": " Hay",
+          "start": 0.8399999999999999,
+          "end": 1.4
+        },
+        {
+          "word": " next,",
+          "start": 1.4,
+          "end": 1.68
+        },
+        {
+          "word": " lower",
+          "start": 1.96,
+          "end": 2.12
+        },
+        {
+          "word": " the",
+          "start": 2.12,
+          "end": 2.34
+        },
+        {
+          "word": " fan",
+          "start": 2.34,
+          "end": 2.56
+        },
+        {
+          "word": " speed.",
+          "start": 2.56,
+          "end": 3.04
+        }
+      ]
+    },
+    "d8030eeb72718143e74e820685a76dd110e187384a06ef355db13937498e49b0": {
+      "text": "appointment stop. Hey Nick's turn on the kitchen light.",
+      "words": [
+        {
+          "word": " appointment",
+          "start": 0.0,
+          "end": 0.58
+        },
+        {
+          "word": " stop.",
+          "start": 0.58,
+          "end": 1.0
+        },
+        {
+          "word": " Hey",
+          "start": 1.42,
+          "end": 1.42
+        },
+        {
+          "word": " Nick's",
+          "start": 1.42,
+          "end": 1.84
+        },
+        {
+          "word": " turn",
+          "start": 1.84,
+          "end": 2.12
+        },
+        {
+          "word": " on",
+          "start": 2.12,
+          "end": 2.32
+        },
+        {
+          "word": " the",
+          "start": 2.32,
+          "end": 2.44
+        },
+        {
+          "word": " kitchen",
+          "start": 2.44,
+          "end": 2.7
+        },
+        {
+          "word": " light.",
+          "start": 2.7,
+          "end": 3.0
+        }
+      ]
+    },
+    "40941afbed00276e847a611979bb97a628519c74a5a44cd74a187389df4dfa4a": {
+      "text": "Hey Nicks, lower the fan speed.",
+      "words": [
+        {
+          "word": " Hey",
+          "start": 0.7799999999999996,
+          "end": 1.38
+        },
+        {
+          "word": " Nicks,",
+          "start": 1.38,
+          "end": 1.76
+        },
+        {
+          "word": " lower",
+          "start": 1.98,
+          "end": 2.12
+        },
+        {
+          "word": " the",
+          "start": 2.12,
+          "end": 2.34
+        },
+        {
+          "word": " fan",
+          "start": 2.34,
+          "end": 2.56
+        },
+        {
+          "word": " speed.",
+          "start": 2.56,
+          "end": 2.98
+        }
+      ]
+    }
+  }
+}
