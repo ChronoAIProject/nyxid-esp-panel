@@ -117,13 +117,15 @@ def packets(text, index, count, lane):
     return data
 
 
-def main(action, source, output):
-    plan = listener.read(source/inputs.PLAN)
-    assert listener.sha(source/inputs.AUDIO) == plan["archive_sha256"]
+def main(action, source, output, stem=inputs.STEM):
+    plan_file = source/(stem+"-inputs.json")
+    audio_file = source/(stem+"-stereo.zip")
+    plan = listener.read(plan_file)
+    assert listener.sha(audio_file) == plan["archive_sha256"]
     fw = BUILD/"nyx_mac_listener.bin"
     model = listener.WORK/"model/hey_nyx_model.bin"
     assert listener.sha(model) == listener.C161 and fw.read_bytes().count(model.read_bytes()) == 1
-    versions = [listener.sha(p) for p in (fw, CODEC/"nyx_first_command.bin", source/inputs.PLAN)]
+    versions = [listener.sha(p) for p in (fw, CODEC/"nyx_first_command.bin", plan_file)]
     root = inputs.WORK / ("-".join(h[:12] for h in versions))
     root.mkdir(exist_ok=True, parents=True)
     old = compatibility(root)
@@ -131,7 +133,7 @@ def main(action, source, output):
     if action == "score":
         reader, asr = listener.load_reader()
         lib = decoder_api()
-    with TemporaryDirectory() as tmp, ZipFile(source/inputs.AUDIO) as archive:
+    with TemporaryDirectory() as tmp, ZipFile(audio_file) as archive:
         detector = binding(Path(tmp)/"v5.so",coded="v5")
         for row in plan["records"]:
             i = row["index"]
@@ -164,11 +166,11 @@ def main(action, source, output):
             print(action,i,row["role"],record["first"],flush=True)
     if action == "score":
         output.mkdir(parents=True,exist_ok=True)
-        logs = output/(inputs.STEM+"-uart.zip")
+        logs = output/(stem+"-uart.zip")
         with ZipFile(logs,"x",ZIP_DEFLATED,compresslevel=3) as z:
             for log in sorted(root.glob("*.log")):
                 z.write(log,log.name)
-        listener.save(output/(inputs.STEM+".json"),dict(records=rows, compatibility=old,
+        listener.save(output/(stem+".json"),dict(records=rows, compatibility=old,
             listener_sha256=versions[0], codec_sha256=versions[1], plan_sha256=versions[2],
             app_bytes=fw.stat().st_size, qemu_sha256=listener.sha(listener.QEMU),
             mac_commit=listener.MAC, scorer_sha256=listener.sha(Path(__file__)), asr=asr,

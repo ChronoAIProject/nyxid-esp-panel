@@ -73,3 +73,20 @@ src=research/wakeword_p4/results
 taskset -c 2,3 /usr/bin/python3 "$app/transition.py" score --inputs "$src" --out .local/wakeword/c161-mac-listener/transition/recheck
 taskset -c 2,3 /usr/bin/python3 "$app/transition_summary.py" --inputs "$src" --output .local/wakeword/c161-mac-listener/transition/recheck
 ```
+
+## 唤醒后取消或停播面板音频
+
+对此前 12 个带播报的条件，使用首次 P4 通知所在读块的实际交接时钟控制面板播放。模拟立即或延后 500 ms 开始 10 ms 淡出，到录音结束前均抑制面板输出。分别重新生成同步参考与回声，保留停播前的原始麦克风样本和停播后的房间衰减。用量化后的安静麦克风、参考和原房间响应复算旧完整混音，与原 PCM 的最大偏差小于 1 个 16 位量化单位。独立核对两种停播条件下的通知源、首条采样时钟和录音窗均与各自原记录一致。这是在模拟声场中用实测通知驱动播放的配对试验，实际 DAC 停播延迟需在板端测量。
+
+| 首句完整 /12，数字写法等价 | 按原时序播报 | 通知后立即淡出 | 通知后 500 ms 淡出 |
+| --- | ---: | ---: | ---: |
+| 原麦 | 3 | 10 | 11 |
+| 延迟 90 ms 的原麦 | 5 | 12 | 12 |
+| 始终 AEC/AGC | 5 | 9 | 9 |
+| 随参考切换 | 5 | 11 | 12 |
+
+其中 8 个条件在唤醒时尚未开始播报。两种停播时序都完整取消了其后排定的播报，所得双声道逐字节等于原安静条件，复用相应的四条安静 P4 录音和转写。其余 4 个条件在通知前已经开始出声，形成 8 条新双声道输入。全部重新经 P4 监听器与 Opus，主机核对了 884,160 个选路样本和 11,056 个编码包。在这 4 个已出声条件中，延迟 90 ms 的原麦从 1/4 提高至两种停播时序均 4/4；按参考切换由 1/4 提高至 3/4、4/4。立即停播时失去的一句是 “set the hallway lights **at** 20%”，目标为 “**to** 20%”。两条命令、两种声音各自绑定，足以核对这次差异，500 ms 的时序优势还需更多独立语料和板测。[逐条停播对照](../../results/4090-c161-mac-playback-transition-stop-comparison.json) · [停播时钟和输入来源](../../results/4090-c161-mac-playback-transition-stop-inputs.json) · [8 条新双声道](../../results/4090-c161-mac-playback-transition-stop-stereo.zip) · [逐句转写](../../results/4090-c161-mac-playback-transition-stop.json) · [P4 上行包](../../results/4090-c161-mac-playback-transition-stop-uart.zip)
+
+Mac 的实机播放包有三条 16 kHz 单声道 PCM16 WAV。两条外部音轨各自完整包含冻结 v5 和合成命令，第三条是面板播报。按包内清单的采样位置同步，从独立扬声器播放外部轨，在 P4 播放面板轨并回采实际参考。清单给出原始时序，停播对照使用板上实际通知。记录通知点、首次与最后一个有效参考采样点、原麦及编码入口，另记两端播放增益、摆位和采样时钟。归档 SHA256 为 `2f526e4a05d7cf4976dd1f522b835893df73002e0dcc33cf1d4dae25cbaee927`。[Mac 实机播放包](../../results/4090-c161-mac-playback-transition-board-wavs.zip)
+
+在相同研究环境中，从仓库根目录运行 `stop_playback.py prepare`、`stop_playback.py score`、`stop_playback.py compare` 可重建干预输入、上行回放及对照表，脚本位于本目录。评分也可用 `--inputs research/wakeword_p4/results --out <新的目录>` 直接消费归档记录。用 `board_playback.py <输出.zip>` 可从冻结生成器重新导出三条音轨，各个干声的 PCM 均校验回原计划。
