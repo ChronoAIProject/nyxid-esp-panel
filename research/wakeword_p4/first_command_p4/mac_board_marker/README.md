@@ -34,3 +34,19 @@ The marker switch defaults to OFF. Enabling it selects single C161 and disables 
 The replay compiles the two C feeders from the patched board source and uses the actual X8 slot normalizer. It injects the original simulator UART C161 return at the exact end of each matching 480-sample block and verifies every PCM window supplied. For 16 captures from the same timed/middle firmware, supplying the archived TX reproduces both allowed routes and first 256-sample read end exactly. The report also retains eight older-firmware traces for comparison. The board feeder uses physical R only. With zero R, missing TX lets some self-play model hits through.
 
 For geometry 0, replace only the zero R with the distributed panel signal at its original clock. Panel-only C161 hits sample 48,480 with either input. The restored reference suppresses its call. Simultaneous external cue and panel playback still open at sample 48,896, before command sample 49,600. The 24 original-level dry af_bella targets also open before the commands with model hits disabled. Erasing their address produces zero openings. All these numbers come from digital replay. The two boards supply the actual microphone/reference alignment, first captured frame, packet arrival, decoded first sentence, heap and runtime observations.
+
+## Cross-build and P4 simulator evidence
+
+Run `check_builds.py BUILD ...` in the IDF environment to inspect all three linked apps. It checks the selected board backend, feature flags, linked marker entry points, type size in the target ELF, both OTA partitions and the original model bytes inside the final flashable app. The image hashes identify the particular builds. The board project includes compilation timestamps.
+
+The digital P4 fixture recompiles the board's C161 runtime and links its INT8 weights, marker and read functions with the existing P4 simulator support libraries. It starts a fresh detector for each distinct input, primes with 81,600 silent samples and reads interleaved M/R in blocks of 256. QEMU uses its test memory region and its floating-point context workaround. The fixture runs detection through the full clip to retain both routes. `O` records only the first read end that would request a call. The app-level network, codec and loudspeaker are exercised on the physical panel.
+
+For an existing `middle-uart` build, run the following commands from the research checkout. The fixture build uses the original Ninja compile and link flags and writes a separate ELF and flash image. To prepare the simulator support build, use the existing `first_command_p4/mac_listener/build_panel_marker_order.sh middle-uart` research workflow.
+
+```sh
+fixture=research/wakeword_p4/first_command_p4/mac_board_marker
+sim=.local/wakeword/c161-panel-middle-uart/build
+qemu=.local/wakeword/qemu-p4-release/qemu/bin/qemu-system-riscv32
+python3 "$fixture/build_guest.py" "$patched_board" "$sim" "$work"
+python3 "$fixture/run_guest.py" "$work/board.bin" "$sim" "$qemu" "$work/run" > "$work/results.json"
+```

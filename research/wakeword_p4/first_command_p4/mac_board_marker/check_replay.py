@@ -19,12 +19,16 @@ BELLA = RESULTS / "c161-bella-command-playback.zip"
 BELLA_SHA = "67b54cc6493d1925914d0628e1785ca693e1b41dc5ee61e18c49f48858fe2e94"
 
 
-def build_replay(board, tmp):
-    service = board / "components/panel_services"
+def write_feeders(service, tmp):
     code = (service / "panel_voice.c").read_text()
     start = code.index("static inline int feed_wake_model(")
     stop = code.index("#ifdef NYX_PANEL_RESEARCH_WAKE_CLOCK_FIXTURE", start)
     (tmp / "panel_feeders.inc").write_text(code[start:stop])
+
+
+def build_replay(board, tmp):
+    service = board / "components/panel_services"
+    write_feeders(service, tmp)
     subprocess.run(["cc", "-O2", "-std=c11", "-DNYX_PANEL_RESEARCH_FIXED_MARKER=1",
                     "-I", service, "-I", board / "boards/lcd_x8", "-I", tmp,
                     "-c", HERE / "replay.c", "-o", tmp / "replay.o"], check=True)
