@@ -1,0 +1,31 @@
+{
+  "seed": 41951,
+  "steps": 300,
+  "advance_samples": 0,
+  "history": [
+    {
+      "step": 1,
+      "loss": 6.819058418273926,
+      "positive_mean": 0.43405231833457947
+    },
+    {
+      "step": 100,
+      "loss": 5.238374710083008,
+      "positive_mean": 0.5822296738624573
+    },
+    {
+      "step": 300,
+      "loss": 1.9761271476745605,
+      "positive_mean": 0.8341702222824097
+    }
+  ],
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "sources_sha256": "b00a21f9778e668b0b8900822efc60860b2389e52c69b7afb811c6910dd324a7",
+  "weights_sha256": "461b36a4951710721c1bedfbd0f53328474b9c06b58de62fb0186f08a9b911f1",
+  "calibration_sha256": "63780f78ed6ca0f1edc95be357039b1f622b80ae3cbefdb571bf7501a3479679",
+  "script_sha256": "06d629a020793d10848737816f86b44391aaeb4635fcec210b325a810f0017e6",
+  "positive_views": 373,
+  "negative_views": 1152,
+  "speech_bags": 1346,
+  "policy": "Same original music proposer, optimizer, seed, fixed 300 updates and training samples in both arms. Maximize the best five adjacent sigmoid scores averaged within a 12-window positive bag, ending at the annotated keyword tail or 180 ms earlier. Reject original parent peak negative spans plus frozen mined training speech. All parameters train; identical calibration windows."
+}
