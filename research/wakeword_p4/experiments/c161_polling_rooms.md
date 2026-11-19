@@ -387,3 +387,11 @@ nice -n 10 taskset -c 2,3 /usr/bin/python3 "$scripts/score_spelling_p4_commands.
 把每窗实际耗时加入同一条串行队列，拼写拒绝即跳过五类模型。冻结 C161 仍走独立时钟。原 72 个普通称呼配对命中数保持 42，命令前交付从纯音频时钟的 32 次变为 18 次。两秒回看解码后含完整命令从 28 次变为 31 次，其中及时且完整从 20 次变为 11 次。新增整句中，普通 Hey Nyx 仍为 12/12 有通知、4/12 及时、10/12 转写含完整命令；Hey Nicks 为 12/12、4/12、11/12。同批官方 Hey Willow 为 8/12、2/12、7/12。另有 2/12 次 Hey Nick 误开，旧日常句误开 2/96，原固定 v5 播放继续采用已验证的独立匹配器。74 个新增不同捕获的 33,582 个 Opus 包经再次解码，两条音轨的 PCM 哈希全部吻合。[逐窗队列和捕获](../results/4090-c161-early-readout-p4.json) · [实际 Opus 包](../results/4090-c161-early-readout-p4-captures.zip)
 
 复现时，以 ESP-IDF v5.5.4 为 `midlevel_p4_selftest` 构建两个独立的 ESP32-P4 应用。字符应用选用 `NYX_PROPOSAL_SPELLINGS=ON` 和 `NYX_FC_SINGLE_ROUNDING=OFF`。五类应用使用 `NYX_ONSET_EVIDENCE=ON`、`NYX_ONSET_REFERENCE_FC=ON`、`NYX_FC_SINGLE_ROUNDING=OFF`，`NYX_ONSET_MODEL` 指向本研究的 `4090-c161-early-proposal-readout-trigger.tflite`。研究脚本从仓库根目录运行，五类构建目录为 `.local/wakeword/c161-early-readout-p4/build`，字符构建路径可用 `collect --character-build` 指定。按顺序执行 `collect`、`character`、`five`、`score`。采集、复核和评分均从相同的原始 PCM 和候选时钟开始。[复现脚本](../first_command_p4/mac_listener/time_connected_verifiers.py)
+
+### 面板播报与外部插话的同步回放
+
+在 96 条已用合成日常句上，原 C161 和固定 v5 各误开 0 次，普通合成称呼的研究候选误开 2 次，两句均为 “Hey Nick, can you help me?”。三条 “We need six cups of water.” 均无通知。另在四段连续 Bot 音频内，48 次普通回复三条路线都无误开，8 次主动示范唤醒词中研究候选开麦 4 次，C161 和固定 v5 各为 0 次。段数包含相同内容的不同播放条件。[逐句文本、通知时钟和音频哈希](../results/4090-c161-spoken-bot-echo.json)
+
+在主机上，以同步的面板播放参考和前 4 秒纯面板声音拟合 4 kHz、128 ms 的线性回声通路，再用随后 750 ms 验证。若通知前连续两个 160 ms 窗口中，参考对麦克风能量的解释比例均达到 90%，则抑制此次通知。在已有 Bot 录音上，示范词的 4 次通知都被抑制。日常 Nick 两次均缺少播放参考，仍触发。此诊断依赖校准期间只有面板发声、参考同步和回声通路稳定，计算耗时尚待整机测量。[复现脚本](../first_command_p4/mac_listener/check_spoken_playback_echo.py)
+
+另外混合四种已用合成声音和两个 Bot 示范句，对每种声音回放 −6、0、+6 dB 三种外部称呼相对面板回声的电平。普通 Hey Nyx 单独播放时研究候选通知 12/12，全部晚于标注命令起点；加入面板示范后为 0/12。将外部称呼换为已交接的固定 v5 时，原麦上的 C161 加固定匹配器在单独播放及两方同说时均 12/12 于标注命令前通知。时间只计音频到达。相同声线与命令在不同电平复用，以上为配对开发回放。[76 对麦克风和参考输入](../results/4090-c161-spoken-bot-echo.json)
