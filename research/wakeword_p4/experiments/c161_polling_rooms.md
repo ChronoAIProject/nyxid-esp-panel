@@ -379,3 +379,11 @@ nice -n 10 taskset -c 2,3 /usr/bin/python3 "$scripts/score_spelling_p4_commands.
 在训练分区的 251 个目标窗和 209 个 Nick 窗上训练两个小型整数分类器。按声线、干声或房间版本、招呼词和后续命令配成 72 组、384 对，RTX 4090 各训练 600 步。两个模型都读约 520 ms 的频带特征，一个以固定提议点为中心，另一个以字符模型解码出竞争拼写 Nick 的 K 帧为中心。三种训练声线另作阈值校准，两种方法都保留了这三个声音的 18/18 个目标窗，29 个 Nick 窗分别放行 21、12 个。[训练、校准和权重哈希](../results/4090-c161-aligned-nick-fit.json)
 
 在原 869 条开发输入上，只对原路线已放行、竞争拼写首选 Nick 的 50 个窗额外复核。两个日常误唤仍在，一个通过复核，另一个的首选竞争拼写并非 Nick。按 K 帧定位后，28.001 小时背景从 5 次通知降至 4 次，但 18 次对话目标的命中从 15 降至 13，转写完整命令从 5 降至 3。四声音 72 个配对仍有 42 次命中、32 次提前交付、28 次转写完整。固定时钟版还额外损失一次配对命令前交付。此次两个模型保留作研究对照。[全部通知、分组统计与捕获](../results/4090-c161-aligned-nick-replay.json)
+
+### 提前前级在 P4 QEMU 的两级实际复核耗时
+
+用 96 条日常句、162 条已匹配的称呼与命令录音，以及 60 条新增整句输入重建全部 300 个完整候选窗。在 ESP32-P4 QEMU 的 INT8 字符模型和 31 个拼写的解码器上，681,600 个字符输出字节及全部拼写决策与主机相同。仅对拼写通过的 109 个窗运行新五类模型，545 个有符号输出码逐字节相符。字符推理加解码中位数 33.413 ms，五类推理中位数 24.403 ms。各自的静态张量区实际使用 65,052 B 和 65,164 B。本次两份独立自测固件分别计时，整机还包含连续前端、音频 I/O、任务调度和其他设备任务。[字符逐窗报告](../results/4090-c161-early-readout-p4-character.json) · [五类逐窗报告](../results/4090-c161-early-readout-p4-five.json)
+
+把每窗实际耗时加入同一条串行队列，拼写拒绝即跳过五类模型。冻结 C161 仍走独立时钟。原 72 个普通称呼配对命中数保持 42，命令前交付从纯音频时钟的 32 次变为 18 次。两秒回看解码后含完整命令从 28 次变为 31 次，其中及时且完整从 20 次变为 11 次。新增整句中，普通 Hey Nyx 仍为 12/12 有通知、4/12 及时、10/12 转写含完整命令；Hey Nicks 为 12/12、4/12、11/12。同批官方 Hey Willow 为 8/12、2/12、7/12。另有 2/12 次 Hey Nick 误开，旧日常句误开 2/96，原固定 v5 播放继续采用已验证的独立匹配器。74 个新增不同捕获的 33,582 个 Opus 包经再次解码，两条音轨的 PCM 哈希全部吻合。[逐窗队列和捕获](../results/4090-c161-early-readout-p4.json) · [实际 Opus 包](../results/4090-c161-early-readout-p4-captures.zip)
+
+复现时，以 ESP-IDF v5.5.4 为 `midlevel_p4_selftest` 构建两个独立的 ESP32-P4 应用。字符应用选用 `NYX_PROPOSAL_SPELLINGS=ON` 和 `NYX_FC_SINGLE_ROUNDING=OFF`。五类应用使用 `NYX_ONSET_EVIDENCE=ON`、`NYX_ONSET_REFERENCE_FC=ON`、`NYX_FC_SINGLE_ROUNDING=OFF`，`NYX_ONSET_MODEL` 指向本研究的 `4090-c161-early-proposal-readout-trigger.tflite`。研究脚本从仓库根目录运行，五类构建目录为 `.local/wakeword/c161-early-readout-p4/build`，字符构建路径可用 `collect --character-build` 指定。按顺序执行 `collect`、`character`、`five`、`score`。采集、复核和评分均从相同的原始 PCM 和候选时钟开始。[复现脚本](../first_command_p4/mac_listener/time_connected_verifiers.py)
