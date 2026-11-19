@@ -59,6 +59,8 @@ def capture(work, z, idx, case, small, turbo, decoder, builds, *, tx_pair=None):
             if serial.exists():
                 z.write(serial, f"retry/{idx:03}-{attempt}.txt")
             if attempt == 2: raise
+    if "Task watchdog got triggered." in log:
+        z.write(serial, f"watchdog/{idx:03}.txt")
     events = [s for s in log.splitlines() if s.startswith(("READY ","HITS ","V5_ALLOW ","C161_ALLOW ","OPEN ","CUE_ROUTE ","FINISH ","LISTENER PASS"))]
     z.writestr(f"events/{idx:03}.txt","\n".join(events)+"\n")
     board = dict(opened=known["opened"], source=source)

@@ -21,6 +21,15 @@ LANES = (("selected", "raw"), ("processed", "delayed_raw"))
 
 
 def samples(text, tag, count):
+    # A task-WDT register dump can interrupt the middle of a UART hex line.
+    # Join only its two literal fragments, keeping the input log intact.
+    if "Task watchdog got triggered." in text:
+        dump = (r"E \(\d+\) task_wdt: Task watchdog got triggered\. The following tasks/users did not reset the watchdog in time:\n"
+                r"(?:E \(\d+\) task_wdt: [^\n]*\n)+Core +\d+ register dump:\n"
+                r"(?:(?:[A-Z][A-Z0-9/]*[ \t]*:[ \t]*0x[0-9a-f]+[ \t]*)+\n)+"
+                r"Please enable CONFIG_ESP_SYSTEM_USE_FRAME_POINTER option to have a full backtrace\.\n")
+        interrupted = r"^("+re.escape(tag)+r" \d+ [0-9a-f]*)"+dump+r"([0-9a-f]*)$"
+        text = re.sub(interrupted, r"\1\2", text, flags=re.M)
     data = bytearray()
     for at, hexbytes in re.findall(r"^"+tag+r" (\d+) ([0-9a-f]+)$", text, re.M):
         assert len(data) == 2*int(at)
