@@ -64,10 +64,19 @@ void dump(const char* label, const int16_t* samples,int count) {
 void worker(void*) {
     uint32_t h[3];
     ESP_ERROR_CHECK(esp_flash_read(nullptr,h,kOffset,sizeof(h)));
+    bool call_setup = false;
+#ifdef NYX_CAPTURE_OPUS
+    int setup_us = 0;
+    call_setup = h[0] == 0x4f52594e || h[0] == 0x5752594e;
+    if (call_setup) {
+        vTaskPrioritySet(nullptr,4);
+        setup_us = h[0] == 0x5752594e ? 1500000 : 0;
+    }
+#endif
     const bool qualify_capture_frame = h[0] == 0x4652594e;
     const bool frame_activity = qualify_capture_frame || h[0] == 0x4152594e;
     const bool wait_for_third = frame_activity || h[0] == 0x5452594e;
-    const bool signed_reference = wait_for_third || h[0] == 0x4452594e;
+    const bool signed_reference = call_setup || wait_for_third || h[0] == 0x4452594e;
     const bool prefix_guarded = signed_reference || h[0] == 0x5052594e;
     const bool guarded = prefix_guarded || h[0] == 0x4752594e;
     const bool stereo = guarded || h[0] == 0x5352594e;
@@ -131,7 +140,7 @@ void worker(void*) {
     int64_t sum_us=0;
     std::printf("READY %lu %d %d %d\n",(unsigned long)h[1],length,chunk,prime);
 #ifdef NYX_CAPTURE_OPUS
-    CaptureOpus codec(call, length+chunk, chunk*1000/16);
+    CaptureOpus codec(call, length+chunk, chunk*1000/16, setup_us);
 #endif
     for (int at=0;at<length;at+=chunk) {
 #ifdef NYX_CAPTURE_OPUS
@@ -212,10 +221,13 @@ void worker(void*) {
                 !panel_voice_pcm_push(&call,history.samples,history.count-part)) abort();
             panel_voice_pcm_clear(&history);
 #ifdef NYX_CAPTURE_OPUS
-            codec.start();
+            codec.open();
 #endif
             std::printf("OPEN %d %d %d\n",at+chunk,emitted,first);
         }
+#ifdef NYX_CAPTURE_OPUS
+        codec.start_if_ready();
+#endif
         int us=esp_timer_get_time()-begin;
         ++blocks; sum_us+=us; peak_us=std::max(peak_us,us); overruns+=us*16>chunk*1000;
         if (hit161>=0 || hitcue>=0) std::printf("HITS %d %d %d\n",at+chunk,hit161,hitcue);

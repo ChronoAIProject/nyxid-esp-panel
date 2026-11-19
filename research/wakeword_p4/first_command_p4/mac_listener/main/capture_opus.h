@@ -30,7 +30,8 @@ class CaptureOpus {
     esp_timer_handle_t timer{};
     Packet* packets{};
     int capacity, count = 0, peak = 0, pending = 0, backlog_ticks = 0;
-    int64_t opened = 0, caught_up = -1;
+    int64_t clock_start = 0, opened = 0, launched = 0, first_packet = 0, caught_up = -1;
+    int wait_us;
     int64_t total_encode_us = 0;
     int peak_encode_us = 0, stack_free = 0;
     size_t heap_before = 0, heap_ready = 0;
@@ -73,6 +74,7 @@ class CaptureOpus {
                 total_encode_us += cost;
                 peak_encode_us = std::max(peak_encode_us, cost);
                 if (count >= capacity || !out.encoded_bytes || out.encoded_bytes > sizeof(Packet::data)) abort();
+                if (!count) first_packet = esp_timer_get_time();
                 packets[count].length = out.encoded_bytes;
                 std::memcpy(packets[count++].data, bytes, out.encoded_bytes);
                 xSemaphoreTake(lock, portMAX_DELAY);
@@ -92,7 +94,8 @@ class CaptureOpus {
     }
 
 public:
-    CaptureOpus(panel_voice_pcm_t& call, int samples, int period_us) : fifo(call), capacity((samples+319)/320) {
+    CaptureOpus(panel_voice_pcm_t& call, int samples, int period_us, int setup_us)
+        : fifo(call), capacity((samples+319)/320), wait_us(setup_us) {
         packets = static_cast<Packet*>(heap_caps_calloc(capacity, sizeof(Packet), MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT));
         if (!packets || !lock || !finished) abort();
         esp_timer_create_args_t args{};
@@ -100,6 +103,7 @@ public:
         args.arg = producer;
         args.name = "sample_clock";
         ESP_ERROR_CHECK(esp_timer_create(&args, &timer));
+        clock_start = esp_timer_get_time();
         ESP_ERROR_CHECK(esp_timer_start_periodic(timer, period_us));
     }
 
@@ -109,10 +113,15 @@ public:
         pending = std::max(pending, int(queued)-1);
     }
 
-    void start() {
+    void open() {
         peak = fifo.count;
-        heap_before = heap_caps_get_free_size(caps);
         opened = esp_timer_get_time();
+    }
+
+    void start_if_ready() {
+        if (!opened || launched || esp_timer_get_time()-opened < wait_us) return;
+        launched = esp_timer_get_time();
+        heap_before = heap_caps_get_free_size(caps);
         if (xTaskCreate([](void* self){static_cast<CaptureOpus*>(self)->encode();},
                         "voice_mic", 48*1024, this, 4, nullptr) != pdPASS) abort();
     }
@@ -128,12 +137,20 @@ public:
         ESP_ERROR_CHECK(esp_timer_stop(timer));
         ESP_ERROR_CHECK(esp_timer_delete(timer));
         if (opened) {
+            // A short input can finish before the simulated call setup completes.
+            while (!launched) {
+                start_if_ready();
+                if (!launched) vTaskDelay(1);
+            }
             xSemaphoreTake(lock, portMAX_DELAY);
             ending = true;
             xSemaphoreGive(lock);
             if (xSemaphoreTake(finished, pdMS_TO_TICKS(10000)) != pdTRUE) abort();
             if (fifo.count || count != (expected+319)/320) abort();
         }
+        std::printf("MIC_CLOCK %lld %lld %lld %d\n",opened ? (long long)(opened-clock_start) : -1LL,
+                    launched ? (long long)(launched-opened) : -1LL,
+                    first_packet ? (long long)(first_packet-opened) : -1LL, wait_us);
         std::printf("MIC_QUEUE %d %d %lld %d %d %d %lld %d %u %u %d\n",count,peak,
                     (long long)caught_up,pending,backlog_ticks,peak_encode_us,(long long)total_encode_us,
                     stack_free,unsigned(heap_before),unsigned(heap_ready),int(fifo.count));
