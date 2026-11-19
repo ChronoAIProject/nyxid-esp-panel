@@ -51,3 +51,21 @@ cmake --build "$work/build-mapped" --parallel 2
 ```
 
 逐块测量写入本地 build-mapped/result.json 和 uart.log。首句脚本从已提交的映射版测量开始，生成文件时使用独占创建以保存原始报告。[首句脚本](../experiments/replay_c161_p4_first_command.py)
+
+## 两词专用声学文件
+
+PocketSphinx 的短语搜索还会用全部 42 个基础音素作为竞争项。保留这些音素以及 hey、nicks 所需的 6 个三音素上下文，再从混合权重的每一行取出实际使用的 144 个状态列。means、variances 和转移矩阵逐字节复用原文件。专用模型仅适用于这份两词词典及搜索配置。模型与词典由 6,607,989 B 降至 1,739,289 B。主机重放 625 段已消费语流中的全部 220 个提议，每次短语的分数、起止、首次返回及最终通知均与完整模型一致。[专用文件及原状态编号](../results/4090-c161-lexical-p4-compact-inputs.json) · [跨语料比较](../results/4090-c161-lexical-p4-compact-transfer.json)
+
+同一 62 窗口在独立 P4 模拟器中均逐项匹配完整模型的短语时钟和确认结论，其中 28 个背景候选全部拒绝。初始化 2.382 s，就绪时外部堆增量 2,767,308 B，最慢 30 ms 音频块耗时 14.058 ms。按单工作任务排队重放，成功窗口提议至确认中位数 365 ms，最大 868 ms，含同一句产生的重复确认。RTX 4090 的首句完整转写在即时起录为 0/12 和 1/8，两秒回看为 11/12 和 6/8。[逐块用时](../results/4090-c161-lexical-p4-compact.json) · [原始 UART](../results/4090-c161-lexical-p4-compact-uart.log) · [首句转写](../results/4090-c161-lexical-p4-compact-fifo-first-command.json)
+
+面板现有三份音乐文件共 1,446,087 B。专用声学文件及词典与音乐合计 3,185,376 B，超过现有 2 MiB SPIFFS 容量 1,088,224 B，另需文件系统开销。自测用独立研究分区，发布固件整机仍需单独验证。[现有面板数据](../../../spiffs/music) · [现有分区](../../../partitions.csv)
+
+在上文准备步骤后，用 compact.py 生成专用模型。复用了已核对发行 wheel 中的原生格式转换函数。主机回归使用同一版本的 Python 扩展。
+
+```sh
+/usr/bin/python3 "$app/compact.py"
+idf.py -C "$app" -B "$work/build-compact" -DNYX_LEXICAL_FLASH_MAP=ON -DNYX_LEXICAL_COMPACT=ON \
+  -DIDF_TARGET=esp32p4 -DSDKCONFIG="$work/sdkconfig" "-DSDKCONFIG_DEFAULTS=$app/sdkconfig.defaults;$work/qemu.defaults" reconfigure
+cmake --build "$work/build-compact" --parallel 2
+/usr/bin/python3 "$app/run_qemu.py" --compact
+```

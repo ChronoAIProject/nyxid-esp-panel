@@ -12,8 +12,9 @@ from prepare import WORK, sha, read
 QEMU = Path(".local/wakeword/qemu-p4-release/qemu/bin/qemu-system-riscv32")
 
 
-def main(mapped):
-    build = WORK / ("build-mapped" if mapped else "build")
+def main(mode):
+    mapped = mode != "read"
+    build = WORK / ("build" if mode == "read" else f"build-{mode}")
     output = build if mapped else WORK
     files = read(build / "flasher_args.json")["flash_files"]
     image = bytearray(b"\xff" * (16 << 20))
@@ -42,7 +43,7 @@ def main(mapped):
                 child.kill()
     text = log.read_text(errors="replace")
     assert child.returncode == 0 and "LEX_DONE cases=62" in text, (err[-250:],text[-1200:])
-    source = WORK / "inputs.json"
+    source = (WORK / "compact" if mode == "compact" else WORK) / "inputs.json"
     manifest = read(source)
     inputs = manifest["records"]
     mappings = {}
@@ -98,5 +99,7 @@ def main(mapped):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--mapped", action="store_true")
-    main(parser.parse_args().mapped)
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument("--mapped", dest="mode", action="store_const", const="mapped")
+    group.add_argument("--compact", dest="mode", action="store_const", const="compact")
+    main(parser.parse_args().mode or "read")

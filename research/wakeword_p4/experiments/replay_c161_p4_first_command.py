@@ -1,4 +1,5 @@
 """Schedule the measured P4 lexical work in FIFO order and transcribe the resulting captures."""
+import argparse
 from collections import defaultdict
 
 from check_c161_event_transcripts_v1 import choose
@@ -39,9 +40,9 @@ def service(src, case, worker_free_us):
                 notify_us=decision, worker_free_us=clock+case["close_us"])
 
 
-def schedule():
-    manifest, measured = read(INPUTS), read(MAPPED)
-    assert measured["input_sha256"] == sha(INPUTS)
+def schedule(input_path, measurement_path):
+    manifest, measured = read(input_path), read(measurement_path)
+    assert measured["input_sha256"] == sha(input_path)
     assert manifest["speech_report_sha256"] == sha(SPEECH)
     assert manifest["background_report_sha256"] == sha(BACKGROUND)
     windows = defaultdict(list)
@@ -76,8 +77,10 @@ def schedule():
     return streams
 
 
-def main():
-    streams = schedule()
+def main(compact):
+    input_path = RESULTS / f"{STEM}-compact-inputs.json" if compact else INPUTS
+    measurement_path = RESULTS / f"{STEM}-compact.json" if compact else MAPPED
+    streams = schedule(input_path, measurement_path)
     by_audio = {(s["cohort"], s["pcm_sha256"]): s for s in streams.values()}
     model, files = load_reader()
     readings, targets = {}, []
@@ -90,13 +93,16 @@ def main():
         targets.append(dict(cohort=cohort, key=stream["key"], source_pcm_sha256=src["pcm_sha256"],
                             voice=src["voice"], span=span, hits=hits, captures=captures))
     assert len(targets) == 20
-    result = dict(sources={p.name: sha(p) for p in (INPUTS, MAPPED, SPEECH, BACKGROUND)},
+    result = dict(sources={p.name: sha(p) for p in (input_path, measurement_path, SPEECH, BACKGROUND)},
                   policy="One FIFO lexical worker completes each window including end_utt; original C161 runs independently. "
                          "Merge actual notifications with 67-step cooldown, capture on 160-sample boundary.",
                   asr="Whisper small.en CUDA FP16, unprompted; immediate or 32000 samples before capture boundary",
                   model_files=files, streams=list(streams.values()), targets=targets, transcripts=readings)
-    save(RESULTS / f"{STEM}-fifo-first-command.json", result)
+    prefix = f"{STEM}-compact" if compact else STEM
+    save(RESULTS / f"{prefix}-fifo-first-command.json", result)
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--compact", action="store_true")
+    main(parser.parse_args().compact)

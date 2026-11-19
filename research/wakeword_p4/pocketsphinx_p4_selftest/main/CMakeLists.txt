@@ -36,13 +36,17 @@ list(APPEND sources "${gen}/profile.c")
 idf_component_register(SRCS ${sources} PRIV_INCLUDE_DIRS "${gen}" "${ps}/include" "${ps}/src" PRIV_REQUIRES fatfs esp_timer heap esp_partition)
 target_compile_definitions(${COMPONENT_LIB} PRIVATE HAVE_CONFIG_H)
 target_compile_options(${COMPONENT_LIB} PRIVATE -Wno-error)
-fatfs_create_rawflash_image(storage "${work}/files" FLASH_IN_PROJECT)
+set(volume "${work}")
+if(NYX_LEXICAL_COMPACT)
+    set(volume "${work}/compact")
+endif()
+fatfs_create_rawflash_image(storage "${volume}/files" FLASH_IN_PROJECT)
 
 if(NYX_LEXICAL_FLASH_MAP)
     idf_build_get_property(python PYTHON)
     add_custom_target(nyx_map_offsets
         COMMAND "${python}" "${CMAKE_CURRENT_LIST_DIR}/../map_offsets.py"
-                "${CMAKE_BINARY_DIR}/storage.bin" "${work}" "${gen}/map_offsets.inc"
+                "${CMAKE_BINARY_DIR}/storage.bin" "${volume}" "${gen}/map_offsets.inc"
         BYPRODUCTS "${gen}/map_offsets.inc"
         VERBATIM)
     add_dependencies(nyx_map_offsets fatfs_storage_bin)
