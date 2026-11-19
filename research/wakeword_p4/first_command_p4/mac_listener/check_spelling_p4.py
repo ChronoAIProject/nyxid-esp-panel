@@ -106,10 +106,11 @@ def packet(spec, count, data):
     return h + b"".join(struct.pack("<B9s", len(chars), bytes(chars)) for chars in spec["tokens"]) + data
 
 
-def run(work, batch_size, output=RESULTS):
+def run(work, batch_size, output=RESULTS, stem=None):
     output.mkdir(parents=True, exist_ok=True)
-    archive = output/(STEM+"-uart.zip")
-    report = output/(STEM+".json")
+    stem = stem or STEM
+    archive = output/(stem+"-uart.zip")
+    report = output/(stem+".json")
     if archive.exists() or report.exists():
         raise FileExistsError(f"Choose an unused --output directory for replay reports: {output}")
     build = work/"build"

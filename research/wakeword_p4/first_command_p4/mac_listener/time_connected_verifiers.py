@@ -43,7 +43,7 @@ def sources():
         yield "connected",i,pcm,r["routes"]["c161"]["events"],meta,windows,accepted,r["routes"]["parent"]["events"],r["captures"]
 
 
-def collect(work, char_build):
+def collect(work, char_build, source_streams=sources, refs=None):
     old, config = read(prior.CAL), read(spell.gap.FIT)
     char, native = prior.model(), prior.fit.native_frontend()
     vocab = read(prior.WAV2VEC / "vocab.json")
@@ -58,7 +58,7 @@ def collect(work, char_build):
         (folder/"sdkconfig").symlink_to((char_build.parent/"sdkconfig").resolve())
     rows, five_rows, streams = [], [], []
     with (folder/"blocks.bin").open("wb") as cf, (work/"five.bin").open("wb") as ff:
-        for group,i,pcm,c161,_,windows,accepted,baseline,_ in sources():
+        for group,i,pcm,c161,_,windows,accepted,baseline,_ in source_streams():
             raw = base.native_inputs(native,pcm)[0] if windows else None
             start = len(rows)
             admitted = []
@@ -89,14 +89,16 @@ def collect(work, char_build):
             ix = list(range(start,len(rows)))
             paths = {k:base.scoring.merged(c161,[rows[j]["end"] for j in ix if rows[j][k]]) for k in ("paths","capped")}
             streams.append(dict(group=group,index=i,windows=ix,c161=c161,host=paths,baseline=baseline,pcm_sha256=base.poll.digest(pcm)))
-    refs = [RESULTS/(connected.STEM+".json"),RESULTS/(study.training.STEM+"-replay.json"),prior.CAL,spell.gap.FIT]
+    if refs is None:
+        refs = [RESULTS/(connected.STEM+".json"),RESULTS/(study.training.STEM+"-replay.json")]
+    refs = [*refs, prior.CAL, spell.gap.FIT]
     save(folder/"fixtures.json",dict(records=rows,streams=streams,inputs={p.name:sha(p) for p in refs},
          blocks_sha256=sha(folder/"blocks.bin"), tokens=[[vocab[c] for c in w] for w in spell.WORDS],
          separator=vocab["|"],max_gap=config["max_gap"],thresholds=dict(paths=old["threshold"],capped=config["threshold"])))
     save(work/"five.json",dict(records=five_rows,fixture_sha256=sha(work/"five.bin")))
 
 
-def measure_five(work):
+def measure_five(work, stem=STEM):
     spec = read(work/"five.json")
     file = work/"five.bin"
     assert sha(file) == spec["fixture_sha256"]
@@ -108,7 +110,7 @@ def measure_five(work):
     cfg = read(build/"config/sdkconfig.json")
     assert cfg["NN_ANSI_C"] and cfg["IDF_TARGET"] == "esp32p4"
     rows, batches = spec["records"], []
-    archive = RESULTS/(STEM+"-five-uart.zip")
+    archive = RESULTS/(stem+"-five-uart.zip")
     with file.open("rb") as stream, ZipFile(archive.with_suffix(".tmp"),"w", ZIP_DEFLATED) as uart:
         for start in range(0,len(rows),150):
             n = min(150,len(rows)-start)
@@ -130,7 +132,7 @@ def measure_five(work):
             uart.write(log,log.name)
         assert not stream.read(1)
     archive.with_suffix(".tmp").replace(archive)
-    save(RESULTS/(STEM+"-five.json"), dict(records=rows,batches=batches,model_sha256=sha(path),
+    save(RESULTS/(stem+"-five.json"), dict(records=rows,batches=batches,model_sha256=sha(path),
          images={f:sha(build/f) for f in images.values()},archive_sha256=sha(archive),qemu_sha256=sha(five_probe.QEMU)))
 
 
