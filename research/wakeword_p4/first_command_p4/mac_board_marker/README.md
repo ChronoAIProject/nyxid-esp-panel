@@ -4,6 +4,8 @@ The patch applies to `research/c161-parallel-runtime-20261118` at `0d8e1935702a5
 
 ## Build and replay
 
+The existing research release provides both linked application images. Use the image matching the development board profile. The download record gives the byte count, app SHA256, linked ELF SHA256 and embedded C161 offset for each original build. [External display rev1 app](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/c161-fixed-marker-p4-rev1-16mb-8bbf5b6b.bin) · [LCD-X8 rev3 app](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/c161-fixed-marker-p4-rev3-lcd-x8-16mb-e6bde7d0.bin) · [Verified download record](../../results/4090-c161-mac-board-marker-app-downloads.json)
+
 In the board checkout, use its documented ESP-IDF v5.5.4 environment and build requirements. Set `research` to the GPU research checkout. Choose the profile recorded for the device. The previous Mac stability report identifies `p4-rev1-16mb` for the external-screen board and `p4-rev3-lcd-x8-16mb` for LCD-X8. The separate external-screen rev3 profile is `p4-rev3-16mb`.
 
 ```sh
