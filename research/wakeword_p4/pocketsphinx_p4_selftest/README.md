@@ -153,3 +153,20 @@ Piper 对 Hey Nyx 和 Hey Nicks 给出相同音素，但两种拼写分别合成
 模型冻结后，再用同两个 Piper 声音生成 44 条新语句，包含两条新命令、Hi Nick、Hey Nick、Hey Mick、Hi Max、Hi Chris、Hi Nikki、Hey Willow 和日常句。加入复核后的 /haɪ/ 及 /heɪ/ 均唤醒 4/4，两秒回看后的完整命令分别为 3/4、4/4。原姓名对比双速合计 5/8 唤醒、3/8 完整。新复核模型在 32 条称呼及日常干扰中误唤 8 条，原姓名对比双速为 2 条。从语音起点直接搜两种发音、跳过神经网络复核时为 9 条。三个配置对同批 4 条 Hey Willow 均无通知。
 
 复核后仍误唤 Hey Nick 3/4、Hi Nick 2/4、Hey Mick 2/4，以及 1/8 日常句。此前那批 Piper 的两个姓名误唤和既有 96 条日常短句的两次误唤均消失，Bot 普通回复仍有 2/48。两批均只作开发对照，新增路径当前只在主机验证；普通语音的实机验证使用冻结 C161，固定音使用 v5。[新音频与输入清单](../results/4090-c161-vad-word-check-fresh-plan.json) · [逐匹配得分、误唤及首句转写](../results/4090-c161-vad-word-check-evaluation.json)
+
+### Melo 连说、姓名与命令首音素
+
+RTX 4090 上用 Melo 的 EN-US、EN-BR 各生成同两条命令，分别用逗号连接和直接连说。每对输入复用语句顺序和逐句随机种子，保留合成的实际音素、时长、原速 16 kHz 音频和逐句哈希。共 96 句，其中 32 条 Nyx 目标、40 条常见姓名、16 条日常句和 8 条 Hey Willow。日常句在逗号配对间重复。Nyx 主机回放在 2 秒回看录音上用同一 Whisper 检查完整命令。官方 Hey Willow DEFAULT 在经典 ESP32 QEMU 完整消费相同的八段语流。[输入和音素](../results/4090-c161-melo-address-grammar-plan.json) · [八段 WAV](../results/4090-c161-melo-address-grammar-wav.zip) · [Willow 报告](../results/4090-c161-melo-address-grammar-willow.json) · [串口及逐块返回](../results/4090-c161-melo-address-grammar-willow.zip)
+
+在短语搜索产生候选时，用完整英文 PocketSphinx 声学模型对已到达的词段同时识别 hey/hi nicks、Nick、Mick、Max 等。下表每格为唤醒数、首句完整数，分母为该行语句数。辅助路径保留原 C161 的通知，只对语音起点额外产生的候选启用姓名语法。首词分组取自 Melo 的 hh ey 或 hh ay。[逐句事件和转写](../results/4090-c161-melo-address-grammar.json)
+
+| Melo 目标语句 | 句数 | C161 唤醒、首句完整 | 加辅助路径后唤醒、首句完整 |
+| --- | ---: | ---: | ---: |
+| /heɪ/，带逗号 | 8 | 4、3 | 5、4 |
+| /heɪ/，直接连说 | 8 | 1、0 | 4、3 |
+| /haɪ/，带逗号 | 8 | 4、3 | 6、4 |
+| /haɪ/，直接连说 | 8 | 5、2 | 5、2 |
+
+两种发音合计，辅助路径为 20/32 唤醒、13/32 首句完整，C161 为 14/32、8/32。EN-BR 接 open 的八条目标两条路径均漏。对各自字面称呼的八条命令，辅助路径 Hey Nyx 为 5/8、3/8，官方 Hey Willow 为 2/8、1/8。双方均未对彼此的八条命令唤醒。此前两批 Piper，辅助路径分别为 11/12、10/12 和 7/8、5/8；姓名及日常句误唤分别为 0/20、5/32。已有连续命令唤醒 22/36，同批日常句 0/108、独立日常句 0/96、普通 Bot 回复 0/48，Bot 主动示范唤醒词时通知 4/8。将语法扩大到全部辅助候选后，连续命令唤醒降至 12/36。[Piper 和 Bot 明细](../results/4090-c161-address-grammar.json)
+
+Melo 的 40 条姓名中辅助路径误唤 4 条，均为不带逗号接 switch。其余 16 条日常句均无误唤。用合成器的音素对齐估计，在原采样位置遮盖命令首音素，并另做等长后移 250 ms 和整条命令遮盖。逐句从语流开头重放，72 条原样对照均复现四条路径的原始通知采样点。遮住 /s/ 后 EN-US 的 Hey Mick 误唤消失，后移对照仍触发；另外三次 Nick 在原 C161 就触发，分别遮住 /s/ 或整条命令仍会触发。20 条原本命中的目标在三种干预下都保留。整条命令静音还使原先未命中的 3 条目标、2 条姓名产生通知。遮盖会改变停顿和检测行为，从这次结果只能把 Hey Mick 的一次误唤定位到该 /s/ 时段。此姓名语法只做过主机回放。[遮盖代码](../experiments/check_c161_melo_command_boundary.py) · [72 条逐句结果](../results/4090-c161-melo-address-grammar-boundary.json)
