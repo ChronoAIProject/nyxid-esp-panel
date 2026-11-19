@@ -325,3 +325,9 @@ python3 measure_command_capture.py playback.wav uplink-decoded.wav --command-at 
 沿用上述并发固件构建方式，运行 `check_speex_opus_setup.py`。四个已有固定 v5 双讲输入均取 0 dB，监听与编码任务采用产品中的相同优先级 4。在模拟器启动周期采音定时器时记录微秒时钟，以同一时钟记录交付 OPEN、创建编码任务和首个编码包完成。两种协议为 `0x4f52594e` 和 `0x5752594e`，分别在 OPEN 后立即允许启动编码任务、等足 1.5 秒后在下一个采音块允许启动。等待期间采音写入同一 FIFO。
 
 四对输入的 OPEN 样本时钟都比命令起点早 36 ms，客机微秒时钟的提前量为 33.400–33.848 ms。立即启动时首个编码包比命令开头早 25.032–25.660 ms，FIFO 最多 32,000 样本。模拟 1.5 秒建连等待时，首个包在 OPEN 后 1.511–1.512 秒完成，FIFO 增至 56,000 样本，OPEN 后 1.548–1.551 秒追至不足一帧。两种配置各 1,188 个包都与原独立编码实验的同源输出逐字节相同，命令转写各 4/4 完整。共 5,000 个块，均在 16 ms 预算内，最低内部空闲堆为 236,192 B。这里测到的是本地编码包完成时钟，实板网络发送与服务端收到首包的时钟仍由 Mac 回传。[逐条计时与开麦后积压](../../results/4090-c161-speex-opus-setup.json) · [实际编码包和计时串口](../../results/4090-c161-speex-opus-setup.zip)
+
+### 同声线 Nyx、Nick 和 Willow 的连说播放包
+
+包内 36 个 16 kHz 单声道 PCM16 WAV，覆盖四个声音、三条命令和三个称呼。每个文件从头到尾一次播放，按同一声线和命令比较三种称呼，保持外部扬声器、摆位及音量相同。每组三条的命令都从样本 48,000（3 秒）开始，此后 PCM 逐字节相同。门锁命令的 Nyx 文件以 001、028、055、082 开头，冻结 C161 单独开麦 2/4；加整数提前复核的研究路线开麦 4/4、Opus 首句完整 4/4，其中 1 条在命令开始前开麦。另两条命令也保留了 Hey Nick 的误开样本。清单中模拟时钟以 16 kHz 样本计。实板可按文件名回传 M/R、OPEN、首包及解码后的首句。固定 v5 的板测包见上文。[下载 36 条 WAV 和 manifest](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/c161-connected-names-mac-playback-v1.zip) · [逐文件清单和校验和](../../results/c161-connected-names-mac-playback-v1.json)
+
+已从 Release 匿名重新下载，校验 2,091,542 B 归档及全部 36 条 WAV、PCM、称呼区间和命令区间。归档 SHA256 为 `bfaad614a4fdef31f01b7edc9c6a86da03a8b38d1e8b6e1e5da1019010053932`。
