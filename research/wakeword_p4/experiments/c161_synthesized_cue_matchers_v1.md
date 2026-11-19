@@ -244,3 +244,19 @@ Mac 可直接播放四条独立唤醒音。若需要验证紧接命令的时钟�
 python3 research/wakeword_p4/first_command_p4/mac_listener/expand_coded_piper_audio.py \
     research/wakeword_p4/results .local/wakeword/coded-piper-playback
 ```
+
+### 四声线整句合成的 Nyx、Nicks、Nick、Willow 与固定 v5
+
+在分支提交 f7bac6ee 先冻结 60 条 WAV，再按登记的 DEFAULT 运行官方 Hey Willow。af_river、am_eric、bf_lily、bm_fable 四种训练库声音分别说三个新命令，开头使用 Hey Nyx、Hey Nicks、Hey Nick 或 Hey Willow。每个词和命令在一次合成中自然连接，速度和标点在配对内相同。Nyx 与 Nicks 的 12 对音素串和命令起点相同，但 PCM 各自生成。另将字面 Hey Nyx 换为交接原字节 v5，12 对从命令开始到结尾逐样本相同。按合成器的时长记录定位命令首音素。该批是新增开发录音，涉及四个已用声音。[60 条 WAV 和清单](../results/4090-c161-connected-nick-willow-audio.zip) · [冻结输入与时钟](../results/4090-c161-connected-nick-willow-plan.json)
+
+| 检测器与自身称呼 | 命中 / 12 | 命令前交付 / 12 | 两秒回看经 Opus 解码转写含完整命令 / 12 |
+| --- | ---: | ---: | ---: |
+| 冻结 C161，普通 Hey Nyx | 5 | 0 | 4 |
+| 提前前级、拼写和阈值 34 的五类复核，普通 Hey Nyx | 12 | 5 | 10 |
+| 同一自然发音路线，Hey Nicks | 12 | 5 | 11 |
+| 官方 Hey Willow，普通 Hey Willow | 8 | 2 | 7 |
+| 冻结 C161 加 v5 匹配器，固定合成音 | 12 | 12 | 11 |
+
+自然发音路线的时钟按音频到达计算，此表排除复核计算耗时。该路线在 12 条 Hey Nick 中误触两条，都来自 bf_lily。按竞争拼写 K 帧追加复核后，这两条被拒绝，两组正常称呼仍各命中 12 条；此前两条日常 “Hey Nick, can you help me?” 仍会误开。官方和冻结 C161 加 v5 匹配器各自在 12 条 Nick 中误开零次。本批固定音 12 条均经过完整 P4 QEMU 监听器，提前 65–80 ms 开麦，和独立调度的开麦及回看时钟逐样本一致；客机最慢的 16 ms 块耗时 11.002 ms，最低内部空闲堆 381,132 B。[逐条通知与上行转写](../results/4090-c161-connected-nick-willow.json) · [官方返回与 P4 Opus 包](../results/4090-c161-connected-nick-willow-uart.zip)
+
+固定 v5 的 12 次选中通道捕获，保留两秒回看时有 11 条完整命令，整句逐词一致为 0 条。从开麦前 100 ms 开始识别时有 12 条完整、11 条逐词一致；沿用此前按末段编码定位的裁切时有 10 条完整、10 条逐词一致。两个裁切参数均在本批采样前确定。对真机录音保留完整 Opus 包与开麦时钟，可复核同一次捕获的结果。[实际解码哈希和三种逐句文本](../results/4090-c161-connected-nick-willow-crops.json)
