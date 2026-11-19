@@ -28,13 +28,21 @@ def capture(reader, decoder, work, archive, i, name, mic, opened, carrier):
     assert len(raw) == len(selected) and len(raw)>0
     payload = struct.pack("<3I",0x3552504f,i,len(raw))+selected.tobytes()+raw.tobytes()
     log = work/f"{i:03}-{name}.log"
-    uplink.boot(uplink.CODEC,log,b"UPLINK PASS",payload,work)
+    for attempt in range(3):
+        uplink.boot(uplink.CODEC,log,b"UPLINK PASS",payload,work)
+        text = log.read_text()
+        try:
+            frames = [uplink.packets(text,i,len(raw),lane) for lane in (0,1)]
+            break
+        except (AssertionError, ValueError):
+            archive.write(log,f"retry/{log.name}-{attempt+1}")
+            if attempt == 2:
+                raise
     archive.write(log,"opus/"+log.name)
-    text = log.read_text()
     log.unlink()
     lanes = {}
     for lane, signal in enumerate((selected,raw)):
-        packets = uplink.packets(text,i,len(raw),lane)
+        packets = frames[lane]
         audio = uplink.decode(decoder,packets)
         lanes[("selected","raw")[lane]] = dict(input_sha256=host.base.poll.digest(signal),
             decoded_sha256=host.base.poll.digest(audio),packets=len(packets),

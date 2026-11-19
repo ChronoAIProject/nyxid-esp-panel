@@ -1,0 +1,33 @@
+{
+  "arm": "overlap",
+  "steps": 400,
+  "seed": 463102,
+  "logs": [
+    {
+      "step": 1,
+      "loss": 21.821292877197266
+    },
+    {
+      "step": 100,
+      "loss": 8.615528106689453
+    },
+    {
+      "step": 200,
+      "loss": 7.941033363342285
+    },
+    {
+      "step": 400,
+      "loss": 7.226626396179199
+    }
+  ],
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "torch": "2.15.0+cu132",
+  "positive_bags": 231,
+  "paired_absent_bags": 231,
+  "negative_bags": 687,
+  "hard_bags": 1346,
+  "sources_sha256": "fc80a7b80888bfc7e4ae303b097a501d9a42904e03a9b34c7fc85b2f16e2e1d0",
+  "weights_sha256": "2341e13fbb9ddb2681180bf75f1dee39efe10253aaafc94d155c00a95f228e3a",
+  "calibration_sha256": "3266ee1e7ff27d23f2ecd7299cdc42b363389abf29b5b31f2ee4e4b38cf1ffa9",
+  "policy": "Last five consecutive ticks with the 256-sample delivery strictly before the training target end. Both arms share sources, external room, gain, initialization, hard bank and minibatch IDs. Overlap adds training music plus the known panel demo before selecting negative peaks; paired absent control removes external source."
+}
