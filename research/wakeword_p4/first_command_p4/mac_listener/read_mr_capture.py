@@ -1,5 +1,6 @@
 """Read the fixed-cue clocks and levels from a 16 kHz PCM16 MR or LCD-X8 TDM WAV."""
 import argparse
+from bisect import bisect_left, bisect_right
 import hashlib
 import json
 from pathlib import Path
@@ -11,7 +12,7 @@ from zipfile import ZipFile
 APP = Path(__file__).resolve().parent
 
 
-def analyze(path, idle_frames=0, *, panel_tx_samples=None):
+def analyze(path, idle_frames=0, *, panel_tx_samples=None, middle_receiver=False):
     with wave.open(str(path), "rb") as wav:
         channels, width, rate, frames, compression, _ = wav.getparams()
         if (rate, width, compression) != (16000, 2, "NONE") or channels not in (2, 4):
@@ -22,11 +23,13 @@ def analyze(path, idle_frames=0, *, panel_tx_samples=None):
         with tempfile.TemporaryDirectory() as tmp:
             binary = Path(tmp) / "read_mr"
             flags = []
+            include_panel = middle_receiver or panel_tx_samples is not None
             if panel_tx_samples is not None:
                 if not panel_tx_samples or any(t < 1 or t > frames for t in panel_tx_samples):
                     raise ValueError("TX pair clocks must be one-based sample counts inside the capture")
                 if list(panel_tx_samples) != sorted(set(panel_tx_samples)):
                     raise ValueError("TX pair clocks must be strictly increasing")
+            if include_panel:
                 bundle = APP.parents[1] / "results/c161-panel-level-reference-mac.zip"
                 with ZipFile(bundle) as archive:
                     header = archive.read("receiver/panel_marker_pair.h")
@@ -34,6 +37,8 @@ def analyze(path, idle_frames=0, *, panel_tx_samples=None):
                     raise ValueError("Unexpected panel B,C matcher in Mac handoff")
                 (Path(tmp) / "panel_marker_pair.h").write_bytes(header)
                 flags = ["-DNYX_MEASURE_PANEL_PAIR", "-I", tmp]
+            if middle_receiver:
+                flags.append("-DNYX_MEASURE_MIDDLE_RECEIVER")
             subprocess.run(["c++", *flags, "-std=c++17", "-O2", "-I", str(APP/"main"),
                             "-I", str(APP.parents[1]/"portable"), str(APP/"read_mr_capture.cpp"),
                             "-o", str(binary)], check=True)
@@ -49,17 +54,26 @@ def analyze(path, idle_frames=0, *, panel_tx_samples=None):
                 if proc.wait() or count != frames * channels * width:
                     raise ValueError("Incomplete PCM frames in capture")
                 events.seek(0)
-                report = parse_events(events.read().decode().splitlines(), include_panel=panel_tx_samples is not None)
+                report = parse_events(events.read().decode().splitlines(), include_panel=include_panel,
+                                      middle_receiver=middle_receiver)
     if panel_tx_samples is not None:
         report["panel_playout"] = compare_panel(panel_tx_samples, report["events"])
+        if middle_receiver:
+            # PanelEchoConfirmation accepts an acoustic C up to 80 ms either side of TX.
+            hits = report["events"]["mic_panel_middle"]
+            report["panel_playout"]["mic_panel_middle_near_tx"] = [
+                dict(tx_sample=t, mic_samples=hits[bisect_left(hits, t-1280):bisect_right(hits, t+1280)])
+                for t in panel_tx_samples]
     return dict(file=path.name, pcm_sha256=digest.hexdigest(), sample_rate=rate, frames=frames,
                 layout="MR" if channels == 2 else "MIC1,MIC3,MIC2,MIC4", **report)
 
 
-def parse_events(lines, *, include_panel=False):
+def parse_events(lines, *, include_panel=False, middle_receiver=False):
     hits = {name:[] for name in ("mic_three", "ref_three", "ref_two", "ref_signed_two")}
     if include_panel:
         hits.update(mic_panel=[], ref_panel=[])
+    if middle_receiver:
+        hits.update(mic_timed_three=[], mic_panel_middle=[])
     levels = {}
     activity = {}
     for line in lines:
@@ -102,5 +116,8 @@ if __name__ == "__main__":
                    help="Number of known quiet frames at the start for separate level statistics")
     p.add_argument("--panel-tx-sample", type=int, action="append",
                    help="One-based TX B,C pair sample in capture coordinates. Repeat for each isolated panel demo.")
+    p.add_argument("--middle-receiver", action="store_true",
+                   help="Also measure the timed cue and acoustic C used by the middle-marker receiver build.")
     args = p.parse_args()
-    print(json.dumps(analyze(args.wav, args.idle_frames, panel_tx_samples=args.panel_tx_sample), indent=2))
+    print(json.dumps(analyze(args.wav, args.idle_frames, panel_tx_samples=args.panel_tx_sample,
+                             middle_receiver=args.middle_receiver), indent=2))

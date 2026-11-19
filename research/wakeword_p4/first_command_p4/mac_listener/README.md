@@ -382,6 +382,10 @@ python3 read_mr_capture.py capture.wav --panel-tx-sample 46388
 
 `panel_playout` 分别报告 TX 减去 R、M 上 B、C 匹配时刻的有符号差值。正值表示软件事件晚于该通道的观测。M 还包含声学传播与麦克风通路的延迟，R 的含义取决于板上回采接线。各通道按完整单播序列配对，事件数对不上时保留原始观测。两槽、四槽、缺失一次 R 事件均有合成输入复核。工具需要 Python 3、C++17 编译器及工作树中的 Mac 对照包。[数字验证](../../results/4090-c161-panel-tx-capture-reader.json)
 
+使用 `build_panel_marker_order.sh middle` 对应的接收器时，在同一命令加 `--middle-receiver`。这个选项按接收器的匹配器命名，大板和中板均可使用。麦克风三段匹配看 `events.mic_timed_three`，可直接核对同一采集起点的 UART `HITS` 第三个数。面板自播的麦克风单段 C 匹配看 `events.mic_panel_middle`。提供实际 TX 时钟后，`panel_playout.mic_panel_middle_near_tx` 列出每次 TX 前后 1,280 个样本内的所有 C 匹配。相邻匹配可来自同一次播放。开麦时刻取同次 UART 的 `OPEN`。
+
+两个公开回放包共 49 条模拟 UART，每条均用双声道 M/R 和 LCD-X8 四槽重放。新模式逐样本复现 23 条有三段匹配和 26 条无匹配的记录。旧 `mic_three` 在其中一条面板自播上漏记，在另三条上晚 8–24 个样本。漏记的那条在固件上被参考通道拦住，未开麦。[逐条时钟与输入校验和](../../results/4090-c161-middle-capture-reader.json) · [复现脚本](check_middle_capture_reader.py)
+
 ### 从板上麦克风录音估计配平连说命令的起点
 
 每个 WAV 录一遍已交接的配平外播轨，保留完整命令。工具读取 16 kHz PCM16 双声道 M/R 或 LCD-X8 四槽 TDM 的第一槽，用归档中的对应命令在麦克风录音上定位。以下示例在本目录运行，需要 Python 3 和 NumPy。把 005 换成本次外播文件夹的编号，把 46848 换成本次 UART OPEN 换算到 WAV 起点的采样数；省略该选项仍可定位命令。[十二条外播轨](../../results/c161-balanced-connected-commands.zip) · [分析工具](measure_connected_command_clock.py)

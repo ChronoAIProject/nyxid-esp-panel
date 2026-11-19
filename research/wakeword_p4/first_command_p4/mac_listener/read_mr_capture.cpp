@@ -11,6 +11,10 @@
 #ifdef NYX_MEASURE_PANEL_PAIR
 #include "panel_marker_pair.h"
 #endif
+#ifdef NYX_MEASURE_MIDDLE_RECEIVER
+#include "c161_panel_middle_marker.h"
+#include "c161_timed_final_marker.h"
+#endif
 
 struct Levels {
     std::uint64_t count = 0, full_scale = 0, at_least_64 = 0;
@@ -52,6 +56,10 @@ int main(int argc, char **argv) {
 #ifdef NYX_MEASURE_PANEL_PAIR
     nyx::PanelMarkerPair mic_panel, ref_panel;
 #endif
+#ifdef NYX_MEASURE_MIDDLE_RECEIVER
+    nyx::TimedFinalMarker timed_cue;
+    nyx::PanelMiddleMarker panel_middle;
+#endif
     nyx::ReferenceSignature signature;
     nyx::ReferenceActivity activity;
     std::uint64_t active_frames = 0, idle_active_frames = 0;
@@ -74,6 +82,10 @@ int main(int argc, char **argv) {
 #ifdef NYX_MEASURE_PANEL_PAIR
             if (mic_panel.update(mic)) std::printf("EVENT mic_panel %llu\n", at);
             if (ref_panel.update(ref)) std::printf("EVENT ref_panel %llu\n", at);
+#endif
+#ifdef NYX_MEASURE_MIDDLE_RECEIVER
+            if (timed_cue.update(mic)) std::printf("EVENT mic_timed_three %llu\n", at);
+            if (panel_middle.update(mic)) std::printf("EVENT mic_panel_middle %llu\n", at);
 #endif
             if (mic_match.update(mic)) std::printf("EVENT mic_three %llu\n", at);
             if (ref_match.update(ref)) std::printf("EVENT ref_three %llu\n", at);
