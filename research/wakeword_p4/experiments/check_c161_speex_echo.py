@@ -18,9 +18,10 @@ DEB = "a418ba872a3c006502d5e70d855262507ee81b94227efef52512b5973f067e9d"
 LIB = OUT/"speexdsp/usr/lib/x86_64-linux-gnu/libspeexdsp.so.1.5.2"
 
 
-def binding():
-    assert sha(OUT/"libspeexdsp1.deb") == DEB
-    api = ctypes.CDLL(str(LIB.resolve()))
+def binding(library=LIB):
+    if library == LIB:
+        assert sha(OUT/"libspeexdsp1.deb") == DEB
+    api = ctypes.CDLL(str(library.resolve()))
     ptr, integer = ctypes.c_void_p, ctypes.c_int
     api.speex_echo_state_init.argtypes = [integer, integer]
     api.speex_echo_state_init.restype = ptr
