@@ -12,6 +12,8 @@ import numpy as np
 from scipy.signal import fftconvolve
 import soundfile as sf
 
+import cache_sender_p4_case as cases
+
 import check_additional_connected_voices as study
 
 ch, tx, mixed = study.ch, study.tx, study.mixed
@@ -165,6 +167,8 @@ def guest():
     assert sid == first["small"] and qid == first["qwen"]
     readers = small, tx.diag.reader(first["turbo"]), uplink.decoder_api(), proc, model
     archive = GUEST.with_suffix(".zip")
+    provenance = dict(study=GUEST.stem, host=ch.sha(OUT), firmware=first["firmware"], codec=first["codec"],
+                      qwen=qid, small=sid, turbo=first["turbo"], capture=ch.sha(Path(study.playback.__file__)))
     rows = []
     with TemporaryDirectory(dir=OUT.parent) as folder:
         work = Path(folder)
@@ -177,7 +181,7 @@ def guest():
                     continue
                 i = len(rows)
                 case = host_index, s, "bca", role, mic, np.zeros_like(mic), known["result"]
-                row = study.playback.guest_case(work, logs, i, case, readers, builds)
+                row = cases.capture(work, logs, i, case, readers, builds, provenance)
                 rows.append(dict(row, batch=batch, profile=angle, timely=known["timely"]))
                 if len(rows) % 12 == 0:
                     print("P4", len(rows), flush=True)

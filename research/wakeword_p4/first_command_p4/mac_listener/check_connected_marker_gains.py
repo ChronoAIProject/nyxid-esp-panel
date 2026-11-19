@@ -11,6 +11,8 @@ import numpy as np
 from scipy.signal import fftconvolve
 import soundfile as sf
 
+import cache_sender_p4_case as cases
+
 import check_sender_directivity as direction
 import fit_single_marker_gains as fit
 
@@ -169,13 +171,15 @@ def guest():
     assert sid==original["small"] and qid==original["qwen"]
     readers = small,tx.diag.reader(original["turbo"]),uplink.decoder_api(),proc,model
     archive = GUEST.with_suffix(".zip")
+    provenance = dict(study=GUEST.stem, host=ch.sha(OUT), firmware=original["firmware"], codec=original["codec"],
+                      qwen=qid, small=sid, turbo=original["turbo"], capture=ch.sha(Path(study.playback.__file__)))
     with TemporaryDirectory(dir=OUT.parent) as folder:
         work = Path(folder)
         rows = []
         with ZipFile(work/archive.name,"w",ZIP_DEFLATED) as logs:
             def capture(host_index,s,role,mic,result):
                 case = host_index,s,"bca",role,mic,np.zeros_like(mic),result
-                return study.playback.guest_case(work,logs,len(rows),case,readers,builds)
+                return cases.capture(work,logs,len(rows),case,readers,builds,provenance)
             for j,(scene,h) in enumerate(zip(recordings(),report["records"],strict=True)):
                 batch,s,profile,raw,mic,_,before = scene
                 assert (s,batch,profile,ch.digest(mic)) == (h["source"],h["batch"],h["profile"], h["result"]["pcm_sha256"])
