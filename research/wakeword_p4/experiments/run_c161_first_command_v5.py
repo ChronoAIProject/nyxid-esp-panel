@@ -21,7 +21,8 @@ LOG = WORK / "first-command-uart.log"
 STEM = "4090-c161-first-command-opus-v5"
 
 
-def boot(build=BUILD, log=LOG, image=WORK / "first-command-flash.bin", marker=b"FIRST_COMMAND PASS", flash_payload=None):
+def boot(build=BUILD, log=LOG, image=WORK / "first-command-flash.bin", marker=b"FIRST_COMMAND PASS",
+         flash_payload=None, *, serial_target=None):
     images = read(build / "flasher_args.json")["flash_files"]
     flash = bytearray(b"\xff" * (4 << 20))
     for offset, name in images.items():
@@ -36,7 +37,8 @@ def boot(build=BUILD, log=LOG, image=WORK / "first-command-flash.bin", marker=b"
         flash[offset:offset+len(payload)] = payload
     image.write_bytes(flash)
     log.unlink(missing_ok=True)
-    cmd = [str(QEMU), "-machine", "esp32p4", "-display", "none", "-serial", f"file:{log.resolve()}",
+    target = log if serial_target is None else serial_target
+    cmd = [str(QEMU), "-machine", "esp32p4", "-display", "none", "-serial", f"file:{target.resolve()}",
            "-monitor", "stdio", "-snapshot", "-drive", f"file={image.resolve()},if=mtd,format=raw"]
     data = b""
     with subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE) as emulator:

@@ -11,6 +11,7 @@ case "$variant" in
     tx) work="$root/.local/wakeword/c161-panel-playout-event" ;;
     echo) work="$root/.local/wakeword/c161-panel-echo-confirmation" ;;
     middle) work="$root/.local/wakeword/c161-panel-middle-confirmation" ;;
+    middle-uart) work="$root/.local/wakeword/c161-panel-middle-uart" ;;
     *) exit 2 ;;
 esac
 export NYX_MAC_WORK="$root/.local/wakeword/c161-mac-listener"
@@ -19,6 +20,10 @@ export IDF_TOOLS_PATH="$root/.local/wakeword/idf-tools"
 export PATH="/usr/bin:$PATH"
 mkdir -p "$work/src"
 git archive 419837340caeb739c71834d7a2350cc2b39f1de3 "$app/main" "$app/CMakeLists.txt" "$app/dependencies.lock" research/wakeword_p4/portable research/wakeword_p4/first_command_p4/main components/panel_services | tar -x -C "$work/src"
+if [[ "$variant" == middle-uart ]]; then
+    cp "$app/main/listener.cpp" "$work/src/$app/main/listener.cpp"
+    variant=middle
+fi
 (
     source .local/wakeword/c161-onset-names/env
     PYTHONPATH="$app:$PYTHONPATH" /usr/bin/python3 - "$work/src/$app/main" "$variant" <<'PY'

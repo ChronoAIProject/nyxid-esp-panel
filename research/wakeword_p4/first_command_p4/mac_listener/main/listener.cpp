@@ -59,6 +59,8 @@ void dump(const char* label, const int16_t* samples,int count) {
         }
         line[4*n]=0;
         std::printf("%s %d %s\n",label,start,line);
+        // Let the idle task run during the post-FINISH UART transfer.
+        if ((start / kHop + 1) % 32 == 0) vTaskDelay(1);
     }
 }
 

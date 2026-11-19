@@ -28,6 +28,10 @@
 
 对同一批 24 个 −6 dB 条件，分别保留背面频响并静音面板、静音音乐，或保留两种干扰并改为正面频响。三种单项改动在主机 INT8 回放中都从 22/24 恢复到 24/24。两个漏开对应包内 `first/015.wav` 和 `second/011.wav`，背面同时保留音乐与面板时，两路检测均无原始命中。各条件的去称呼对照均为 0/24。所有回放保留原房间、麦克风增益和软件 TX 时钟。实板可用这两个文件对照扬声器朝向。[240 个逐次开麦记录](../../results/4090-c161-bella-weak-playback.json)
 
+固定 af_bella 的历史告警全部出现在 `FINISH` 之后导出第二路 `PROCESSED` PCM 时。将两版模拟固件在同一批 24 个输入上交替先后重放，常规文件输出下两版都是 0/24 次告警，所有开麦时钟、送编 PCM 和处理后 PCM 逐样本一致。将历史首个告警样本 `first/025.wav` 补静音至 20 秒，两版也都正常结束。用原长度重放同一输入，将主机端 UART 接收限为 96,000 B/s，原导出循环在 `PROCESSED 23680` 处报 IDLE0 看门狗，每导出 32 行暂停一个调度 tick 的版本通过。两版均保留 5 秒看门狗及相同 C161，互相核对了完整 PCM。此速率是模拟器主机读取串口的实验条件。实板持续运行仍需设备回采。
+
+构建 `build_panel_marker_order.sh middle-uart` 后，在仓库根目录使用上文研究环境运行 `check_bella_uart_watchdog.py`，与冻结的 `middle` 构建对照。原始 52 份 UART 共 19,770,541 B（ZIP），归档 SHA256 为 `10a8d566008a16c194549cec215147227225afe7c1815947f5058a6706acd03e`。[逐场结果](../../results/4090-c161-bella-uart-watchdog.json) · [下载 UART 归档](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/4090-c161-bella-uart-watchdog.zip)
+
 ## 复现
 
 从仓库根目录运行，Mac 源提交须已获取。使用 ESP-IDF 5.5.4、ESP-SR 2.6.1、esp-tflite-micro 1.3.3~1、esp-nn 1.1.2 与 esp-micro-speech-features 1.2.3，前端使用 Mac 提交中的分配检查补丁。QEMU 使用 ANSI 神经网络内核和参考 FFT，并在 DSP 运算时屏蔽 tick 以避开模拟器浮点舍入 CSR 的延迟上下文切换问题；C161 内部进度日志在此模拟构建关闭。源 WAV 的生成和路径见上方配对实验。
