@@ -1,0 +1,1089 @@
+diff --git a/cmake/panel_wake.cmake b/cmake/panel_wake.cmake
+index 3388b61e..ac75afc6 100644
+--- a/cmake/panel_wake.cmake
++++ b/cmake/panel_wake.cmake
+@@ -5,3 +5,8 @@ if(NOT NYX_PANEL_WAKE_ENGINE STREQUAL "hey-nyx" AND
+         NOT NYX_PANEL_WAKE_ENGINE STREQUAL "hi-esp")
+     message(FATAL_ERROR "Unknown NYX_PANEL_WAKE_ENGINE: ${NYX_PANEL_WAKE_ENGINE}")
+ endif()
++option(NYX_PANEL_RESEARCH_FIXED_MARKER "Enable the fixed playback receiver with single C161" OFF)
++if(NYX_PANEL_RESEARCH_FIXED_MARKER AND
++        (NOT NYX_PANEL_WAKE_ENGINE STREQUAL "hey-nyx" OR NYX_PANEL_WAKE_RESEARCH_HANDOFF))
++    message(FATAL_ERROR "The fixed-marker trial requires the single C161 runtime")
++endif()
+diff --git a/components/panel_services/CMakeLists.txt b/components/panel_services/CMakeLists.txt
+index 6b7fcf88..f21da0f7 100644
+--- a/components/panel_services/CMakeLists.txt
++++ b/components/panel_services/CMakeLists.txt
+@@ -54,6 +54,10 @@ idf_component_register(
+
+ if(_wake_engine STREQUAL "hey-nyx")
+     target_compile_definitions(${COMPONENT_LIB} PRIVATE NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME=1)
++    if(NYX_PANEL_RESEARCH_FIXED_MARKER)
++        target_sources(${COMPONENT_LIB} PRIVATE "fixed_marker/board_marker.cpp")
++        target_compile_definitions(${COMPONENT_LIB} PRIVATE NYX_PANEL_RESEARCH_FIXED_MARKER=1 NYX_PANEL_UPDATE_DISABLED=1)
++    endif()
+     if(NYX_PANEL_WAKE_RESEARCH_HANDOFF)
+         target_compile_definitions(${COMPONENT_LIB} PRIVATE NYX_PANEL_UPDATE_DISABLED=1)
+     endif()
+diff --git a/components/panel_services/fixed_marker/board_marker.cpp b/components/panel_services/fixed_marker/board_marker.cpp
+new file mode 100644
+index 00000000..91fb9559
+--- /dev/null
++++ b/components/panel_services/fixed_marker/board_marker.cpp
+@@ -0,0 +1,44 @@
++#include "board_marker.h"
++#include "c161_coded_cue_reference_v5.h"
++#include "c161_panel_echo_confirmation.h"
++#include "c161_panel_middle_marker.h"
++#include "c161_timed_final_marker.h"
++#include "panel_marker_pair.h"
++#include "reference_activity.h"
++#include "reference_prefix.h"
++#include "reference_signature.h"
++#include "reference_wake.h"
++#include <new>
++#include <type_traits>
++
++struct board_marker {
++    nyx::TimedFinalMarker cue;
++    nyx::PanelMiddleMarker mic_middle;
++    nyx::PanelMarkerPair ref_pair;
++    nyx::PanelEchoConfirmation echo;
++    nyx::CodedCueReferenceV5 full;
++    nyx::ReferenceActivity activity;
++    nyx::ReferenceSignature signature;
++    nyx::ReferencePrefix prefix;
++    nyx::ReferenceWake model_route, cue_route;
++};
++
++static_assert(alignof(board_marker) <= 8 && std::is_trivially_destructible_v<board_marker>);
++
++size_t board_marker_bytes(void) { return sizeof(board_marker); }
++board_marker_t *board_marker_begin(void *storage) { return new (storage) board_marker{}; }
++
++unsigned board_marker_step(board_marker_t *s, int16_t mic, int16_t ref, bool model_hit, bool tx_pair) {
++    const bool matched = s->cue.update(mic);
++    const bool active = s->activity.update(ref);
++    const bool panel_clear = s->echo.allow_model(s->ref_pair.update(ref), tx_pair, s->mic_middle.update(mic));
++    const bool full_clear = s->full.allow(ref, true);
++    s->signature.update(ref);
++    using State = nyx::ReferencePrefix::State;
++    const auto prefix = s->prefix.update(ref, [&] { return s->signature.matches(); });
++    const bool ref_clear = full_clear && prefix != State::confirmed;
++    const bool waiting = prefix == State::awaiting_third;
++    const bool cue = s->cue_route.update_active(active, ref_clear, matched, waiting);
++    const bool model = s->model_route.update_active(active, ref_clear && panel_clear, model_hit, waiting);
++    return (model ? BOARD_MARKER_C161 : 0) | (cue ? BOARD_MARKER_CUE : 0);
++}
+diff --git a/components/panel_services/fixed_marker/board_marker.h b/components/panel_services/fixed_marker/board_marker.h
+new file mode 100644
+index 00000000..664c0a91
+--- /dev/null
++++ b/components/panel_services/fixed_marker/board_marker.h
+@@ -0,0 +1,21 @@
++#pragma once
++#include <stdbool.h>
++#include <stddef.h>
++#include <stdint.h>
++
++#ifdef __cplusplus
++extern "C" {
++#endif
++
++typedef struct board_marker board_marker_t;
++enum { BOARD_MARKER_C161 = 1, BOARD_MARKER_CUE = 2 };
++size_t board_marker_bytes(void);
++// Begin a listening epoch in caller-owned, 8-byte aligned storage.
++board_marker_t *board_marker_begin(void *storage);
++// One synchronous raw M/R sample. TX means an observed local B,C playout event.
++unsigned board_marker_step(board_marker_t *state, int16_t mic, int16_t reference,
++                           bool c161_hit, bool tx_pair);
++
++#ifdef __cplusplus
++}
++#endif
+diff --git a/components/panel_services/fixed_marker/c161_coded_cue_aligned_v4.h b/components/panel_services/fixed_marker/c161_coded_cue_aligned_v4.h
+new file mode 100644
+index 00000000..b18ca6b5
+--- /dev/null
++++ b/components/panel_services/fixed_marker/c161_coded_cue_aligned_v4.h
+@@ -0,0 +1,59 @@
++#pragma once
++#include <cstdint>
++#include "c161_coded_cue_band_coefficients_v4.h"
++
++namespace nyx {
++// Feed consecutive mono PCM16 at 16 kHz. Only the distributed v4 cue carries both patterns.
++class AlignedCodedCueV4 {
++public:
++    bool update(std::int16_t pcm) {
++        sum_ += pcm;
++        if (++phase_ < 4) return false;
++        const int block = sum_ / 16;
++        fir_[fir_cursor_] = fir_[fir_cursor_ + 17] = block;
++        fir_cursor_ = (fir_cursor_ + 1) % 17;
++        int filtered = 0;
++        for (int i = 0; i < 17; ++i)
++            filtered += fir_[fir_cursor_ + i] * kCueBandFir[16 - i];
++        const int sample = filtered / 128;
++        sum_ = phase_ = 0;
++        const int old = ring_[cursor_];
++        energy_ += sample * sample - old * old;
++        ring_[cursor_] = ring_[cursor_ + 320] = sample;
++        cursor_ = (cursor_ + 1) % 320;
++        slot_ = (slot_ + 1) & 1023;
++        // The two patterns traverse the same channel. Require the same correlation sign
++        // and the 160 ms spacing, allowing 1.5 ms for clock and arrival differences.
++        const int entering = first_[(slot_ + 1024 - 640 + 6) & 1023];
++        const int leaving = first_[(slot_ + 1024 - 640 - 7) & 1023];
++        positive_ += (entering > 0) - (leaving > 0);
++        negative_ += (entering < 0) - (leaving < 0);
++        first_[slot_] = 0;
++        if (cooldown_ > 0) {
++            --cooldown_;
++            return false;
++        }
++        if (!energy_) return false;
++        first_[slot_] = sign(0);
++        if (!positive_ && !negative_) return false;
++        const int second = sign(1);
++        if (!((second > 0 && positive_) || (second < 0 && negative_))) return false;
++        cooldown_ = 8039;
++        return true;
++    }
++
++private:
++    int sign(int pattern) const {
++        std::int32_t dot = 0;
++        for (int i = 0; i < 320; ++i)
++            dot += ring_[cursor_ + i] * kCueBandPatterns[pattern][i];
++        if (double(dot) * dot < 0.09 * kCueBandEnergy[pattern] * energy_) return 0;
++        return dot > 0 ? 1 : -1;
++    }
++    std::int16_t ring_[640]{}, fir_[34]{};
++    int fir_cursor_ = 0;
++    std::int8_t first_[1024]{};
++    std::int64_t energy_ = 0;
++    int sum_ = 0, phase_ = 0, cursor_ = 0, slot_ = 0, positive_ = 0, negative_ = 0, cooldown_ = 0;
++};
++}  // namespace nyx
+diff --git a/components/panel_services/fixed_marker/c161_coded_cue_band_coefficients_v4.h b/components/panel_services/fixed_marker/c161_coded_cue_band_coefficients_v4.h
+new file mode 100644
+index 00000000..3f213ea0
+--- /dev/null
++++ b/components/panel_services/fixed_marker/c161_coded_cue_band_coefficients_v4.h
+@@ -0,0 +1,52 @@
++#pragma once
++#include <cstdint>
++namespace nyx {
++inline constexpr int kCueBandFir[17] = {0, -1, 0, 5, -1, 8, -31, -14, 68, -14, -31, 8, -1, 5, 0, -1, 0};
++inline constexpr std::int8_t kCueBandPatterns[2][320] = {
++    {
++        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 3, -2, -2, 1,
++        -1, 9, -8, -21, 30, 15, -46, -1, 41, 6, -41, -26, 62, 27, -72, -25,
++        67, 32, -73, -7, 49, -24, 9, 5, -14, -8, 2, 48, -52, -13, 64, -59,
++        16, 39, -60, 15, 27, 2, -10, -40, 26, 32, -10, -11, -38, 25, 54, -58,
++        -3, 40, -40, 16, 9, -16, 33, -45, -15, 80, -20, -65, 10, 56, 12, -62,
++        4, 36, -38, 19, 61, -68, -65, 89, 49, -73, -32, 46, 16, -32, 8, 15,
++        -20, 5, -1, -4, 31, -16, -42, 31, 36, -30, -28, 23, 12, -11, 23, -27,
++        -50, 70, 62, -103, -51, 120, 1, -92, 58, 29, -83, 9, 88, -11, -89, 15,
++        51, -17, 34, -24, -88, 76, 67, -71, -43, 37, 61, -35, -78, 30, 86, 2,
++        -91, -39, 68, 75, -35, -75, 10, 9, 41, 51, -94, -29, 67, -22, 11, 33,
++        -29, -39, -26, 80, 75, -111, -79, 95, 55, -45, -24, -19, 18, 59, -43, -36,
++        28, 18, 23, -63, -28, 94, 8, -74, -17, 58, 23, -51, -7, 43, -15, -43,
++        50, 24, -64, 13, 27, -17, 8, 0, -12, 8, -10, 4, 38, -47, -13, 58,
++        -54, 17, 51, -87, 24, 63, -72, 4, 55, -27, -17, -15, 12, 59, -24, -65,
++        22, 39, -9, 21, -40, -54, 109, -8, -92, 86, -22, -68, 103, -12, -81, 56,
++        5, -41, 59, 4, -92, 21, 100, -30, -83, 30, 25, 17, 20, -98, 21, 103,
++        -84, -20, 72, -35, -26, 21, 17, 3, -37, 0, 53, -13, -66, 20, 85, -29,
++        -79, 27, 30, 16, 19, -77, -17, 84, -14, -6, 6, -83, 55, 89, -96, -21,
++        76, -46, -27, 67, -6, -42, 4, -1, 21, 24, -41, -5, 20, -22, 30, 12,
++        -38, -5, 9, 26, -5, -29, 14, 1, -3, 16, -15, -8, 17, -4, -6, 5,
++    },
++    {
++        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 2, 1, -2, -3,
++        0, 6, 1, -6, 4, -7, -1, 25, -24, -12, 39, -15, -16, -5, 7, 50,
++        -29, -58, 31, 36, -8, 0, -15, -38, 28, 51, -1, -62, -34, 82, 22, -66,
++        8, 22, -18, 4, 17, 4, -23, -22, 28, 23, -4, -23, -37, 32, 58, -32,
++        -57, 20, 44, -5, -29, -3, 12, 20, -11, -45, 52, 33, -81, 10, 53, -14,
++        -10, -34, 22, 66, -77, -32, 94, -13, -67, 22, 40, -24, 3, -6, -31, 66,
++        -16, -57, 56, -11, -12, 28, -44, 13, 44, -50, -11, 72, -41, -59, 77, 9,
++        -34, -9, -30, 82, 6, -113, 61, 48, -57, 9, 8, -3, 4, -1, -5, -10,
++        36, -13, -61, 72, 35, -101, 11, 67, -12, -28, -9, 15, 0, 12, 8, -35,
++        2, 13, 24, -2, -65, 34, 56, -43, -24, 4, 17, 40, -25, -63, 27, 63,
++        -14, -48, -18, 45, 37, -46, -26, 19, 15, 22, -12, -58, 8, 96, -31, -96,
++        60, 44, -34, -23, -13, 64, 18, -106, 0, 120, -9, -115, 17, 80, -14, -16,
++        -31, -17, 87, -28, -69, 93, -32, -86, 108, 33, -88, -30, 48, 59, -52, -35,
++        49, -18, -27, 51, 14, -63, 1, 34, 7, 15, -69, 2, 110, -88, -39, 109,
++        -72, -13, 84, -81, -6, 84, -62, -26, 64, -18, -18, 10, -17, 16, 25, -21,
++        -28, 9, 35, -5, -19, 9, -34, 13, 80, -44, -87, 45, 70, -18, -48, -8,
++        21, 19, 21, -41, -43, 77, 1, -65, 52, -10, -29, 55, -29, -37, 47, 11,
++        -31, -4, 10, 11, 5, -33, 1, 50, -20, -38, 10, 19, 29, -23, -51, 28,
++        35, -5, -19, -25, 23, 25, -28, -3, 27, -18, -25, 35, 9, -38, 24, 10,
++        -40, 20, 27, -18, -17, 6, 13, -3, 1, -3, -13, 14, 10, -12, -3, 4,
++    },
++};
++inline constexpr int kCueBandEnergy[2] = {666186, 537235};
++}  // namespace nyx
+diff --git a/components/panel_services/fixed_marker/c161_coded_cue_coefficients_v5.h b/components/panel_services/fixed_marker/c161_coded_cue_coefficients_v5.h
+new file mode 100644
+index 00000000..a5bcc8ca
+--- /dev/null
++++ b/components/panel_services/fixed_marker/c161_coded_cue_coefficients_v5.h
+@@ -0,0 +1,74 @@
++#pragma once
++#include <cstdint>
++namespace nyx {
++inline constexpr int kCueBandFirV5[17] = {0, -1, 0, 5, -1, 8, -31, -14, 68, -14, -31, 8, -1, 5, 0, -1, 0};
++inline constexpr std::int8_t kCueBandPatternsV5[3][320] = {
++    {
++        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 3, -2, -2, 1,
++        -1, 9, -8, -21, 30, 15, -46, -1, 41, 6, -41, -26, 62, 27, -72, -25,
++        67, 32, -73, -7, 49, -24, 9, 5, -14, -8, 2, 48, -52, -13, 64, -59,
++        16, 39, -60, 15, 27, 2, -10, -40, 26, 32, -10, -11, -38, 25, 54, -58,
++        -3, 40, -40, 16, 9, -16, 33, -45, -15, 80, -20, -65, 10, 56, 12, -62,
++        4, 36, -38, 19, 61, -68, -65, 89, 49, -73, -32, 46, 16, -32, 8, 15,
++        -20, 5, -1, -4, 31, -16, -42, 31, 36, -30, -28, 23, 12, -11, 23, -27,
++        -50, 70, 62, -103, -51, 120, 1, -92, 58, 29, -83, 9, 88, -11, -89, 15,
++        51, -17, 34, -24, -88, 76, 67, -71, -43, 37, 61, -35, -78, 30, 86, 2,
++        -91, -39, 68, 75, -35, -75, 10, 9, 41, 51, -94, -29, 67, -22, 11, 33,
++        -29, -39, -26, 80, 75, -111, -79, 95, 55, -45, -24, -19, 18, 59, -43, -36,
++        28, 18, 23, -63, -28, 94, 8, -74, -17, 58, 23, -51, -7, 43, -15, -43,
++        50, 24, -64, 13, 27, -17, 8, 0, -12, 8, -10, 4, 38, -47, -13, 58,
++        -54, 17, 51, -87, 24, 63, -72, 4, 55, -27, -17, -15, 12, 59, -24, -65,
++        22, 39, -9, 21, -40, -54, 109, -8, -92, 86, -22, -68, 103, -12, -81, 56,
++        5, -41, 59, 4, -92, 21, 100, -30, -83, 30, 25, 17, 20, -98, 21, 103,
++        -84, -20, 72, -35, -26, 21, 17, 3, -37, 0, 53, -13, -66, 20, 85, -29,
++        -79, 27, 30, 16, 19, -77, -17, 84, -14, -6, 6, -83, 55, 89, -96, -21,
++        76, -46, -27, 67, -6, -42, 4, -1, 21, 24, -41, -5, 20, -22, 30, 12,
++        -38, -5, 9, 26, -5, -29, 14, 1, -3, 16, -15, -8, 17, -4, -6, 5,
++    },
++    {
++        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 2, 1, -2, -3,
++        0, 6, 1, -6, 4, -7, -1, 25, -24, -12, 39, -15, -16, -5, 7, 50,
++        -29, -58, 31, 36, -8, 0, -15, -38, 28, 51, -1, -62, -34, 82, 22, -66,
++        8, 22, -18, 4, 17, 4, -23, -22, 28, 23, -4, -23, -37, 32, 58, -32,
++        -57, 20, 44, -5, -29, -3, 12, 20, -11, -45, 52, 33, -81, 10, 53, -14,
++        -10, -34, 22, 66, -77, -32, 94, -13, -67, 22, 40, -24, 3, -6, -31, 66,
++        -16, -57, 56, -11, -12, 28, -44, 13, 44, -50, -11, 72, -41, -59, 77, 9,
++        -34, -9, -30, 82, 6, -113, 61, 48, -57, 9, 8, -3, 4, -1, -5, -10,
++        36, -13, -61, 72, 35, -101, 11, 67, -12, -28, -9, 15, 0, 12, 8, -35,
++        2, 13, 24, -2, -65, 34, 56, -43, -24, 4, 17, 40, -25, -63, 27, 63,
++        -14, -48, -18, 45, 37, -46, -26, 19, 15, 22, -12, -58, 8, 96, -31, -96,
++        60, 44, -34, -23, -13, 64, 18, -106, 0, 120, -9, -115, 17, 80, -14, -16,
++        -31, -17, 87, -28, -69, 93, -32, -86, 108, 33, -88, -30, 48, 59, -52, -35,
++        49, -18, -27, 51, 14, -63, 1, 34, 7, 15, -69, 2, 110, -88, -39, 109,
++        -72, -13, 84, -81, -6, 84, -62, -26, 64, -18, -18, 10, -17, 16, 25, -21,
++        -28, 9, 35, -5, -19, 9, -34, 13, 80, -44, -87, 45, 70, -18, -48, -8,
++        21, 19, 21, -41, -43, 77, 1, -65, 52, -10, -29, 55, -29, -37, 47, 11,
++        -31, -4, 10, 11, 5, -33, 1, 50, -20, -38, 10, 19, 29, -23, -51, 28,
++        35, -5, -19, -25, 23, 25, -28, -3, 27, -18, -25, 35, 9, -38, 24, 10,
++        -40, 20, 27, -18, -17, 6, 13, -3, 1, -3, -13, 14, 10, -12, -3, 4,
++    },
++    {
++        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, -1, 3, -4,
++        -5, 13, 2, -13, 2, -5, 5, 30, -19, -45, 29, 37, -30, -3, 13, -33,
++        11, 43, -15, -33, 5, 8, 12, 13, -24, -23, 24, 37, -46, -21, 68, -34,
++        -29, 50, -38, 4, 51, -51, -23, 42, 12, -8, -20, -21, 23, 50, -33, -61,
++        57, 22, -52, 29, 13, -32, -1, 15, 26, -21, -45, 42, 36, -54, 0, 25,
++        -11, 18, -26, -15, 45, -3, -20, -27, 6, 93, -58, -95, 120, 1, -84, 71,
++        -7, -51, 48, 6, -38, 14, 24, -16, -24, 17, 25, -15, -25, 10, 31, -13,
++        -28, 16, 15, -10, -4, 12, -11, -19, 22, 31, -16, -58, 9, 72, -3, -55,
++        -13, 25, 24, 9, -27, -29, 26, 26, -19, -12, 18, 4, -30, -7, 53, 12,
++        -58, -26, 31, 73, -24, -106, 51, 64, -37, -14, -19, 35, 23, -71, 22, 60,
++        -41, -32, 20, 28, -2, -39, 19, 23, -46, 31, 25, -56, 17, 26, -20, -15,
++        37, 4, -81, 66, 45, -99, 45, 38, -76, 12, 73, -22, -77, 37, 45, -19,
++        -4, -43, 27, 62, -72, -12, 58, -30, -5, 33, -36, -25, 54, 22, -49, -24,
++        19, 30, 22, -40, -49, 52, 34, -39, 9, -17, -5, 52, -42, -16, 49, -18,
++        -31, 15, 40, -34, -26, 56, -38, -10, 64, -55, -20, 40, 8, 10, -62, -7,
++        105, -25, -109, 42, 90, -34, -65, -4, 73, 22, -100, 14, 78, -40, -27, 17,
++        18, -6, -29, 27, 22, -43, -23, 61, 28, -80, -18, 56, 31, -15, -82, 27,
++        88, -65, -7, 46, -76, 20, 93, -63, -62, 61, 31, -42, -12, 27, 1, -15,
++        6, -2, -12, 29, 5, -43, 8, 31, -14, -3, 15, -34, 1, 51, -26, -23,
++        20, -8, 10, 5, -20, 8, 5, -5, 4, -2, -1, -2, 2, 5, -5, -2,
++    },
++};
++inline constexpr int kCueBandEnergyV5[3] = {666186, 537235, 468810};
++}  // namespace nyx
+diff --git a/components/panel_services/fixed_marker/c161_coded_cue_reference_v5.h b/components/panel_services/fixed_marker/c161_coded_cue_reference_v5.h
+new file mode 100644
+index 00000000..f8b12f57
+--- /dev/null
++++ b/components/panel_services/fixed_marker/c161_coded_cue_reference_v5.h
+@@ -0,0 +1,24 @@
++#pragma once
++#include "c161_coded_cue_v5.h"
++
++namespace nyx {
++// Feed the raw playback reference at the sample index of the processed mic output.
++// The mic matcher can be shared with the existing v5 path. Each result is one tick.
++class CodedCueReferenceV5 {
++public:
++    bool allow(std::int16_t reference, bool mic_hit) {
++        if (reference_detector_.update(reference)) {
++            remaining_ = kWindowSamples + 1;
++        }
++        const bool suppress = remaining_ > 0;
++        if (suppress) --remaining_;
++        return mic_hit && !suppress;
++    }
++
++    // Measured zero-reference frontend latency plus eight 256-sample AEC partitions.
++    static constexpr int kWindowSamples = 1440 + 8 * 256;
++private:
++    CodedCueV5 reference_detector_;
++    int remaining_ = 0;
++};
++}
+diff --git a/components/panel_services/fixed_marker/c161_coded_cue_v5.h b/components/panel_services/fixed_marker/c161_coded_cue_v5.h
+new file mode 100644
+index 00000000..7d51fa0c
+--- /dev/null
++++ b/components/panel_services/fixed_marker/c161_coded_cue_v5.h
+@@ -0,0 +1,69 @@
++#pragma once
++#include <cstdint>
++#include "c161_coded_cue_coefficients_v5.h"
++
++namespace nyx {
++// Feed consecutive mono PCM16 at 16 kHz. Only the distributed v5 cue carries the three patterns.
++class CodedCueV5 {
++public:
++    bool update(std::int16_t pcm) {
++        sum_ += pcm;
++        if (++phase_ < 4) return false;
++        const int block = sum_ / 16;
++        fir_[fir_cursor_] = fir_[fir_cursor_ + 17] = block;
++        fir_cursor_ = (fir_cursor_ + 1) % 17;
++        int filtered = 0;
++        for (int i = 0; i < 17; ++i)
++            filtered += fir_[fir_cursor_ + i] * kCueBandFirV5[16 - i];
++        const int sample = filtered / 128;
++        sum_ = phase_ = 0;
++        const int old = ring_[cursor_];
++        energy_ += sample * sample - old * old;
++        ring_[cursor_] = ring_[cursor_ + 320] = sample;
++        cursor_ = (cursor_ + 1) % 320;
++        slot_ = (slot_ + 1) & 1023;
++        // Look for the next known pattern 160 ms or 120 ms after its predecessor.
++        // A matched chain keeps one polarity, allowing 1.5 ms of relative arrival error.
++        for (int k = 0; k < 2; ++k) {
++            const int delay = k == 0 ? 640 : 480;
++            const int entering = signs_[k][(slot_ + 1024 - delay + 6) & 1023];
++            const int leaving = signs_[k][(slot_ + 1024 - delay - 7) & 1023];
++            positive_[k] += (entering > 0) - (leaving > 0);
++            negative_[k] += (entering < 0) - (leaving < 0);
++            signs_[k][slot_] = 0;
++        }
++        if (cooldown_ > 0) {
++            --cooldown_;
++            return false;
++        }
++        if (!energy_) return false;
++        signs_[0][slot_] = sign(0);
++        if (positive_[0] || negative_[0]) {
++            const int second = sign(1);
++            if (consistent(0, second)) signs_[1][slot_] = second;
++        }
++        if (!positive_[1] && !negative_[1]) return false;
++        if (!consistent(1, sign(2))) return false;
++        cooldown_ = 8039;
++        return true;
++    }
++
++private:
++    bool consistent(int k, int sign) const {
++        return (sign > 0 && positive_[k]) || (sign < 0 && negative_[k]);
++    }
++
++    int sign(int pattern) const {
++        std::int32_t dot = 0;
++        for (int i = 0; i < 320; ++i)
++            dot += ring_[cursor_ + i] * kCueBandPatternsV5[pattern][i];
++        if (double(dot) * dot < 0.09 * kCueBandEnergyV5[pattern] * energy_) return 0;
++        return dot > 0 ? 1 : -1;
++    }
++    std::int16_t ring_[640]{}, fir_[34]{};
++    int fir_cursor_ = 0;
++    std::int8_t signs_[2][1024]{};
++    std::int64_t energy_ = 0;
++    int sum_ = 0, phase_ = 0, cursor_ = 0, slot_ = 0, positive_[2]{}, negative_[2]{}, cooldown_ = 0;
++};
++}  // namespace nyx
+diff --git a/components/panel_services/fixed_marker/c161_panel_demo_guard.h b/components/panel_services/fixed_marker/c161_panel_demo_guard.h
+new file mode 100644
+index 00000000..918914b3
+--- /dev/null
++++ b/components/panel_services/fixed_marker/c161_panel_demo_guard.h
+@@ -0,0 +1,21 @@
++#pragma once
++
++namespace nyx {
++// Call once per 16 kHz capture sample on the listener thread. The optional
++// speaker event is the panel demonstration's B,C marker pair on the playout
++// clock, mapped to this capture clock. A queued or cancelled playback request
++// alone supplies no event. Keep feeding the physical R to the AEC and FIFO.
++class PanelDemoGuard {
++public:
++    bool allow_model(bool reference_pair, bool played_pair) {
++        if (reference_pair || played_pair) remaining_ = kTailSamples + 1;
++        if (remaining_ == 0) return true;
++        --remaining_;
++        return false;
++    }
++    static constexpr int kTailSamples = 1944 + 3488;
++
++private:
++    int remaining_ = 0;
++};
++}  // namespace nyx
+diff --git a/components/panel_services/fixed_marker/c161_panel_echo_confirmation.h b/components/panel_services/fixed_marker/c161_panel_echo_confirmation.h
+new file mode 100644
+index 00000000..775eb839
+--- /dev/null
++++ b/components/panel_services/fixed_marker/c161_panel_echo_confirmation.h
+@@ -0,0 +1,33 @@
++#pragma once
++#include "c161_panel_demo_guard.h"
++
++namespace nyx {
++// Inputs are consumed in capture-sample order. Corroborate the known panel's
++// B,C playout event with the same pair heard on the microphone, in either order.
++class PanelEchoConfirmation {
++public:
++    bool allow_model(bool reference_pair, bool played_pair, bool mic_pair) {
++        age(played_age_, played_pair);
++        age(mic_age_, mic_pair);
++        if (reference_pair)
++            remaining_ = PanelDemoGuard::kTailSamples + 1;
++        if ((played_pair || mic_pair) && played_age_ <= kSkew && mic_age_ <= kSkew) {
++            const int tail = PanelDemoGuard::kTailSamples + 1 - mic_age_;
++            if (tail > remaining_) remaining_ = tail;
++        }
++        if (!remaining_) return true;
++        --remaining_;
++        return false;
++    }
++
++private:
++    static constexpr int kSkew = 1280;
++    static void age(int& value, bool fresh) {
++        if (fresh) value = 0;
++        else if (value <= kSkew) ++value;
++    }
++    int played_age_ = kSkew + 1;
++    int mic_age_ = kSkew + 1;
++    int remaining_ = 0;
++};
++}  // namespace nyx
+diff --git a/components/panel_services/fixed_marker/c161_panel_middle_marker.h b/components/panel_services/fixed_marker/c161_panel_middle_marker.h
+new file mode 100644
+index 00000000..7e98e9e3
+--- /dev/null
++++ b/components/panel_services/fixed_marker/c161_panel_middle_marker.h
+@@ -0,0 +1,36 @@
++#pragma once
++#include <cstdint>
++#include "c161_coded_cue_coefficients_v5.h"
++
++namespace nyx {
++// Acoustic corroboration for a known local B,C,A demonstration. The caller
++// separately checks the playout clock; a match here cannot open or veto alone.
++class PanelMiddleMarker {
++public:
++    bool update(std::int16_t pcm) {
++        sum_ += pcm;
++        if (++phase_ < 4) return false;
++        fir_[fir_cursor_] = fir_[fir_cursor_ + 17] = sum_ / 16;
++        sum_ = phase_ = 0;
++        fir_cursor_ = (fir_cursor_ + 1) % 17;
++        int filtered = 0;
++        for (int i = 0; i < 17; ++i)
++            filtered += fir_[fir_cursor_ + i] * kCueBandFirV5[16 - i];
++        const int sample = filtered / 128;
++        const int old = ring_[cursor_];
++        energy_ += sample * sample - old * old;
++        ring_[cursor_] = ring_[cursor_ + 320] = sample;
++        cursor_ = (cursor_ + 1) % 320;
++        if (!energy_) return false;
++        std::int32_t dot = 0;
++        for (int i = 0; i < 320; ++i)
++            dot += ring_[cursor_ + i] * kCueBandPatternsV5[2][i];
++        return double(dot) * dot >= 0.09 * kCueBandEnergyV5[2] * energy_;
++    }
++
++private:
++    std::int16_t ring_[640]{}, fir_[34]{};
++    std::int64_t energy_ = 0;
++    int fir_cursor_ = 0, cursor_ = 0, sum_ = 0, phase_ = 0;
++};
++}  // namespace nyx
+diff --git a/components/panel_services/fixed_marker/c161_timed_final_marker.h b/components/panel_services/fixed_marker/c161_timed_final_marker.h
+new file mode 100644
+index 00000000..39d06151
+--- /dev/null
++++ b/components/panel_services/fixed_marker/c161_timed_final_marker.h
+@@ -0,0 +1,79 @@
++#pragma once
++#include <cstdint>
++#include "c161_coded_cue_coefficients_v5.h"
++
++namespace nyx {
++// Feed consecutive mono PCM16 at 16 kHz. Only the distributed v5 cue carries the three patterns.
++class TimedFinalMarker {
++public:
++    bool update(std::int16_t pcm) {
++        sum_ += pcm;
++        if (++phase_ < 4) return false;
++        const int block = sum_ / 16;
++        fir_[fir_cursor_] = fir_[fir_cursor_ + 17] = block;
++        fir_cursor_ = (fir_cursor_ + 1) % 17;
++        int filtered = 0;
++        for (int i = 0; i < 17; ++i)
++            filtered += fir_[fir_cursor_ + i] * kCueBandFirV5[16 - i];
++        const int sample = filtered / 128;
++        sum_ = phase_ = 0;
++        const int old = ring_[cursor_];
++        energy_ += sample * sample - old * old;
++        ring_[cursor_] = ring_[cursor_ + 320] = sample;
++        cursor_ = (cursor_ + 1) % 320;
++        slot_ = (slot_ + 1) & 1023;
++        // Look for the next known pattern 160 ms or 120 ms after its predecessor.
++        // A matched chain keeps one polarity, allowing 1.5 ms of relative arrival error.
++        for (int k = 0; k < 2; ++k) {
++            const int delay = k == 0 ? 640 : 480;
++            const int entering = signs_[k][(slot_ + 1024 - delay + 6) & 1023];
++            const int leaving = signs_[k][(slot_ + 1024 - delay - 7) & 1023];
++            positive_[k] += (entering > 0) - (leaving > 0);
++            negative_[k] += (entering < 0) - (leaving < 0);
++            signs_[k][slot_] = 0;
++        }
++        if (cooldown_ > 0) {
++            --cooldown_;
++            return false;
++        }
++        if (!energy_) return false;
++        signs_[0][slot_] = sign(0);
++        if (positive_[0] || negative_[0]) {
++            const int second = sign(1);
++            if (consistent(0, second)) signs_[1][slot_] = second;
++        }
++        if (!positive_[1] && !negative_[1]) return false;
++        if (!consistent(1, sign(2))) return false;
++        cooldown_ = 8039;
++        return true;
++    }
++
++private:
++    bool consistent(int k, int sign) const {
++        return (sign > 0 && positive_[k]) || (sign < 0 && negative_[k]);
++    }
++
++    int sign(int pattern) const {
++        std::int32_t dot = 0;
++        for (int i = 0; i < 320; ++i)
++            dot += ring_[cursor_ + i] * kCueBandPatternsV5[pattern][i];
++        const double squared = double(dot) * dot;
++        const int polarity = dot > 0 ? 1 : -1;
++        if (squared >= 0.09 * kCueBandEnergyV5[pattern] * energy_) return polarity;
++        if (pattern != 2 || squared < 0.04 * kCueBandEnergyV5[pattern] * energy_) return 0;
++
++        // A weak final marker needs a same-polarity middle marker 120 ms earlier.
++        // Two 4 kHz ticks allow 0.5 ms for clock drift and peak quantization.
++        for (int skew = -2; skew <= 2; ++skew) {
++            if (signs_[1][(slot_ + 1024 - 480 + skew) & 1023] == polarity)
++                return polarity;
++        }
++        return 0;
++    }
++    std::int16_t ring_[640]{}, fir_[34]{};
++    int fir_cursor_ = 0;
++    std::int8_t signs_[2][1024]{};
++    std::int64_t energy_ = 0;
++    int sum_ = 0, phase_ = 0, cursor_ = 0, slot_ = 0, positive_[2]{}, negative_[2]{}, cooldown_ = 0;
++};
++}  // namespace nyx
+diff --git a/components/panel_services/fixed_marker/panel_marker_pair.h b/components/panel_services/fixed_marker/panel_marker_pair.h
+new file mode 100644
+index 00000000..178ac633
+--- /dev/null
++++ b/components/panel_services/fixed_marker/panel_marker_pair.h
+@@ -0,0 +1,59 @@
++#pragma once
++#include <cstdint>
++#include "c161_coded_cue_coefficients_v5.h"
++
++namespace nyx {
++// Feed consecutive mono PCM16 at 16 kHz. Only the distributed v4 cue carries both patterns.
++class PanelMarkerPair {
++public:
++    bool update(std::int16_t pcm) {
++        sum_ += pcm;
++        if (++phase_ < 4) return false;
++        const int block = sum_ / 16;
++        fir_[fir_cursor_] = fir_[fir_cursor_ + 17] = block;
++        fir_cursor_ = (fir_cursor_ + 1) % 17;
++        int filtered = 0;
++        for (int i = 0; i < 17; ++i)
++            filtered += fir_[fir_cursor_ + i] * kCueBandFirV5[16 - i];
++        const int sample = filtered / 128;
++        sum_ = phase_ = 0;
++        const int old = ring_[cursor_];
++        energy_ += sample * sample - old * old;
++        ring_[cursor_] = ring_[cursor_ + 320] = sample;
++        cursor_ = (cursor_ + 1) % 320;
++        slot_ = (slot_ + 1) & 1023;
++        // The two patterns traverse the same channel. Require the same correlation sign
++        // and the 160 ms spacing, allowing 1.5 ms for clock and arrival differences.
++        const int entering = first_[(slot_ + 1024 - 640 + 6) & 1023];
++        const int leaving = first_[(slot_ + 1024 - 640 - 7) & 1023];
++        positive_ += (entering > 0) - (leaving > 0);
++        negative_ += (entering < 0) - (leaving < 0);
++        first_[slot_] = 0;
++        if (cooldown_ > 0) {
++            --cooldown_;
++            return false;
++        }
++        if (!energy_) return false;
++        first_[slot_] = sign(0);
++        if (!positive_ && !negative_) return false;
++        const int second = sign(1);
++        if (!((second > 0 && positive_) || (second < 0 && negative_))) return false;
++        cooldown_ = 8039;
++        return true;
++    }
++
++private:
++    int sign(int pattern) const {
++        std::int32_t dot = 0;
++        for (int i = 0; i < 320; ++i)
++            dot += ring_[cursor_ + i] * kCueBandPatternsV5[pattern + 1][i];
++        if (double(dot) * dot < 0.09 * kCueBandEnergyV5[pattern + 1] * energy_) return 0;
++        return dot > 0 ? 1 : -1;
++    }
++    std::int16_t ring_[640]{}, fir_[34]{};
++    int fir_cursor_ = 0;
++    std::int8_t first_[1024]{};
++    std::int64_t energy_ = 0;
++    int sum_ = 0, phase_ = 0, cursor_ = 0, slot_ = 0, positive_ = 0, negative_ = 0, cooldown_ = 0;
++};
++}  // namespace nyx
+diff --git a/components/panel_services/fixed_marker/reference_activity.h b/components/panel_services/fixed_marker/reference_activity.h
+new file mode 100644
+index 00000000..119646aa
+--- /dev/null
++++ b/components/panel_services/fixed_marker/reference_activity.h
+@@ -0,0 +1,37 @@
++#pragma once
++#include <cstdint>
++
++namespace nyx {
++// Emit one activity pulse at the end of each 10 ms frame whose AC RMS reaches
++// 64 PCM16 units. The wake and capture routes apply their existing hold times.
++class ReferenceActivity {
++public:
++    static constexpr int kFrame = 160;
++    static bool active_frame(const int16_t *pcm) {
++        int sum = 0;
++        int64_t energy = 0;
++        for (int i = 0; i < kFrame; ++i) {
++            sum += pcm[i];
++            energy += int(pcm[i]) * int(pcm[i]);
++        }
++        return above_floor(sum, energy);
++    }
++
++    bool update(int16_t sample) {
++        sum_ += sample;
++        energy_ += int(sample) * int(sample);
++        if (++count_ != kFrame) return false;
++        const bool active = above_floor(sum_, energy_);
++        count_ = sum_ = 0;
++        energy_ = 0;
++        return active;
++    }
++
++private:
++    static bool above_floor(int sum, int64_t energy) {
++        return kFrame * energy - int64_t(sum) * sum >= int64_t(kFrame * 64) * (kFrame * 64);
++    }
++    int count_ = 0, sum_ = 0;
++    int64_t energy_ = 0;
++};
++}
+diff --git a/components/panel_services/fixed_marker/reference_prefix.h b/components/panel_services/fixed_marker/reference_prefix.h
+new file mode 100644
+index 00000000..be315d43
+--- /dev/null
++++ b/components/panel_services/fixed_marker/reference_prefix.h
+@@ -0,0 +1,32 @@
++#pragma once
++#include "c161_coded_cue_aligned_v4.h"
++
++namespace nyx {
++// The first two codes of the digital v5 reference precede the final code by
++// 120 ms. Bridge that interval, including the final matcher's 1.5 ms tolerance.
++class ReferencePrefix {
++public:
++    static constexpr int kWindowSamples = 1920 + 24;
++    enum class State { clear, confirmed, awaiting_third };
++
++    template <typename Qualify>
++    State update(std::int16_t reference, Qualify qualify) {
++        if (pair_.update(reference)) {
++            state_ = qualify() ? State::confirmed : State::awaiting_third;
++            remaining_ = kWindowSamples + 1;
++        }
++        if (!remaining_) return State::clear;
++        --remaining_;
++        return state_;
++    }
++
++    template <typename Qualify>
++    bool clear(std::int16_t reference, Qualify qualify) {
++        return update(reference, qualify) != State::confirmed;
++    }
++private:
++    AlignedCodedCueV4 pair_;
++    int remaining_ = 0;
++    State state_ = State::clear;
++};
++}
+diff --git a/components/panel_services/fixed_marker/reference_signature.h b/components/panel_services/fixed_marker/reference_signature.h
+new file mode 100644
+index 00000000..6ca7bbfa
+--- /dev/null
++++ b/components/panel_services/fixed_marker/reference_signature.h
+@@ -0,0 +1,39 @@
++#pragma once
++#include <cstdint>
++
++namespace nyx {
++// Check only at a two-code match on the electrical reference. Compare 32 ms
++// from the middle of the frozen WAV's second code, tolerating level changes.
++class ReferenceSignature {
++public:
++    void update(std::int16_t sample) {
++        const std::uint32_t bit = 1u << (next_ & 31);
++        auto& word = history_[next_ >> 5];
++        if (sample > 0) word |= bit;
++        else word &= ~bit;
++        next_ = (next_ + 1) & 1023;
++    }
++
++    bool matches() const {
++        // Second code ends at 15680. Its sampled sign pattern starts at 14800.
++        for (int lag = 880 - 48; lag <= 880 + 48; ++lag) {
++            int errors = 0;
++            for (int i = 0; i < 128; ++i) {
++                const int slot = (1024 + next_ - lag + 4*i) & 1023;
++                const auto actual = (history_[slot >> 5] >> (slot & 31)) & 1u;
++                const auto expected = (kPattern[i >> 5] >> (31 - (i & 31))) & 1u;
++                errors += actual != expected;
++                if (errors > 12 && i + 1 - errors > 12) break;
++                if (i == 127) return true;
++            }
++        }
++        return false;
++    }
++
++private:
++    // Sign of digital v5 PCM[14800:15312:4], most significant bit first.
++    static constexpr std::uint32_t kPattern[4] = {0xb597fd99, 0xe723199e, 0x6d666b6c, 0xcd9cd24d};
++    std::uint32_t history_[32]{};
++    int next_ = 0;
++};
++}
+diff --git a/components/panel_services/fixed_marker/reference_wake.h b/components/panel_services/fixed_marker/reference_wake.h
+new file mode 100644
+index 00000000..08493448
+--- /dev/null
++++ b/components/panel_services/fixed_marker/reference_wake.h
+@@ -0,0 +1,37 @@
++#pragma once
++#include <cstdlib>
++#include <cstdint>
++
++namespace nyx {
++// A microphone decision can arrive shortly before the playback reference
++// completes its three v5 anchors. Allow one C161 stride during playback.
++class ReferenceWake {
++public:
++    bool update(int16_t reference, bool reference_clear, bool hit, bool awaiting_third = false) {
++        return update_active(std::abs(int(reference)) >= 64, reference_clear, hit, awaiting_third);
++    }
++
++    bool update_active(bool active, bool reference_clear, bool hit, bool awaiting_third) {
++        if (active) recent_ = 8001;
++        const bool playing = recent_ > 0;
++        if (playing) --recent_;
++        if (!reference_clear) {
++            pending_ = 0;
++            return false;
++        }
++        if (pending_) {
++            // Keep a due decision until a tentative pair expires or a full match cancels it.
++            if (pending_ == 1 && awaiting_third) return false;
++            if (--pending_ == 0) return true;
++        }
++        if (!hit) return false;
++        if (playing) pending_ = 480;
++        else if (awaiting_third) pending_ = 1;
++        else return true;
++        return false;
++    }
++
++private:
++    int recent_ = 0, pending_ = 0;
++};
++}
+diff --git a/components/panel_services/panel_voice.c b/components/panel_services/panel_voice.c
+index f00cd50e..648b50db 100644
+--- a/components/panel_services/panel_voice.c
++++ b/components/panel_services/panel_voice.c
+@@ -2,6 +2,9 @@
+ #include "panel_voice.h"
+ #include "panel_ota.h"
+ #include "panel_voice_audio.h"
++#ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
++#include "fixed_marker/board_marker.h"
++#endif
+ #include "esp_aec.h"
+ #include "esp_agc.h"
+ #include "esp_wn_models.h"
+@@ -124,6 +127,12 @@ static remote_record_t remote_records[8];
+ static SemaphoreHandle_t wake_lock;
+ static voice_call_t *wake_call;
+ static panel_voice_pcm_t wake_tail;
++#ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
++// Protected by wake_lock. PCM end counts completed 160-sample AGC hops in
++// the current listening epoch, including the wake-initiated call that follows.
++static uint64_t marker_pcm_end;
++static unsigned marker_epoch;
++#endif
+ static atomic_bool wake_enabled=true, wake_listening;
+ // Progress counters are independent of UI state: a stuck audio task can leave
+ // HTTP and "listening" responsive. Wrap is harmless to progress comparisons.
+@@ -726,6 +735,9 @@ static void mic_task(void *arg)
+         if (esp_opus_enc_open(&cfg,sizeof(cfg),&encoder)!=ESP_AUDIO_ERR_OK) {
+             state("error","Voice microphone encoding could not start");atomic_store(&c->running,false);
+         }
++#ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
++        bool logged_pcm=false,logged_send=false,logged_audio_send=false;
++#endif
+         while (atomic_load(&c->running)) {
+             bool ready=false;
+             // Bound bursts, but do not sleep a wall-clock audio frame after
+@@ -742,20 +754,44 @@ static void mic_task(void *arg)
+                 ready=connected && !muted;
+                 if (ready) have=panel_voice_pcm_pop(&c->capture,mono,FRAME_SAMPLES);
+                 remaining=c->capture.count;
++#ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
++                const unsigned epoch=marker_epoch;
++                // A successful pop returns the oldest frame. Mute/disconnect
++                // can clear the FIFO, so derive its origin from the actual tail.
++                const int64_t pcm_start=have?(int64_t)(marker_pcm_end-remaining-FRAME_SAMPLES):-1;
++#endif
+                 xSemaphoreGive(wake_lock);
+                 if (ready && !have) break;
+                 if (!have) memset(mono,0,sizeof(mono));
+                 esp_audio_enc_in_frame_t input={.buffer=(uint8_t *)mono,.len=sizeof(mono)};
+                 esp_audio_enc_out_frame_t output={.buffer=encoded,.len=sizeof(encoded)};
++#ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
++                int64_t input_us=(have && !logged_pcm)?esp_timer_get_time():0;
++#endif
+                 if (esp_opus_enc_process(encoder,&input,&output)!=ESP_AUDIO_ERR_OK) {
+                     state("error","Voice microphone encoding failed");atomic_store(&c->running,false);break;
+                 }
++#ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
++                if(have && !logged_pcm) {
++                    logged_pcm=true;
++                    ESP_LOGI("panel.wake.marker","first_pcm epoch=%u start=%lld samples=%u input_us=%lld",
++                        epoch,(long long)pcm_start,(unsigned)FRAME_SAMPLES,(long long)input_us);
++                }
++#endif
+                 if (atomic_load(&c->connected)) {
+                     esp_peer_audio_frame_t frame={.data=encoded,.size=output.encoded_bytes,.pts=pts};
+                     xSemaphoreTake(c->peer_lock,portMAX_DELAY);
+                     int err=esp_peer_send_audio(c->peer,&frame);
+                     xSemaphoreGive(c->peer_lock);
+                     if (err) {state("error","Voice microphone send failed");atomic_store(&c->running,false);break;}
++#ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
++                    if(!logged_send || (have && !logged_audio_send)) {
++                        ESP_LOGI("panel.wake.marker","peer_send epoch=%u first=%d captured=%d start=%lld pts=%u bytes=%d accepted_us=%lld",
++                            epoch,!logged_send,have,(long long)pcm_start,pts,(int)output.encoded_bytes,(long long)esp_timer_get_time());
++                        logged_send=true;
++                        if(have)logged_audio_send=true;
++                    }
++#endif
+                     if(have)c->replayed_samples+=FRAME_SAMPLES;
+                     xSemaphoreTake(state_lock,portMAX_DELAY);
+                     status.sent_packets++;status.buffered_ms=remaining/16;
+@@ -916,6 +952,45 @@ static inline int feed_wake_model(const esp_wn_iface_t *wn,model_iface_data_t *m
+     return hit;
+ }
+
++#ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
++typedef struct {
++    uint64_t model_end;
++    uint64_t cue_end;
++} marker_decision_t;
++
++// Split on actual C161 inference boundaries. The gate consumes every M/R
++// sample in order, including both sides of a boundary within an I2S read.
++static int feed_marked_read(const esp_wn_iface_t *wn, model_iface_data_t *model,
++    int16_t *scratch, size_t *used, int model_chunk, const int16_t *mic,
++    const int16_t *mr, size_t count, bool *dirty, board_marker_t *marker,
++    uint64_t before, marker_decision_t *decision
++#ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
++    , wake_clock_t *clock, wake_clock_event_t *event
++#endif
++    )
++{
++    for (size_t i=0; i<count;) {
++        size_t n=(size_t)model_chunk-*used;
++        if (n>count-i) n=count-i;
++        int hit=feed_wake_model(wn,model,scratch,used,model_chunk,mic+i,n,dirty
++#ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
++            ,clock,event,true
++#endif
++        );
++        if (hit<0) return -1;
++        const size_t end=i+n;
++        for (; i<end; ++i) {
++            // The live board supplies physical R. It has no independently
++            // dated local demo TX event in this capture-clock domain.
++            unsigned route=board_marker_step(marker,mic[i],mr[2*i+1],hit && i+1==end,false);
++            if ((route & BOARD_MARKER_C161) && !decision->model_end) decision->model_end=before+i+1;
++            if ((route & BOARD_MARKER_CUE) && !decision->cue_end) decision->cue_end=before+i+1;
++        }
++    }
++    return decision->model_end || decision->cue_end;
++}
++#endif
++
+ #ifdef NYX_PANEL_RESEARCH_WAKE_CLOCK_FIXTURE
+ static void probe_wake_clock(const esp_wn_iface_t *wn,model_iface_data_t *model,
+     int16_t *scratch,int detector_chunk,int read_chunk,bool *dirty)
+@@ -977,6 +1052,9 @@ static void wake_task(void *arg)
+     aec_handle_t *aec=NULL;void *agc=NULL;
+     int16_t *capture=NULL,*mic=NULL,*ref=NULL,*clean=NULL,*adjusted=NULL,*detect=NULL;
+     size_t wn_used=0,agc_used=0;int chunk=0,wn_chunk=0;
++#ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
++    board_marker_t *marker=NULL;
++#endif
+     int16_t agc_input[160],agc_output[160];
+ #ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
+     unsigned wake_epoch=0;
+@@ -1053,6 +1131,18 @@ static void wake_task(void *arg)
+             }
+         }
+         wn_used=agc_used=0;
++#ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
++        void *storage=heap_caps_aligned_alloc(8,board_marker_bytes(),MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
++        if(!storage)goto unavailable;
++        marker=board_marker_begin(storage);
++        uint64_t marker_samples=0;
++        xSemaphoreTake(wake_lock,portMAX_DELAY);
++        marker_pcm_end=0;
++        ++marker_epoch;
++        xSemaphoreGive(wake_lock);
++        ESP_LOGI("panel.wake.marker","begin epoch=%u bytes=%u ref=physical tx=unavailable",
++                 marker_epoch,(unsigned)board_marker_bytes());
++#endif
+         // Idle listening and each call have separate adaptive filter state,
+         // just as the original microphone task constructs a fresh AEC per call.
+         aec_destroy(aec);aec=create_voice_aec();
+@@ -1077,6 +1167,10 @@ static void wake_task(void *arg)
+ #endif
+             xSemaphoreTake(wake_lock,portMAX_DELAY);
+             voice_call_t *c=wake_call;
++#ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
++            if(!c && !marker){xSemaphoreGive(wake_lock);break;}
++            marker_decision_t decision={0};
++#endif
+             if(!c && !wake_available()) {
+                 xSemaphoreGive(wake_lock);break;
+             }
+@@ -1103,6 +1197,9 @@ static void wake_task(void *arg)
+                     memcpy(adjusted+produced,agc_output,sizeof(agc_output));produced+=160;
+                 }
+             }
++#ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
++            marker_pcm_end+=produced;
++#endif
+             bool triggered=false;
+             if(c) {
+                 bool ready=atomic_load(&c->controls) && atomic_load(&c->connected) &&
+@@ -1130,11 +1227,21 @@ static void wake_task(void *arg)
+                 // baseline uses this same input path for a matched comparison.
+                 wake_pcm=mic;wake_samples=(size_t)chunk;
+ #endif
++#ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
++                int detected=feed_marked_read(wn,model,detect,&wn_used,wn_chunk,wake_pcm,capture,wake_samples,
++                    &model_dirty,marker,marker_samples,&decision
++#ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
++                    ,&clock,&event
++#endif
++                );
++                marker_samples+=wake_samples;
++#else
+                 int detected=feed_wake_model(wn,model,detect,&wn_used,wn_chunk,wake_pcm,wake_samples,&model_dirty
+ #ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
+                     ,&clock,&event,true
+ #endif
+                     );
++#endif
+                 if(detected<0){err=ESP_FAIL;wake_status("error");}
+                 triggered=detected>0;
+             }
+@@ -1164,6 +1271,10 @@ static void wake_task(void *arg)
+ #endif
+             if(triggered) {
+                 if(!wake_available())break;
++#ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
++                const int64_t decision_us=esp_timer_get_time();
++                heap_caps_free(marker);marker=NULL;
++#endif
+ #ifdef NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME
+                 // Idle inference and a call never overlap. Release only the
+                 // experimental classifier and join its consumer before the
+@@ -1176,10 +1287,16 @@ static void wake_task(void *arg)
+                 ESP_LOGI("panel.wake","%s detected; recording while connecting",panel_voice_wake_word());
+                 xSemaphoreTake(state_lock,portMAX_DELAY);status.wake_detections++;xSemaphoreGive(state_lock);
+                 esp_err_t call_result=start_call(NULL,true);
++#ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
++                ESP_LOGI("panel.wake.marker","decision epoch=%u c161_end=%llu cue_end=%llu read_end=%llu decision_us=%lld start_call=%s min_internal_boot=%u",
++                    marker_epoch,(unsigned long long)decision.model_end,(unsigned long long)decision.cue_end,
++                    (unsigned long long)marker_samples,(long long)decision_us,esp_err_to_name(call_result),
++                    (unsigned)heap_caps_get_minimum_free_size(MALLOC_CAP_INTERNAL|MALLOC_CAP_8BIT));
++#endif
+ #ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
+                 // Use timestamps captured at the detector, not the time of
+                 // UART delivery, HTTP polling or connection setup.
+-                ESP_LOGI("panel.wake.clock",
++                if(event.sample_end) ESP_LOGI("panel.wake.clock",
+                     "event epoch=%u sample_end=%llu read_end=%llu read_us=%lld detect_start_us=%lld "
+                     "detect_end_us=%lld rx_bytes=%u rx_overflows=%u",
+                     wake_epoch,(unsigned long long)event.sample_end,(unsigned long long)epoch_read_samples,
+@@ -1192,6 +1309,9 @@ static void wake_task(void *arg)
+             }
+         }
+         atomic_store(&wake_listening,false);
++#ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
++        heap_caps_free(marker);marker=NULL;
++#endif
+         // Read/processing/FIFO errors can leave the loop before call_task has
+         // joined its audio workers. Keep exclusive ownership until that task
+         // detaches the call; let it acquire wake_lock while we wait.
+@@ -1207,6 +1327,9 @@ static void wake_task(void *arg)
+         vTaskDelay(pdMS_TO_TICKS(100));
+     }
+ unavailable:
++#ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
++    heap_caps_free(marker);
++#endif
+     // The model borrows names/weights from models/root across rearm cycles.
+     // Keep those owners reachable until every fatal exit has destroyed it.
+     atomic_store(&wake_listening,false);
