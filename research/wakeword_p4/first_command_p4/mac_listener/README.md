@@ -367,3 +367,13 @@ python3 read_mr_capture.py capture.wav --panel-tx-sample 46388
 ```
 
 `panel_playout` 分别报告 TX 减去 R、M 上 B、C 匹配时刻的有符号差值。正值表示软件事件晚于该通道的观测。M 还包含声学传播与麦克风通路的延迟，R 的含义取决于板上回采接线。各通道按完整单播序列配对，事件数对不上时保留原始观测。两槽、四槽、缺失一次 R 事件均有合成输入复核。工具需要 Python 3、C++17 编译器及工作树中的 Mac 对照包。[数字验证](../../results/4090-c161-panel-tx-capture-reader.json)
+
+### 从板上麦克风录音估计配平连说命令的起点
+
+每个 WAV 录一遍已交接的配平外播轨，保留完整命令。工具读取 16 kHz PCM16 双声道 M/R 或 LCD-X8 四槽 TDM 的第一槽，用归档中的对应命令在麦克风录音上定位。以下示例在本目录运行，需要 Python 3 和 NumPy。把 005 换成本次外播文件夹的编号，把 46848 换成本次 UART OPEN 换算到 WAV 起点的采样数；省略该选项仍可定位命令。[十二条外播轨](../../results/c161-balanced-connected-commands.zip) · [分析工具](measure_connected_command_clock.py)
+
+```sh
+python3 measure_connected_command_clock.py board.wav --track 005 --open-sample 46848
+```
+
+`estimated_command_sample` 是房间主要声学路径上的命令边界估计，`estimated_lead_ms` 为该边界减去 OPEN，正值表示提前开麦。方法在命令前后两半各选 200 ms 语音做相关匹配，分别检查峰值、其他候选位置和两个时间估计的一致性。若返回 `inconclusive`，请保留原始录音、两个匹配窗口和串口时钟。强档 005 和弱档 050 均可使用。108 个已知房间与播放时钟的模拟输入全部返回估计，与房间脉冲绝对峰所在路径的偏差为 −2 至 +3 个样本。错命令、双次回放及缺失命令各 12 条，均未给出时钟。另 11 个房间和音乐组合加入 ±200 ppm 采样时钟差，10 个得到估计，误差在 14 个样本以内，其余一个无法判定。实板还需核对 OPEN 到录音起点的换算。[时钟和对照的逐项结果](../../results/4090-c161-connected-command-clock.json)
