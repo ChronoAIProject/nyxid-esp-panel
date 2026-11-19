@@ -335,3 +335,19 @@ python3 measure_command_capture.py playback.wav uplink-decoded.wav --command-at 
 ### 可直接播放的普通 Nyx
 
 `hye-nyx-c161-lewis-200ms.wav` 包含 655 ms 合成称呼和 200 ms 尾静音。16 kHz 单声道 PCM16，总长 855 ms，SHA256 为 `7821129f336c482997a1c7b0e6fdd01c3fe41bb40682f85fbe04d6e16dd56328`，已从 Release 匿名重下载并核对 WAV、PCM 和尾静音。可单播，或在文件末接入测试命令，对照固定 v5 记录 M/R、C161、实际 OPEN 和 Opus 首句。在先前用过的 18 条数字命令上，P4 模拟固件均于命令前开麦，其中 12 条 Opus 首句完整。已有厨房和客厅混音中开麦 4/16。此段选自在开发数据上测过的声音。[下载普通 Nyx WAV](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/hye-nyx-c161-lewis-200ms.wav) · [两种合成方式的 Nyx 和 Nick 原始片段](../../results/4090-c161-reusable-nyx-cues.zip) · [逐案对照和原始包](../../experiments/c161_polling_rooms.md#给可单播的普通-nyx-增加-200-ms-尾静音)
+
+### 重复固定音的播放参考与插话
+
+用前文的 IDF、组件和 SDK 配置在独立目录构建可选参考端固件。原对照为 `build-reference-framed`。在同一个研究环境从仓库根执行以下命令，`app`、`fft` 和 `NYX_MAC_WORK` 取自上文的复现步骤。
+
+```sh
+idf.py -C "$app" -B "$NYX_MAC_WORK/build-repeat-reference" -DNYX_REPEAT_REFERENCE=ON -DIDF_TARGET=esp32p4 \
+  "-DEXTRA_COMPONENT_DIRS=$fft;$NYX_MAC_WORK/features" "-DSDKCONFIG=$NYX_MAC_WORK/sdkconfig" \
+  "-DSDKCONFIG_DEFAULTS=$PWD/research/wakeword_p4/midlevel_p4_selftest/sdkconfig.defaults" reconfigure
+nice -n 10 cmake --build "$NYX_MAC_WORK/build-repeat-reference" --parallel 2
+source .local/wakeword/c161-onset-names/env
+nice -n 10 taskset -c 2,4 /usr/bin/python3 "$app/rearm_repeat_reference.py" host
+nice -n 10 taskset -c 2,4 /usr/bin/python3 "$app/rearm_repeat_reference.py" p4
+```
+
+研究脚本在创建 JSON 时要求输出路径可新建。复现时在独立工作树保留冻结输入，先将待重建的同名 JSON、ZIP 移入本地备份目录。已有模拟构建用 `check_repeat_p4.py` 回放六个房间的 P4 FIFO，用 `check_repeat_command_audio.py` 对照已有 16 个厨房和客厅命令，用 `score_repeat_command_boundary.py` 复解同一批编码包。新开关使播放参考每次完整匹配后重新开始检测，已知自播误开消失，同时在 20 次外部同音插话中少接住一次。Mac 的主测 WAV 使用原 v5。[配对结果与音频参数](../../experiments/c161_polling_rooms.md#在同一条-hye-nyx-中提前-500-ms-重复标记)

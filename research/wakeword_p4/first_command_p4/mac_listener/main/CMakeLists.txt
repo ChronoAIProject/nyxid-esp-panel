@@ -34,3 +34,7 @@ if(NYX_CAPTURE_OPUS)
     idf_component_optional_requires(PRIVATE esp_audio_codec)
     target_compile_definitions(${COMPONENT_LIB} PRIVATE NYX_CAPTURE_OPUS)
 endif()
+
+if(NYX_REPEAT_REFERENCE)
+    target_compile_definitions(${COMPONENT_LIB} PRIVATE NYX_REPEAT_REFERENCE)
+endif()

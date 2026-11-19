@@ -24,7 +24,7 @@ def activity_pulses(reference):
 
 
 def score(work, source, mic, ref, detector, index, build=BUILD, prefix=None, qualify=None,
-          wait_for_third=False, frame_activity=False, qualify_capture_frame=False):
+          wait_for_third=False, frame_activity=False, qualify_capture_frame=False, reference_hits=None):
     protocol = 0x4752594e if prefix is None else 0x5052594e
     if qualify is not None:
         protocol = 0x4452594e
@@ -46,7 +46,7 @@ def score(work, source, mic, ref, detector, index, build=BUILD, prefix=None, qua
     c161 = [t for _, t, _ in hits if t >= 0]
     fixed = [t for _, _, t in hits if t >= 0]
     assert fixed == [r["t"] for r in detect(detector, [mic])]
-    refs = [r["t"] for r in detect(detector, [ref])]
+    refs = reference_hits(ref) if reference_hits else [r["t"] for r in detect(detector, [ref])]
     prefixes = [r["t"] for r in detect(prefix, [ref])] if prefix is not None else []
     accepted_prefixes = prefixes if qualify is None else [t for t in prefixes if qualify(ref, t)]
     tentative = sorted(set(prefixes) - set(accepted_prefixes)) if wait_for_third else []

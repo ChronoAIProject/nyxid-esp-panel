@@ -4,6 +4,9 @@
 #include <cstdlib>
 #include <cstring>
 #include "c161_coded_cue_reference_v5.h"
+#ifdef NYX_REPEAT_REFERENCE
+#include "repeated_cue_reference.h"
+#endif
 #include "reference_capture.h"
 #include "reference_activity.h"
 #include "reference_prefix.h"
@@ -132,7 +135,11 @@ void worker(void*) {
     nyx::ReferenceWake model_route, cue_route;
     nyx::ReferenceCapture capture;
     nyx::ReferenceActivity capture_activity, wake_activity;
+#ifdef NYX_REPEAT_REFERENCE
+    nyx::RepeatedCueReference guard;
+#else
     nyx::CodedCueReferenceV5 guard;
+#endif
     nyx::ReferencePrefix prefix;
     nyx::ReferenceSignature signature;
     nyx::CodedCueV5 cue;
