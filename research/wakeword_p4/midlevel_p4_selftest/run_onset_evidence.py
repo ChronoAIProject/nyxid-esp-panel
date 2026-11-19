@@ -16,7 +16,8 @@ from score_c161_piper_spellings import annotate
 from select_c161_synthesized_cue_v2 import load_wav
 
 
-def main(build):
+def main(build, dest):
+    dest.mkdir(parents=True, exist_ok=True)
     stem = host.exported.STEM + "-p4"
     report = host.read(host.REPORT)
     fixture = host.FIXTURE
@@ -32,6 +33,9 @@ def main(build):
     uart = host.evidence.WORK/"p4-uart.log"
     boot(build=build, log=uart, image=host.evidence.WORK/"p4-flash.bin", marker=b"ONSET_DONE", flash_payload=(2<<20,data))
     text = uart.read_text(errors="replace")
+    kind, = re.findall(r"ONSET_FC (per_channel|vendor)", text)
+    if kind == "per_channel":
+        stem += "-reference-fc"
     match = re.search(r"ONSET_END count=(\d+) min_internal=(\d+)",text)
     assert match, text[-2000:]
     count, heap = map(int,match.groups())
@@ -71,9 +75,11 @@ def main(build):
             del row["native_proposals"],row["expanded_proposals"]
         records.append(dict(key=r["key"],pcm_sha256=r["pcm_sha256"],worker=worker,events=events,**ann))
     assert i==count
-    log = host.RESULTS/(stem+"-uart.log")
+    if kind == "per_channel":
+        assert all(w["device_codes"] == w["host_codes"] for record in records for w in record["worker"])
+    log = dest/(stem+"-uart.log")
     log.write_bytes(uart.read_bytes())
-    host.save(host.RESULTS/(stem+".json"),dict(records=records,fixture=report["fixture"],arena_used=arena,
+    host.save(dest/(stem+".json"),dict(records=records,fully_connected=kind,fixture=report["fixture"],arena_used=arena,
          arena_reserved=192*1024,init_us=init,min_internal_free=heap, model_sha256=report["model"],
          asr=wh,host_replay_sha256=host.sha(host.REPORT),uart_sha256=host.sha(log),qemu_sha256=host.sha(QEMU),
          code={p.name:host.sha(p) for p in (Path(__file__),Path(__file__).parent/"main/onset_evidence.cpp")},
@@ -84,4 +90,6 @@ def main(build):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("build",type=Path)
-    main(parser.parse_args().build)
+    parser.add_argument("--out",type=Path, default=host.evidence.WORK/"p4-results")
+    args = parser.parse_args()
+    main(args.build,args.out)

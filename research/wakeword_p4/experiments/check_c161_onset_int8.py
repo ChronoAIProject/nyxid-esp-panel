@@ -75,5 +75,30 @@ def main():
                      fixture=dict(windows=len(fixtures),bytes=FIXTURE.stat().st_size,sha256=sha(FIXTURE))))
 
 
+def rebuild_fixture():
+    report = read(REPORT)
+    records = {r["pcm_sha256"]:r for r in report["records"] if r["cohort"] == "appointment"}
+    count = report["fixture"]["windows"]
+    raw = bytearray(count.to_bytes(4, "little"))
+    lookup = np.array(report["feature_lookup"], dtype=np.int8)
+    for src in read(evidence.PLAN)["records"]:
+        pcm = load_wav(src)
+        ref = records.pop(digest(pcm))
+        for (t, end, patch), row in zip(exported.fit.base.onset.observations(pcm), ref["checks"], strict=True):
+            values = lookup[patch]
+            assert (t, end, digest(values)) == (row["onset"], row["available"], row["input_sha256"])
+            raw.extend(values.tobytes())
+            raw.extend(np.array(row["codes"], dtype=np.int8).tobytes())
+    import hashlib
+    assert not records and hashlib.sha256(raw).hexdigest() == report["fixture"]["sha256"]
+    FIXTURE.write_bytes(raw)
+
+
 if __name__ == "__main__":
-    main()
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--fixture-only", action="store_true")
+    if parser.parse_args().fixture_only:
+        rebuild_fixture()
+    else:
+        main()

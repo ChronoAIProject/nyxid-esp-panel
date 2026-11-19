@@ -11,6 +11,12 @@
 
 extern const uint8_t model_bytes[] asm("_binary_4090_c161_onset_evidence_posterior_int8_tflite_start");
 
+#ifdef NYX_ONSET_REFERENCE_FC
+namespace tflite {
+TFLMRegistration Register_OnsetPerChannelFC();
+}
+#endif
+
 namespace {
 constexpr uint32_t fixture_offset = 2 << 20;
 constexpr uint32_t feature_bytes = 144 * 40;
@@ -23,7 +29,13 @@ bool replay() {
     resolver.AddConv2D();
     resolver.AddReshape();
     resolver.AddAveragePool2D();
+#ifdef NYX_ONSET_REFERENCE_FC
+    resolver.AddFullyConnected(tflite::Register_OnsetPerChannelFC());
+    std::puts("ONSET_FC per_channel");
+#else
     resolver.AddFullyConnected();
+    std::puts("ONSET_FC vendor");
+#endif
     resolver.AddSoftmax();
     const auto start = esp_timer_get_time();
     tflite::MicroInterpreter vm(tflite::GetModel(model_bytes), resolver, arena, sizeof(arena));
