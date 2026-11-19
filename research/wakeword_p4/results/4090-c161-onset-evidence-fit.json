@@ -1,0 +1,73 @@
+{
+  "models": {
+    "posterior": {
+      "history": [
+        {
+          "step": 1,
+          "loss": 4.8966875076293945
+        },
+        {
+          "step": 100,
+          "loss": 0.8590062260627747
+        },
+        {
+          "step": 500,
+          "loss": 0.24269211292266846
+        },
+        {
+          "step": 1000,
+          "loss": 0.16921454668045044
+        }
+      ],
+      "weights_sha256": "e0074c2ff08891b3f2d4e138cc825a8886f53176441aa6ccbddd562847a1d93f"
+    },
+    "time_bins": {
+      "history": [
+        {
+          "step": 1,
+          "loss": 5.097371578216553
+        },
+        {
+          "step": 100,
+          "loss": 0.9240042567253113
+        },
+        {
+          "step": 500,
+          "loss": 0.3003564774990082
+        },
+        {
+          "step": 1000,
+          "loss": 0.22078995406627655
+        }
+      ],
+      "weights_sha256": "c37fa43ff443cda9aea74b829397461bdae2a2d78f0942f6002bcae499eca718"
+    }
+  },
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "torch": "2.15.0+cu132",
+  "steps": 1000,
+  "seed": 631740,
+  "classes": [
+    "Nyx",
+    "Nick",
+    "Next",
+    "Mick",
+    "other"
+  ],
+  "counts": [
+    960,
+    319,
+    312,
+    96,
+    3380
+  ],
+  "alphabet": 32,
+  "files": {
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/train_c161_onset_evidence.py": "3dcb0f762a8e68fc8784b8094e8459b2ed40af888522cf6ba7dbc49c95ad1769",
+    "research/wakeword_p4/results/4090-c161-onset-letters-sources.json": "57fef78e6f77c7e0a3fd8c800a9f487dd2a6a013950375c9021fb9750f182372",
+    "research/wakeword_p4/results/4090-c161-onset-letters-fit.json": "4a668454dc2ce0d6d2f24785aa3b7261455983d84f80201ffb3900c11867c14b",
+    "research/wakeword_p4/results/4090-c161-onset-letters-pretrained.npz": "ac807d354438693569acd24500fa0e8ceb7fff0bada254f6ac474f966899e6f1",
+    ".local/wakeword/c161-onset-letters/features.npz": "d82baa5a072fab27fac43371ed226f634a85c0a89ee8a7dc8b8356ee4ef8813a"
+  },
+  "policy": "Two matched native fits, class-balanced batches, 1000 steps. CE plus class KL at T=2. Second fit additionally uses smooth L1 on class-centered contributions of six time bins. No evaluation audio, no threshold sweep; accept Nyx >= 0.5 at onset + 1.32 s."
+}
