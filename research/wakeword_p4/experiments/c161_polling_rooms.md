@@ -130,3 +130,11 @@ RTX 4090 从相同的五类后验蒸馏权重开始，分别微调 450 步，两
 | 反射加噪声，命令前命中／首句完整（16 条） | 7／4 | 1／1 | 4／2 |
 
 66 条背景中共有 3,861 个起点，311 个完整复核窗里只有 7 个对应近期起点。只加噪声及反射加噪声两组分别有 12、11 个复核窗，均无近期起点，导致只按起点放行时两组的命中数退回原 C161。Melo 字面 “Hey Nyx” 在仅近期起点条件下，干声 8/8 完整，房间 3/8 命中、1/8 完整。日常对话里新增的 “Hey Max” 误唤仍通过起点条件。三组都是复用开发音频的主机流式结果。[连续背景、起点和提议](../results/4090-c161-readout-onsets-background.json) · [噪声与反射](../results/4090-c161-readout-onsets-acoustics.json) · [对话](../results/4090-c161-readout-onsets-context.json) · [Bot](../results/4090-c161-readout-onsets-bot.json)
+
+### 实际提议正例版的 P4 数值与耗时
+
+将上述实际提议正例版 INT8 编入 P4 QEMU 五类探针。在八个开发组的 341 条输入上按原连续前端提取全部 571 个完整提议窗，分四次冷启动，从 flash 读取 144 × 40 个 INT8 输入并调用五类模型。2,855 个输出码均与主机逐个相等，张量区实用 65,164 B，最低空闲内部堆 398,404 B。单次 Invoke 中位 24.466 ms，范围 23.121–28.629 ms。将各窗实际调用耗时计入串行复核、保留原 C161 通知时钟后，四声音原时钟的干声、只加噪声、只加反射和反射叠噪条件仍分别在命令前命中 12、8、12、7 条，各以 16 为分母。[输入 SHA、每窗 P4 输出和串行通知](../results/4090-c161-positive-readout-p4.json) · [四次完整 UART](../results/4090-c161-positive-readout-p4.zip)
+
+在 melo-US 连续对话的 “Hey Max, can you carry the other bag upstairs?” 窗口，P4 实测有符号输出依次为 37、−128、−127、−127、−39。Nyx 达到接受门槛 0，Invoke 用时 24.914 ms。从样本 3,180,960 窗口就绪到串行输出为样本 3,181,359。该词落在可用语音起点后，起点规则同样接受。整机音频流水线及实板运行时间待 Mac 实测。
+
+复现使用 `midlevel_p4_selftest` 的 ESP-IDF 逐通道全连接配置，把 `NYX_ONSET_MODEL` 指向 `4090-c161-positive-readout-trigger.tflite` 后构建。在研究 Python 环境运行 `python3 research/wakeword_p4/first_command_p4/mac_listener/check_positive_readout_p4.py <构建目录>`。[复现代码](../first_command_p4/mac_listener/check_positive_readout_p4.py)
