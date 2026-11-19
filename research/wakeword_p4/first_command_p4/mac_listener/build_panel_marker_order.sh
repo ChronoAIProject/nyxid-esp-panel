@@ -12,6 +12,7 @@ case "$variant" in
     echo) work="$root/.local/wakeword/c161-panel-echo-confirmation" ;;
     middle) work="$root/.local/wakeword/c161-panel-middle-confirmation" ;;
     middle-uart) work="$root/.local/wakeword/c161-panel-middle-uart" ;;
+    external-clock) work="$root/.local/wakeword/c161-external-clock" ;;
     *) exit 2 ;;
 esac
 export NYX_MAC_WORK="$root/.local/wakeword/c161-mac-listener"
@@ -20,7 +21,7 @@ export IDF_TOOLS_PATH="$root/.local/wakeword/idf-tools"
 export PATH="/usr/bin:$PATH"
 mkdir -p "$work/src"
 git archive 419837340caeb739c71834d7a2350cc2b39f1de3 "$app/main" "$app/CMakeLists.txt" "$app/dependencies.lock" research/wakeword_p4/portable research/wakeword_p4/first_command_p4/main components/panel_services | tar -x -C "$work/src"
-if [[ "$variant" == middle-uart ]]; then
+if [[ "$variant" == middle-uart || "$variant" == external-clock ]]; then
     cp "$app/main/listener.cpp" "$work/src/$app/main/listener.cpp"
     variant=middle
 fi

@@ -84,13 +84,17 @@ void worker(void*) {
     const bool signed_reference = call_setup || wait_for_third || h[0] == 0x4452594e;
     const bool prefix_guarded = signed_reference || h[0] == 0x5052594e;
     const bool guarded = prefix_guarded || h[0] == 0x4752594e;
-    const bool stereo = guarded || h[0] == 0x5352594e;
+    // An external detector can supply its independently measured I2S decision block.
+    const bool external_clock = h[0] == 0x4b4c434e;
+    const bool stereo = external_clock || guarded || h[0] == 0x5352594e;
     if ((!stereo && h[0]!=0x584e594d) || !h[2] || h[2]>400000) abort();
     const int length=h[2];
     auto* pcm=buffer(length+2048);
     ESP_ERROR_CHECK(esp_flash_read(nullptr,pcm,kOffset+sizeof(h),length*2));
     auto* playback = stereo ? buffer(length+2048) : nullptr;
     if (stereo) ESP_ERROR_CHECK(esp_flash_read(nullptr,playback,kOffset+sizeof(h)+length*2,length*2));
+    uint32_t open_block = 0;
+    if (external_clock) ESP_ERROR_CHECK(esp_flash_read(nullptr,&open_block,kOffset+sizeof(h)+length*4,sizeof(open_block)));
     const auto& wn=panel_wake_runtime_iface;
     model_iface_data_t* model;
     aec_handle_t* aec;
@@ -122,6 +126,7 @@ void worker(void*) {
 #endif
     const int chunk=aec_get_chunksize(aec);
     if (chunk<=0 || chunk>1024 || wn.get_samp_chunksize(model)!=kBlock) abort();
+    if (external_clock && (!open_block || open_block % chunk || open_block > ((length+chunk-1)/chunk)*unsigned(chunk))) abort();
     alignas(16) int16_t wake[kBlock]{}, ref[1024]{}, clean[1024], frame[kHop], adjusted[kHop];
     int prime=0;
     while (prime<panel_wake_runtime_prime_samples()) {
@@ -159,7 +164,8 @@ void worker(void*) {
         int64_t begin=esp_timer_get_time();
         {
             DspSection lock;
-            aec_process(aec,pcm+at,stereo ? playback+at : ref,clean);
+            const bool use_reference = stereo && (!external_clock || unsigned(at) >= open_block);
+            aec_process(aec,pcm+at,use_reference ? playback+at : ref,clean);
         }
         for (int i=0;i<chunk;++i) {
             frame[fill++]=clean[i];
@@ -170,7 +176,9 @@ void worker(void*) {
                 if (esp_agc_process(agc,frame,adjusted,kHop,16000)!=ESP_AGC_SUCCESS) abort();
             }
             std::memcpy(processed+emitted,adjusted,sizeof(adjusted));
-            if (stereo) {
+            if (external_clock) {
+                std::memcpy(selected+emitted,adjusted,sizeof(adjusted));
+            } else if (stereo) {
                 // AGC has already completed this frame. Its reference is available
                 // through the same last sample before the FIFO is written.
                 static_assert(kHop == nyx::ReferenceActivity::kFrame);
@@ -223,7 +231,8 @@ void worker(void*) {
             }
             if (guarded ? model_route.update_active(active,reference_clear,model_hit,awaiting_third) : model_hit) allowed161=at+i+1;
         }
-        if (first<0 && (allowed_cue>=0 || allowed161>=0)) {
+        const bool request = external_clock ? unsigned(at+chunk) == open_block : (allowed_cue>=0 || allowed161>=0);
+        if (first<0 && request) {
             const size_t part=std::min(history.count,history.capacity-history.head);
             first=emitted-static_cast<int>(history.count);
             if (!panel_voice_pcm_push(&call,history.samples+history.head,part) ||
