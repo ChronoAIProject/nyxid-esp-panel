@@ -80,7 +80,7 @@ def annotate(source, pcm, routes, native, expanded, reader):
             hits = list(filter(inside, events))
             outside[name].difference_update(hits)
             item = dict(hits=hits)
-            if hits and address in ("Hye Nyx", "Hey Nyx", "Hey Nicks", "Hey Willow"):
+            if hits and address in ("Hye Nyx", "Hey Nyx", "Hi Nicks", "Hey Nicks", "Hey Willow"):
                 begin = max(0, (hits[0] + 159) // 160 * 160 - 32000)
                 key = asr(begin, end + 6400)
                 item.update(first=begin, asr=key, exact_command=normalized(readings[key]["text"])[-len(want):] == want)
