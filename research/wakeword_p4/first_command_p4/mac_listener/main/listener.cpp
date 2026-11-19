@@ -3,7 +3,8 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include "c161_coded_cue_v5.h"
+#include "c161_coded_cue_reference_v5.h"
+#include "reference_capture.h"
 #include "esp_aec.h"
 #include "esp_agc.h"
 #include "esp_flash.h"
@@ -32,7 +33,7 @@ int16_t* buffer(size_t n) {
     return ptr;
 }
 
-void dump(const int16_t* samples,int count) {
+void dump(const char* label, const int16_t* samples,int count) {
     static constexpr char hex[]="0123456789abcdef";
     char line[4*kHop+1];
     const auto* bytes=reinterpret_cast<const uint8_t*>(samples);
@@ -43,17 +44,20 @@ void dump(const int16_t* samples,int count) {
             line[2*i]=hex[b>>4]; line[2*i+1]=hex[b&15];
         }
         line[4*n]=0;
-        std::printf("AUDIO %d %s\n",start,line);
+        std::printf("%s %d %s\n",label,start,line);
     }
 }
 
 void worker(void*) {
     uint32_t h[3];
     ESP_ERROR_CHECK(esp_flash_read(nullptr,h,kOffset,sizeof(h)));
-    if (h[0]!=0x584e594d || !h[2] || h[2]>400000) abort();
+    const bool stereo = h[0] == 0x5352594e;
+    if ((!stereo && h[0]!=0x584e594d) || !h[2] || h[2]>400000) abort();
     const int length=h[2];
     auto* pcm=buffer(length+2048);
     ESP_ERROR_CHECK(esp_flash_read(nullptr,pcm,kOffset+sizeof(h),length*2));
+    auto* playback = stereo ? buffer(length+2048) : nullptr;
+    if (stereo) ESP_ERROR_CHECK(esp_flash_read(nullptr,playback,kOffset+sizeof(h)+length*2,length*2));
     const auto& wn=panel_wake_runtime_iface;
     model_iface_data_t* model;
     aec_handle_t* aec;
@@ -82,16 +86,19 @@ void worker(void*) {
     panel_voice_pcm_t history{buffer(kLookback),kLookback,0,0};
     panel_voice_pcm_t call{buffer(60*16000),60*16000,0,0};
     auto* processed=buffer(length+2048);
+    auto* selected = stereo ? buffer(length+2048) : processed;
+    nyx::ReferenceCapture capture;
+    nyx::CodedCueReferenceV5 guard;
     nyx::CodedCueV5 cue;
     int fill=0, wake_fill=0, emitted=0, first=-1, peak_us=0, overruns=0, blocks=0;
     int64_t sum_us=0;
     std::printf("READY %lu %d %d %d\n",(unsigned long)h[1],length,chunk,prime);
     for (int at=0;at<length;at+=chunk) {
-        int hit161=-1, hitcue=-1;
+        int hit161=-1, hitcue=-1, allowed_cue=-1;
         int64_t begin=esp_timer_get_time();
         {
             DspSection lock;
-            aec_process(aec,pcm+at,ref,clean);
+            aec_process(aec,pcm+at,stereo ? playback+at : ref,clean);
         }
         for (int i=0;i<chunk;++i) {
             frame[fill++]=clean[i];
@@ -102,12 +109,20 @@ void worker(void*) {
                 if (esp_agc_process(agc,frame,adjusted,kHop,16000)!=ESP_AGC_SUCCESS) abort();
             }
             std::memcpy(processed+emitted,adjusted,sizeof(adjusted));
-            if (first<0) panel_voice_pcm_preroll_push(&history,adjusted,kHop);
-            else if (!panel_voice_pcm_push(&call,adjusted,kHop)) abort();
+            if (stereo) {
+                for (int j=0;j<kHop;++j) {
+                    const int t=emitted+j;
+                    selected[t]=capture.update(pcm[t],playback[t],adjusted[j]);
+                }
+            }
+            if (first<0) panel_voice_pcm_preroll_push(&history,selected+emitted,kHop);
+            else if (!panel_voice_pcm_push(&call,selected+emitted,kHop)) abort();
             emitted+=kHop;
         }
         for (int i=0;i<chunk;++i) {
-            if (cue.update(pcm[at+i])) hitcue=at+i+1;
+            const bool matched=cue.update(pcm[at+i]);
+            if (matched) hitcue=at+i+1;
+            if (stereo ? guard.allow(playback[at+i],matched) : matched) allowed_cue=at+i+1;
             wake[wake_fill++]=pcm[at+i];
             if (wake_fill!=kBlock) continue;
             wake_fill=0;
@@ -116,7 +131,7 @@ void worker(void*) {
             if (hit<0) abort();
             if (hit>0) hit161=at+i+1;
         }
-        if (first<0 && (hitcue>=0 || hit161>=0)) {
+        if (first<0 && (allowed_cue>=0 || hit161>=0)) {
             const size_t part=std::min(history.count,history.capacity-history.head);
             first=emitted-static_cast<int>(history.count);
             if (!panel_voice_pcm_push(&call,history.samples+history.head,part) ||
@@ -127,13 +142,17 @@ void worker(void*) {
         int us=esp_timer_get_time()-begin;
         ++blocks; sum_us+=us; peak_us=std::max(peak_us,us); overruns+=us*16>chunk*1000;
         if (hit161>=0 || hitcue>=0) std::printf("HITS %d %d %d\n",at+chunk,hit161,hitcue);
+        if (stereo && hitcue>=0) std::printf("CUE_ROUTE %d %d\n",hitcue,allowed_cue);
         if (blocks%64==0) vTaskDelay(1);
     }
     if (first>=0 && (call.count!=static_cast<size_t>(emitted-first) ||
-        std::memcmp(call.samples,processed+first,call.count*sizeof(int16_t)))) abort();
+        std::memcmp(call.samples,selected+first,call.count*sizeof(int16_t)))) abort();
     std::printf("FINISH %d %d %u %d %lld %d %d %u\n",emitted,first,(unsigned)call.count,blocks,
                 (long long)sum_us,peak_us,overruns,(unsigned)heap_caps_get_minimum_free_size(MALLOC_CAP_INTERNAL));
-    if (first>=0) dump(call.samples,call.count);
+    if (first>=0) {
+        dump("AUDIO",call.samples,call.count);
+        if (stereo) dump("PROCESSED",processed+first,call.count);
+    }
     wn.destroy(model); aec_destroy(aec); esp_agc_close(agc);
     std::puts("LISTENER PASS");
     vTaskDelete(nullptr);
