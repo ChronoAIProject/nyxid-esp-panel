@@ -10,8 +10,8 @@ import handoff_barge_in as handoff
 from handoff_willow import BASE, PLAN, WORK
 
 
-def willow_events(index, record, plan_digest, archive):
-    folder = WORK / "runs" / f"{index:02}"
+def willow_events(index, record, plan_digest, archive, runs=WORK / "runs"):
+    folder = runs / f"{index:02}"
     report = joined.read(folder / "report.json")
     assert report["model"] == "wn9_heywillow_tts" and report["stage"] == 104
     assert report["execution_sha256"] == plan_digest and report["record"] == record
