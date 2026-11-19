@@ -1,0 +1,84 @@
+{
+  "sources_sha256": "57fef78e6f77c7e0a3fd8c800a9f487dd2a6a013950375c9021fb9750f182372",
+  "script_sha256": "1efec7dd02596e80c749e39a96b1b5741870f61049228452fc77710abf7ccca5",
+  "models": {
+    "pretrained": {
+      "history": [
+        {
+          "step": 1,
+          "loss": 1.5984641313552856
+        },
+        {
+          "step": 100,
+          "loss": 0.1894337683916092
+        },
+        {
+          "step": 500,
+          "loss": 0.14772336184978485
+        },
+        {
+          "step": 1000,
+          "loss": 0.13023534417152405
+        }
+      ],
+      "weights_sha256": "ac807d354438693569acd24500fa0e8ceb7fff0bada254f6ac474f966899e6f1",
+      "parameters": 304517
+    },
+    "small": {
+      "history": [
+        {
+          "step": 1,
+          "loss": 1.6298725605010986
+        },
+        {
+          "step": 100,
+          "loss": 0.30694684386253357
+        },
+        {
+          "step": 500,
+          "loss": 0.1537543535232544
+        },
+        {
+          "step": 1000,
+          "loss": 0.13143379986286163
+        }
+      ],
+      "weights_sha256": "4e27fbb4d3ca46717319ab4984fa904e713643d04925b6bce29d14d2b35e35b5",
+      "parameters": 106925
+    },
+    "distilled": {
+      "history": [
+        {
+          "step": 1,
+          "loss": 4.4263715744018555
+        },
+        {
+          "step": 100,
+          "loss": 1.7420555353164673
+        },
+        {
+          "step": 500,
+          "loss": 0.47419145703315735
+        },
+        {
+          "step": 1000,
+          "loss": 0.36281663179397583
+        }
+      ],
+      "weights_sha256": "255a4b590513b4fd478195d5ec4d689c1c6054a8b7bc0eaee89f425888e94a79",
+      "parameters": 106925
+    }
+  },
+  "seed": 631740,
+  "steps": 1000,
+  "train_counts": [
+    960,
+    319,
+    312,
+    96,
+    3380
+  ],
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "torch_version": "2.15.0+cu132",
+  "policy": "One final fit per mode on the same samples and class-balanced minibatches. Accept Nyx probability >= 0.5; first complete 1.32 s after VAD onset. No threshold tuning."
+}
