@@ -1,6 +1,7 @@
 """Adapt only the five-class readout to random or high-scoring windows in the same training audio."""
 import argparse
 import ctypes
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -90,7 +91,8 @@ def embeddings(model, patches):
     return torch.cat(output)
 
 
-def train():
+def train(experiment=None, collect_positives=None):
+    experiment = experiment or sys.modules[__name__]
     gpu = torch.cuda.get_device_name()
     assert "4090" in gpu
     torch.set_num_threads(1)
@@ -100,6 +102,7 @@ def train():
     front = RESULTS/f"{music.STEM}-v1.tflite"
     assert sha(front) == read(RESULTS/f"{music.STEM}-export-v1.json")["sha256"]
     mined, rows = collect()
+    positive_views, positive_records = collect_positives() if collect_positives else ({}, [])
     parent = paired.weights("teacher")
     old = room.BASE.WORK/"features.npz"
     assert sha(old) == read(room.BASE.SOURCES)["cache_sha256"]
@@ -115,16 +118,21 @@ def train():
     with torch.no_grad():
         prior = (head(anchors)/2).softmax(dim=-1)
     reports = {}
-    for mode in MODES:
+    for mode in experiment.MODES:
         head.load_state_dict(initial)
-        extra = embeddings(net, mined[mode])
+        extra = embeddings(net, mined["peak" if positive_views else mode])
+        positives = embeddings(net, positive_views[mode]) if positive_views else None
         rng = np.random.default_rng(SEED)
+        positive_rng = np.random.default_rng(SEED+1)
         opt = torch.optim.AdamW(head.parameters(),lr=.0003,weight_decay=.001)
         losses = []
         for step in range(STEPS):
             ids = np.concatenate([rng.choice(g,12) for g in pools])
             x = torch.cat((anchors[ids], extra[rng.choice(len(extra), 16)]))
             y = torch.from_numpy(np.r_[labels[ids], np.full(16,4,np.int64)]).cuda()
+            if positives is not None:
+                x = torch.cat((x, positives[positive_rng.choice(len(positives),16)]))
+                y = torch.cat((y, y.new_zeros(16)))
             logits = head(x)
             loss = F.cross_entropy(logits,y,label_smoothing=.025)
             loss = loss + 4*F.kl_div((logits[:len(ids)]/2).log_softmax(dim=-1),prior[ids],reduction="batchmean")
@@ -137,10 +145,11 @@ def train():
         with np.load(parent) as inherited:
             changed = [k for k,v in state.items() if not np.array_equal(v,inherited[k])]
             assert set(changed) == {"names.2.weight","names.2.bias"}
-        with weights(mode).open("xb") as f:
+        with experiment.weights(mode).open("xb") as f:
             np.savez_compressed(f,**state)
-        reports[mode] = dict(weights_sha256=sha(weights(mode)),losses=losses,changed=changed)
-    save(FIT, dict(models=reports,records=rows,seed=SEED,steps=STEPS,gpu=gpu,torch=torch.__version__,
+        reports[mode] = dict(weights_sha256=sha(experiment.weights(mode)),losses=losses,changed=changed)
+    save(experiment.FIT, dict(models=reports,records=rows,positive_records=positive_records,
+        positive_policy=getattr(experiment,"POSITIVE_POLICY",None), experiment_sha256=sha(Path(experiment.__file__)),seed=SEED,steps=STEPS,gpu=gpu,torch=torch.__version__,
         parent_weights_sha256=sha(parent),front_sha256=sha(front),script_sha256=sha(Path(__file__)),
         input_files={str(p):sha(p) for p in (paired.FIT,room.SOURCES,room.BASE.SOURCES,old,room.CACHE,RESULTS/DAILY,
                                                RESULTS/f"{music.STEM}-training-v1.json")},
@@ -156,6 +165,5 @@ if __name__ == "__main__":
     if p.parse_args().action == "train":
         train()
     else:
-        import sys
         from export_c161_polling_rooms import main
         main(sys.modules[__name__])

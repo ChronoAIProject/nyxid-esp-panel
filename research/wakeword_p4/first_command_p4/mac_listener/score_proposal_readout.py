@@ -12,17 +12,17 @@ base = fit.replay
 GROUPS = ("acoustics","matched","fresh","context","daily","bot","music","background")
 
 
-def main(group):
+def main(group, experiment=fit):
     parent = RESULTS/f"{fit.music.STEM}-{group}.json"
     old = read(parent)
-    exported = RESULTS/(fit.STEM+"-exports.json")
+    exported = RESULTS/(experiment.STEM+"-exports.json")
     spec = read(exported)
-    assert spec["fit_sha256"] == sha(fit.FIT)
-    assert old["word_sha256"] == read(fit.FIT)["front_sha256"] and old["c161_sha256"] == base.scoring.MODEL_SHA
+    assert spec["fit_sha256"] == sha(experiment.FIT)
+    assert old["word_sha256"] == read(experiment.FIT)["front_sha256"] and old["c161_sha256"] == base.scoring.MODEL_SHA
     parents, hashes = base.scoring.verifiers()
     assert old["verifier_sha256"] == hashes["teacher"]
     models = {"parent":parents["teacher"]}
-    for mode in fit.MODES:
+    for mode in experiment.MODES:
         item = spec["models"][mode]
         path = RESULTS/item["file"]
         assert sha(path) == item["sha256"]
@@ -76,7 +76,7 @@ def main(group):
         rows.append(row)
         if group == "background" and len(rows)%10 == 0:
             print(group,len(rows),flush=True)
-    save(RESULTS/f"{fit.STEM}-{group}.json", dict(records=rows, previous_sha256=sha(parent), exports_sha256=sha(exported),
+    save(RESULTS/f"{experiment.STEM}-{group}.json", dict(records=rows, previous_sha256=sha(parent), exports_sha256=sha(exported),
         parent_sha256=old["verifier_sha256"], script_sha256=sha(Path(__file__)), asr=identity,
         policy="Replay every complete archived INT8 proposal on the same continuous input. Check parent INT8 outputs "
                "and all merged first-notification clocks. Frozen C161 union and original cooldown; re-read source "
