@@ -10,6 +10,32 @@ import check_replay
 HERE = Path(__file__).resolve().parent
 
 
+def link_guest(sim, work, target_elf, sources, includes, idf_python):
+    commands = json.loads((sim / "compile_commands.json").read_text())
+    objects = []
+    for template, source in sources:
+        command, = [shlex.split(c["command"]) for c in commands if Path(c["file"]).name == template]
+        target = work / (source.name + ".o")
+        subprocess.run([command[0], *["-I"+str(p) for p in includes],
+                        "-DNYX_PANEL_RESEARCH_FIXED_MARKER=1", *command[1:command.index("-o")],
+                        "-o", target, "-c", source], cwd=sim, check=True)
+        objects.append(str(target))
+
+    # Keep the simulator's IDF link order and test RAM configuration. All new
+    # outputs go in work. The original board and simulator ELFs stay available.
+    listing = subprocess.check_output(["ninja", "-t", "commands", target_elf], cwd=sim, text=True)
+    command = shlex.split(listing.splitlines()[-1])
+    assert command[:2] == [":", "&&"] and command[-2:] == ["&&", ":"]
+    link = command[2:-2]
+    index = link.index("-o")
+    link[index:index+2] = [*objects, "-Wl,--wrap=app_main", "-o", str(work / "board.elf")]
+    link = ["-Wl,--Map="+str(work / "board.map") if s.startswith("-Wl,--Map=") else s for s in link]
+    subprocess.run(link, cwd=sim, check=True)
+    subprocess.run([idf_python, "-m", "esptool", "--chip", "esp32p4", "elf2image",
+                    "--flash_mode", "dio", "--flash_freq", "80m", "--flash_size", "4MB",
+                    "--min-rev-full", "301", "-o", work / "board.bin", work / "board.elf"], check=True)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("board", type=Path)
@@ -23,32 +49,10 @@ def main():
     work.mkdir(exist_ok=True, parents=True)
     check_replay.write_feeders(service, work)
     (work / "guest.c").write_bytes((HERE / "guest.c").read_bytes())
-    commands = json.loads((sim / "compile_commands.json").read_text())
     sources = [("panel_voice_audio.c", work / "guest.c"),
                ("listener.cpp", service / "fixed_marker/board_marker.cpp"),
                ("panel_wake_runtime.cpp", runtime / "panel_wake_runtime.cpp")]
-    objects = []
-    for template, source in sources:
-        command, = [shlex.split(c["command"]) for c in commands if Path(c["file"]).name == template]
-        target = work / (source.name + ".o")
-        subprocess.run([command[0], "-I"+str(work), "-I"+str(runtime), "-I"+str(service),
-                        "-DNYX_PANEL_RESEARCH_FIXED_MARKER=1", *command[1:command.index("-o")],
-                        "-o", target, "-c", source], cwd=sim, check=True)
-        objects.append(str(target))
-
-    # Keep the simulator's IDF link order and test RAM configuration. All new
-    # outputs go in work. The original board and simulator ELFs stay available.
-    listing = subprocess.check_output(["ninja", "-t", "commands", "nyx_mac_listener.elf"], cwd=sim, text=True)
-    command = shlex.split(listing.splitlines()[-1])
-    assert command[:2] == [":", "&&"] and command[-2:] == ["&&", ":"]
-    link = command[2:-2]
-    index = link.index("-o")
-    link[index:index+2] = [*objects, "-Wl,--wrap=app_main", "-o", str(work / "board.elf")]
-    link = ["-Wl,--Map="+str(work / "board.map") if s.startswith("-Wl,--Map=") else s for s in link]
-    subprocess.run(link, cwd=sim, check=True)
-    subprocess.run([args.idf_python, "-m", "esptool", "--chip", "esp32p4", "elf2image",
-                    "--flash_mode", "dio", "--flash_freq", "80m", "--flash_size", "4MB",
-                    "--min-rev-full", "301", "-o", work / "board.bin", work / "board.elf"], check=True)
+    link_guest(sim, work, "nyx_mac_listener.elf", sources, [work, runtime, service], args.idf_python)
     model = (board / "models/hey-nyx-c161/model.tflite").read_bytes()
     assert (work / "board.bin").read_bytes().count(model) == 1
 

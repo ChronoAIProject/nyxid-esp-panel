@@ -77,3 +77,19 @@ Use the same relative filename from both dry playback packs, with the same playe
 On the 24 digital rear-room inputs with music and panel playback, the Nyx marker requested the microphone before all 24 commands and Willow before one. Each detector had zero openings on the 24 address-erased controls. Each call kept its own request clock, two-second history and full P4 Opus stream. Qwen and Whisper turbo recovered 12 and 9 complete Nyx commands and 1 and 0 Willow commands. The isolated Willow positive opened 282 ms before the end of the address. [Native returns and first-command scores](../../results/4090-c161-bella-room-willow.json)
 
 With the Nyx request clocks fixed, muting only the external music raised the complete-command counts from 12 to 21 for Qwen and from 9 to 18 for turbo. Muting only the panel yielded 13 and 8. With both sources silent the counts were 22 and 21. Keeping both sources and excluding the first two decoded seconds from ASR yielded 11 and 8. Mac can alternate music on and off with the panel playing and the speaker positions fixed. On `first/040.wav` (“turn down the hall light”) and `second/001.wav` (“please turn on the porch lights”), both readers recovered the full command only after muting music in that pair. [Paired source mutes](../../results/4090-c161-bella-product-interference.json) · [Receiver history comparison](../../results/4090-c161-bella-product-history.json)
+
+## First captured packet during setup
+
+The sender fixture compiles the wake branch of the patched board's `mic_task` and its FIFO into the existing P4 codec simulation. It takes the archived processed PCM at the actual open of each of the 24 rear-room Nyx cases. It runs an immediate-ready control and a simulated 500 ms until connection plus another 1,000 ms until provider readiness. The logical clock starts the microphone task at open. Real boards perform session setup before launching it. The fixture accepts each local send and checks the PCM supplied to every encoder call.
+
+```sh
+p4=research/wakeword_p4/first_command_p4
+work=.local/wakeword/c161-bella-sender
+python3 "$p4/mac_board_marker/build_sender.py" .local/wakeword/c161-mac-board-marker/src \
+    .local/wakeword/c161-first-command-v5/build "$work/build" \
+    --idf-python .local/wakeword/idf-tools/python_env/idf5.5_py3.11_env/bin/python
+source .local/wakeword/c161-onset-names/env
+TOKENIZERS_PARALLELISM=false taskset -c 2,4 nice -n 10 /usr/bin/python3 "$p4/mac_listener/check_bella_sender.py" score
+```
+
+All 7,396 immediate-ready captured packets matched the archived bytes. In the wait condition the board branch encoded 25 unsent silence frames, sent 50 silence frames, then sent the same 7,396 captured PCM frames across the 24 calls. Qwen and Whisper turbo recovered 12/24 and 9/24 full commands in the immediate condition, and 11/24 and 6/24 with the wait. For physical runs correlate both board `peer_send` markers with the first packet at the receiver and its first decoded command. [Paired transcripts and packet counts](../../results/4090-c161-bella-sender.json) · [Original packet UARTs](../../results/4090-c161-bella-sender.zip)
