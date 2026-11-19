@@ -116,3 +116,17 @@ cmake --build "$work/build-q8" --parallel 2
 两张权重表分别放入含三份现有音乐的 2 MiB SPIFFS，并使用同一 Q8 ELF 启动 P4 QEMU。两次各有 62/62 个窗口与主机的短语返回时钟和确认结果吻合，28 个背景窗口均无通知。就绪外部堆增量均为 2,825,128 B。正例适配及姓名对比的初始化分别为 6.08 和 7.04 秒。按单个解码器排队计入实际块耗时，两秒回看后，旧四声音分别完整 11/12、11/12，新对话分别 8/8、7/8。两种实现成功窗口从提议到通知的延迟中位数分别为 345 和 350 ms，最长 751 和 787 ms。真实设备调度与首句仍待整机回报。[正例适配 P4 排队及录音](../results/4090-c161-q8-keyword-map-p4-fifo-first-command.json) · [姓名对比 P4 排队及录音](../results/4090-c161-q8-name-contrast-p4-fifo-first-command.json)
 
 Mac 可从原 Q8 模型文件生成研究测试卷。在单独的测试副本中替换 am/sendump。正例适配文件 SHA256 为 `884010cf5ff555a90a110d06809c8be8c33631453fc98814a8a36a3da6679021`，姓名对比文件为 `314e8b0713609218136916902810463a8a1048a0bfa7b34b93d0db492d8efe14`。常规实机基准仍为原 C161。这两张表的训练只使用既有训练来源；这些测试结果来自合成开发语料。[正例适配权重](../results/4090-c161-q8-keyword-map.sendump) · [姓名对比权重](../results/4090-c161-q8-name-contrast.sendump)
+
+## 换用 Piper 后的发音与连接命令
+
+冻结上述两份权重后，在 RTX 4090 上用 Piper 的两个 OpenSLR83 英国开发声音生成了四段安静对话。每个声音分别说同样的查列车和卧室音箱命令，依次测试三种目标拼写、Hey Willow、Nick／Max／Chris 三个姓名和日常句。顺序按已存种子打乱。四段共 36 句，音量取合成器原值，重采样后削波为零。原始采样率浮点音频、实际音素和四段完整 16 kHz PCM 均可回放。姓名和日常句合计 20 条。[输入及时间轴](../results/4090-c161-q8-piper-spellings-plan.json) · [原音频归档](../results/4090-c161-q8-piper-spellings-pcm.zip)
+
+| 安静条件，每格为唤醒数 / 4 | C161 | 原 Q8 双速 | 正例适配双速 | 姓名对比双速 |
+| --- | ---: | ---: | ---: | ---: |
+| Hye Nyx，首词 /haɪ/ | 0/4 | 0/4 | 0/4 | 0/4 |
+| Hey Nyx，首词 /heɪ/ | 1/4 | 3/4 | 3/4 | 3/4 |
+| Hey Nicks，首词 /heɪ/ | 1/4 | 3/4 | 4/4 | 4/4 |
+
+Piper 对 Hey Nyx 和 Hey Nicks 给出相同音素，但两种拼写分别合成，均保留了各自的波形。两份适配权重在 /heɪ/ 组均唤醒 7/8，两秒回看后的固定 Whisper 转写均完整 6/8。原 Q8 双速为 6/8 唤醒、5/8 完整，C161 为 2/8、1/8。三种确认器仅接原速提议时均为 3/8、2/8。两份适配的姓名及日常句均误唤 0/20，对 Hey Willow 也均为 0/4。四次 /haɪ/ 及漏掉的一次 /heɪ/ 均未产生任何速度的前级提议。两种权重在已有提议的其余七次 /heɪ/ 上均有通知。语句外全配置零通知。[逐句提议、短语匹配和录音转写](../results/4090-c161-q8-piper-spellings-evaluation.json)
+
+官方 Hey Willow DEFAULT 在同一批 PCM 上经经典 ESP32 QEMU 完整消费四段，自己的命令为 0/4，交叉及日常语句也没有通知。此前 Kokoro 的四声音亮度命令在安静和播报时各 4/4。两批合成器、声音与载句均有变化，四条样本不足以比较总体水平。开发声音来自 Google OpenSLR83、Demirsahin 等（LREC 2020），通过 rhasspy/piper-voices 的英国南部女声和北部男声模型生成，源数据采用 CC BY-SA 4.0。[官方逐块返回及串口记录](../results/4090-c161-q8-piper-spellings-willow.zip) · [声音来源和版本](../results/4090-piper-slr83-development-source-v1.json) · [同条件 Kokoro 结果](../speex_echo_p4/README.md)
