@@ -199,3 +199,26 @@ P4 研究监听器增加协议 `0x5452594e`。当数字播放参考仅匹配前�
 在六段连续对话中，把 18 处 Nyx 称呼分别替换为同一个 1.10 秒 v5 WAV，按离线强制对齐的命令首词起点拼接。每条命令从该点开始的 PCM 逐样本保留，同一段录音另保留原声及移除称呼后补等长静音两组对照。三组均用冻结 C161 和 v5 三段匹配器在主机逐样本处理，通知向上取整到 256 样本块。直接数字输入时，固定音 18/18 在命令前 66.0–80.4 ms 交付；42 段其余对话和句间零误唤。原声命中 6/18，均晚于对齐的命令起点；称呼静音组为 0/18。固定音组两秒回看覆盖全部命令起点，Whisper 转写的命令末尾逐词正确 15/18。其余三条都来自南部女声，涉及 dim / turn、basil / bezel 等识别差异。此处回放覆盖两个声音和三条命令；扬声器、声场、Opus 和整机时延另由上文的模拟器试验及 Mac 板测检验。[冻结播放 WAV](../results/hye-nyx-c161-v5-early-80ms.wav) · [每次通知、命令 PCM 哈希和识别文本](../results/4090-c161-fixed-cue-piper-dialogues.json)
 
 将上述 18 个固定音与紧接的命令逐个送入既有 ESP32-P4 QEMU 监听固件和 Opus 编码固件，参考通道输入静音。每个片段从连续对话中截取，保留 30 ms 推理和 16 ms 交付网格的相位。18/18 的开麦和回看起点逐样本复现原连续流，全部在命令前 66.0–80.4 ms 开麦。共处理 4,892 个音频块，最慢 4.738 ms，最低内部空闲堆 381,132 字节。解码实际选中通道的 3,835 个 Opus 包，两秒回看有 15/18 条命令末尾逐词完整，只从开麦前 100 ms 读取则为 14/18。Mac 播放包的 18 个 WAV 与模拟器逐条输入的 PCM 相同，清单给出从零起算的命令起点、预期开麦点和校验和。ZIP 的 SHA256 为 `902498cd5fe36e6a1e6f63c314a8c96867699b769fa77aa41f0dc444ee1e1665`。[Mac 播放包](../results/4090-c161-fixed-cue-piper-p4-playback.zip) · [逐条 P4 时钟及解码文本](../results/4090-c161-fixed-cue-piper-p4.json) · [监听记录与原始 Opus 包](../results/4090-c161-fixed-cue-piper-p4-uart.zip)
+
+### 同一批英国口音命令上的普通 Hey Nyx、固定音与 Hey Willow
+
+以 Mac 播放包的 18 段录音为底，每条都保留命令起点后的全部 PCM。取已有四种 Kokoro 声音各一条普通 “Hey Nyx.” 和 “Hey Willow.”，在每条命令前直接拼接唤醒词的有效语音。八条语音及固定 v5 各自匹配至有效帧 RMS −18.47 dBFS，另留原始电平 v5（−17.05 dBFS）和静音。共 198 个数字输入。官方 ESP32 WakeNet `wn9_heywillow_tts` 使用 DEFAULT 和连续 81,600 样本预热。冻结 C161 加 v5 使用原阈值。两路都按首个通知向上取整到 256 样本块，并以相同两秒原麦回看和静音参考下的 90 ms 延迟通道送 P4 QEMU 的 Opus 编码器。18 个原始固定音输入的捕获和解码哈希与上轮监听固件逐条吻合。[冻结输入](../results/4090-c161-piper-matched-willow-plan.json) · [逐条结果](../results/4090-c161-piper-matched-willow.json) · [官方原始返回与 Opus 包](../results/4090-c161-piper-matched-willow-uart.zip)
+
+| 检测器及播放内容 | 整段有通知 | 命令前交付 | 解码后转写包含完整命令末尾 |
+| --- | ---: | ---: | ---: |
+| C161 加 v5，四声音普通 Hey Nyx | 0/72 | 0/72 | 0/72 |
+| 官方 Hey Willow，四声音普通 Hey Willow | 72/72 | 10/72 | 60/72 |
+| C161 加 v5，等响度固定合成音 | 18/18 | 18/18 | 15/18 |
+| C161 加 v5，交接原字节固定音 | 18/18 | 18/18 | 15/18 |
+
+官方 Willow 的交付中位数在命令开始后 86.4 ms，最晚 196 ms，最早提前 20 ms。四个声音分别在 0、2、8、0 次配对中先于命令交付。v5 的中位数提前 72.8 ms。两系统在 18 条静音替换上均无通知，相互播放对方的称呼也均无通知。四声音使用八个固定的唤醒词音频反复配对，两种英国声音提供三条命令的 18 个原始片段。这些分母表示播放组合。此次用同一数字通道对照，扬声器到麦克风的整机时钟仍由 Mac 实测。
+
+Mac 在仓库根目录可用 Python 3 重建并校验播放 WAV。以下命令生成第 0 条命令的 11 种输入，省略 `--pair 0` 可生成全部 198 条。每种唤醒音在补充包内仅保存一份。[补充唤醒音](../results/4090-c161-piper-matched-willow-cues.zip) · [原 Mac 播放包](../results/4090-c161-fixed-cue-piper-p4-playback.zip)
+
+```bash
+results=research/wakeword_p4/results
+python3 research/wakeword_p4/first_command_p4/mac_listener/expand_piper_matched_audio.py \
+    "$results/4090-c161-fixed-cue-piper-p4-playback.zip" \
+    "$results/4090-c161-piper-matched-willow-cues.zip" \
+    "$results/4090-c161-piper-matched-willow-plan.json" .local/wakeword/piper-matched-playback --pair 0
+```
