@@ -54,7 +54,8 @@ void dump(const char* label, const int16_t* samples,int count) {
 void worker(void*) {
     uint32_t h[3];
     ESP_ERROR_CHECK(esp_flash_read(nullptr,h,kOffset,sizeof(h)));
-    const bool signed_reference = h[0] == 0x4452594e;
+    const bool wait_for_third = h[0] == 0x5452594e;
+    const bool signed_reference = wait_for_third || h[0] == 0x4452594e;
     const bool prefix_guarded = signed_reference || h[0] == 0x5052594e;
     const bool guarded = prefix_guarded || h[0] == 0x4752594e;
     const bool stereo = guarded || h[0] == 0x5352594e;
@@ -134,11 +135,13 @@ void worker(void*) {
             const int16_t reference = stereo ? playback[at+i] : 0;
             const bool full_clear = !stereo || guard.allow(reference,true);
             if (signed_reference) signature.update(reference);
-            const bool prefix_clear = !prefix_guarded || prefix.clear(reference, [&] {
+            using PrefixState = nyx::ReferencePrefix::State;
+            const auto prefix_state = prefix_guarded ? prefix.update(reference, [&] {
                 return !signed_reference || signature.matches();
-            });
-            const bool reference_clear = full_clear && prefix_clear;
-            const bool cue_ok = guarded ? cue_route.update(reference,reference_clear,matched) : matched && reference_clear;
+            }) : PrefixState::clear;
+            const bool reference_clear = full_clear && prefix_state != PrefixState::confirmed;
+            const bool awaiting_third = wait_for_third && prefix_state == PrefixState::awaiting_third;
+            const bool cue_ok = guarded ? cue_route.update(reference,reference_clear,matched,awaiting_third) : matched && reference_clear;
             if (cue_ok) allowed_cue=at+i+1;
             bool model_hit=false;
             wake[wake_fill++]=pcm[at+i];
@@ -150,7 +153,7 @@ void worker(void*) {
                 model_hit=hit>0;
                 if (model_hit) hit161=at+i+1;
             }
-            if (guarded ? model_route.update(reference,reference_clear,model_hit) : model_hit) allowed161=at+i+1;
+            if (guarded ? model_route.update(reference,reference_clear,model_hit,awaiting_third) : model_hit) allowed161=at+i+1;
         }
         if (first<0 && (allowed_cue>=0 || allowed161>=0)) {
             const size_t part=std::min(history.count,history.capacity-history.head);

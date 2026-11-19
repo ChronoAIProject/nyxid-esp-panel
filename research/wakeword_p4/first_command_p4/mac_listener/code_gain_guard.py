@@ -16,10 +16,14 @@ from check_c161_v3_two_anchor_v1 import binding
 from replay_c161_pcm_cues_v1 import detect
 
 
-def score(work, source, mic, ref, detector, index, build=BUILD, prefix=None, qualify=None):
+def score(work, source, mic, ref, detector, index, build=BUILD, prefix=None, qualify=None,
+          wait_for_third=False):
     protocol = 0x4752594e if prefix is None else 0x5052594e
     if qualify is not None:
         protocol = 0x4452594e
+    if wait_for_third:
+        assert qualify is not None and prefix is not None
+        protocol = 0x5452594e
     payload = struct.pack("<3I", protocol, index, len(mic)) + mic.tobytes() + ref.tobytes()
     log = work / "serial.log"
     listener.boot(build, log, work/"image.bin", b"LISTENER PASS", (2<<20, payload))
@@ -32,10 +36,11 @@ def score(work, source, mic, ref, detector, index, build=BUILD, prefix=None, qua
     refs = [r["t"] for r in detect(detector, [ref])]
     prefixes = [r["t"] for r in detect(prefix, [ref])] if prefix is not None else []
     accepted_prefixes = prefixes if qualify is None else [t for t in prefixes if qualify(ref, t)]
+    tentative = sorted(set(prefixes) - set(accepted_prefixes)) if wait_for_third else []
     allows = []
     for label, events in (("C161_ALLOW", c161), ("V5_ALLOW", fixed)):
         actual = [int(s) for s in re.findall("^"+label+r" (\d+)$", log_text, re.M)]
-        assert actual == expected(events, refs, ref, accepted_prefixes)
+        assert actual == expected(events, refs, ref, accepted_prefixes, tentative)
         allows.extend(actual)
     opened = [int(s) for s in re.findall(r"^OPEN (\d+) ", log_text, re.M)]
     assert opened == ([(min(allows)+255)//256*256] if allows else [])

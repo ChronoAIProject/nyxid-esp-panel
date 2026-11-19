@@ -163,3 +163,7 @@ Mac 的实机播放包有三条 16 kHz 单声道 PCM16 WAV。两条外部音轨�
 原两秒回看五条漏转写中，am_onyx 的厨房命令 “Raise the bedroom blinds halfway” 仅将末词拆为 “half way”；客厅同句还将 “blinds” 读成了 “blind”。客厅的另三条漏转写涉及 am_onyx 的日历命令，以及 bm_lewis 的两句命令。评分沿用原词序和分词口径。提高命令电平后，P4 通话队列原有八次成功均保留，并找回七条，仅 am_onyx 在客厅的 “Read tomorrow's first calendar entry” 仍将首词读成 “Breathe”。本组 32 次监听模拟共 15,670 个 16 ms 块，有一次超过周期，耗时 27.956 ms。最低内部空闲堆为 381,132 B。两路各解码 10,866 个 20 ms 包。[监听事件与实际 P4 编码包](../../results/4090-c161-coded-command-uplink-uart.zip)
 
 Mac 可用同一外部扬声器、相同音量和摆位，配对播放每种声音每条命令的 original 和 limited 文件。16 条 WAV 都是 16 kHz 单声道 PCM16；清单给出唤醒音哈希、发送端命令起点、整份 WAV 和 PCM 哈希。归档 SHA256 为 `a6ee56d7d2390fd676040eeb1ce6834abdf0e4c386768d2893bb5d735df678a7`。[四声音、两命令的实机播放包](../../results/4090-c161-coded-command-uplink-playback.zip)
+
+## 低码率的固定音自播
+
+使用上面的 ESP-IDF 构建步骤，将构建目录设为 `.local/wakeword/c161-mac-listener/build-reference-third`。在研究 Python 环境运行 `third_reference.py` 可复现浴室与淋浴间的双路回放、参考时钟偏移和普通讲话碰撞。协议字 `0x5452594e` 在原双路协议的同一采样点读取麦克风与播放参考，对未经签名确认的前两段匹配等候第三段。Mac 可优先对照加噪浴室的 12 kbps 自播和普通讲话参考同时收到外部唤醒这两个情形。[固定 WAV、模拟结果与实机取样要求](../../experiments/c161_synthesized_cue_matchers_v1.md#低码率自播的修复与时钟偏差)
