@@ -106,7 +106,12 @@ def packet(spec, count, data):
     return h + b"".join(struct.pack("<B9s", len(chars), bytes(chars)) for chars in spec["tokens"]) + data
 
 
-def run(work, batch_size):
+def run(work, batch_size, output=RESULTS):
+    output.mkdir(parents=True, exist_ok=True)
+    archive = output/(STEM+"-uart.zip")
+    report = output/(STEM+".json")
+    if archive.exists() or report.exists():
+        raise FileExistsError(f"Choose an unused --output directory for replay reports: {output}")
     build = work/"build"
     spec = read(work/"fixtures.json")
     images = read(build/"flasher_args.json")["flash_files"]
@@ -122,7 +127,6 @@ def run(work, batch_size):
     rows, streams = spec["records"], spec["streams"]
     assert sha(blocks) == spec["blocks_sha256"] and blocks.stat().st_size == STRIDE * len(rows)
     batches = []
-    archive = RESULTS/(STEM+"-uart.zip")
     with blocks.open("rb") as src, ZipFile(archive.with_suffix(".tmp"), "w", ZIP_DEFLATED) as z:
         for start in range(0,len(rows),batch_size):
             count = min(batch_size,len(rows)-start)
@@ -160,7 +164,7 @@ def run(work, batch_size):
                 if w["device"][route]:
                     hits[route].append(complete)
         s["delayed"] = {route:base.scoring.merged(s["c161"],ts) for route,ts in hits.items()}
-    save(RESULTS/(STEM+".json"),dict(records=rows, streams=streams, batches=batches, inputs=spec["inputs"],
+    save(report,dict(records=rows, streams=streams, batches=batches, inputs=spec["inputs"],
          thresholds=spec["thresholds"], max_gap=spec["max_gap"], words=WORDS, model_sha256=sha(model),
          model_bytes=model.stat().st_size, used_frames=71, alphabet=32, qemu_sha256=sha(QEMU),
          firmware_sha256=sha(Path(__file__).resolve().parents[2]/"midlevel_p4_selftest/main/proposal_spellings.cpp"),
@@ -177,8 +181,9 @@ if __name__ == "__main__":
     p.add_argument("action",choices=["collect","run"])
     p.add_argument("work",type=Path)
     p.add_argument("--batch-size",type=int,choices=range(1,201),default=100,metavar="1..200")
+    p.add_argument("--output",type=Path,default=RESULTS,help="directory for new UART and timing reports")
     args = p.parse_args()
     if args.action == "collect":
         collect(args.work)
     else:
-        run(args.work,args.batch_size)
+        run(args.work,args.batch_size,args.output)

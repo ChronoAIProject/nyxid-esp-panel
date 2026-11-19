@@ -1,4 +1,5 @@
 """Measure command captures and localize remaining misses at the fixed proposal clocks."""
+import argparse
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -38,8 +39,8 @@ def opportunity(stream, windows, meta, result):
                 finished_margin_samples=[hi-w["complete_sample"] for w in available])
 
 
-def main():
-    measured_path = RESULTS / (probe.STEM+".json")
+def main(output=RESULTS):
+    measured_path = output / (probe.STEM+".json")
     measured = read(measured_path)
     comparison_path = RESULTS / (probe.gap.STEM+"-comparison.json")
     archive = read(comparison_path)
@@ -80,7 +81,7 @@ def main():
                                        new_transcripts={k:v for k,v in cache.items() if k not in cached}))
         summary[group] = counts
         print(group, flush=True)
-    save(RESULTS / (probe.STEM+"-commands.json"), dict(records=records, summary=summary, asr=identity,
+    save(output / (probe.STEM+"-commands.json"), dict(records=records, summary=summary, asr=identity,
          measurement_sha256=sha(measured_path), comparison_sha256=sha(comparison_path), script_sha256=sha(Path(__file__)),
          policy="First merged event on or after cue onset and strictly before command. Two-second pre-roll "
                 "followed by all remaining scene audio. Reuse an archived transcript only for the same PCM "
@@ -89,4 +90,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    p = argparse.ArgumentParser()
+    p.add_argument("--output",type=Path,default=RESULTS,help="directory containing the new timing report")
+    main(p.parse_args().output)

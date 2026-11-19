@@ -294,10 +294,10 @@ Joe 的两个误唤是 “Hey Next.” 和 “Hey Mix.”。句号版 “Hey Nic
 
 将每个窗口的实际客机耗时计入一条串行复核队列，保留原 C161 通知及其共用冷却时间。房间配对普通称呼上，C161 加拼写和词间空白上限及时 9/16，完整命令 8/16。冻结 C161 单独为 1/16 和 1/16，官方 Willow 在自己的配对称呼上为 11/16 和 8/16。Nyx 的七次漏唤中五次在命令前没有完整候选窗，两次已有窗口但拼写规则拒绝。仅加噪声的十次漏唤里这两类各五次。28.001 小时历史背景中拼写加空白上限出现 16 次通知，C161 单独为零。本轮对 25 个新增捕获起点在 RTX 4090 上重新转写。[逐句计数、失败原因和转写](../results/4090-c161-spelling-p4-commands.json)
 
-复现使用固定的 ESP-IDF v5.5.4，并从仓库根目录启动。以下命令使用与已有研究相同的音频、Python 环境及 P4 QEMU。每次独立复核使用空的工作目录，报告按仓库惯例首次写入。
+复现使用固定的 ESP-IDF v5.5.4，并从仓库根目录启动。以下命令使用与已有研究相同的音频、Python 环境及 P4 QEMU。每次独立复核指定一个新的本地工作目录。UART、逐窗计时和新转写一起写入该目录下的 reports。
 
 ```bash
-work="$PWD/.local/wakeword/c161-spelling-p4"
+work="$PWD/.local/wakeword/c161-spelling-p4-replay"
 app="$PWD/research/wakeword_p4/midlevel_p4_selftest"
 scripts=research/wakeword_p4/first_command_p4/mac_listener
 mkdir -p "$work"
@@ -308,8 +308,8 @@ nice -n 10 taskset -c 2,3 idf.py -C "$app" -B "$work/build" -DIDF_TARGET=esp32p4
 nice -n 10 taskset -c 2,3 cmake --build "$work/build" --parallel 2
 source .local/wakeword/c161-onset-names/env
 nice -n 10 taskset -c 2,3 /usr/bin/python3 "$scripts/check_spelling_p4.py" collect "$work"
-nice -n 10 taskset -c 2,3 /usr/bin/python3 "$scripts/check_spelling_p4.py" run "$work"
-nice -n 10 taskset -c 2,3 /usr/bin/python3 "$scripts/score_spelling_p4_commands.py"
+nice -n 10 taskset -c 2,3 /usr/bin/python3 "$scripts/check_spelling_p4.py" run "$work" --output "$work/reports"
+nice -n 10 taskset -c 2,3 /usr/bin/python3 "$scripts/score_spelling_p4_commands.py" --output "$work/reports"
 ```
 
 ### 提前训练五帧触发对连读、房间和日常词的影响
