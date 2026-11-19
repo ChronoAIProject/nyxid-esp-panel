@@ -14,7 +14,7 @@ from replay_c161_pcm_cues_v1 import detect
 ch = advance.challenge
 
 
-def main():
+def main(materials=advance.materials, stem=advance.STEM):
     prior = ch.RESULTS/"4090-c161-v5-playback-opus.json"
     settings = [r for r in ch.read(prior)["records"] if r["mode"]!="raw"]
     decoder = codec_api()
@@ -26,7 +26,7 @@ def main():
     with TemporaryDirectory() as tmp:
         full = ch.binding(Path(tmp)/"v5.so",coded="v5")
         pair = ch.binding(Path(tmp)/"pair.so",coded="aligned")
-        for i,s,mode,baseline,cue,cmd in advance.materials():
+        for i,s,mode,baseline,cue,cmd in materials():
             track = np.r_[cue,cmd]
             h,noise = signals[s["room"]]
             n = len(baseline)
@@ -65,7 +65,7 @@ def main():
                     reference_full=hits,prefix=prefixes,sign_errors=[distance(ref,t) for t in prefixes],
                     qualified=qualified,panel_allowed=allowed,clipped=int((q!=mic).sum())))
     assert len(rows)==288
-    ch.save(ch.RESULTS/f"{advance.STEM}-transport.json",dict(records=rows,version=decoder.opus_get_version_string().decode(),
+    ch.save(ch.RESULTS/f"{stem}-transport.json",dict(records=rows,version=decoder.opus_get_version_string().decode(),
         plan_sha256=ch.sha(ch.PLAN),code_sha256=ch.sha(Path(__file__)),settings_sha256=ch.sha(prior),
         policy="Offline external or panel playback of the entire joined file. Each Opus encoder and decoder starts fresh, remove its reported lookahead, no packet loss. Room and noise held fixed. Host reference guards use the entire decoded player output as digital reference. Timing of first delivery is rounded up to 256 samples."))
 

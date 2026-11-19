@@ -175,3 +175,13 @@ Willow 还有两次通知在命令开始后 99 ms，均来自 am_onyx；以整�
 270 个已消费 MIT 房间响应中，提前版固定音匹配在命令源时钟前交付的数量分别为 267、267、267、268，安静及加噪各自如此。该组输入在唤醒音后追加房间余响和噪声。将两条紧接命令和唤醒音整份经 libopus 1.3.1 编解码再进入房间，四声音提前版在语音及音频模式、12/16/24/48 kbit/s 的八种设置均提前交付 16/16；主机用完整解码播放流作自播参考，各设置均无放行。该项使用主机守卫，P4 自播表使用 PCM 数字参考。[4,320 条房间结果](../results/4090-c161-coded-advance-rooms.json) · [全部编解码设置和参考时钟](../results/4090-c161-coded-advance-transport.json)
 
 孤立播放提前版时，Whisper small.en 将 af_bella 读为 “Hey”，其余三个声音读为 “Hey next”；wav2vec2 对 bf_lily 读为 “HAY NIX”。可使用同声音的 ordinary、tail 和 advance 文件并排听辨，持续时间相同。[12 条孤立播放 WAV](../results/4090-c161-coded-advance-isolated.zip) · [两套 CUDA 转写](../results/4090-c161-coded-advance-isolated.json) · [16 条紧接命令的四声音播放包](../results/4090-c161-coded-advance-playback.zip)
+
+## 供 Mac 实播的单文件 Hye Nyx
+
+采用 v3 的同一条合成发音，将增强版 v5 的三段编码各提前 1,280 个样本，保留从起点到最后一个有效帧的 17,600 个样本。独立 WAV 为 1.10 秒、16 kHz 单声道 PCM16、35,244 B，SHA256 为 `cc59349578cbca6c63ba13a45f7303d9de98d11560a31799b0a884e227eabf0f`。RTX 4090 上 Whisper small.en 无提示转写为 “Hey, Nix.”，wav2vec2 贪心解码为 “HEYNIX”。检测使用 C161 INT8（235/256、五步平滑）和 v5 三段匹配器。[播放 WAV](../results/hye-nyx-c161-v5-early-80ms.wav) · [生成参数、两种转写和源文件哈希](../results/4090-c161-single-cue-advance-source.json)
+
+厨房空调、客厅音乐各回放同一唤醒音，后接四种合成声音的两条命令。16 次 P4 QEMU 外部播放全部在源命令前 64 ms 开麦，实际通话队列的 Opus 包经解码和 Whisper 转写，全部保留了完整的命令。相同麦克风输入、同步 PCM 参考的面板自播误开 0/16。32 次回放共 13,892 个 16 ms 块，最慢 10.932 ms，超时为零，最低内部空闲堆 381,132 B。Mac 可直接播放包内八条干声，每条从样本 17,600 起接命令。ZIP 的 SHA256 为 `1ed5dad95395d0c9d2d37f0813be4a987f8fb32919f9188dcf1cae004d70700c`。[八条播放 WAV 和清单](../results/4090-c161-single-cue-advance-commands.zip) · [P4 逐句时钟与转写](../results/4090-c161-single-cue-advance-p4.json) · [UART 与上行包](../results/4090-c161-single-cue-advance-uart.zip)
+
+在已用于开发的 270 个 MIT 房间响应中，单独播放唤醒音并保留余响，按源 WAV 结束时钟判断是否及时。安静时 269/270 及时，加噪时 270/270 及时，最终均有 270/270 通知。安静 h081 淋浴间由 C161 在样本 32,640 命中，在 32,768 交付，比源时钟 32,137 晚 39.44 ms。另将唤醒音与命令整条经 Opus 语音和音频模式编解码，厨房和客厅的八种配置（12/16/24/48 kbps）均有 16/16 次主机外部及时通知。给主机提供完整解码参考，每种均误放行 0/16；两段前缀的数字波形检查在 12、16、24 kbps 均通过 0/16，在 48 kbps 均通过 16/16。[270 个房间逐条记录](../results/4090-c161-single-cue-advance-rooms.json) · [主机端编解码与参考检查](../results/4090-c161-single-cue-advance-transport.json)
+
+h024 浴室和 h081 淋浴间另用一条真实拼接的合成命令 “Close the upstairs curtains.”，固定源起点 32,137。每种组合切换静音参考（外部播放）和同步解码参考（面板自播），P4 QEMU 共 24 次。外部 12/12 开麦，其中 9/12 在命令前，全部由 C161 命中。两秒回看按实际开麦时钟截取原麦，12/12 可转写出完整命令，本组只评原麦。淋浴间安静的 PCM 晚 39.44 ms，两种 Opus 均晚 71.44 ms。面板自播误开 1/12，发生在加噪浴室的 12 kbps 语音模式。数字参考的两段匹配在样本 28,924 出现，波形检查未通过。C161 在 30,240 命中，等待期满在 30,720 开麦，完整三段参考在 30,844 才确认，晚 7.75 ms。PCM 和 48 kbps 自播分别误开 0/4。板端请记录参考取样点与实际扬声器的相对时钟、首句解码、堆和丢帧。[困难房间全部时钟与原麦转写](../results/4090-c161-single-cue-advance-difficult.json)
