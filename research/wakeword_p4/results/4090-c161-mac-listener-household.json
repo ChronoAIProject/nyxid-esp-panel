@@ -1,0 +1,5492 @@
+{
+  "mac_commit": "0d8e1935702a561b535a8c1a0921fd8034943d2c",
+  "files": {
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/first_command_p4/mac_listener/main/listener.cpp": "04c7cf4d70722507e73048d73be7ba77cd14a2777a4b1ce340ad5ee7a11e127c",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/first_command_p4/mac_listener/replay.py": "d69ee380e1ef65397e0b796c2d73d2c65f39bb483222d74d5d155d3a9dab02de",
+    ".local/wakeword/c161-mac-listener/src/components/panel_wake_runtime/panel_wake_runtime.cpp": "617890a1eda6dc1d756884dce5ccfabdef5037e20fb8e6f5515856c33f9fbc0e",
+    ".local/wakeword/c161-mac-listener/src/components/panel_wake_runtime/panel_wake_runtime.h": "8bb92533b52e12b460f1f434473a1dbc653a75f926249a628f0278905f9bdc4b",
+    ".local/wakeword/c161-mac-listener/model/hey_nyx_model.bin": "c16154040378b8acccdb57c19917c46cea0a9ea6a39f105004b964ddd093ab81",
+    ".local/wakeword/c161-mac-listener/model/manifest.json": "ffcde7f062dc113b1aec10af4aee07e4f5028b25c1fd332aa2303866c38119e7",
+    "research/wakeword_p4/results/hye-nyx-c161-synthetic-cue-v5.wav": "79c37ecc57e3a7297f1a9ff1a9481fd56af1b985872a7875ccbadb5ffbf40f47",
+    ".local/wakeword/c161-mac-listener/features.zip": "052a8f32e7a82f49593bfdc067638a8cee6542443726d1a7e5b01b3bd9d67eac",
+    ".local/wakeword/c161-mac-listener/features/src/filterbank_util.c": "74d23babcd8fd75b6d6dc198d3092e56be6da5f32354c9cb0f38dd30c910e638",
+    "research/wakeword_p4/results/4090-c161-v5-household-rooms-plan.json": "6c21269f7c73bbce9fe5189222550f3239b4ef831f477916f4711cdace45be15",
+    "research/wakeword_p4/results/4090-c161-v5-household-rooms-v1.json": "fafe822163f072856296ab7c8e8349326f9a952d38ae10a83d20e11169301573",
+    "research/wakeword_p4/results/4090-c161-v5-household-rooms-audio.json": "92a5ca513b26fbe385ed4d99bad09201a2d25f2f3cff99295e707b1e23215da9",
+    "components/panel_services/panel_voice_audio.c": "5b6feb313074d72d3b0ce0a5f8cec3be409ffdc3a1cdbd620a581cc8bd172aa3",
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/portable/c161_coded_cue_v5.h": "9bf9bd02846576c5c103ba507870ebfafd6b7b0657017ce878137cad67eef797"
+  },
+  "qemu_sha256": "053a4ad154c61fb3bb5d545b9c4411eb89ea12448e675b1d2abe6b1f7b1c1308",
+  "app_sha256": "13069a17b46f950f957e94f1c895e0e49cc663ae1bf4df2b3eebc11421b6eb33",
+  "app_bytes": 435056,
+  "asr": {
+    "model.bin": "62b2a45b05ee59acb4a5341b33ee35e041395d378d418a18acfe4c9e768ee37a",
+    "config.json": "666a9605530ac1f61fa8177f3702b4dacec9966749e42610839fcc32661d5fae",
+    "tokenizer.json": "929c5252409436dce1b38a75d1abbcb5e132d170d8e324e4e04ed915fa2d22df",
+    "vocabulary.txt": "ff77588746d3a2595d32ab5b69ffd7b95ce2441ac57533cb66fc3eb575a115cf"
+  },
+  "uart_sha256": "d015a1d6454375fcb979a9495d528f2670c52574cbd1ea952c6e145f2d249577",
+  "policy": "One boot per existing input. Raw mic to Mac single C161 and frozen v5, zero idle playback reference to embedded ESP-SR AEC/AGC. First event wins at the end of an AEC read block. Transfer last 32000 adjusted samples into panel FIFO then append remaining processed audio. Device compares FIFO against its complete processed stream sample-by-sample. Continue running detectors for shadow comparisons. Speech-presence labels and transcripts do not enter device code. Final partial input read zero padded. QEMU reference FFT and esp-nn ANSI C.",
+  "records": [
+    {
+      "index": 0,
+      "role": "v5",
+      "scene": 0,
+      "snr_db": 0,
+      "voice": "af_heart",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "8843fdbbcb4d44d81d4fda1bb3ca29a1c873b01a59e826049d45d68b18cef5a2",
+      "input_samples": 104929,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          49920,
+          -1,
+          49676
+        ],
+        [
+          50944,
+          50880,
+          -1
+        ]
+      ],
+      "first": 17920,
+      "emitted": 104960,
+      "count": 87040,
+      "mean_block_us": 728.4853658536585,
+      "peak_block_us": 4544,
+      "over_budget": 0,
+      "blocks": 410,
+      "min_internal": 381132,
+      "delivered": 49920,
+      "command_at": 56320,
+      "before_command": 38400,
+      "processed_sha256": "49909b1de9bbce6f3cb33614a668ced647387b0d1a545426f3280ba1eb191ed7",
+      "raw_sha256": "7f3d48202cdff90bf3d09cd06406821a43a52d9cbec8f6b789e9509a2e71f572",
+      "transcripts": {
+        "processed": {
+          "text": "Agent, turn off the death lamp.",
+          "words": [
+            {
+              "word": " Agent,",
+              "start": 0.0,
+              "end": 1.54
+            },
+            {
+              "word": " turn",
+              "start": 2.32,
+              "end": 2.96
+            },
+            {
+              "word": " off",
+              "start": 2.96,
+              "end": 3.18
+            },
+            {
+              "word": " the",
+              "start": 3.18,
+              "end": 3.34
+            },
+            {
+              "word": " death",
+              "start": 3.34,
+              "end": 3.5
+            },
+            {
+              "word": " lamp.",
+              "start": 3.5,
+              "end": 3.8
+            }
+          ],
+          "exact_suffix": false,
+          "contains_command": false
+        },
+        "raw": {
+          "text": "Hey, Nix. Turn off the desk lamp.",
+          "words": [
+            {
+              "word": " Hey,",
+              "start": 0.8000000000000005,
+              "end": 1.28
+            },
+            {
+              "word": " Nix.",
+              "start": 1.48,
+              "end": 1.66
+            },
+            {
+              "word": " Turn",
+              "start": 2.62,
+              "end": 2.88
+            },
+            {
+              "word": " off",
+              "start": 2.88,
+              "end": 3.08
+            },
+            {
+              "word": " the",
+              "start": 3.08,
+              "end": 3.24
+            },
+            {
+              "word": " desk",
+              "start": 3.24,
+              "end": 3.46
+            },
+            {
+              "word": " lamp.",
+              "start": 3.46,
+              "end": 3.72
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        }
+      },
+      "host_c161": [
+        50880
+      ],
+      "host_v5": [
+        49676
+      ],
+      "host_willow": [],
+      "log_sha256": "36cfd48e19d09d4d15e5eebbf93364358fa4b648df63175d0a604fb939ed1212",
+      "c161_identical": true
+    },
+    {
+      "index": 1,
+      "role": "ordinary",
+      "scene": 0,
+      "snr_db": 0,
+      "voice": "af_heart",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "c086cea6de72eff19947e809f7f91256797f97164430e1ff438aa837b44f7d72",
+      "input_samples": 104929,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          55296,
+          55200,
+          -1
+        ]
+      ],
+      "first": 23200,
+      "emitted": 104960,
+      "count": 81760,
+      "mean_block_us": 736.9439024390244,
+      "peak_block_us": 4363,
+      "over_budget": 0,
+      "blocks": 410,
+      "min_internal": 381132,
+      "delivered": 55296,
+      "command_at": 56320,
+      "before_command": 33120,
+      "processed_sha256": "7f95850e026ad81c62b3bfa5302acf7b710b1acbe2b717ec443b2a3bfbc89e04",
+      "raw_sha256": "9697d3e0af12dbbcda2514254246fe595e1a763f21e3df4aee4aff830684c03b",
+      "transcripts": {
+        "processed": {
+          "text": "Hey, mix. Turn off the deathly.",
+          "words": [
+            {
+              "word": " Hey,",
+              "start": 0.8000000000000005,
+              "end": 1.2
+            },
+            {
+              "word": " mix.",
+              "start": 1.32,
+              "end": 1.46
+            },
+            {
+              "word": " Turn",
+              "start": 2.6,
+              "end": 2.66
+            },
+            {
+              "word": " off",
+              "start": 2.66,
+              "end": 2.86
+            },
+            {
+              "word": " the",
+              "start": 2.86,
+              "end": 3.0
+            },
+            {
+              "word": " deathly.",
+              "start": 3.0,
+              "end": 3.42
+            }
+          ],
+          "exact_suffix": false,
+          "contains_command": false
+        },
+        "raw": {
+          "text": "Hey, Nix. Turn off the desk lamp.",
+          "words": [
+            {
+              "word": " Hey,",
+              "start": 0.5800000000000003,
+              "end": 1.1
+            },
+            {
+              "word": " Nix.",
+              "start": 1.24,
+              "end": 1.5
+            },
+            {
+              "word": " Turn",
+              "start": 2.3,
+              "end": 2.56
+            },
+            {
+              "word": " off",
+              "start": 2.56,
+              "end": 2.74
+            },
+            {
+              "word": " the",
+              "start": 2.74,
+              "end": 2.92
+            },
+            {
+              "word": " desk",
+              "start": 2.92,
+              "end": 3.12
+            },
+            {
+              "word": " lamp.",
+              "start": 3.12,
+              "end": 3.38
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        }
+      },
+      "host_c161": [
+        55200
+      ],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "df428381418e21336c6e5715bacee5d9cca3a4842e60755d7160f4649a25aa49",
+      "c161_identical": true
+    },
+    {
+      "index": 2,
+      "role": "willow",
+      "scene": 0,
+      "snr_db": 0,
+      "voice": "af_heart",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "c34fa0a7d89f442a625641236a6806f8fab883636df8903c29af8e7241f3eadf",
+      "input_samples": 104929,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 104960,
+      "count": 0,
+      "mean_block_us": 739.6365853658536,
+      "peak_block_us": 4385,
+      "over_budget": 0,
+      "blocks": 410,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [
+        48960
+      ],
+      "log_sha256": "18e9bb349235106cacb1b25ef2c4fcab232de925448e41332067405b35fd6daa",
+      "c161_identical": true
+    },
+    {
+      "index": 3,
+      "role": "silence",
+      "scene": 0,
+      "snr_db": 0,
+      "voice": "af_heart",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "0257b1c522ad4c05dc86fb0975298729cb3717208cb747ea1e532e95cf88b610",
+      "input_samples": 104929,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 104960,
+      "count": 0,
+      "mean_block_us": 783.7975609756097,
+      "peak_block_us": 4449,
+      "over_budget": 0,
+      "blocks": 410,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "77483bebfbd7883c56635175d4d1afa48607cdf80778a2e44e73be0a0ada88ec",
+      "c161_identical": true
+    },
+    {
+      "index": 4,
+      "role": "v5",
+      "scene": 0,
+      "snr_db": 6,
+      "voice": "af_heart",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "514069d8099c47da33858213067dc89a5af4f3286c986187b5c8df67ee5336e4",
+      "input_samples": 104929,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          49920,
+          49920,
+          49676
+        ]
+      ],
+      "first": 17920,
+      "emitted": 104960,
+      "count": 87040,
+      "mean_block_us": 728.1926829268293,
+      "peak_block_us": 4447,
+      "over_budget": 0,
+      "blocks": 410,
+      "min_internal": 381132,
+      "delivered": 49920,
+      "command_at": 56320,
+      "before_command": 38400,
+      "processed_sha256": "a0909b9327fdb3538dbb92979b406559076133a512bf5485816a51dae11574ed",
+      "raw_sha256": "556808ddc5a6a0b9421c35896f22585f6160132d9708e53accb5641e4525c7d6",
+      "transcripts": {
+        "processed": {
+          "text": "Hey Nick, turn off the desk lamp.",
+          "words": [
+            {
+              "word": " Hey",
+              "start": 0.7600000000000005,
+              "end": 1.36
+            },
+            {
+              "word": " Nick,",
+              "start": 1.36,
+              "end": 1.66
+            },
+            {
+              "word": " turn",
+              "start": 2.6,
+              "end": 2.96
+            },
+            {
+              "word": " off",
+              "start": 2.96,
+              "end": 3.18
+            },
+            {
+              "word": " the",
+              "start": 3.18,
+              "end": 3.34
+            },
+            {
+              "word": " desk",
+              "start": 3.34,
+              "end": 3.54
+            },
+            {
+              "word": " lamp.",
+              "start": 3.54,
+              "end": 3.82
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        },
+        "raw": {
+          "text": "Hey, Nix. Turn off the desk lamp.",
+          "words": [
+            {
+              "word": " Hey,",
+              "start": 0.8000000000000003,
+              "end": 1.26
+            },
+            {
+              "word": " Nix.",
+              "start": 1.48,
+              "end": 1.64
+            },
+            {
+              "word": " Turn",
+              "start": 2.72,
+              "end": 2.88
+            },
+            {
+              "word": " off",
+              "start": 2.88,
+              "end": 3.08
+            },
+            {
+              "word": " the",
+              "start": 3.08,
+              "end": 3.24
+            },
+            {
+              "word": " desk",
+              "start": 3.24,
+              "end": 3.48
+            },
+            {
+              "word": " lamp.",
+              "start": 3.48,
+              "end": 3.72
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        }
+      },
+      "host_c161": [
+        49920
+      ],
+      "host_v5": [
+        49676
+      ],
+      "host_willow": [],
+      "log_sha256": "3e51f29849d298c553a4351d7b0959549aca458443e7e84fb69b33cc2987fa37",
+      "c161_identical": true
+    },
+    {
+      "index": 5,
+      "role": "ordinary",
+      "scene": 0,
+      "snr_db": 6,
+      "voice": "af_heart",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "2d2b437df86cc61b6a9af76417d1f1ad051f4c6e3fe98602bc7d5df1c3e8b7e9",
+      "input_samples": 104929,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          54784,
+          54720,
+          -1
+        ]
+      ],
+      "first": 22720,
+      "emitted": 104960,
+      "count": 82240,
+      "mean_block_us": 845.0780487804878,
+      "peak_block_us": 5093,
+      "over_budget": 0,
+      "blocks": 410,
+      "min_internal": 381132,
+      "delivered": 54784,
+      "command_at": 56320,
+      "before_command": 33600,
+      "processed_sha256": "50a6f1d17c7e2f4125ea254b31fc283e51847c93dc494c0ab98c1b24993d8ccb",
+      "raw_sha256": "cc664d8008dc09d21cb1d3ca0f21dcdb2235680a47eda3cffe74d929cb89c971",
+      "transcripts": {
+        "processed": {
+          "text": "Hey, Nick. Turn off the desk lamp.",
+          "words": [
+            {
+              "word": " Hey,",
+              "start": 0.78,
+              "end": 1.24
+            },
+            {
+              "word": " Nick.",
+              "start": 1.36,
+              "end": 1.48
+            },
+            {
+              "word": " Turn",
+              "start": 2.36,
+              "end": 2.68
+            },
+            {
+              "word": " off",
+              "start": 2.68,
+              "end": 2.88
+            },
+            {
+              "word": " the",
+              "start": 2.88,
+              "end": 3.04
+            },
+            {
+              "word": " desk",
+              "start": 3.04,
+              "end": 3.24
+            },
+            {
+              "word": " lamp.",
+              "start": 3.24,
+              "end": 3.5
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        },
+        "raw": {
+          "text": "Hey, Nix. Turn off the desk lamp.",
+          "words": [
+            {
+              "word": " Hey,",
+              "start": 0.6599999999999995,
+              "end": 1.14
+            },
+            {
+              "word": " Nix.",
+              "start": 1.28,
+              "end": 1.54
+            },
+            {
+              "word": " Turn",
+              "start": 2.34,
+              "end": 2.58
+            },
+            {
+              "word": " off",
+              "start": 2.58,
+              "end": 2.78
+            },
+            {
+              "word": " the",
+              "start": 2.78,
+              "end": 2.94
+            },
+            {
+              "word": " desk",
+              "start": 2.94,
+              "end": 3.18
+            },
+            {
+              "word": " lamp.",
+              "start": 3.18,
+              "end": 3.42
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        }
+      },
+      "host_c161": [
+        54720
+      ],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "6b4be9d42e36c1fe39704c322981159e2caecc1abc676d1ea3c03f11f0c164d8",
+      "c161_identical": true
+    },
+    {
+      "index": 6,
+      "role": "willow",
+      "scene": 0,
+      "snr_db": 6,
+      "voice": "af_heart",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "61d83751d646813bd5400aa9ea2901f21fd9d7d2572c6585993a17e03b08f5ae",
+      "input_samples": 104929,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 104960,
+      "count": 0,
+      "mean_block_us": 783.6634146341463,
+      "peak_block_us": 4700,
+      "over_budget": 0,
+      "blocks": 410,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [
+        48960
+      ],
+      "log_sha256": "d3de202d44d11833f883d058f2683f9eada2e568aeec9856bf49e3910b104ea2",
+      "c161_identical": true
+    },
+    {
+      "index": 7,
+      "role": "silence",
+      "scene": 0,
+      "snr_db": 6,
+      "voice": "af_heart",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "7835bd8addf80109c4ec3b783480282235378aaec3a92c84cc072ed712929f73",
+      "input_samples": 104929,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 104960,
+      "count": 0,
+      "mean_block_us": 738.3170731707318,
+      "peak_block_us": 4280,
+      "over_budget": 0,
+      "blocks": 410,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "bb80d3a7e2759cd140c9d14bed416f8e21d5d5736d6cfe0234c3e0e0e86268dc",
+      "c161_identical": true
+    },
+    {
+      "index": 8,
+      "role": "v5",
+      "scene": 0,
+      "snr_db": 12,
+      "voice": "af_heart",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "d56ec797bb50b348b265677110f0bd863c6166dd04fbe2655e1fed2703c2284e",
+      "input_samples": 104929,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          49920,
+          49920,
+          49676
+        ]
+      ],
+      "first": 17920,
+      "emitted": 104960,
+      "count": 87040,
+      "mean_block_us": 714.3170731707318,
+      "peak_block_us": 4417,
+      "over_budget": 0,
+      "blocks": 410,
+      "min_internal": 381132,
+      "delivered": 49920,
+      "command_at": 56320,
+      "before_command": 38400,
+      "processed_sha256": "a2b928cd8392ae2859cda0b572f6f83e4e19ddda532d52ccf76f6aca91f9c404",
+      "raw_sha256": "e5ef67a5a0d143f7776fd5bd2900d7bceaefbde461d2b2bcbbe5445009f9ee7b",
+      "transcripts": {
+        "processed": {
+          "text": "Hey, Nix. Turn off the desk lamp.",
+          "words": [
+            {
+              "word": " Hey,",
+              "start": 0.94,
+              "end": 1.36
+            },
+            {
+              "word": " Nix.",
+              "start": 1.56,
+              "end": 1.72
+            },
+            {
+              "word": " Turn",
+              "start": 2.82,
+              "end": 2.98
+            },
+            {
+              "word": " off",
+              "start": 2.98,
+              "end": 3.16
+            },
+            {
+              "word": " the",
+              "start": 3.16,
+              "end": 3.34
+            },
+            {
+              "word": " desk",
+              "start": 3.34,
+              "end": 3.56
+            },
+            {
+              "word": " lamp.",
+              "start": 3.56,
+              "end": 3.84
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        },
+        "raw": {
+          "text": "Hey, Nix. Turn off the desk lamp.",
+          "words": [
+            {
+              "word": " Hey,",
+              "start": 0.8200000000000003,
+              "end": 1.26
+            },
+            {
+              "word": " Nix.",
+              "start": 1.48,
+              "end": 1.64
+            },
+            {
+              "word": " Turn",
+              "start": 2.68,
+              "end": 2.88
+            },
+            {
+              "word": " off",
+              "start": 2.88,
+              "end": 3.08
+            },
+            {
+              "word": " the",
+              "start": 3.08,
+              "end": 3.24
+            },
+            {
+              "word": " desk",
+              "start": 3.24,
+              "end": 3.46
+            },
+            {
+              "word": " lamp.",
+              "start": 3.46,
+              "end": 3.74
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        }
+      },
+      "host_c161": [
+        49920
+      ],
+      "host_v5": [
+        49676
+      ],
+      "host_willow": [],
+      "log_sha256": "d9364bbf45c9e422a07ffd81fa2d4ee811e1565acd618ac134b45498087ded07",
+      "c161_identical": true
+    },
+    {
+      "index": 9,
+      "role": "ordinary",
+      "scene": 0,
+      "snr_db": 12,
+      "voice": "af_heart",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "7e1d6b0f3f218cec81409f29462ea0e0e9a81997620fcf41794d4a227f8d77f5",
+      "input_samples": 104929,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          53760,
+          53760,
+          -1
+        ]
+      ],
+      "first": 21760,
+      "emitted": 104960,
+      "count": 83200,
+      "mean_block_us": 728.0390243902439,
+      "peak_block_us": 4331,
+      "over_budget": 0,
+      "blocks": 410,
+      "min_internal": 381132,
+      "delivered": 53760,
+      "command_at": 56320,
+      "before_command": 34560,
+      "processed_sha256": "067cefcacaf9d5fe7356e5ccc60511e03d5e592e3f91ec2ce878edd98958c716",
+      "raw_sha256": "d0df413b4cc7126eeae4caef9f3fc282bd98e4ff731651bc10c658a4930cfd99",
+      "transcripts": {
+        "processed": {
+          "text": "Hey Nix, turn off the desk lamp.",
+          "words": [
+            {
+              "word": " Hey",
+              "start": 0.7399999999999995,
+              "end": 1.3
+            },
+            {
+              "word": " Nix,",
+              "start": 1.3,
+              "end": 1.66
+            },
+            {
+              "word": " turn",
+              "start": 2.52,
+              "end": 2.74
+            },
+            {
+              "word": " off",
+              "start": 2.74,
+              "end": 2.94
+            },
+            {
+              "word": " the",
+              "start": 2.94,
+              "end": 3.1
+            },
+            {
+              "word": " desk",
+              "start": 3.1,
+              "end": 3.32
+            },
+            {
+              "word": " lamp.",
+              "start": 3.32,
+              "end": 3.6
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        },
+        "raw": {
+          "text": "Hey, Nix, turn off the desk lamp.",
+          "words": [
+            {
+              "word": " Hey,",
+              "start": 0.6799999999999997,
+              "end": 1.2
+            },
+            {
+              "word": " Nix,",
+              "start": 1.34,
+              "end": 1.6
+            },
+            {
+              "word": " turn",
+              "start": 2.38,
+              "end": 2.64
+            },
+            {
+              "word": " off",
+              "start": 2.64,
+              "end": 2.84
+            },
+            {
+              "word": " the",
+              "start": 2.84,
+              "end": 3.0
+            },
+            {
+              "word": " desk",
+              "start": 3.0,
+              "end": 3.24
+            },
+            {
+              "word": " lamp.",
+              "start": 3.24,
+              "end": 3.52
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        }
+      },
+      "host_c161": [
+        53760
+      ],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "d06086f45a06da35b73796b88779dab8aeef810b331142df7950d842deb6b5af",
+      "c161_identical": true
+    },
+    {
+      "index": 10,
+      "role": "willow",
+      "scene": 0,
+      "snr_db": 12,
+      "voice": "af_heart",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "6c616b062344560024af0aecff4fdea973054a8f2fa39946ddddef0ff5dfda23",
+      "input_samples": 104929,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 104960,
+      "count": 0,
+      "mean_block_us": 712.5073170731707,
+      "peak_block_us": 4102,
+      "over_budget": 0,
+      "blocks": 410,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [
+        48960
+      ],
+      "log_sha256": "e47159dc343c29ba86d3e95d0a1433d5437aec6b0f46b18735353a758cd0c548",
+      "c161_identical": true
+    },
+    {
+      "index": 11,
+      "role": "silence",
+      "scene": 0,
+      "snr_db": 12,
+      "voice": "af_heart",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "3af0f4bddcd357faf5f388048f34fcd653b9e930e804b94c2ad4df4f74d0aa31",
+      "input_samples": 104929,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 104960,
+      "count": 0,
+      "mean_block_us": 695.7975609756097,
+      "peak_block_us": 4188,
+      "over_budget": 0,
+      "blocks": 410,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "a44f780ee436936bcf00aa03699efb0837dbfebd9d12709bd080c5fc4a899633",
+      "c161_identical": true
+    },
+    {
+      "index": 12,
+      "role": "v5",
+      "scene": 1,
+      "snr_db": 0,
+      "voice": "af_heart",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "811d46ed9fe1125437cb8d20ac481023ee8cf309fa3dae1d00fd764ea15c690a",
+      "input_samples": 105846,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          49920,
+          -1,
+          49700
+        ]
+      ],
+      "first": 17920,
+      "emitted": 105920,
+      "count": 88000,
+      "mean_block_us": 710.9468599033817,
+      "peak_block_us": 4112,
+      "over_budget": 0,
+      "blocks": 414,
+      "min_internal": 381132,
+      "delivered": 49920,
+      "command_at": 56320,
+      "before_command": 38400,
+      "processed_sha256": "6dc22be313cf6df1904330313b23e21817ec72fe4bee8a1a1fe4804e917df59f",
+      "raw_sha256": "379d84be9d5fc66a806db58f9026790873a58a54a62ee052c3922358cce231da",
+      "transcripts": {
+        "processed": {
+          "text": "Hey Rick, why did you make this?",
+          "words": [
+            {
+              "word": " Hey",
+              "start": 0.8799999999999994,
+              "end": 1.4
+            },
+            {
+              "word": " Rick,",
+              "start": 1.4,
+              "end": 1.72
+            },
+            {
+              "word": " why",
+              "start": 1.94,
+              "end": 2.0
+            },
+            {
+              "word": " did",
+              "start": 2.0,
+              "end": 3.06
+            },
+            {
+              "word": " you",
+              "start": 3.06,
+              "end": 3.24
+            },
+            {
+              "word": " make",
+              "start": 3.24,
+              "end": 3.44
+            },
+            {
+              "word": " this?",
+              "start": 3.44,
+              "end": 3.7
+            }
+          ],
+          "exact_suffix": false,
+          "contains_command": false
+        },
+        "raw": {
+          "text": "Hey, mix. Why the evening moves?",
+          "words": [
+            {
+              "word": " Hey,",
+              "start": 0.0,
+              "end": 1.3
+            },
+            {
+              "word": " mix.",
+              "start": 1.54,
+              "end": 1.6
+            },
+            {
+              "word": " Why",
+              "start": 2.1,
+              "end": 2.88
+            },
+            {
+              "word": " the",
+              "start": 2.88,
+              "end": 3.02
+            },
+            {
+              "word": " evening",
+              "start": 3.02,
+              "end": 3.28
+            },
+            {
+              "word": " moves?",
+              "start": 3.28,
+              "end": 3.68
+            }
+          ],
+          "exact_suffix": false,
+          "contains_command": false
+        }
+      },
+      "host_c161": [],
+      "host_v5": [
+        49700
+      ],
+      "host_willow": [],
+      "log_sha256": "eee1777669fd3b44211e68e78e8657203e2d1f8f52dca80992d8bc8f15509900",
+      "c161_identical": true
+    },
+    {
+      "index": 13,
+      "role": "ordinary",
+      "scene": 1,
+      "snr_db": 0,
+      "voice": "af_heart",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "35eb2285bb3052435647a82fee6cde3b72a3f8753c0d5fce15579e9b750bce86",
+      "input_samples": 105846,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 105920,
+      "count": 0,
+      "mean_block_us": 720.4830917874397,
+      "peak_block_us": 4422,
+      "over_budget": 0,
+      "blocks": 414,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "ad33e532f5850a4f1ff3a5010450411294581d9d10e94fb8897c64595543e619",
+      "c161_identical": true
+    },
+    {
+      "index": 14,
+      "role": "willow",
+      "scene": 1,
+      "snr_db": 0,
+      "voice": "af_heart",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "cd31eb78279af961031412aa78b0b451c03d6212596def703b0f666e9ccd66bc",
+      "input_samples": 105846,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 105920,
+      "count": 0,
+      "mean_block_us": 721.1545893719807,
+      "peak_block_us": 4207,
+      "over_budget": 0,
+      "blocks": 414,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [
+        53568
+      ],
+      "log_sha256": "e3c0903b3f933f105b501cf183ffb9adea02f8e000edfd06904e26a5f1a8a87b",
+      "c161_identical": true
+    },
+    {
+      "index": 15,
+      "role": "silence",
+      "scene": 1,
+      "snr_db": 0,
+      "voice": "af_heart",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "5b175e0b9d609fa1241f7e71ed42b692f38676bebd188646c640bfbcdab54dae",
+      "input_samples": 105846,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 105920,
+      "count": 0,
+      "mean_block_us": 723.9951690821256,
+      "peak_block_us": 4243,
+      "over_budget": 0,
+      "blocks": 414,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "a2049be00b6ec2b3f61cd871e6e4e29bb6136deaaae24f3607e66b7947ae867a",
+      "c161_identical": true
+    },
+    {
+      "index": 16,
+      "role": "v5",
+      "scene": 1,
+      "snr_db": 6,
+      "voice": "af_heart",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "c4eec42c35bc206720814f4ec9ba683749a897673563e4775fb3786a1c86b82b",
+      "input_samples": 105846,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          49920,
+          -1,
+          49700
+        ]
+      ],
+      "first": 17920,
+      "emitted": 105920,
+      "count": 88000,
+      "mean_block_us": 761.9855072463768,
+      "peak_block_us": 4685,
+      "over_budget": 0,
+      "blocks": 414,
+      "min_internal": 381132,
+      "delivered": 49920,
+      "command_at": 56320,
+      "before_command": 38400,
+      "processed_sha256": "9a4d3b81280ebe39de96537935112efa530278bb0509f2f6133ee53be5fd5a5a",
+      "raw_sha256": "1feb8c58b6906fe74e0e52fa11db25fb03d4401324e650b48e5ab8c611904556",
+      "transcripts": {
+        "processed": {
+          "text": "Hey, Riggs, play the evening news.",
+          "words": [
+            {
+              "word": " Hey,",
+              "start": 0.8200000000000003,
+              "end": 1.38
+            },
+            {
+              "word": " Riggs,",
+              "start": 1.58,
+              "end": 1.8
+            },
+            {
+              "word": " play",
+              "start": 1.9,
+              "end": 2.96
+            },
+            {
+              "word": " the",
+              "start": 2.96,
+              "end": 3.12
+            },
+            {
+              "word": " evening",
+              "start": 3.12,
+              "end": 3.4
+            },
+            {
+              "word": " news.",
+              "start": 3.4,
+              "end": 3.68
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        },
+        "raw": {
+          "text": "Hey, Nix. Play the evening news.",
+          "words": [
+            {
+              "word": " Hey,",
+              "start": 0.0,
+              "end": 1.28
+            },
+            {
+              "word": " Nix.",
+              "start": 1.48,
+              "end": 1.66
+            },
+            {
+              "word": " Play",
+              "start": 2.08,
+              "end": 2.88
+            },
+            {
+              "word": " the",
+              "start": 2.88,
+              "end": 3.04
+            },
+            {
+              "word": " evening",
+              "start": 3.04,
+              "end": 3.28
+            },
+            {
+              "word": " news.",
+              "start": 3.28,
+              "end": 3.72
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        }
+      },
+      "host_c161": [],
+      "host_v5": [
+        49700
+      ],
+      "host_willow": [],
+      "log_sha256": "ff8c2167dc83eecee742640177fb60f43ed7ad83c9a2240d11e5d42b311fe922",
+      "c161_identical": true
+    },
+    {
+      "index": 17,
+      "role": "ordinary",
+      "scene": 1,
+      "snr_db": 6,
+      "voice": "af_heart",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "5570ef8b66fdcdb481624d8b772a14ce4f28969c52a627079ebd678228f81931",
+      "input_samples": 105846,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 105920,
+      "count": 0,
+      "mean_block_us": 780.6062801932367,
+      "peak_block_us": 4627,
+      "over_budget": 0,
+      "blocks": 414,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "8823a4104b5a2cba3061fb7a6801e3fa2dd4abd3c6e352ab568eba10a2fdf67d",
+      "c161_identical": true
+    },
+    {
+      "index": 18,
+      "role": "willow",
+      "scene": 1,
+      "snr_db": 6,
+      "voice": "af_heart",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "e71ac2619dc45c315f4325cc01e05d5ff49ae6eef805590629da3a78be61f68b",
+      "input_samples": 105846,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 105920,
+      "count": 0,
+      "mean_block_us": 760.1642512077294,
+      "peak_block_us": 4158,
+      "over_budget": 0,
+      "blocks": 414,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [
+        48960
+      ],
+      "log_sha256": "417ff0246cd9e5bc024f10001abbd8fc81a152daaf96ab89fdb5e39727341b53",
+      "c161_identical": true
+    },
+    {
+      "index": 19,
+      "role": "silence",
+      "scene": 1,
+      "snr_db": 6,
+      "voice": "af_heart",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "c81502d1b1adbc57b50bdf27758e0d3ab78f52d53071777ea4c35ecade5865b4",
+      "input_samples": 105846,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 105920,
+      "count": 0,
+      "mean_block_us": 780.7053140096618,
+      "peak_block_us": 4875,
+      "over_budget": 0,
+      "blocks": 414,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "43b9cc4f997ace002acdbf8c2b74c783b2dcff3cf481157cbdbd82ee44ae1733",
+      "c161_identical": true
+    },
+    {
+      "index": 20,
+      "role": "v5",
+      "scene": 1,
+      "snr_db": 12,
+      "voice": "af_heart",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "b1b745b58f5525717b741bf16053b2776c14ad9fb49a0e490fffeb06441b6c12",
+      "input_samples": 105846,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          49920,
+          -1,
+          49700
+        ]
+      ],
+      "first": 17920,
+      "emitted": 105920,
+      "count": 88000,
+      "mean_block_us": 762.1231884057971,
+      "peak_block_us": 4177,
+      "over_budget": 0,
+      "blocks": 414,
+      "min_internal": 381132,
+      "delivered": 49920,
+      "command_at": 56320,
+      "before_command": 38400,
+      "processed_sha256": "c89c21e9d5a198182123546c304dcfc9923a5760be370c415858a0cb27ffde53",
+      "raw_sha256": "b9527e084deecdb352a8799f22e3dc9a8006c67a61476e41a613a9678a455fb9",
+      "transcripts": {
+        "processed": {
+          "text": "Hey Nix, play the evening news.",
+          "words": [
+            {
+              "word": " Hey",
+              "start": 0.0,
+              "end": 1.36
+            },
+            {
+              "word": " Nix,",
+              "start": 1.36,
+              "end": 1.78
+            },
+            {
+              "word": " play",
+              "start": 1.9,
+              "end": 2.96
+            },
+            {
+              "word": " the",
+              "start": 2.96,
+              "end": 3.12
+            },
+            {
+              "word": " evening",
+              "start": 3.12,
+              "end": 3.4
+            },
+            {
+              "word": " news.",
+              "start": 3.4,
+              "end": 3.68
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        },
+        "raw": {
+          "text": "Hey, Nix. Play the evening news.",
+          "words": [
+            {
+              "word": " Hey,",
+              "start": 0.0,
+              "end": 1.28
+            },
+            {
+              "word": " Nix.",
+              "start": 1.48,
+              "end": 1.66
+            },
+            {
+              "word": " Play",
+              "start": 2.34,
+              "end": 2.88
+            },
+            {
+              "word": " the",
+              "start": 2.88,
+              "end": 3.04
+            },
+            {
+              "word": " evening",
+              "start": 3.04,
+              "end": 3.26
+            },
+            {
+              "word": " news.",
+              "start": 3.26,
+              "end": 3.72
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        }
+      },
+      "host_c161": [],
+      "host_v5": [
+        49700
+      ],
+      "host_willow": [],
+      "log_sha256": "e48b5b10cd16fe9720a998bd704750c18983bc325da209e64df1ca185ff8d785",
+      "c161_identical": true
+    },
+    {
+      "index": 21,
+      "role": "ordinary",
+      "scene": 1,
+      "snr_db": 12,
+      "voice": "af_heart",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "87a71c778247e945ff0a3e2b2dc2f36cbea959532b5077ec4e38ab38e6d85c34",
+      "input_samples": 105846,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          54272,
+          54240,
+          -1
+        ]
+      ],
+      "first": 22240,
+      "emitted": 105920,
+      "count": 83680,
+      "mean_block_us": 785.7198067632851,
+      "peak_block_us": 4915,
+      "over_budget": 0,
+      "blocks": 414,
+      "min_internal": 381132,
+      "delivered": 54272,
+      "command_at": 56320,
+      "before_command": 34080,
+      "processed_sha256": "4988ce866f336a785ab276d5426e46f9184a2e3679aee40f9e7eace77f45b213",
+      "raw_sha256": "a115213fe79a3a639be1d78b5b657f5c0ebb5b89d6a4806561d4a825622f4ad9",
+      "transcripts": {
+        "processed": {
+          "text": "Hey Nix, play the evening news.",
+          "words": [
+            {
+              "word": " Hey",
+              "start": 0.0,
+              "end": 1.26
+            },
+            {
+              "word": " Nix,",
+              "start": 1.26,
+              "end": 1.68
+            },
+            {
+              "word": " play",
+              "start": 2.4,
+              "end": 2.7
+            },
+            {
+              "word": " the",
+              "start": 2.7,
+              "end": 2.88
+            },
+            {
+              "word": " evening",
+              "start": 2.88,
+              "end": 3.12
+            },
+            {
+              "word": " news.",
+              "start": 3.12,
+              "end": 3.44
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        },
+        "raw": {
+          "text": "Hey, Nix. Play the evening news.",
+          "words": [
+            {
+              "word": " Hey,",
+              "start": 0.0,
+              "end": 1.18
+            },
+            {
+              "word": " Nix.",
+              "start": 1.32,
+              "end": 1.62
+            },
+            {
+              "word": " Play",
+              "start": 2.36,
+              "end": 2.6
+            },
+            {
+              "word": " the",
+              "start": 2.6,
+              "end": 2.76
+            },
+            {
+              "word": " evening",
+              "start": 2.76,
+              "end": 3.0
+            },
+            {
+              "word": " news.",
+              "start": 3.0,
+              "end": 3.4
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        }
+      },
+      "host_c161": [
+        54240
+      ],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "cc8479c0a9bdd6511f5e0b8ff913e05b58df4cb78c364d8c80f45735836c1e84",
+      "c161_identical": true
+    },
+    {
+      "index": 22,
+      "role": "willow",
+      "scene": 1,
+      "snr_db": 12,
+      "voice": "af_heart",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "44f8b6026c2ee00ac3fd689e83581943a22f465e0fa7eaa0c9bab966b4e85d51",
+      "input_samples": 105846,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 105920,
+      "count": 0,
+      "mean_block_us": 740.6980676328502,
+      "peak_block_us": 4177,
+      "over_budget": 0,
+      "blocks": 414,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [
+        48960
+      ],
+      "log_sha256": "b348cf7799b5b2a39c9a3267af88c7ba7a4b9dc60428f97f1567ad654bb58cf5",
+      "c161_identical": true
+    },
+    {
+      "index": 23,
+      "role": "silence",
+      "scene": 1,
+      "snr_db": 12,
+      "voice": "af_heart",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "ce579c57a70a60d389ac84ed8e136525c59523885dad5e980c652e85b9e61bbf",
+      "input_samples": 105846,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 105920,
+      "count": 0,
+      "mean_block_us": 747.963768115942,
+      "peak_block_us": 4132,
+      "over_budget": 0,
+      "blocks": 414,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "557415427c82f23fbba5651e536a9f3db128e49ece6df3d5d343d441fbe61848",
+      "c161_identical": true
+    },
+    {
+      "index": 24,
+      "role": "v5",
+      "scene": 0,
+      "snr_db": 0,
+      "voice": "am_onyx",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "1c3bc81a017b571fe5eaaaa282c690095a2d29b29b168f3488e32562d25a0075",
+      "input_samples": 108129,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          49920,
+          -1,
+          49676
+        ],
+        [
+          51968,
+          51840,
+          -1
+        ]
+      ],
+      "first": 17920,
+      "emitted": 108160,
+      "count": 90240,
+      "mean_block_us": 717.2411347517731,
+      "peak_block_us": 4377,
+      "over_budget": 0,
+      "blocks": 423,
+      "min_internal": 381132,
+      "delivered": 49920,
+      "command_at": 54720,
+      "before_command": 36800,
+      "processed_sha256": "52a3934e5af33962ba3da17cc5d4637af480428c504577f70e0edaacb743c5af",
+      "raw_sha256": "9a1851d75e6a8273e895d42e772894622a3011b98fe3cc8971cf6ee36ae6d2cd",
+      "transcripts": {
+        "processed": {
+          "text": "Hey Nick. Turn off the desk, Nick.",
+          "words": [
+            {
+              "word": " Hey",
+              "start": 0.8200000000000001,
+              "end": 1.36
+            },
+            {
+              "word": " Nick.",
+              "start": 1.36,
+              "end": 1.66
+            },
+            {
+              "word": " Turn",
+              "start": 2.42,
+              "end": 2.84
+            },
+            {
+              "word": " off",
+              "start": 2.84,
+              "end": 3.08
+            },
+            {
+              "word": " the",
+              "start": 3.08,
+              "end": 3.32
+            },
+            {
+              "word": " desk,",
+              "start": 3.32,
+              "end": 3.56
+            },
+            {
+              "word": " Nick.",
+              "start": 3.72,
+              "end": 3.9
+            }
+          ],
+          "exact_suffix": false,
+          "contains_command": false
+        },
+        "raw": {
+          "text": "Hey, Nix. Turn off the desk, ma'am.",
+          "words": [
+            {
+              "word": " Hey,",
+              "start": 0.78,
+              "end": 1.28
+            },
+            {
+              "word": " Nix.",
+              "start": 1.46,
+              "end": 1.66
+            },
+            {
+              "word": " Turn",
+              "start": 2.4,
+              "end": 2.76
+            },
+            {
+              "word": " off",
+              "start": 2.76,
+              "end": 3.0
+            },
+            {
+              "word": " the",
+              "start": 3.0,
+              "end": 3.22
+            },
+            {
+              "word": " desk,",
+              "start": 3.22,
+              "end": 3.48
+            },
+            {
+              "word": " ma",
+              "start": 3.68,
+              "end": 3.74
+            },
+            {
+              "word": "'am.",
+              "start": 3.74,
+              "end": 4.06
+            }
+          ],
+          "exact_suffix": false,
+          "contains_command": false
+        }
+      },
+      "host_c161": [
+        51840
+      ],
+      "host_v5": [
+        49676
+      ],
+      "host_willow": [],
+      "log_sha256": "ab561d3cd77b674548a3a35253de93192f393236053010d6fccbd153b3da914f",
+      "c161_identical": true
+    },
+    {
+      "index": 25,
+      "role": "ordinary",
+      "scene": 0,
+      "snr_db": 0,
+      "voice": "am_onyx",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "c20342e73fe8cc2a9bd230bd49d58445c6f89d7edede6b7fd7538e72d09f3c94",
+      "input_samples": 108129,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 108160,
+      "count": 0,
+      "mean_block_us": 720.9385342789598,
+      "peak_block_us": 4550,
+      "over_budget": 0,
+      "blocks": 423,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "f71afd0145bc5a15b7574f60f31a3d5359783c8cc8d7ceb89e8793b840d6b641",
+      "c161_identical": true
+    },
+    {
+      "index": 26,
+      "role": "willow",
+      "scene": 0,
+      "snr_db": 0,
+      "voice": "am_onyx",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "fba3bca3c29c876e430d99ac94b544de619f3393cd77abd7e43aa22f2ee27862",
+      "input_samples": 108129,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 108160,
+      "count": 0,
+      "mean_block_us": 719.0614657210402,
+      "peak_block_us": 4414,
+      "over_budget": 0,
+      "blocks": 423,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [
+        48960
+      ],
+      "log_sha256": "85eccb4816f58d69d0b23a31860dcf179804e6bf17224776f9c46ea8d36c6cd6",
+      "c161_identical": true
+    },
+    {
+      "index": 27,
+      "role": "silence",
+      "scene": 0,
+      "snr_db": 0,
+      "voice": "am_onyx",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "645a6267684e657470518677a1a66001031eeff682ab4a97703183805cb4ae5e",
+      "input_samples": 108129,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 108160,
+      "count": 0,
+      "mean_block_us": 745.9645390070922,
+      "peak_block_us": 4419,
+      "over_budget": 0,
+      "blocks": 423,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "cba66cd2788a31a8620d95220e5210e864beb5c64de7f35c029a115b478873c4",
+      "c161_identical": true
+    },
+    {
+      "index": 28,
+      "role": "v5",
+      "scene": 0,
+      "snr_db": 6,
+      "voice": "am_onyx",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "860805a7389bca6c28462e256be4b00915249fa18f9cdc1885a81891d5287940",
+      "input_samples": 108129,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          49920,
+          -1,
+          49676
+        ],
+        [
+          50432,
+          50400,
+          -1
+        ]
+      ],
+      "first": 17920,
+      "emitted": 108160,
+      "count": 90240,
+      "mean_block_us": 711.8439716312057,
+      "peak_block_us": 4705,
+      "over_budget": 0,
+      "blocks": 423,
+      "min_internal": 381132,
+      "delivered": 49920,
+      "command_at": 54720,
+      "before_command": 36800,
+      "processed_sha256": "58b5db1e0f1cb5e0ed836624c2b864e46af7f0af6e9088123b9c2254cb219c93",
+      "raw_sha256": "d1a304d518e3118b1c15c0bc1bbc1579039f1439228d0bee8a7271ea72ed488a",
+      "transcripts": {
+        "processed": {
+          "text": "Hey, Nick, turn off the desk lamp.",
+          "words": [
+            {
+              "word": " Hey,",
+              "start": 0.8199999999999996,
+              "end": 1.38
+            },
+            {
+              "word": " Nick,",
+              "start": 1.58,
+              "end": 1.64
+            },
+            {
+              "word": " turn",
+              "start": 1.94,
+              "end": 2.86
+            },
+            {
+              "word": " off",
+              "start": 2.86,
+              "end": 3.08
+            },
+            {
+              "word": " the",
+              "start": 3.08,
+              "end": 3.3
+            },
+            {
+              "word": " desk",
+              "start": 3.3,
+              "end": 3.56
+            },
+            {
+              "word": " lamp.",
+              "start": 3.56,
+              "end": 3.94
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        },
+        "raw": {
+          "text": "Hey, Nix, turn off the desk lamp.",
+          "words": [
+            {
+              "word": " Hey,",
+              "start": 0.6600000000000004,
+              "end": 1.28
+            },
+            {
+              "word": " Nix,",
+              "start": 1.46,
+              "end": 1.68
+            },
+            {
+              "word": " turn",
+              "start": 2.38,
+              "end": 2.76
+            },
+            {
+              "word": " off",
+              "start": 2.76,
+              "end": 3.0
+            },
+            {
+              "word": " the",
+              "start": 3.0,
+              "end": 3.22
+            },
+            {
+              "word": " desk",
+              "start": 3.22,
+              "end": 3.48
+            },
+            {
+              "word": " lamp.",
+              "start": 3.48,
+              "end": 3.84
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        }
+      },
+      "host_c161": [
+        50400
+      ],
+      "host_v5": [
+        49676
+      ],
+      "host_willow": [],
+      "log_sha256": "54cf4e2a475ff456d01e6eab5259ec80121013407c16e9a1eeca24d1e6fc4ad0",
+      "c161_identical": true
+    },
+    {
+      "index": 29,
+      "role": "ordinary",
+      "scene": 0,
+      "snr_db": 6,
+      "voice": "am_onyx",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "72b6840dcf6e0a51fc57a4b82467a69e71e510e9d81064f7c3ea4bc8c0ee237d",
+      "input_samples": 108129,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 108160,
+      "count": 0,
+      "mean_block_us": 720.6028368794326,
+      "peak_block_us": 4515,
+      "over_budget": 0,
+      "blocks": 423,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "fe7ea88c8ef2cd1e2b683f48b8bf9cecd7e1e7d00eb03d5faa04ca439a311079",
+      "c161_identical": true
+    },
+    {
+      "index": 30,
+      "role": "willow",
+      "scene": 0,
+      "snr_db": 6,
+      "voice": "am_onyx",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "c78a6d55ec903f027e362ab44c0fab2983bd8773bc2de383672bfe61c05f143a",
+      "input_samples": 108129,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 108160,
+      "count": 0,
+      "mean_block_us": 743.0685579196218,
+      "peak_block_us": 11350,
+      "over_budget": 0,
+      "blocks": 423,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [
+        48960
+      ],
+      "log_sha256": "5173a943e632f1f2c7bc5d0b4c60bb10ece3ea8a4745dc1e56f62d1c4ab40c3f",
+      "c161_identical": true
+    },
+    {
+      "index": 31,
+      "role": "silence",
+      "scene": 0,
+      "snr_db": 6,
+      "voice": "am_onyx",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "349d32101661c41fe7903acb484824dc7e6ee612dbb8523ff64de746c4248859",
+      "input_samples": 108129,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 108160,
+      "count": 0,
+      "mean_block_us": 731.2955082742317,
+      "peak_block_us": 4336,
+      "over_budget": 0,
+      "blocks": 423,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "061b1119fde27ee925b4de2523c6d7ad7262779de0d34645abb445e1aca75aae",
+      "c161_identical": true
+    },
+    {
+      "index": 32,
+      "role": "v5",
+      "scene": 0,
+      "snr_db": 12,
+      "voice": "am_onyx",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "86fa8aae9ac3fb6c93c93fa6be62a6374fd0a1967ece98b7183a02cac890d551",
+      "input_samples": 108129,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          49920,
+          49920,
+          49676
+        ]
+      ],
+      "first": 17920,
+      "emitted": 108160,
+      "count": 90240,
+      "mean_block_us": 712.3096926713948,
+      "peak_block_us": 4261,
+      "over_budget": 0,
+      "blocks": 423,
+      "min_internal": 381132,
+      "delivered": 49920,
+      "command_at": 54720,
+      "before_command": 36800,
+      "processed_sha256": "1ac5e6fea65891c8771083f5b1264e527481113f125790c29a0bd5e0162fc3ef",
+      "raw_sha256": "46020c01b6ffa443960374e650e8edb2ad6a8ce0c2445ed3653f53c46485a81d",
+      "transcripts": {
+        "processed": {
+          "text": "Hey, Nix. Turn off the desk lamp.",
+          "words": [
+            {
+              "word": " Hey,",
+              "start": 0.8000000000000005,
+              "end": 1.36
+            },
+            {
+              "word": " Nix.",
+              "start": 1.56,
+              "end": 1.76
+            },
+            {
+              "word": " Turn",
+              "start": 2.6,
+              "end": 2.86
+            },
+            {
+              "word": " off",
+              "start": 2.86,
+              "end": 3.08
+            },
+            {
+              "word": " the",
+              "start": 3.08,
+              "end": 3.3
+            },
+            {
+              "word": " desk",
+              "start": 3.3,
+              "end": 3.6
+            },
+            {
+              "word": " lamp.",
+              "start": 3.6,
+              "end": 3.9
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        },
+        "raw": {
+          "text": "Hey, Nix. Turn off the desk lamp.",
+          "words": [
+            {
+              "word": " Hey,",
+              "start": 0.78,
+              "end": 1.28
+            },
+            {
+              "word": " Nix.",
+              "start": 1.46,
+              "end": 1.66
+            },
+            {
+              "word": " Turn",
+              "start": 2.52,
+              "end": 2.76
+            },
+            {
+              "word": " off",
+              "start": 2.76,
+              "end": 3.0
+            },
+            {
+              "word": " the",
+              "start": 3.0,
+              "end": 3.22
+            },
+            {
+              "word": " desk",
+              "start": 3.22,
+              "end": 3.48
+            },
+            {
+              "word": " lamp.",
+              "start": 3.48,
+              "end": 3.82
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        }
+      },
+      "host_c161": [
+        49920
+      ],
+      "host_v5": [
+        49676
+      ],
+      "host_willow": [],
+      "log_sha256": "81329207f9c0f74d689449caed4f78ace0e12637302e9ab5f9ffbe7f290855b8",
+      "c161_identical": true
+    },
+    {
+      "index": 33,
+      "role": "ordinary",
+      "scene": 0,
+      "snr_db": 12,
+      "voice": "am_onyx",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "fac4b00c5067dd16acf4c64f39a21c1fe9f1732ca33926990f29e12ea45a904d",
+      "input_samples": 108129,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 108160,
+      "count": 0,
+      "mean_block_us": 746.0851063829788,
+      "peak_block_us": 5014,
+      "over_budget": 0,
+      "blocks": 423,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "51eb1fa727b143b5a3decbeadfe5b7f8f7973753fba2afd9e30b6b17f8e45627",
+      "c161_identical": true
+    },
+    {
+      "index": 34,
+      "role": "willow",
+      "scene": 0,
+      "snr_db": 12,
+      "voice": "am_onyx",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "c6e372e39a3289a31d7ed41769994598f4aa296a87f53d58c41797f71edff900",
+      "input_samples": 108129,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 108160,
+      "count": 0,
+      "mean_block_us": 696.0945626477542,
+      "peak_block_us": 4101,
+      "over_budget": 0,
+      "blocks": 423,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [
+        48960
+      ],
+      "log_sha256": "fa41b0d71b93a0628c4fbd96deb759a387f52734641e0bc6d5c9aa8688585efd",
+      "c161_identical": true
+    },
+    {
+      "index": 35,
+      "role": "silence",
+      "scene": 0,
+      "snr_db": 12,
+      "voice": "am_onyx",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "c68aa3d78bd3d04514b23dd193b146f36e05b056b104ff726b582f4be19bdfa3",
+      "input_samples": 108129,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 108160,
+      "count": 0,
+      "mean_block_us": 698.6241134751773,
+      "peak_block_us": 4203,
+      "over_budget": 0,
+      "blocks": 423,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "714bf2a99b8a9d4fe309918a950340e207ba351e3dd53b31f9984f96ad91361c",
+      "c161_identical": true
+    },
+    {
+      "index": 36,
+      "role": "v5",
+      "scene": 1,
+      "snr_db": 0,
+      "voice": "am_onyx",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "f5b67db60cec63f6405d48ed71b1735f4e432ef9ffb4dcc38ef8e2f4a44f77e0",
+      "input_samples": 107446,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          49920,
+          -1,
+          49708
+        ]
+      ],
+      "first": 17920,
+      "emitted": 107520,
+      "count": 89600,
+      "mean_block_us": 725.5214285714286,
+      "peak_block_us": 4639,
+      "over_budget": 0,
+      "blocks": 420,
+      "min_internal": 381132,
+      "delivered": 49920,
+      "command_at": 54720,
+      "before_command": 36800,
+      "processed_sha256": "3236d64acfe6cab512cd11f206bae627b10165156ca240d064a6f5241056734e",
+      "raw_sha256": "fbe07e58397baff5dc9b768f322b4178adb5e9e66e62f6fd5d4c143a34603096",
+      "transcripts": {
+        "processed": {
+          "text": "I love you. I love you.",
+          "words": [
+            {
+              "word": " I",
+              "start": 0.0,
+              "end": 0.1
+            },
+            {
+              "word": " love",
+              "start": 0.1,
+              "end": 0.34
+            },
+            {
+              "word": " you.",
+              "start": 0.34,
+              "end": 0.7
+            },
+            {
+              "word": " I",
+              "start": 1.06,
+              "end": 1.4
+            },
+            {
+              "word": " love",
+              "start": 1.4,
+              "end": 1.56
+            },
+            {
+              "word": " you.",
+              "start": 1.56,
+              "end": 3.06
+            }
+          ],
+          "exact_suffix": false,
+          "contains_command": false
+        },
+        "raw": {
+          "text": "Eunex, huh? Why is it that easy?",
+          "words": [
+            {
+              "word": " Eunex,",
+              "start": 1.28,
+              "end": 1.64
+            },
+            {
+              "word": " huh?",
+              "start": 1.88,
+              "end": 1.92
+            },
+            {
+              "word": " Why",
+              "start": 2.56,
+              "end": 2.78
+            },
+            {
+              "word": " is",
+              "start": 2.78,
+              "end": 2.92
+            },
+            {
+              "word": " it",
+              "start": 2.92,
+              "end": 2.96
+            },
+            {
+              "word": " that",
+              "start": 2.96,
+              "end": 3.08
+            },
+            {
+              "word": " easy?",
+              "start": 3.08,
+              "end": 3.2
+            }
+          ],
+          "exact_suffix": false,
+          "contains_command": false
+        }
+      },
+      "host_c161": [],
+      "host_v5": [
+        49708
+      ],
+      "host_willow": [],
+      "log_sha256": "84086efbd499da724df2253fca053c8c86fdc685ef71ec78cf379c4b23a4195c",
+      "c161_identical": true
+    },
+    {
+      "index": 37,
+      "role": "ordinary",
+      "scene": 1,
+      "snr_db": 0,
+      "voice": "am_onyx",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "7f81476899ce5c5827c2a3058a2f04f997cb5952216e729ef44ac603e1315e4f",
+      "input_samples": 107446,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 107520,
+      "count": 0,
+      "mean_block_us": 726.35,
+      "peak_block_us": 4747,
+      "over_budget": 0,
+      "blocks": 420,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "b1d92e3c286c5843b9709464ec154182f56ffb0cbb06ae376ade463fd5f9eb15",
+      "c161_identical": true
+    },
+    {
+      "index": 38,
+      "role": "willow",
+      "scene": 1,
+      "snr_db": 0,
+      "voice": "am_onyx",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "101af910b32183daafeed4ef21217063aa049a199f957c9e1a392b43665532b7",
+      "input_samples": 107446,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 107520,
+      "count": 0,
+      "mean_block_us": 697.1333333333333,
+      "peak_block_us": 4288,
+      "over_budget": 0,
+      "blocks": 420,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "fafb2ff0a4937bfbcf21c29ec629b49fe79f593f45016393f101d0c4692f3491",
+      "c161_identical": true
+    },
+    {
+      "index": 39,
+      "role": "silence",
+      "scene": 1,
+      "snr_db": 0,
+      "voice": "am_onyx",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "8a81592a902bcb9aa3cf74731eae50fa2182fe7eda4381fa4f21164cddde3ccd",
+      "input_samples": 107446,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 107520,
+      "count": 0,
+      "mean_block_us": 689.5380952380953,
+      "peak_block_us": 4052,
+      "over_budget": 0,
+      "blocks": 420,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "f0655cd70e6ee3a11ff06be205ffb22fa9f33ebec7313b9ad841a6468f30d721",
+      "c161_identical": true
+    },
+    {
+      "index": 40,
+      "role": "v5",
+      "scene": 1,
+      "snr_db": 6,
+      "voice": "am_onyx",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "5b50bcd13d86507fa538c83ee540e2bb9eedd836ffd89a1411d5891004fa74dc",
+      "input_samples": 107446,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          49920,
+          -1,
+          49700
+        ]
+      ],
+      "first": 17920,
+      "emitted": 107520,
+      "count": 89600,
+      "mean_block_us": 699.5166666666667,
+      "peak_block_us": 4307,
+      "over_budget": 0,
+      "blocks": 420,
+      "min_internal": 381132,
+      "delivered": 49920,
+      "command_at": 54720,
+      "before_command": 36800,
+      "processed_sha256": "9c54aba052ad9951151a8b1183c43a34e8497f915d9b8988e5c274fea220b21e",
+      "raw_sha256": "b6e7caaab3b96dc81d1a87e07545104a933e94cfdbbdf3228a9be559e0722603",
+      "transcripts": {
+        "processed": {
+          "text": "Hey Nick, ha ha. Why have you asked me?",
+          "words": [
+            {
+              "word": " Hey",
+              "start": 1.0000000000000002,
+              "end": 1.4
+            },
+            {
+              "word": " Nick,",
+              "start": 1.4,
+              "end": 1.68
+            },
+            {
+              "word": " ha",
+              "start": 1.88,
+              "end": 1.96
+            },
+            {
+              "word": " ha.",
+              "start": 1.96,
+              "end": 2.1599999999999997
+            },
+            {
+              "word": " Why",
+              "start": 2.54,
+              "end": 2.86
+            },
+            {
+              "word": " have",
+              "start": 2.86,
+              "end": 2.96
+            },
+            {
+              "word": " you",
+              "start": 2.96,
+              "end": 3.04
+            },
+            {
+              "word": " asked",
+              "start": 3.04,
+              "end": 3.18
+            },
+            {
+              "word": " me?",
+              "start": 3.18,
+              "end": 3.38
+            }
+          ],
+          "exact_suffix": false,
+          "contains_command": false
+        },
+        "raw": {
+          "text": "Phoenix. Play the 8-minute news.",
+          "words": [
+            {
+              "word": " Phoenix.",
+              "start": 0.98,
+              "end": 1.6
+            },
+            {
+              "word": " Play",
+              "start": 2.48,
+              "end": 2.78
+            },
+            {
+              "word": " the",
+              "start": 2.78,
+              "end": 2.98
+            },
+            {
+              "word": " 8",
+              "start": 2.98,
+              "end": 3.1
+            },
+            {
+              "word": "-minute",
+              "start": 3.1,
+              "end": 3.28
+            },
+            {
+              "word": " news.",
+              "start": 3.28,
+              "end": 3.6
+            }
+          ],
+          "exact_suffix": false,
+          "contains_command": false
+        }
+      },
+      "host_c161": [],
+      "host_v5": [
+        49700
+      ],
+      "host_willow": [],
+      "log_sha256": "ad8d0b29d73705d247b0852c107750b3e67d81cbd51337f72170fc9ee5aa5040",
+      "c161_identical": true
+    },
+    {
+      "index": 41,
+      "role": "ordinary",
+      "scene": 1,
+      "snr_db": 6,
+      "voice": "am_onyx",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "c01b940eb528ade0dbeb6430e580f36298fb8f3b9f9cfcca1b8d0497394ff2e8",
+      "input_samples": 107446,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 107520,
+      "count": 0,
+      "mean_block_us": 696.1,
+      "peak_block_us": 4167,
+      "over_budget": 0,
+      "blocks": 420,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "d4614db5b44985ed789d69b312b642ba89a0cd9bb392aa41455d95f6600afad1",
+      "c161_identical": true
+    },
+    {
+      "index": 42,
+      "role": "willow",
+      "scene": 1,
+      "snr_db": 6,
+      "voice": "am_onyx",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "8613a59b4ea573c212bfebdba94e328c9e91ca1ec24d9837c608ce25ac1f0f11",
+      "input_samples": 107446,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 107520,
+      "count": 0,
+      "mean_block_us": 696.6761904761905,
+      "peak_block_us": 4153,
+      "over_budget": 0,
+      "blocks": 420,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [
+        48960
+      ],
+      "log_sha256": "d3416d8a6dccedd64e8cbe2477e7cbbcdc9357b442c8236f82b4eda0ca177cba",
+      "c161_identical": true
+    },
+    {
+      "index": 43,
+      "role": "silence",
+      "scene": 1,
+      "snr_db": 6,
+      "voice": "am_onyx",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "58205696f647e0d23d2a6e863326b5988f2e6145192772d8c1c03dfb70a0b6b2",
+      "input_samples": 107446,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 107520,
+      "count": 0,
+      "mean_block_us": 696.9333333333333,
+      "peak_block_us": 4234,
+      "over_budget": 0,
+      "blocks": 420,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "9c537cb18ddc8248eadaee7e85daa9c28f71ad41c15627e7e294d85fc7a8d429",
+      "c161_identical": true
+    },
+    {
+      "index": 44,
+      "role": "v5",
+      "scene": 1,
+      "snr_db": 12,
+      "voice": "am_onyx",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "367858ac9687d609cfd56b0fc246d75f9ac1eb36f8201820b12602428c752612",
+      "input_samples": 107446,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          49920,
+          -1,
+          49700
+        ]
+      ],
+      "first": 17920,
+      "emitted": 107520,
+      "count": 89600,
+      "mean_block_us": 678.3809523809524,
+      "peak_block_us": 4327,
+      "over_budget": 0,
+      "blocks": 420,
+      "min_internal": 381132,
+      "delivered": 49920,
+      "command_at": 54720,
+      "before_command": 36800,
+      "processed_sha256": "2b8bf0afe344b915e5c34d415db2807f757190adb495581104b1e85e8ea274a9",
+      "raw_sha256": "3fd680c6c2b915ed47508dd445537778e94d3193a402dbdc34bbf35447a844d9",
+      "transcripts": {
+        "processed": {
+          "text": "A-Nix. Play the A-Nix.",
+          "words": [
+            {
+              "word": " A",
+              "start": 0.6999999999999995,
+              "end": 1.38
+            },
+            {
+              "word": "-Nix.",
+              "start": 1.38,
+              "end": 1.74
+            },
+            {
+              "word": " Play",
+              "start": 2.42,
+              "end": 2.86
+            },
+            {
+              "word": " the",
+              "start": 2.86,
+              "end": 3.06
+            },
+            {
+              "word": " A",
+              "start": 3.06,
+              "end": 3.14
+            },
+            {
+              "word": "-Nix.",
+              "start": 3.14,
+              "end": 3.36
+            }
+          ],
+          "exact_suffix": false,
+          "contains_command": false
+        },
+        "raw": {
+          "text": "A.N.I.X. Play the evening news.",
+          "words": [
+            {
+              "word": " A",
+              "start": 0.0,
+              "end": 1.28
+            },
+            {
+              "word": ".N",
+              "start": 1.28,
+              "end": 1.46
+            },
+            {
+              "word": ".I",
+              "start": 1.46,
+              "end": 1.56
+            },
+            {
+              "word": ".X.",
+              "start": 1.56,
+              "end": 1.7
+            },
+            {
+              "word": " Play",
+              "start": 2.12,
+              "end": 2.78
+            },
+            {
+              "word": " the",
+              "start": 2.78,
+              "end": 2.98
+            },
+            {
+              "word": " evening",
+              "start": 2.98,
+              "end": 3.22
+            },
+            {
+              "word": " news.",
+              "start": 3.22,
+              "end": 3.64
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        }
+      },
+      "host_c161": [],
+      "host_v5": [
+        49700
+      ],
+      "host_willow": [],
+      "log_sha256": "1d45baaa2633b8ab4479efa25c78dc13001e05d0ffaa708258587f4662ff57de",
+      "c161_identical": true
+    },
+    {
+      "index": 45,
+      "role": "ordinary",
+      "scene": 1,
+      "snr_db": 12,
+      "voice": "am_onyx",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "54a852ac25249793af40734afedd058180e2b2e8fae33b87a1d9b4e17f3513f8",
+      "input_samples": 107446,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 107520,
+      "count": 0,
+      "mean_block_us": 695.3238095238095,
+      "peak_block_us": 4311,
+      "over_budget": 0,
+      "blocks": 420,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "ee3d984660bcdc399eca5343bbe9d48fb0a969de982b7e89f8d5406e76d19222",
+      "c161_identical": true
+    },
+    {
+      "index": 46,
+      "role": "willow",
+      "scene": 1,
+      "snr_db": 12,
+      "voice": "am_onyx",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "497e55c91662fb034d0ccb9df79c346671c108ba0d145a2c0105da3bf1af2abb",
+      "input_samples": 107446,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 107520,
+      "count": 0,
+      "mean_block_us": 692.6619047619048,
+      "peak_block_us": 4216,
+      "over_budget": 0,
+      "blocks": 420,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [
+        47424
+      ],
+      "log_sha256": "d52b72e2ed549d32556b2fcedc25a38393e89a7e3fa352e0faf4c5e79393fb01",
+      "c161_identical": true
+    },
+    {
+      "index": 47,
+      "role": "silence",
+      "scene": 1,
+      "snr_db": 12,
+      "voice": "am_onyx",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "1c6a9e091405b19a726c5d92432ae220c8e72a5f9a06220d807d9f24fd45ed35",
+      "input_samples": 107446,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 107520,
+      "count": 0,
+      "mean_block_us": 691.2785714285715,
+      "peak_block_us": 4160,
+      "over_budget": 0,
+      "blocks": 420,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "763a004e36645b3b58839c57a02a25bbdfc081835711bf14d73ec3ec5d60c515",
+      "c161_identical": true
+    },
+    {
+      "index": 48,
+      "role": "v5",
+      "scene": 0,
+      "snr_db": 0,
+      "voice": "bf_isabella",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "62f1c1d74245c67a651a4d42c6a2fe3d3915c2f5a11ca0f70deb9f5922be285b",
+      "input_samples": 112129,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          49920,
+          -1,
+          49676
+        ]
+      ],
+      "first": 17920,
+      "emitted": 112320,
+      "count": 94400,
+      "mean_block_us": 677.125284738041,
+      "peak_block_us": 4285,
+      "over_budget": 0,
+      "blocks": 439,
+      "min_internal": 381132,
+      "delivered": 49920,
+      "command_at": 57520,
+      "before_command": 39600,
+      "processed_sha256": "6a79ac99f99b304138f32161b0c7cedfaeced08eaf284f9569151e6ad511d104",
+      "raw_sha256": "87d072193ffc4f0452c05e1958ecceec6194ffd5596125c76f7d3b8e88088061",
+      "transcripts": {
+        "processed": {
+          "text": "Is it coming up? Turn off the desk lamp.",
+          "words": [
+            {
+              "word": " Is",
+              "start": 0.9599999999999995,
+              "end": 1.44
+            },
+            {
+              "word": " it",
+              "start": 1.44,
+              "end": 1.62
+            },
+            {
+              "word": " coming",
+              "start": 1.62,
+              "end": 1.86
+            },
+            {
+              "word": " up?",
+              "start": 1.86,
+              "end": 2.16
+            },
+            {
+              "word": " Turn",
+              "start": 2.78,
+              "end": 3.02
+            },
+            {
+              "word": " off",
+              "start": 3.02,
+              "end": 3.24
+            },
+            {
+              "word": " the",
+              "start": 3.24,
+              "end": 3.46
+            },
+            {
+              "word": " desk",
+              "start": 3.46,
+              "end": 3.7
+            },
+            {
+              "word": " lamp.",
+              "start": 3.7,
+              "end": 4.0
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        },
+        "raw": {
+          "text": "Alex, turn off the desk lamp.",
+          "words": [
+            {
+              "word": " Alex,",
+              "start": 0.8600000000000003,
+              "end": 1.52
+            },
+            {
+              "word": " turn",
+              "start": 2.56,
+              "end": 2.92
+            },
+            {
+              "word": " off",
+              "start": 2.92,
+              "end": 3.16
+            },
+            {
+              "word": " the",
+              "start": 3.16,
+              "end": 3.36
+            },
+            {
+              "word": " desk",
+              "start": 3.36,
+              "end": 3.62
+            },
+            {
+              "word": " lamp.",
+              "start": 3.62,
+              "end": 3.92
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        }
+      },
+      "host_c161": [],
+      "host_v5": [
+        49676
+      ],
+      "host_willow": [],
+      "log_sha256": "18cec2f1dee75c466eac33fbbdd14762e5e108127c120eaa9d8482255caac1b8",
+      "c161_identical": true
+    },
+    {
+      "index": 49,
+      "role": "ordinary",
+      "scene": 0,
+      "snr_db": 0,
+      "voice": "bf_isabella",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "e382513089cdb1daa05157b7de87bfe03cf9618a10463d06565137cd31a37676",
+      "input_samples": 112129,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 112320,
+      "count": 0,
+      "mean_block_us": 706.9589977220957,
+      "peak_block_us": 4162,
+      "over_budget": 0,
+      "blocks": 439,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "a013667ee53577136a90db982de2020a11a7a49d9a643fe33b0bffd075e7ecb0",
+      "c161_identical": true
+    },
+    {
+      "index": 50,
+      "role": "willow",
+      "scene": 0,
+      "snr_db": 0,
+      "voice": "bf_isabella",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "2c8fb5da5175a7a58d5de9bcbed9803d424bf49a626a9c183e49f3c1d7436dea",
+      "input_samples": 112129,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 112320,
+      "count": 0,
+      "mean_block_us": 704.9020501138953,
+      "peak_block_us": 4582,
+      "over_budget": 0,
+      "blocks": 439,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [
+        52032
+      ],
+      "log_sha256": "6098208e6a6ad4aa388fc796bec9722a866f0e53dba8900c307804983c4aeaf2",
+      "c161_identical": true
+    },
+    {
+      "index": 51,
+      "role": "silence",
+      "scene": 0,
+      "snr_db": 0,
+      "voice": "bf_isabella",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "9b20aaeac03281bdd158c8dddf0a6609f0918dc78ffea570a76f182e9e715e17",
+      "input_samples": 112129,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 112320,
+      "count": 0,
+      "mean_block_us": 699.9157175398633,
+      "peak_block_us": 4193,
+      "over_budget": 0,
+      "blocks": 439,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "b5c8327c33711145d545c3b896549e8bffb39c220a617bdc54e51a349337f27e",
+      "c161_identical": true
+    },
+    {
+      "index": 52,
+      "role": "v5",
+      "scene": 0,
+      "snr_db": 6,
+      "voice": "bf_isabella",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "e4d2e76484253dc0ae1779b263eccd27273ffa81089e07ed7cb535b24fb6595f",
+      "input_samples": 112129,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          49920,
+          -1,
+          49676
+        ],
+        [
+          51456,
+          51360,
+          -1
+        ]
+      ],
+      "first": 17920,
+      "emitted": 112320,
+      "count": 94400,
+      "mean_block_us": 692.6195899772209,
+      "peak_block_us": 4866,
+      "over_budget": 0,
+      "blocks": 439,
+      "min_internal": 381132,
+      "delivered": 49920,
+      "command_at": 57520,
+      "before_command": 39600,
+      "processed_sha256": "3be23d76506ed726065596672008f2eb5f90a68c39e3f27288c765b2b2f77838",
+      "raw_sha256": "9d6989993ee4800e4bd35114e55a77ec7466dfabbd813f182a9744b44a4e1d41",
+      "transcripts": {
+        "processed": {
+          "text": "In there, cover up. Turn off the desk lamp.",
+          "words": [
+            {
+              "word": " In",
+              "start": 0.8800000000000003,
+              "end": 1.4
+            },
+            {
+              "word": " there,",
+              "start": 1.4,
+              "end": 1.62
+            },
+            {
+              "word": " cover",
+              "start": 1.84,
+              "end": 1.84
+            },
+            {
+              "word": " up.",
+              "start": 1.84,
+              "end": 2.38
+            },
+            {
+              "word": " Turn",
+              "start": 2.78,
+              "end": 3.02
+            },
+            {
+              "word": " off",
+              "start": 3.02,
+              "end": 3.24
+            },
+            {
+              "word": " the",
+              "start": 3.24,
+              "end": 3.44
+            },
+            {
+              "word": " desk",
+              "start": 3.44,
+              "end": 3.72
+            },
+            {
+              "word": " lamp.",
+              "start": 3.72,
+              "end": 3.98
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        },
+        "raw": {
+          "text": "Hey Nix, turn off the desk lamp.",
+          "words": [
+            {
+              "word": " Hey",
+              "start": 0.0,
+              "end": 1.28
+            },
+            {
+              "word": " Nix,",
+              "start": 1.28,
+              "end": 1.66
+            },
+            {
+              "word": " turn",
+              "start": 2.48,
+              "end": 2.92
+            },
+            {
+              "word": " off",
+              "start": 2.92,
+              "end": 3.16
+            },
+            {
+              "word": " the",
+              "start": 3.16,
+              "end": 3.34
+            },
+            {
+              "word": " desk",
+              "start": 3.34,
+              "end": 3.62
+            },
+            {
+              "word": " lamp.",
+              "start": 3.62,
+              "end": 3.94
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        }
+      },
+      "host_c161": [
+        51360
+      ],
+      "host_v5": [
+        49676
+      ],
+      "host_willow": [],
+      "log_sha256": "74316c491e182136d973421d194e86244a437c09031b863ed90cfa38360e3362",
+      "c161_identical": true
+    },
+    {
+      "index": 53,
+      "role": "ordinary",
+      "scene": 0,
+      "snr_db": 6,
+      "voice": "bf_isabella",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "6d14024851da0a4eecceb53a4644b4da3272150af9a4b057dcc78a69b4bbed78",
+      "input_samples": 112129,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          53760,
+          53760,
+          -1
+        ]
+      ],
+      "first": 21760,
+      "emitted": 112320,
+      "count": 90560,
+      "mean_block_us": 701.3576309794988,
+      "peak_block_us": 4066,
+      "over_budget": 0,
+      "blocks": 439,
+      "min_internal": 381132,
+      "delivered": 53760,
+      "command_at": 57520,
+      "before_command": 35760,
+      "processed_sha256": "0626ad08318915ab8bc4f979a2014cb0faca70ab955125b3646a426102cfebbd",
+      "raw_sha256": "c1ad951a6e70c93ce4c96bfdf61b0a02e4b5f1437c88f992dda2b1fa1eafd8fc",
+      "transcripts": {
+        "processed": {
+          "text": "Hey, Nixon. Turn off the desk lamp.",
+          "words": [
+            {
+              "word": " Hey,",
+              "start": 0.6200000000000003,
+              "end": 1.18
+            },
+            {
+              "word": " Nixon.",
+              "start": 1.4,
+              "end": 1.6
+            },
+            {
+              "word": " Turn",
+              "start": 2.5,
+              "end": 2.78
+            },
+            {
+              "word": " off",
+              "start": 2.78,
+              "end": 3.0
+            },
+            {
+              "word": " the",
+              "start": 3.0,
+              "end": 3.2
+            },
+            {
+              "word": " desk",
+              "start": 3.2,
+              "end": 3.48
+            },
+            {
+              "word": " lamp.",
+              "start": 3.48,
+              "end": 3.76
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        },
+        "raw": {
+          "text": "Hey Nix, turn off the desk lamp.",
+          "words": [
+            {
+              "word": " Hey",
+              "start": 0.0,
+              "end": 1.1
+            },
+            {
+              "word": " Nix,",
+              "start": 1.1,
+              "end": 1.48
+            },
+            {
+              "word": " turn",
+              "start": 1.98,
+              "end": 2.66
+            },
+            {
+              "word": " off",
+              "start": 2.66,
+              "end": 2.92
+            },
+            {
+              "word": " the",
+              "start": 2.92,
+              "end": 3.1
+            },
+            {
+              "word": " desk",
+              "start": 3.1,
+              "end": 3.38
+            },
+            {
+              "word": " lamp.",
+              "start": 3.38,
+              "end": 3.68
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        }
+      },
+      "host_c161": [
+        53760
+      ],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "bdeefab3b482975d095b38d286d5f04241ac13140181a0e67258a77cd72c6401",
+      "c161_identical": true
+    },
+    {
+      "index": 54,
+      "role": "willow",
+      "scene": 0,
+      "snr_db": 6,
+      "voice": "bf_isabella",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "c8802fbbd660294868ac3108dbf3f37ee918e15df8f672097d7e81680b45eb44",
+      "input_samples": 112129,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 112320,
+      "count": 0,
+      "mean_block_us": 702.496583143508,
+      "peak_block_us": 4210,
+      "over_budget": 0,
+      "blocks": 439,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [
+        48960
+      ],
+      "log_sha256": "056e7039226b2910a3217e6e474c7c41d8800301ad57c6d79f7938e94b1076e5",
+      "c161_identical": true
+    },
+    {
+      "index": 55,
+      "role": "silence",
+      "scene": 0,
+      "snr_db": 6,
+      "voice": "bf_isabella",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "41ef8d99b0f68aa2dcebae95f16de38ce4d1dd996d4600ccd0e7d52daf71e7a4",
+      "input_samples": 112129,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 112320,
+      "count": 0,
+      "mean_block_us": 705.0797266514807,
+      "peak_block_us": 4144,
+      "over_budget": 0,
+      "blocks": 439,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "6e37025dfcdaf6452e03a647851b2641a73735754b099f9aefeb17cc5481a2d9",
+      "c161_identical": true
+    },
+    {
+      "index": 56,
+      "role": "v5",
+      "scene": 0,
+      "snr_db": 12,
+      "voice": "bf_isabella",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "35b79848693d4bab3f6cb786313d0f54adba0a18006f0254935394ada77ef8e8",
+      "input_samples": 112129,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          49920,
+          49920,
+          49676
+        ]
+      ],
+      "first": 17920,
+      "emitted": 112320,
+      "count": 94400,
+      "mean_block_us": 704.2232346241458,
+      "peak_block_us": 4056,
+      "over_budget": 0,
+      "blocks": 439,
+      "min_internal": 381132,
+      "delivered": 49920,
+      "command_at": 57520,
+      "before_command": 39600,
+      "processed_sha256": "8836413da777b57f5d7e35f918a1a2e6732fa5ffef7bcc55d68837718f87608a",
+      "raw_sha256": "c6c6a8122d0a1310fa5758c4e4cc431eda0c2dbb50cbde296d426920c35545bc",
+      "transcripts": {
+        "processed": {
+          "text": "He next turn off the desk lamp",
+          "words": [
+            {
+              "word": " He",
+              "start": 0.7599999999999996,
+              "end": 1.36
+            },
+            {
+              "word": " next",
+              "start": 1.36,
+              "end": 1.68
+            },
+            {
+              "word": " turn",
+              "start": 1.68,
+              "end": 3.0
+            },
+            {
+              "word": " off",
+              "start": 3.0,
+              "end": 3.26
+            },
+            {
+              "word": " the",
+              "start": 3.26,
+              "end": 3.42
+            },
+            {
+              "word": " desk",
+              "start": 3.42,
+              "end": 3.72
+            },
+            {
+              "word": " lamp",
+              "start": 3.72,
+              "end": 4.0
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        },
+        "raw": {
+          "text": "Hey Nix, turn off the desk lamp.",
+          "words": [
+            {
+              "word": " Hey",
+              "start": 0.0,
+              "end": 1.28
+            },
+            {
+              "word": " Nix,",
+              "start": 1.28,
+              "end": 1.66
+            },
+            {
+              "word": " turn",
+              "start": 2.44,
+              "end": 2.92
+            },
+            {
+              "word": " off",
+              "start": 2.92,
+              "end": 3.16
+            },
+            {
+              "word": " the",
+              "start": 3.16,
+              "end": 3.34
+            },
+            {
+              "word": " desk",
+              "start": 3.34,
+              "end": 3.62
+            },
+            {
+              "word": " lamp.",
+              "start": 3.62,
+              "end": 3.94
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        }
+      },
+      "host_c161": [
+        49920
+      ],
+      "host_v5": [
+        49676
+      ],
+      "host_willow": [],
+      "log_sha256": "34b969ed38789cf644f11b0e2c68cb48b9ac299053c0d3619252ec2471fe381a",
+      "c161_identical": true
+    },
+    {
+      "index": 57,
+      "role": "ordinary",
+      "scene": 0,
+      "snr_db": 12,
+      "voice": "bf_isabella",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "d0e058390e22e80dcd7c2faa05c4da105bb67a06e7227ca72ebc5fd9f36db07e",
+      "input_samples": 112129,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          51968,
+          51840,
+          -1
+        ]
+      ],
+      "first": 19840,
+      "emitted": 112320,
+      "count": 92480,
+      "mean_block_us": 713.5125284738041,
+      "peak_block_us": 4353,
+      "over_budget": 0,
+      "blocks": 439,
+      "min_internal": 381132,
+      "delivered": 51968,
+      "command_at": 57520,
+      "before_command": 37680,
+      "processed_sha256": "59554ea7aec9be5d09b96bf935ae917f4fc70563ebdf1418e5220ab339445457",
+      "raw_sha256": "2fa322d2193c51eaf60998ae23af84129edf9b5f3d386d2ae5d3a08b5aa78953",
+      "transcripts": {
+        "processed": {
+          "text": "Hey, Nixon, turn off the desk lamp.",
+          "words": [
+            {
+              "word": " Hey,",
+              "start": 0.74,
+              "end": 1.32
+            },
+            {
+              "word": " Nixon,",
+              "start": 1.52,
+              "end": 1.72
+            },
+            {
+              "word": " turn",
+              "start": 2.54,
+              "end": 2.9
+            },
+            {
+              "word": " off",
+              "start": 2.9,
+              "end": 3.12
+            },
+            {
+              "word": " the",
+              "start": 3.12,
+              "end": 3.3
+            },
+            {
+              "word": " desk",
+              "start": 3.3,
+              "end": 3.6
+            },
+            {
+              "word": " lamp.",
+              "start": 3.6,
+              "end": 3.88
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        },
+        "raw": {
+          "text": "Hey Nixus, turn off the desk lamp.",
+          "words": [
+            {
+              "word": " Hey",
+              "start": 0.0,
+              "end": 1.22
+            },
+            {
+              "word": " Nixus,",
+              "start": 1.22,
+              "end": 2.0
+            },
+            {
+              "word": " turn",
+              "start": 2.36,
+              "end": 2.8
+            },
+            {
+              "word": " off",
+              "start": 2.8,
+              "end": 3.04
+            },
+            {
+              "word": " the",
+              "start": 3.04,
+              "end": 3.22
+            },
+            {
+              "word": " desk",
+              "start": 3.22,
+              "end": 3.5
+            },
+            {
+              "word": " lamp.",
+              "start": 3.5,
+              "end": 3.8
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        }
+      },
+      "host_c161": [
+        51840
+      ],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "03febfbedf7d685bcad5705b4c811d883313e2bf942bc2a2fcbe0acfed114f7c",
+      "c161_identical": true
+    },
+    {
+      "index": 58,
+      "role": "willow",
+      "scene": 0,
+      "snr_db": 12,
+      "voice": "bf_isabella",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "312fd7ee2373fdc44d683ef41e061b12fd8fad9d19ff5786b7d4d5c92a12e8f4",
+      "input_samples": 112129,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 112320,
+      "count": 0,
+      "mean_block_us": 716.5558086560364,
+      "peak_block_us": 4310,
+      "over_budget": 0,
+      "blocks": 439,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [
+        48960
+      ],
+      "log_sha256": "ab93754124f61472b00a16adbe516bee39454621e67331323474fd29a5e47477",
+      "c161_identical": true
+    },
+    {
+      "index": 59,
+      "role": "silence",
+      "scene": 0,
+      "snr_db": 12,
+      "voice": "bf_isabella",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "9f2621c92ab04d9f35d174b684158a9a11350c519d2523fb0880b751ff37c4c3",
+      "input_samples": 112129,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 112320,
+      "count": 0,
+      "mean_block_us": 712.9384965831435,
+      "peak_block_us": 4345,
+      "over_budget": 0,
+      "blocks": 439,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "e3b6bf87dbe9e1d77fd21c3328dd3cbf6b7374a898e8ce8b1774f500a6f24bec",
+      "c161_identical": true
+    },
+    {
+      "index": 60,
+      "role": "v5",
+      "scene": 1,
+      "snr_db": 0,
+      "voice": "bf_isabella",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "d9a0d5251f9b1bb834f5085627dc50cbda7c221e26dbe595b5abfed56fd57d1b",
+      "input_samples": 112646,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          49920,
+          -1,
+          49700
+        ]
+      ],
+      "first": 17920,
+      "emitted": 112800,
+      "count": 94880,
+      "mean_block_us": 702.1292517006802,
+      "peak_block_us": 4186,
+      "over_budget": 0,
+      "blocks": 441,
+      "min_internal": 381132,
+      "delivered": 49920,
+      "command_at": 57520,
+      "before_command": 39600,
+      "processed_sha256": "24e876d307d12eeae7fd43433ca992dd4f9322c43b511efced39a5940f2701f1",
+      "raw_sha256": "913d1656b410725d122fd910820d2308414baeca3e620c914dd7ebbebb5ca0b5",
+      "transcripts": {
+        "processed": {
+          "text": "He looks like he's eating you.",
+          "words": [
+            {
+              "word": " He",
+              "start": 0.0,
+              "end": 1.38
+            },
+            {
+              "word": " looks",
+              "start": 1.38,
+              "end": 1.66
+            },
+            {
+              "word": " like",
+              "start": 1.66,
+              "end": 2.38
+            },
+            {
+              "word": " he's",
+              "start": 2.38,
+              "end": 3.14
+            },
+            {
+              "word": " eating",
+              "start": 3.14,
+              "end": 3.52
+            },
+            {
+              "word": " you.",
+              "start": 3.52,
+              "end": 3.82
+            }
+          ],
+          "exact_suffix": false,
+          "contains_command": false
+        },
+        "raw": {
+          "text": "He looks. Play the evening news.",
+          "words": [
+            {
+              "word": " He",
+              "start": 0.0,
+              "end": 1.3
+            },
+            {
+              "word": " looks.",
+              "start": 1.3,
+              "end": 1.64
+            },
+            {
+              "word": " Play",
+              "start": 2.46,
+              "end": 2.9
+            },
+            {
+              "word": " the",
+              "start": 2.9,
+              "end": 3.1
+            },
+            {
+              "word": " evening",
+              "start": 3.1,
+              "end": 3.4
+            },
+            {
+              "word": " news.",
+              "start": 3.4,
+              "end": 3.88
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        }
+      },
+      "host_c161": [],
+      "host_v5": [
+        49700
+      ],
+      "host_willow": [],
+      "log_sha256": "19365618a2a9705ae358c98ce14e6ad85c6825b159169f46ab0b8c5c33a6e51b",
+      "c161_identical": true
+    },
+    {
+      "index": 61,
+      "role": "ordinary",
+      "scene": 1,
+      "snr_db": 0,
+      "voice": "bf_isabella",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "99e1b558a0ba264780af1f72f5fd41d7fa560b6d71b306ed045f47870912c10b",
+      "input_samples": 112646,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 112800,
+      "count": 0,
+      "mean_block_us": 726.2562358276645,
+      "peak_block_us": 4206,
+      "over_budget": 0,
+      "blocks": 441,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "9fc3bd91d25513b762b08066b8fb7aa77c5e3cc7f06a8bda1754c1d369528772",
+      "c161_identical": true
+    },
+    {
+      "index": 62,
+      "role": "willow",
+      "scene": 1,
+      "snr_db": 0,
+      "voice": "bf_isabella",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "2bcab79c4ba3b22ca2772ae7e6decbfb7f6fa6c7c079eae40595be6d9aeebe50",
+      "input_samples": 112646,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 112800,
+      "count": 0,
+      "mean_block_us": 726.6621315192743,
+      "peak_block_us": 4371,
+      "over_budget": 0,
+      "blocks": 441,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "8ba99ae68a974956806c9c31528479251f5c76a62f38c6ec6b11424f33d35564",
+      "c161_identical": true
+    },
+    {
+      "index": 63,
+      "role": "silence",
+      "scene": 1,
+      "snr_db": 0,
+      "voice": "bf_isabella",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "84018cd5d7286870e990114ca468bf9d2e1bb485bdbfb124a0f20ca4d6fcf637",
+      "input_samples": 112646,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 112800,
+      "count": 0,
+      "mean_block_us": 727.0272108843537,
+      "peak_block_us": 4193,
+      "over_budget": 0,
+      "blocks": 441,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "bc26d292f9558bc87b325f47489dab725189b658b7f88db1c596004b0ea9fa6a",
+      "c161_identical": true
+    },
+    {
+      "index": 64,
+      "role": "v5",
+      "scene": 1,
+      "snr_db": 6,
+      "voice": "bf_isabella",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "94622fe8b184f88b8e8ec0e1cd7f4f27e65748ca4d89d6b016e7cd31ff02794c",
+      "input_samples": 112646,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          49920,
+          -1,
+          49700
+        ]
+      ],
+      "first": 17920,
+      "emitted": 112800,
+      "count": 94880,
+      "mean_block_us": 698.8299319727892,
+      "peak_block_us": 4297,
+      "over_budget": 0,
+      "blocks": 441,
+      "min_internal": 381132,
+      "delivered": 49920,
+      "command_at": 57520,
+      "before_command": 39600,
+      "processed_sha256": "9211b07a43c8276700676a51c1b9932c771f8aec8a98e4b26dc8776e9f1bc4de",
+      "raw_sha256": "b6e005c4d799f204f51970e54e8ad065fd389c30e04490534f55f8df605fc469",
+      "transcripts": {
+        "processed": {
+          "text": "Hey Luke, play the evening news.",
+          "words": [
+            {
+              "word": " Hey",
+              "start": 0.0,
+              "end": 1.38
+            },
+            {
+              "word": " Luke,",
+              "start": 1.38,
+              "end": 1.68
+            },
+            {
+              "word": " play",
+              "start": 2.06,
+              "end": 2.98
+            },
+            {
+              "word": " the",
+              "start": 2.98,
+              "end": 3.18
+            },
+            {
+              "word": " evening",
+              "start": 3.18,
+              "end": 3.52
+            },
+            {
+              "word": " news.",
+              "start": 3.52,
+              "end": 3.88
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        },
+        "raw": {
+          "text": "Hey Nix, play the evening news.",
+          "words": [
+            {
+              "word": " Hey",
+              "start": 0.0,
+              "end": 1.28
+            },
+            {
+              "word": " Nix,",
+              "start": 1.28,
+              "end": 1.66
+            },
+            {
+              "word": " play",
+              "start": 2.08,
+              "end": 2.9
+            },
+            {
+              "word": " the",
+              "start": 2.9,
+              "end": 3.08
+            },
+            {
+              "word": " evening",
+              "start": 3.08,
+              "end": 3.4
+            },
+            {
+              "word": " news.",
+              "start": 3.4,
+              "end": 3.88
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        }
+      },
+      "host_c161": [],
+      "host_v5": [
+        49700
+      ],
+      "host_willow": [],
+      "log_sha256": "4708ad98a315e6f1d72fcf83546dcb4e7b9b81498c08dfeeef75be94e7efb14b",
+      "c161_identical": true
+    },
+    {
+      "index": 65,
+      "role": "ordinary",
+      "scene": 1,
+      "snr_db": 6,
+      "voice": "bf_isabella",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "d97d902bfb956a6bb123283b9bfad80c693036eb6b7a5edb57a81df47b79c624",
+      "input_samples": 112646,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 112800,
+      "count": 0,
+      "mean_block_us": 714.2902494331066,
+      "peak_block_us": 4188,
+      "over_budget": 0,
+      "blocks": 441,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "45d704ce5aa0135c7ca8a250abed2dc3a0c1fce674e3e0fe22184d732e62541b",
+      "c161_identical": true
+    },
+    {
+      "index": 66,
+      "role": "willow",
+      "scene": 1,
+      "snr_db": 6,
+      "voice": "bf_isabella",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "b537eed9e56ab976b12b7d9ab58aad2f6f98b4fea16c9383947ed0320ab4d4af",
+      "input_samples": 112646,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 112800,
+      "count": 0,
+      "mean_block_us": 717.015873015873,
+      "peak_block_us": 4065,
+      "over_budget": 0,
+      "blocks": 441,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [
+        48960
+      ],
+      "log_sha256": "c3b727aea74887d4492852f88163b2705ff7fae9b4f742789cd40090665a78d5",
+      "c161_identical": true
+    },
+    {
+      "index": 67,
+      "role": "silence",
+      "scene": 1,
+      "snr_db": 6,
+      "voice": "bf_isabella",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "2d26e53708ed8ec4a0631c343a9f8d5d867fde43c24167009f868f56c477649d",
+      "input_samples": 112646,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 112800,
+      "count": 0,
+      "mean_block_us": 771.3287981859411,
+      "peak_block_us": 4299,
+      "over_budget": 0,
+      "blocks": 441,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "194807f8ff7268fbb9fe484f5134dd66d741103a4c186777e9244810d78f5b3c",
+      "c161_identical": true
+    },
+    {
+      "index": 68,
+      "role": "v5",
+      "scene": 1,
+      "snr_db": 12,
+      "voice": "bf_isabella",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "77087ea5ffb4d187ba24b4d0fa82d8424227fa7210e6b83ed97a0d88280ab3f7",
+      "input_samples": 112646,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          49920,
+          -1,
+          49700
+        ]
+      ],
+      "first": 17920,
+      "emitted": 112800,
+      "count": 94880,
+      "mean_block_us": 715.7551020408164,
+      "peak_block_us": 4261,
+      "over_budget": 0,
+      "blocks": 441,
+      "min_internal": 381132,
+      "delivered": 49920,
+      "command_at": 57520,
+      "before_command": 39600,
+      "processed_sha256": "24e444b98136d0bb0bab4edfe3d78898d43c050627fd63b74efb7fe3353635a8",
+      "raw_sha256": "949b5fdd34be04b1add270da0421db3bb67ab4f9196fe82e60e79fc5f58d4ad4",
+      "transcripts": {
+        "processed": {
+          "text": "Alex, play the evening news.",
+          "words": [
+            {
+              "word": " Alex,",
+              "start": 0.0,
+              "end": 1.62
+            },
+            {
+              "word": " play",
+              "start": 1.94,
+              "end": 2.98
+            },
+            {
+              "word": " the",
+              "start": 2.98,
+              "end": 3.2
+            },
+            {
+              "word": " evening",
+              "start": 3.2,
+              "end": 3.48
+            },
+            {
+              "word": " news.",
+              "start": 3.48,
+              "end": 3.92
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        },
+        "raw": {
+          "text": "Hey Nix, play the evening news.",
+          "words": [
+            {
+              "word": " Hey",
+              "start": 0.0,
+              "end": 1.28
+            },
+            {
+              "word": " Nix,",
+              "start": 1.28,
+              "end": 1.66
+            },
+            {
+              "word": " play",
+              "start": 1.88,
+              "end": 2.9
+            },
+            {
+              "word": " the",
+              "start": 2.9,
+              "end": 3.08
+            },
+            {
+              "word": " evening",
+              "start": 3.08,
+              "end": 3.4
+            },
+            {
+              "word": " news.",
+              "start": 3.4,
+              "end": 3.9
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        }
+      },
+      "host_c161": [],
+      "host_v5": [
+        49700
+      ],
+      "host_willow": [],
+      "log_sha256": "4cb71e5abb22aac00f831104bb2936b4ad4754ed56aacc292054d60eac09e4fc",
+      "c161_identical": true
+    },
+    {
+      "index": 69,
+      "role": "ordinary",
+      "scene": 1,
+      "snr_db": 12,
+      "voice": "bf_isabella",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "b8ea523f45f5ed5f7419d8265896e01c11eaa9e2c732aa9575fb9231492917ec",
+      "input_samples": 112646,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 112800,
+      "count": 0,
+      "mean_block_us": 719.1269841269841,
+      "peak_block_us": 4320,
+      "over_budget": 0,
+      "blocks": 441,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "4d6092c2fd33827fe29942bd4aa60663400bd7bfcdb60ae8e9ce25d1f3742c99",
+      "c161_identical": true
+    },
+    {
+      "index": 70,
+      "role": "willow",
+      "scene": 1,
+      "snr_db": 12,
+      "voice": "bf_isabella",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "de526a73428b453796764c4e7f87e2703961191b1190c94628ad237d6ad8cf50",
+      "input_samples": 112646,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 112800,
+      "count": 0,
+      "mean_block_us": 732.4195011337869,
+      "peak_block_us": 4518,
+      "over_budget": 0,
+      "blocks": 441,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [
+        47424
+      ],
+      "log_sha256": "7b8084d50c7d45e55e4cf36a62183991670361116b67ebbb700e86586fbeb4df",
+      "c161_identical": true
+    },
+    {
+      "index": 71,
+      "role": "silence",
+      "scene": 1,
+      "snr_db": 12,
+      "voice": "bf_isabella",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "9941e29085874a6f2d5bed3de96dba4463d2e9409c32b2c889978fa47e230151",
+      "input_samples": 112646,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 112800,
+      "count": 0,
+      "mean_block_us": 731.2267573696145,
+      "peak_block_us": 4400,
+      "over_budget": 0,
+      "blocks": 441,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "3fe322ed6211ae191d6915e690e0a21780a5335dbe2706e44194d83f2ed17ef0",
+      "c161_identical": true
+    },
+    {
+      "index": 72,
+      "role": "v5",
+      "scene": 0,
+      "snr_db": 0,
+      "voice": "bm_lewis",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "8ae271d2f5634cbcac41bdf21a5f9872b11e92296bddf11a2e81122ccf291511",
+      "input_samples": 112529,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          49920,
+          -1,
+          49676
+        ],
+        [
+          50944,
+          50880,
+          -1
+        ]
+      ],
+      "first": 17920,
+      "emitted": 112640,
+      "count": 94720,
+      "mean_block_us": 680.2704545454545,
+      "peak_block_us": 4263,
+      "over_budget": 0,
+      "blocks": 440,
+      "min_internal": 381132,
+      "delivered": 49920,
+      "command_at": 56720,
+      "before_command": 38800,
+      "processed_sha256": "0f770f0327f826c28e939cc316cea01028bd6cae22aa5a6f33e828b0831ec643",
+      "raw_sha256": "e8bf9e96dbd16885f6ad839d4303a72f87de542ac6d90a106e77d1625747dce4",
+      "transcripts": {
+        "processed": {
+          "text": "Turn off the deck clap.",
+          "words": [
+            {
+              "word": " Turn",
+              "start": 0.0,
+              "end": 1.56
+            },
+            {
+              "word": " off",
+              "start": 1.56,
+              "end": 3.34
+            },
+            {
+              "word": " the",
+              "start": 3.34,
+              "end": 3.62
+            },
+            {
+              "word": " deck",
+              "start": 3.62,
+              "end": 3.88
+            },
+            {
+              "word": " clap.",
+              "start": 3.88,
+              "end": 4.22
+            }
+          ],
+          "exact_suffix": false,
+          "contains_command": false
+        },
+        "raw": {
+          "text": "A-Nix. Turn off the desk lamp.",
+          "words": [
+            {
+              "word": " A",
+              "start": 0.6400000000000003,
+              "end": 1.28
+            },
+            {
+              "word": "-Nix.",
+              "start": 1.28,
+              "end": 1.66
+            },
+            {
+              "word": " Turn",
+              "start": 2.7,
+              "end": 2.96
+            },
+            {
+              "word": " off",
+              "start": 2.96,
+              "end": 3.24
+            },
+            {
+              "word": " the",
+              "start": 3.24,
+              "end": 3.56
+            },
+            {
+              "word": " desk",
+              "start": 3.56,
+              "end": 3.8
+            },
+            {
+              "word": " lamp.",
+              "start": 3.8,
+              "end": 4.08
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        }
+      },
+      "host_c161": [
+        50880
+      ],
+      "host_v5": [
+        49676
+      ],
+      "host_willow": [],
+      "log_sha256": "f1850afbb3d1897e6c665edc40ce62a5871816d95d0e7207266aec7af1c3366f",
+      "c161_identical": true
+    },
+    {
+      "index": 73,
+      "role": "ordinary",
+      "scene": 0,
+      "snr_db": 0,
+      "voice": "bm_lewis",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "e411c1e4ba0c35436c306a3c3f1836f254b061708daa12596afd187647bf183e",
+      "input_samples": 112529,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 112640,
+      "count": 0,
+      "mean_block_us": 702.0318181818182,
+      "peak_block_us": 4430,
+      "over_budget": 0,
+      "blocks": 440,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "0e187da77394ea32d2945dd20bba83a3959dee3c5dd48a600ddc0b100db02fed",
+      "c161_identical": true
+    },
+    {
+      "index": 74,
+      "role": "willow",
+      "scene": 0,
+      "snr_db": 0,
+      "voice": "bm_lewis",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "15c47767f852997b4e8c58420a73ef38d1f102e00f36dcfe44457a84ab9d72f4",
+      "input_samples": 112529,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 112640,
+      "count": 0,
+      "mean_block_us": 700.7590909090909,
+      "peak_block_us": 4178,
+      "over_budget": 0,
+      "blocks": 440,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [
+        48960
+      ],
+      "log_sha256": "5f08ee531673ca746ba9082d993a19f963bbca784bae322302b67c268d8ff461",
+      "c161_identical": true
+    },
+    {
+      "index": 75,
+      "role": "silence",
+      "scene": 0,
+      "snr_db": 0,
+      "voice": "bm_lewis",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "69164a755076425747a735fe0b909604f72b1261a68a201364e278c1beea1de8",
+      "input_samples": 112529,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 112640,
+      "count": 0,
+      "mean_block_us": 694.5340909090909,
+      "peak_block_us": 4144,
+      "over_budget": 0,
+      "blocks": 440,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "134dbea3da66024d7d65dc3eadd9e29bc2b3c158249fcacdcac1736804e582a8",
+      "c161_identical": true
+    },
+    {
+      "index": 76,
+      "role": "v5",
+      "scene": 0,
+      "snr_db": 6,
+      "voice": "bm_lewis",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "24331ae3c21aac92f0c9fa22a851b299468bab06b42cf3477502dae621b0059b",
+      "input_samples": 112529,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          49664,
+          49440,
+          -1
+        ],
+        [
+          49920,
+          -1,
+          49676
+        ]
+      ],
+      "first": 17600,
+      "emitted": 112640,
+      "count": 95040,
+      "mean_block_us": 686.1113636363636,
+      "peak_block_us": 4179,
+      "over_budget": 0,
+      "blocks": 440,
+      "min_internal": 381132,
+      "delivered": 49664,
+      "command_at": 56720,
+      "before_command": 39120,
+      "processed_sha256": "3ea8385146db56dc6bc5586619753ecdb57289e6e568f846792341659fa9ef15",
+      "raw_sha256": "f9abb61883d0eaa119a20889169565fab9ed83a51d269e1788e96d0f15323349",
+      "transcripts": {
+        "processed": {
+          "text": "Hey, next turn off the desk lamp",
+          "words": [
+            {
+              "word": " Hey,",
+              "start": 0.8000000000000003,
+              "end": 1.38
+            },
+            {
+              "word": " next",
+              "start": 1.58,
+              "end": 1.7
+            },
+            {
+              "word": " turn",
+              "start": 1.7,
+              "end": 3.08
+            },
+            {
+              "word": " off",
+              "start": 3.08,
+              "end": 3.38
+            },
+            {
+              "word": " the",
+              "start": 3.38,
+              "end": 3.64
+            },
+            {
+              "word": " desk",
+              "start": 3.64,
+              "end": 3.92
+            },
+            {
+              "word": " lamp",
+              "start": 3.92,
+              "end": 4.28
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        },
+        "raw": {
+          "text": "Hey, Nix. Turn off the desk lamp.",
+          "words": [
+            {
+              "word": " Hey,",
+              "start": 0.7400000000000004,
+              "end": 1.3
+            },
+            {
+              "word": " Nix.",
+              "start": 1.48,
+              "end": 1.68
+            },
+            {
+              "word": " Turn",
+              "start": 2.74,
+              "end": 3.0
+            },
+            {
+              "word": " off",
+              "start": 3.0,
+              "end": 3.28
+            },
+            {
+              "word": " the",
+              "start": 3.28,
+              "end": 3.56
+            },
+            {
+              "word": " desk",
+              "start": 3.56,
+              "end": 3.82
+            },
+            {
+              "word": " lamp.",
+              "start": 3.82,
+              "end": 4.1
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        }
+      },
+      "host_c161": [
+        49440
+      ],
+      "host_v5": [
+        49676
+      ],
+      "host_willow": [],
+      "log_sha256": "103a3edc36b67360b33064ca6856276ea903f3cde61dd744a77e88ca6216ee82",
+      "c161_identical": true
+    },
+    {
+      "index": 77,
+      "role": "ordinary",
+      "scene": 0,
+      "snr_db": 6,
+      "voice": "bm_lewis",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "217f0158c1296321a8ea3f644b6a79e0ced9aa8fc9aeaac69bbff5de604dd6b2",
+      "input_samples": 112529,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 112640,
+      "count": 0,
+      "mean_block_us": 699.5340909090909,
+      "peak_block_us": 4797,
+      "over_budget": 0,
+      "blocks": 440,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "5ee87cda8d96801e3cc67ea0e8ec6fcd637afd7e2f57b15af25bebcb0f91c242",
+      "c161_identical": true
+    },
+    {
+      "index": 78,
+      "role": "willow",
+      "scene": 0,
+      "snr_db": 6,
+      "voice": "bm_lewis",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "5c449cdbdbe57400fe58b6de9fdd1ad0e93d26a428e8b848bbcd0e7fb6ae6b7b",
+      "input_samples": 112529,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 112640,
+      "count": 0,
+      "mean_block_us": 697.9272727272727,
+      "peak_block_us": 4230,
+      "over_budget": 0,
+      "blocks": 440,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [
+        47424
+      ],
+      "log_sha256": "def936271a2656aa3897a3b25ddd54c1ff1da8e3b235c2f6c63e43bce2a6e742",
+      "c161_identical": true
+    },
+    {
+      "index": 79,
+      "role": "silence",
+      "scene": 0,
+      "snr_db": 6,
+      "voice": "bm_lewis",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "64ec1375997942cdf05d7641402f3d9189ff351f7295a79c381d8c0a0e17aeca",
+      "input_samples": 112529,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 112640,
+      "count": 0,
+      "mean_block_us": 694.4909090909091,
+      "peak_block_us": 4192,
+      "over_budget": 0,
+      "blocks": 440,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "945dd99679d011d1aeb6ee9332d04c8cf400641fc0773742655c38fbe14b44ed",
+      "c161_identical": true
+    },
+    {
+      "index": 80,
+      "role": "v5",
+      "scene": 0,
+      "snr_db": 12,
+      "voice": "bm_lewis",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "5eb2dba760db42447909bee2e319fc4156ef2e711abc8738229f850246ed67b9",
+      "input_samples": 112529,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          49664,
+          49440,
+          -1
+        ],
+        [
+          49920,
+          -1,
+          49676
+        ]
+      ],
+      "first": 17600,
+      "emitted": 112640,
+      "count": 95040,
+      "mean_block_us": 685.8136363636364,
+      "peak_block_us": 4077,
+      "over_budget": 0,
+      "blocks": 440,
+      "min_internal": 381132,
+      "delivered": 49664,
+      "command_at": 56720,
+      "before_command": 39120,
+      "processed_sha256": "60202943798226ac4bcf0e93bc0c5fbfa61a16cce674fba56751fb7c8c5c4bdb",
+      "raw_sha256": "da959a576001b6f06354f74242ee62b4b0ede93045f973d562196058728331c4",
+      "transcripts": {
+        "processed": {
+          "text": "Hey next turn off the desk lamp",
+          "words": [
+            {
+              "word": " Hey",
+              "start": 0.7399999999999998,
+              "end": 1.38
+            },
+            {
+              "word": " next",
+              "start": 1.38,
+              "end": 1.7
+            },
+            {
+              "word": " turn",
+              "start": 1.7,
+              "end": 3.08
+            },
+            {
+              "word": " off",
+              "start": 3.08,
+              "end": 3.38
+            },
+            {
+              "word": " the",
+              "start": 3.38,
+              "end": 3.62
+            },
+            {
+              "word": " desk",
+              "start": 3.62,
+              "end": 3.92
+            },
+            {
+              "word": " lamp",
+              "start": 3.92,
+              "end": 4.28
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        },
+        "raw": {
+          "text": "Hey, Nix. Turn off the desk lamp.",
+          "words": [
+            {
+              "word": " Hey,",
+              "start": 0.74,
+              "end": 1.3
+            },
+            {
+              "word": " Nix.",
+              "start": 1.48,
+              "end": 1.68
+            },
+            {
+              "word": " Turn",
+              "start": 2.78,
+              "end": 3.0
+            },
+            {
+              "word": " off",
+              "start": 3.0,
+              "end": 3.28
+            },
+            {
+              "word": " the",
+              "start": 3.28,
+              "end": 3.56
+            },
+            {
+              "word": " desk",
+              "start": 3.56,
+              "end": 3.84
+            },
+            {
+              "word": " lamp.",
+              "start": 3.84,
+              "end": 4.12
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        }
+      },
+      "host_c161": [
+        49440
+      ],
+      "host_v5": [
+        49676
+      ],
+      "host_willow": [],
+      "log_sha256": "dff3e8eae7073a46d81c895f6fbcb7283ed791c1a46822aab75fa7c242bfd252",
+      "c161_identical": true
+    },
+    {
+      "index": 81,
+      "role": "ordinary",
+      "scene": 0,
+      "snr_db": 12,
+      "voice": "bm_lewis",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "aab0eb70184e9dbcf4c68fc77c6ddfc1950d85226d16514accff9d58dd6d030b",
+      "input_samples": 112529,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 112640,
+      "count": 0,
+      "mean_block_us": 711.8568181818182,
+      "peak_block_us": 4227,
+      "over_budget": 0,
+      "blocks": 440,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "151456ae3ac072ddf942212f6c76bf5186d07372f3c839c60483de4556e28f41",
+      "c161_identical": true
+    },
+    {
+      "index": 82,
+      "role": "willow",
+      "scene": 0,
+      "snr_db": 12,
+      "voice": "bm_lewis",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "57d486c34cc6649e0b86214663f067dc156aede1362a7acfaf60d2131e9e8620",
+      "input_samples": 112529,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 112640,
+      "count": 0,
+      "mean_block_us": 693.1204545454545,
+      "peak_block_us": 4027,
+      "over_budget": 0,
+      "blocks": 440,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [
+        47424
+      ],
+      "log_sha256": "ed81cc90e8a9c7d3eaf5fadccfc106dbe9031b0d2fbc1e8be793122009c4f5a6",
+      "c161_identical": true
+    },
+    {
+      "index": 83,
+      "role": "silence",
+      "scene": 0,
+      "snr_db": 12,
+      "voice": "bm_lewis",
+      "carrier": "Turn off the desk lamp.",
+      "pcm_sha256": "5ddc00d20af0e17f26eccd6839882e28bbdca0911dd297e4b541bd1965a28f5b",
+      "input_samples": 112529,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 112640,
+      "count": 0,
+      "mean_block_us": 705.5090909090909,
+      "peak_block_us": 4114,
+      "over_budget": 0,
+      "blocks": 440,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "70895718835d6f6f7562d54c7d4ac6137ffb2eea693b4f266c9dd65b991569e9",
+      "c161_identical": true
+    },
+    {
+      "index": 84,
+      "role": "v5",
+      "scene": 1,
+      "snr_db": 0,
+      "voice": "bm_lewis",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "3780966f408ef2b52bf4c0ef4249d6333b6b813296b3b256c297f087e62a1027",
+      "input_samples": 110646,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          49920,
+          -1,
+          49708
+        ]
+      ],
+      "first": 17920,
+      "emitted": 110720,
+      "count": 92800,
+      "mean_block_us": 684.2124711316397,
+      "peak_block_us": 4170,
+      "over_budget": 0,
+      "blocks": 433,
+      "min_internal": 381132,
+      "delivered": 49920,
+      "command_at": 56720,
+      "before_command": 38800,
+      "processed_sha256": "8a85757b0d034edd6365cce5440a401e9b3da34bcb02a7146b5ec86123df68c1",
+      "raw_sha256": "334b756712711452e4778420be1d7bd22bf8b0e10d61080b13dc875cfc179cb7",
+      "transcripts": {
+        "processed": {
+          "text": "Phoenix! I'm excited to eat in Phoenix.",
+          "words": [
+            {
+              "word": " Phoenix!",
+              "start": 0.94,
+              "end": 1.64
+            },
+            {
+              "word": " I'm",
+              "start": 2.06,
+              "end": 2.06
+            },
+            {
+              "word": " excited",
+              "start": 2.06,
+              "end": 3.12
+            },
+            {
+              "word": " to",
+              "start": 3.12,
+              "end": 3.32
+            },
+            {
+              "word": " eat",
+              "start": 3.32,
+              "end": 3.5
+            },
+            {
+              "word": " in",
+              "start": 3.5,
+              "end": 3.68
+            },
+            {
+              "word": " Phoenix.",
+              "start": 3.68,
+              "end": 3.96
+            }
+          ],
+          "exact_suffix": false,
+          "contains_command": false
+        },
+        "raw": {
+          "text": "Phoenix. By the evening, Phoenix.",
+          "words": [
+            {
+              "word": " Phoenix.",
+              "start": 0.0,
+              "end": 1.6
+            },
+            {
+              "word": " By",
+              "start": 2.7,
+              "end": 2.96
+            },
+            {
+              "word": " the",
+              "start": 2.96,
+              "end": 3.14
+            },
+            {
+              "word": " evening,",
+              "start": 3.14,
+              "end": 3.52
+            },
+            {
+              "word": " Phoenix.",
+              "start": 3.96,
+              "end": 3.98
+            }
+          ],
+          "exact_suffix": false,
+          "contains_command": false
+        }
+      },
+      "host_c161": [],
+      "host_v5": [
+        49708
+      ],
+      "host_willow": [],
+      "log_sha256": "0839efb000ecead2c0d297c80a49ee1108786f088c132a3c6c0b960be62c2b03",
+      "c161_identical": true
+    },
+    {
+      "index": 85,
+      "role": "ordinary",
+      "scene": 1,
+      "snr_db": 0,
+      "voice": "bm_lewis",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "a08631f36ec0aa47547b4641efd0a887f74b1a3773411014532f50e78282f910",
+      "input_samples": 110646,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 110720,
+      "count": 0,
+      "mean_block_us": 689.080831408776,
+      "peak_block_us": 4148,
+      "over_budget": 0,
+      "blocks": 433,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "3e212fb7cc92524dad4e3fdfd5b0ee71eff6dd613aff88f3f7e647fd6ca01f25",
+      "c161_identical": true
+    },
+    {
+      "index": 86,
+      "role": "willow",
+      "scene": 1,
+      "snr_db": 0,
+      "voice": "bm_lewis",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "b22f391df886ae53bc43d029e5a5526e8d9cc674d6d0bbfe0712e0da8b15b1de",
+      "input_samples": 110646,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 110720,
+      "count": 0,
+      "mean_block_us": 697.5473441108545,
+      "peak_block_us": 4091,
+      "over_budget": 0,
+      "blocks": 433,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "5df1a5679fdc10f0d028de3868b590ca589ee850bea843a746b0a450e1cad6f2",
+      "c161_identical": true
+    },
+    {
+      "index": 87,
+      "role": "silence",
+      "scene": 1,
+      "snr_db": 0,
+      "voice": "bm_lewis",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "3b2a17e7543a6a742c755897ff4ec75409769bf9d383f065f488c3a53557937d",
+      "input_samples": 110646,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 110720,
+      "count": 0,
+      "mean_block_us": 697.108545034642,
+      "peak_block_us": 4198,
+      "over_budget": 0,
+      "blocks": 433,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "ee48b5b0bcba258d692a467775dadd343fed466399bd3502fbba72f78e214db6",
+      "c161_identical": true
+    },
+    {
+      "index": 88,
+      "role": "v5",
+      "scene": 1,
+      "snr_db": 6,
+      "voice": "bm_lewis",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "0386f3c6c888f5cf1ff67ff45af4d7a9cfe1b938ee7c9fc48f9c0177e590f565",
+      "input_samples": 110646,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          49920,
+          -1,
+          49700
+        ]
+      ],
+      "first": 17920,
+      "emitted": 110720,
+      "count": 92800,
+      "mean_block_us": 682.810623556582,
+      "peak_block_us": 4165,
+      "over_budget": 0,
+      "blocks": 433,
+      "min_internal": 381132,
+      "delivered": 49920,
+      "command_at": 56720,
+      "before_command": 38800,
+      "processed_sha256": "89ed918e7507d6670d2734a8a5548bdc99651f2df2ba1baaf5357de64840bfa8",
+      "raw_sha256": "7217564b77e6a3bed8904e3a85a85d0dee1bc24288e0259cb739dac9b8a38165",
+      "transcripts": {
+        "processed": {
+          "text": "Hey Nick. Friday evening news.",
+          "words": [
+            {
+              "word": " Hey",
+              "start": 0.0,
+              "end": 1.38
+            },
+            {
+              "word": " Nick.",
+              "start": 1.38,
+              "end": 1.68
+            },
+            {
+              "word": " Friday",
+              "start": 2.4,
+              "end": 3.12
+            },
+            {
+              "word": " evening",
+              "start": 3.12,
+              "end": 3.62
+            },
+            {
+              "word": " news.",
+              "start": 3.62,
+              "end": 3.98
+            }
+          ],
+          "exact_suffix": false,
+          "contains_command": false
+        },
+        "raw": {
+          "text": "Hey Nix, play the evening news.",
+          "words": [
+            {
+              "word": " Hey",
+              "start": 0.0,
+              "end": 1.28
+            },
+            {
+              "word": " Nix,",
+              "start": 1.28,
+              "end": 1.66
+            },
+            {
+              "word": " play",
+              "start": 1.8,
+              "end": 2.96
+            },
+            {
+              "word": " the",
+              "start": 2.96,
+              "end": 3.14
+            },
+            {
+              "word": " evening",
+              "start": 3.14,
+              "end": 3.52
+            },
+            {
+              "word": " news.",
+              "start": 3.52,
+              "end": 3.82
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        }
+      },
+      "host_c161": [],
+      "host_v5": [
+        49700
+      ],
+      "host_willow": [],
+      "log_sha256": "cc93a15efde1a2abae1e7538bbd55a838b9c9316b9a7eb00a8016f5aec26e952",
+      "c161_identical": true
+    },
+    {
+      "index": 89,
+      "role": "ordinary",
+      "scene": 1,
+      "snr_db": 6,
+      "voice": "bm_lewis",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "17858d0987bbbe5335a57fe4c8eeaacca55282619af497902adb0154153f73e3",
+      "input_samples": 110646,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 110720,
+      "count": 0,
+      "mean_block_us": 701.0046189376443,
+      "peak_block_us": 4186,
+      "over_budget": 0,
+      "blocks": 433,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "86512a582a7d0d79ec8dd90daac883a5a84349b0b262970ee2b9649d4ea2ed08",
+      "c161_identical": true
+    },
+    {
+      "index": 90,
+      "role": "willow",
+      "scene": 1,
+      "snr_db": 6,
+      "voice": "bm_lewis",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "cae3753ee7d6f37e53a29370783c028935371bd42c8973ed7bf320da075e2aed",
+      "input_samples": 110646,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 110720,
+      "count": 0,
+      "mean_block_us": 702.9838337182448,
+      "peak_block_us": 4194,
+      "over_budget": 0,
+      "blocks": 433,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [
+        48960
+      ],
+      "log_sha256": "215c8c7ca9ee909a6b89b81cd2e3453fe18475bc5faaa728072ee7d8694147f4",
+      "c161_identical": true
+    },
+    {
+      "index": 91,
+      "role": "silence",
+      "scene": 1,
+      "snr_db": 6,
+      "voice": "bm_lewis",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "c13f7df02ab196e21b2210b32829f001b2e5edd803ce64ec7255288d8e879b04",
+      "input_samples": 110646,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 110720,
+      "count": 0,
+      "mean_block_us": 705.6651270207852,
+      "peak_block_us": 4050,
+      "over_budget": 0,
+      "blocks": 433,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "41eed97d26bfa41c473e7c2257d0f956b4b78dd52970ef187f4ed6097f73a84a",
+      "c161_identical": true
+    },
+    {
+      "index": 92,
+      "role": "v5",
+      "scene": 1,
+      "snr_db": 12,
+      "voice": "bm_lewis",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "1878436664a6fba5d3630621abba3681472a5093620aab30237fecc9f036a33b",
+      "input_samples": 110646,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [
+        [
+          49920,
+          -1,
+          49700
+        ]
+      ],
+      "first": 17920,
+      "emitted": 110720,
+      "count": 92800,
+      "mean_block_us": 683.6859122401847,
+      "peak_block_us": 4158,
+      "over_budget": 0,
+      "blocks": 433,
+      "min_internal": 381132,
+      "delivered": 49920,
+      "command_at": 56720,
+      "before_command": 38800,
+      "processed_sha256": "8b93af0c8f6e52d6e3ccc43090c0e335de73af029f1d4af967a895fffad7f3d6",
+      "raw_sha256": "2177c6db0af4c6e9d1710864d6c0bc2706f2e442190549e7ebf567b1e3d8b2c4",
+      "transcripts": {
+        "processed": {
+          "text": "A-N-X Friday evening news",
+          "words": [
+            {
+              "word": " A",
+              "start": 0.0,
+              "end": 1.38
+            },
+            {
+              "word": "-N",
+              "start": 1.38,
+              "end": 1.58
+            },
+            {
+              "word": "-X",
+              "start": 1.58,
+              "end": 1.8
+            },
+            {
+              "word": " Friday",
+              "start": 1.8,
+              "end": 3.06
+            },
+            {
+              "word": " evening",
+              "start": 3.06,
+              "end": 3.6
+            },
+            {
+              "word": " news",
+              "start": 3.6,
+              "end": 4.08
+            }
+          ],
+          "exact_suffix": false,
+          "contains_command": false
+        },
+        "raw": {
+          "text": "A-Nix, play the evening news.",
+          "words": [
+            {
+              "word": " A",
+              "start": 0.0,
+              "end": 1.26
+            },
+            {
+              "word": "-Nix,",
+              "start": 1.26,
+              "end": 1.68
+            },
+            {
+              "word": " play",
+              "start": 1.78,
+              "end": 2.96
+            },
+            {
+              "word": " the",
+              "start": 2.96,
+              "end": 3.16
+            },
+            {
+              "word": " evening",
+              "start": 3.16,
+              "end": 3.5
+            },
+            {
+              "word": " news.",
+              "start": 3.5,
+              "end": 3.84
+            }
+          ],
+          "exact_suffix": true,
+          "contains_command": true
+        }
+      },
+      "host_c161": [],
+      "host_v5": [
+        49700
+      ],
+      "host_willow": [],
+      "log_sha256": "cdb27e141862a80c19a0f789c6254f51c44446f272b2d7b4787a14aae7ff992e",
+      "c161_identical": true
+    },
+    {
+      "index": 93,
+      "role": "ordinary",
+      "scene": 1,
+      "snr_db": 12,
+      "voice": "bm_lewis",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "a60134dd12c6d25cea3da6b1511c0f12556254ffff9c5fb0d1a93a561408380e",
+      "input_samples": 110646,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 110720,
+      "count": 0,
+      "mean_block_us": 698.9584295612009,
+      "peak_block_us": 4181,
+      "over_budget": 0,
+      "blocks": 433,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "e10a084a03eebfbf608535efb58f734d4c9957674f672307d4998ac3e3848ade",
+      "c161_identical": true
+    },
+    {
+      "index": 94,
+      "role": "willow",
+      "scene": 1,
+      "snr_db": 12,
+      "voice": "bm_lewis",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "c7c6c487154464dbae386ed5de46b74b0dc8d4dcd9abfbf545c75b3f86813a55",
+      "input_samples": 110646,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 110720,
+      "count": 0,
+      "mean_block_us": 692.4618937644342,
+      "peak_block_us": 4348,
+      "over_budget": 0,
+      "blocks": 433,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [
+        48960
+      ],
+      "log_sha256": "4ea618678bcf2d1372c4ed75ad09ecf67dc8995278fddd6fdda642cbee8f6173",
+      "c161_identical": true
+    },
+    {
+      "index": 95,
+      "role": "silence",
+      "scene": 1,
+      "snr_db": 12,
+      "voice": "bm_lewis",
+      "carrier": "Play the evening news.",
+      "pcm_sha256": "ced6e720da1c91c896619f0b48ecfd498222871b67bb2b1b586c5081ae0e1bdb",
+      "input_samples": 110646,
+      "prime": 81600,
+      "chunk": 256,
+      "events": [],
+      "first": -1,
+      "emitted": 110720,
+      "count": 0,
+      "mean_block_us": 706.6073903002309,
+      "peak_block_us": 4383,
+      "over_budget": 0,
+      "blocks": 433,
+      "min_internal": 381132,
+      "host_c161": [],
+      "host_v5": [],
+      "host_willow": [],
+      "log_sha256": "43423f049fefa01837d6fdc55c576776ed0aca798cf5ea285d14558f522bd728",
+      "c161_identical": true
+    }
+  ]
+}
