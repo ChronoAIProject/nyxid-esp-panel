@@ -22,7 +22,7 @@ def background(previous):
         yield dict(r,group="background"),pcm,None,None
 
 
-def replay(long):
+def replay(long, arms=training.ARMS, output=None):
     parent_path = dwell.background.OUT if long else dwell.replay.OUT
     previous = ch.read(parent_path)
     short = ch.read(dwell.replay.OUT) if long else previous
@@ -31,7 +31,7 @@ def replay(long):
     five, five_ids = score.verifier.models()
     assert five_ids["trained"] == short["five_sha256"]
     models, hashes = {}, {}
-    for arm in training.ARMS:
+    for arm in arms:
         stem = training.STEM+"-"+arm
         path = ch.RESULTS/(stem+"-v1.tflite")
         hashes[arm] = ch.sha(path)
@@ -40,7 +40,7 @@ def replay(long):
         model.allocate_tensors()
         models[arm] = model
     arrays, rows = {}, []
-    out = BG if long else OUT
+    out = output or (BG if long else OUT)
     for old,pcm,raw,echo in streams:
         key = old["key"]
         assert len(pcm) == old["samples"] and ch.digest(pcm) == old["pcm_sha256"]
@@ -95,8 +95,12 @@ def replay(long):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("stage",choices=("short","background","commands"))
-    stage = parser.parse_args().stage
+    parser.add_argument("--refresh",action="store_true")
+    args = parser.parse_args()
+    stage = args.stage
+    def path(original):
+        return original.with_name(original.name.replace(training.STEM,training.STEM+"-refreshed")) if args.refresh else original
     if stage == "commands":
-        commands.main(OUT,COMMANDS,include_post120=True)
+        commands.main(path(OUT),path(COMMANDS),include_post120=True)
     else:
-        replay(stage == "background")
+        replay(stage == "background", ("refreshed",) if args.refresh else training.ARMS, path(BG if stage=="background" else OUT))

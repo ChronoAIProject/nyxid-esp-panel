@@ -89,7 +89,35 @@ def collect():
     return torch.tensor(np.stack(pos), device="cuda").float()/255, torch.tensor(np.stack(neg), device="cuda").float()/255, rows
 
 
-def train():
+@torch.no_grad()
+def negative_streams(rows):
+    native = fit.prior.letters.native_frontend()
+    streams = []
+    for r, pcm in microphones():
+        if r["kind"] == "target":
+            continue
+        _, bands, clock = fit.prior.base.native_inputs(native, pcm)
+        patches = np.lib.stride_tricks.sliding_window_view(bands, 32, axis=0)
+        delivery = (clock[31:]+255)//256*256
+        first = int(np.searchsorted(delivery, 0, side="right"))
+        assert r["key"] == rows[len(streams)]["key"]
+        streams.append((torch.from_numpy(patches[first:].copy()).cuda().float()/255, delivery[first:]))
+    assert len(streams) == len(rows)
+    return streams
+
+
+@torch.no_grad()
+def refresh_negatives(model, streams):
+    groups, ends = [], []
+    for windows, delivery in streams:
+        score = model(windows).flatten().sigmoid().unfold(0,5,1).mean(-1)
+        start = int(score.argmax())
+        groups.append(windows[start:start+5])
+        ends.append(int(delivery[start+4]))
+    return torch.stack(groups), ends
+
+
+def train(refresh=False):
     torch.set_num_threads(1)
     assert "4090" in torch.cuda.get_device_name()
     torch.manual_seed(SEED)
@@ -105,15 +133,25 @@ def train():
         hard = torch.tensor(z["hard"], device="cuda").float()/255
         rehearsal = torch.tensor(cal["inputs"], device="cuda").float()/255
     assert len(rehearsal) == 256
-    ch.save(source, dict(records=rows, calibration_sha256=ch.sha(calibration.OUT), waves_sha256=ch.sha(calibration.WAVES),
+    source_data = dict(records=rows, calibration_sha256=ch.sha(calibration.OUT), waves_sha256=ch.sha(calibration.WAVES),
         parent_weights_sha256=ch.sha(file(PARENT,"weights")), hard_sha256=ch.sha(mining), rehearsal_sha256=ch.sha(representative),
-        script_sha256=ch.sha(Path(__file__)), seed=SEED))
-    for arm in ARMS:
+        script_sha256=ch.sha(Path(__file__)), seed=SEED)
+    if refresh:
+        original = ch.read(source)
+        assert all(source_data[k] == original[k] for k in source_data if k != "script_sha256")
+        negative_rows = [r for r in rows if r["kind"] != "target"]
+        streams = negative_streams(negative_rows)
+    else:
+        ch.save(source, source_data)
+    for arm in (("refreshed",) if refresh else ARMS):
         model = initialized()
         opt = torch.optim.AdamW(model.parameters(), lr=.0002, weight_decay=.001)
         rng = np.random.default_rng(SEED)
-        history = []
+        history, refreshes = [], []
         for step in range(1, 301):
+            if refresh and step in (51, 101, 151, 201, 251):
+                neg, ends = refresh_negatives(model, streams)
+                refreshes.append(dict(step=step, last_delivery=ends))
             target = pos[rng.choice(len(pos), 32)]
             other = torch.cat((neg[rng.choice(len(neg), 64)], hard[rng.choice(len(hard), 24)]))
             positive = model(target.flatten(0,1)).view(32,11).unfold(1,5,1)
@@ -140,7 +178,8 @@ def train():
                                     probabilities=model(rehearsal).sigmoid().flatten().cpu().numpy())
             ch.save(work/(stem+"-training-v1.json"),dict(arm=arm, steps=300, seed=SEED, gpu=torch.cuda.get_device_name(),
                 torch=torch.__version__, history=history, sources_sha256=ch.sha(source), weights_sha256=ch.sha(weights),
-                calibration_sha256=ch.sha(cal_path), positive_bags=len(pos), negative_bags=len(neg), hard_bags=len(hard)))
+                calibration_sha256=ch.sha(cal_path), positive_bags=len(pos), negative_bags=len(neg), hard_bags=len(hard),
+                **(dict(refreshes=refreshes, trainer_sha256=ch.sha(Path(__file__))) if refresh else {})))
             for path in work.iterdir():
                 path.replace(ch.RESULTS/path.name)
         print(arm, history[-1]["loss"], flush=True)
@@ -149,10 +188,12 @@ def train():
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("stage", choices=("train","export"))
-    if parser.parse_args().stage == "train":
-        train()
+    parser.add_argument("--refresh", action="store_true", help="Fine-tune the latent arm with five negative-window refreshes")
+    args = parser.parse_args()
+    if args.stage == "train":
+        train(args.refresh)
     else:
         import export_c161_word_window_v1 as exporter
-        for arm in ARMS:
+        for arm in (("refreshed",) if args.refresh else ARMS):
             exporter.STEM = STEM+"-"+arm
             exporter.main()
