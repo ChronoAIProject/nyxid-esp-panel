@@ -919,3 +919,9 @@ Qwen 保住此前识全的 24 条。turbo 在中、强档各失去一条原已�
 | 官方 Willow，称呼配平 | 10 | 2 | 9 | 2 |
 
 在最低档的十二次回放中，两版 Willow 各一次迟开、一次识全。另有 12 次标记 Nyx 和 12 次去称呼命令输入，两组在官方 Willow 上均无通知。Nyx 接收器监听 72 次外部 Willow 也均无通知。该组覆盖特定合成声线及面板同播条件，Nyx 的称呼包含接收器可识别的固定标记。[全部 96 条输入及原始音频身份](../results/4090-c161-connected-panel-willow-plan.json) · [两套接收端时钟及转写](../results/4090-c161-connected-panel-willow.json) · [官方原始返回、UART 和实际编码包](../results/4090-c161-connected-panel-willow.zip)
+
+### 在 P4 模拟上对同一首句改用 40 kb/s Opus
+
+复原原弱档 12 条及配平后三档 36 条的完整选中 FIFO。每次以完全相同的 PCM 启动两路独立的 ESP Opus 编码器，同为单声道、16 kHz、20 ms 分帧、VBR、复杂度 0，分别设定 24 与 40 kb/s。24 kb/s 的 14,568 个包与对应历史串口逐包相等。48 条合计，编码载荷从 871,148 增至 1,448,798 bytes，增幅 66.3%。
+
+原弱档 Qwen 首句从 2/12 升至 5/12，turbo 从 2/12 到 3/12。已经配平的弱档 Qwen 从 9/12 降至 8/12，turbo 从 6/12 到 7/12。配平后三档共 36 条，Qwen 为 33 → 32 条，turbo 为 28 → 30 条。Mac 主测配平文件采用原 24 kb/s 上行。[双路编码原始包](../results/4090-c161-connected-opus-rates.zip) · [字节数、逐条转写与得失](../results/4090-c161-connected-opus-rates.json)

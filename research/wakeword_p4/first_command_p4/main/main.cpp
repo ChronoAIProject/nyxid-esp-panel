@@ -142,11 +142,14 @@ bool captured_pair() {
     constexpr uint32_t offset = 2U << 20;
     uint32_t header[3];
     ESP_ERROR_CHECK(esp_flash_read(nullptr, header, offset, sizeof(header)));
-    if (header[0] != 0x3552504f) return false;
+    // Rate comparison supplies the same capture twice, then encodes lane 1 at 40 kb/s.
+    const bool compare_bitrates = header[0] == 0x3652504f;
+    if (header[0] != 0x3552504f && !compare_bitrates) return false;
     const unsigned samples = header[2];
     if (!samples || samples > ((4U<<20)-offset-sizeof(header))/4) abort();
-    auto cfg = encoder_config();
     for (unsigned lane=0; lane<2; ++lane) {
+        auto cfg = encoder_config();
+        if (compare_bitrates && lane == 1) cfg.bitrate = 40000;
         std::printf("UPLINK %lu %u %u\n",(unsigned long)header[1],lane,samples);
         void* encoder = nullptr;
         if (esp_opus_enc_open(&cfg,sizeof(cfg),&encoder) != ESP_AUDIO_ERR_OK) abort();
