@@ -293,3 +293,11 @@ python3 measure_command_capture.py playback.wav uplink-decoded.wav --command-at 
 播放包内有 12 条外部 WAV、两条面板 WAV 和配对清单。Mac 可直接使用单声道 16 kHz PCM16 源。每对从同一时钟的零点起播，面板使用清单中的 `panel`，外部扬声器使用 `external`。外部轨在第 5 秒开始固定 v5，随后说 “can you unlock the side door?”；面板同时示范 “Hey Nicks, turn on the kitchen lights.”。文件名中的 −6、0、+6 dB 指模拟麦克风在唤醒音区间的相对电平，实机值随扬声器音量、摆位和房间而变。播放包 SHA256 为 `a86cb485789a859accbf916f34b000b28e24fcc0e689f86e141dc1f62c2879af`。[独立面板与外部播放轨、manifest](../../results/4090-c161-fixed-cue-over-spoken-bot-playback.zip)
 
 每组可分别播外部音、只让面板示范、两路同时播放。对同一配对保持摆位和音量，比较面板持续播报，以及在该次实板 OPEN 后请求面板淡出。外部命令需播完。从同次 UART、原麦 M、回采参考 R 和 Opus 解码 WAV 可分别读出开麦时钟、面板实际降音时钟、上行中是否保留了外部命令。清单内的 `qemu_open` 是模拟结果，实机淡出由本次 OPEN 驱动。上面两项时钟及捕获工具也可用于这组文件。[回放及完整转写](../../results/4090-c161-fixed-cue-playback-stop.json)
+
+### 同一监听任务中运行 SpeexDSP 和固定 v5
+
+在上述监听器的构建命令中，设置环境变量 `NYX_SPEEXDSP_SOURCE` 指向解压后的 SpeexDSP 1.2.1 源目录，使用独立构建目录 `$NYX_MAC_WORK/build-speex-capture`，增加 `-DNYX_SPEEX_CAPTURE=ON`。此配置保留 ESP-SR AEC、AGC、原麦 C161 和固定音匹配器，在同一任务的 160 样本帧内执行浮点 SpeexDSP，以其输出写入两秒回看和通话 FIFO。使用签名播放参考协议 0x4452594e。源归档 SHA256 为 `8c777343e4a6399569c72abc38a95b24db56882c83dbdb6c6424a5f4aeb54d3d`。从仓库根目录进入上文使用的研究 Python 环境后，运行本目录的 `check_joint_speex_capture.py`。[监听代码](main/listener.cpp) · [验证脚本](check_joint_speex_capture.py)
+
+对 12 条独播、12 条双讲及两条不同的纯 Bot 音频，联合固件的每个 C161、v5、保护后通知和 OPEN 与原监听器一致。双讲时全部提前 36 ms 开麦，独播和双讲的各 12 份实际 FIFO 经 P4 Opus 后，Whisper small.en 的转写末尾均含完整门锁命令。两条纯 Bot 未开麦。全程 14,308 个包已重新解码核对。双讲时联合固件与前述独立 Speex 固件的 12 个 FIFO 均有字节差异，此处使用联合固件自身编码输出评分。[逐条结果](../../results/4090-c161-joint-speex-capture.json) · [UART 事件和完整编码包](../../results/4090-c161-joint-speex-capture.zip)
+
+联合固件为 457,424 B，原监听固件为 438,256 B。每次初始化 Speex 增用 73,832 B 内部堆。26 次回放的最低内部空闲堆为 307,300 B；各次 16 ms 块的平均处理耗时为 1.48–1.75 ms。16,250 个块中有一次耗时 34.725 ms。同一输入再次独立启动三次，OPEN 和 FIFO 哈希均复现，峰值为 6.989、7.287、6.932 ms，三次均在预算内。模拟计时覆盖监听、回声处理和队列，Opus 由独立模拟应用编码。物理整机仍需测量持续采音、播放参考和通话并发时的峰值与丢帧。

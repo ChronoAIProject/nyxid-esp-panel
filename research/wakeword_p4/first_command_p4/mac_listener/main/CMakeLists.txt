@@ -16,3 +16,16 @@ target_link_libraries(${COMPONENT_LIB} PRIVATE "-Wl,--start-group" "${sr}/lib/es
 # QEMU's lazy-FPU rounding CSR workaround masks ticks during the imported runtime.
 # UART logging takes a newlib mutex, so disable progress printf inside those calls.
 set_source_files_properties("${mac}/panel_wake_runtime.cpp" PROPERTIES COMPILE_DEFINITIONS "LOG_LOCAL_LEVEL=0")
+
+# An opt-in research build records the SpeexDSP output in the live listener FIFO.
+if(NYX_SPEEX_CAPTURE)
+    set(dsp "$ENV{NYX_SPEEXDSP_SOURCE}/libspeexdsp")
+    set(units "${dsp}/mdf.c" "${dsp}/fftwrap.c" "${dsp}/smallft.c")
+    target_sources(${COMPONENT_LIB} PRIVATE ${units})
+    target_include_directories(${COMPONENT_LIB} PRIVATE "$ENV{NYX_SPEEXDSP_SOURCE}/include"
+                               "${CMAKE_CURRENT_LIST_DIR}/../../../speex_echo_p4/main")
+    set_source_files_properties(${units} PROPERTIES COMPILE_DEFINITIONS "FLOATING_POINT;USE_SMALLFT;VAR_ARRAYS;EXPORT="
+                                COMPILE_OPTIONS "-fwrapv")
+    set_property(SOURCE "${dsp}/fftwrap.c" APPEND PROPERTY COMPILE_OPTIONS "-Wno-error=maybe-uninitialized")
+    target_compile_definitions(${COMPONENT_LIB} PRIVATE NYX_SPEEX_CAPTURE)
+endif()

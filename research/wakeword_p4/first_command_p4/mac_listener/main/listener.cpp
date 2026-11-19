@@ -9,6 +9,9 @@
 #include "reference_prefix.h"
 #include "reference_signature.h"
 #include "reference_wake.h"
+#ifdef NYX_SPEEX_CAPTURE
+#include "speex/speex_echo.h"
+#endif
 #include "esp_aec.h"
 #include "esp_agc.h"
 #include "esp_flash.h"
@@ -83,6 +86,20 @@ void worker(void*) {
         if (!model || !aec || !agc) abort();
         set_agc_config(agc,15,1,3);
     }
+#ifdef NYX_SPEEX_CAPTURE
+    SpeexEchoState* speex = nullptr;
+    if (stereo) {
+        const uint32_t caps = MALLOC_CAP_INTERNAL | MALLOC_CAP_8BIT;
+        size_t before = heap_caps_get_free_size(caps);
+        int rate = 16000;
+        {
+            DspSection lock;
+            speex = speex_echo_state_init(kHop, 2048);
+            if (!speex || speex_echo_ctl(speex, SPEEX_ECHO_SET_SAMPLING_RATE, &rate)) abort();
+        }
+        std::printf("SPEEX_HEAP %u %u\n", unsigned(before), unsigned(heap_caps_get_free_size(caps)));
+    }
+#endif
     const int chunk=aec_get_chunksize(aec);
     if (chunk<=0 || chunk>1024 || wn.get_samp_chunksize(model)!=kBlock) abort();
     alignas(16) int16_t wake[kBlock]{}, ref[1024]{}, clean[1024], frame[kHop], adjusted[kHop];
@@ -135,6 +152,12 @@ void worker(void*) {
                     selected[t]=capture.update_active(pcm[t],active,adjusted[j]);
                 }
             }
+#ifdef NYX_SPEEX_CAPTURE
+            if (speex) {
+                DspSection lock;
+                speex_echo_cancellation(speex, pcm+emitted, playback+emitted, selected+emitted);
+            }
+#endif
             if (first<0) panel_voice_pcm_preroll_push(&history,selected+emitted,kHop);
             else if (!panel_voice_pcm_push(&call,selected+emitted,kHop)) abort();
             emitted+=kHop;
@@ -190,6 +213,9 @@ void worker(void*) {
         dump("AUDIO",call.samples,call.count);
         if (stereo) dump("PROCESSED",processed+first,call.count);
     }
+#ifdef NYX_SPEEX_CAPTURE
+    if (speex) speex_echo_state_destroy(speex);
+#endif
     wn.destroy(model); aec_destroy(aec); esp_agc_close(agc);
     std::puts("LISTENER PASS");
     vTaskDelete(nullptr);
