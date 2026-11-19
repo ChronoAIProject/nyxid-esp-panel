@@ -1077,3 +1077,9 @@ TX 提前 80 ms 时，完整上行中两条 “turn down” 被 Qwen 转成 “t
 加停顿后，第一批 Qwen 在弱、中、强档各识全 7、11、11 条，第二批各为 7、10、11 条。新增的 72 次开麦全部由标记匹配器触发，71 次比原版提前 160 ms，第二批 008 弱档提前 176 ms。去称呼后，两种时序生成相同的麦克风输入，逐一核对两批各 36 个先前全程未开麦的主机对照哈希。其中第一批全部 36 个和第二批弱档 12 个已有 P4 模拟复核。独立从新归档读取了 72 份串口事件，重新解码 22,877 个 Opus 包并核对每条音频的 PCM 哈希。Mac 主测选用原时序和完整上行。两批均为已使用的开发录音。[逐例时钟与转写](../results/4090-c161-sender-command-gap.json) · [72 次模拟串口及编码包](../results/4090-c161-sender-command-gap.zip)
 
 另以原干声命令匹配完整解码上行里的开头、中间、结尾三个 160 ms 片段。原时序下，第二批 006 中档和 010 强档的三个片段均能定位，Qwen 仍未识全。前者把 “is the kitchen window open?” 读成 “He misses the kitchen window open.”，后者在发送端干声转写中已把 “lights” 写成 “light”。两种时序共 144 条上行，有 36 条通过三个窗口的匹配。将这 36 条上行各自已定位的开头窗口及两侧各 20 ms 置零，三窗均匹配降为 0/36。其余结果保留在逐例报告，匹配不确定时无法据此判断丢音。实板已提供同一工具，可按已知外播轨核对这两句的解码上行。[逐窗时钟、相关性及置零对照](../results/4090-c161-sender-gap-capture-windows.json) · [Mac 的命令定位工具](../first_command_p4/mac_listener/measure_command_capture.py)
+
+### 外部扬声器正面、侧面和背面的连说回放
+
+使用 Amir Majidimehr 在 Audio Science Review 发表的 Google Nest Audio 水平声压测量，取 Spinorama 的正面、90° 和 180° 三条曲线。以正面 500–2,000 Hz 的平均分贝为共同基准，从各自的幅频曲线重建 16 kHz 最小相位滤波器。三个方向在 700–1,580 Hz 标记频带的平均相对增益为 +0.10、−5.28、−5.95 dB。在 100–7,800 Hz，滤波器与插值后的目标曲线最大偏差小于 0.05 dB。原曲线按 CC BY-NC-SA 4.0 发布，保存的三个数值序列沿用该许可。角度滤波器用于模拟开发回放，真实扬声器的相位、非线性、房内各方向反射及绝对声压尚需实采。[ASR 原始测量](https://www.audiosciencereview.com/forum/index.php?threads/google-nest-audio-speaker-review.58134/) · [Spinorama 数据](https://www.spinorama.org/speakers/Google%20Nest%20Audio/ASR/index_asr.html) · [许可](https://creativecommons.org/licenses/by-nc-sa/4.0/) · [提取的三条曲线](../results/nest-audio-asr-horizontal-curves.json)
+
+只对外部扬声器轨应用滤波，随后沿用已有的房间卷积、面板示范、音乐、固定麦克风增益和 TX 提前 80 ms 的时钟。先逐条核对两批原始输入与原开麦结果。两批各包含四种声音、三句命令和三个电平。冻结 C161 加专用匹配器在主机 INT8 回放中，直通与正面均及时开麦 72/72，侧面、背面各为 65/72。两个方向的 14 个漏开都在 −6 dB 外部电平。中、强档三个方向均及时 48/48。四条路径的去称呼对照各 0/72 开麦。复用原来的 24 条干声及其房间和音乐。[576 个输入、开麦及对照](../results/4090-c161-sender-directivity.json)
