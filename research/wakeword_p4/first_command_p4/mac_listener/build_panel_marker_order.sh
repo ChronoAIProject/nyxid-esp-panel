@@ -9,6 +9,8 @@ case "$variant" in
     original) work="$root/.local/wakeword/c161-panel-marker-order" ;;
     timed) work="$root/.local/wakeword/c161-panel-marker-order-timed" ;;
     tx) work="$root/.local/wakeword/c161-panel-playout-event" ;;
+    echo) work="$root/.local/wakeword/c161-panel-echo-confirmation" ;;
+    middle) work="$root/.local/wakeword/c161-panel-middle-confirmation" ;;
     *) exit 2 ;;
 esac
 export NYX_MAC_WORK="$root/.local/wakeword/c161-mac-listener"
@@ -24,7 +26,7 @@ from pathlib import Path
 import sys
 from check_panel_marker_order import host, reference_header, VETO
 main = Path(sys.argv[1])
-timed = sys.argv[2] in ("timed","tx")
+timed = sys.argv[2] in ("timed","tx","echo","middle")
 matcher = "TimedFinalMarker" if timed else "FinalMarkerConfirmation"
 header = host.HEADER.with_name("c161_timed_final_marker.h").read_text() if timed else host.candidate_header()
 (main/"final_marker.h").write_text(header)
@@ -36,7 +38,7 @@ edits = {
     'const bool full_clear =': f'if (panel_pair.update(reference)) panel_remaining = {VETO} + 1;\n            const bool panel_clear = panel_remaining == 0;\n            if (panel_remaining) --panel_remaining;\n            const bool full_clear =',
     'model_route.update_active(active,reference_clear,model_hit': 'model_route.update_active(active,reference_clear && panel_clear,model_hit',
 }
-if sys.argv[2] == "tx":
+if sys.argv[2] in ("tx","echo","middle"):
     header = host.HEADER.with_name("c161_panel_demo_guard.h")
     (main/header.name).write_bytes(header.read_bytes())
     edits["nyx::CodedCueV5 cue;"] = f"nyx::{matcher} cue;\n    nyx::PanelMarkerPair panel_pair;\n    nyx::PanelDemoGuard panel_guard;"
@@ -46,6 +48,19 @@ if sys.argv[2] == "tx":
     edits["const auto& wn="] = (
         "uint32_t played_pair = 0;\n    if (event_fixture) ESP_ERROR_CHECK(esp_flash_read(nullptr,&played_pair,kOffset+sizeof(h)+length*4,sizeof(played_pair)));\n    const auto& wn=")
     s = '#include "c161_panel_demo_guard.h"\n' + s
+if sys.argv[2] in ("echo","middle"):
+    header = host.HEADER.with_name("c161_panel_echo_confirmation.h")
+    (main/header.name).write_bytes(header.read_bytes())
+    s = '#include "c161_panel_echo_confirmation.h"\n' + s
+    edits["nyx::CodedCueV5 cue;"] = f"nyx::{matcher} cue;\n    nyx::PanelMarkerPair panel_pair, mic_pair;\n    nyx::PanelEchoConfirmation panel_guard;"
+    edits["const bool full_clear ="] = (
+        "const bool panel_clear = panel_guard.allow_model(panel_pair.update(reference), "
+        "played_pair == uint32_t(at+i+1), mic_pair.update(pcm[at+i]));\n            const bool full_clear =")
+if sys.argv[2] == "middle":
+    header = host.HEADER.with_name("c161_panel_middle_marker.h")
+    (main/header.name).write_bytes(header.read_bytes())
+    s = '#include "c161_panel_middle_marker.h"\n' + s
+    edits["nyx::CodedCueV5 cue;"] = f"nyx::{matcher} cue;\n    nyx::PanelMarkerPair panel_pair;\n    nyx::PanelMiddleMarker mic_pair;\n    nyx::PanelEchoConfirmation panel_guard;"
 for old, new in edits.items():
     assert s.count(old) == 1
     s = s.replace(old,new)
