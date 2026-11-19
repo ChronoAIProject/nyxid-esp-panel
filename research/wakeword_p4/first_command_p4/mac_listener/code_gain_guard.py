@@ -24,7 +24,7 @@ def activity_pulses(reference):
 
 
 def score(work, source, mic, ref, detector, index, build=BUILD, prefix=None, qualify=None,
-          wait_for_third=False, frame_activity=False):
+          wait_for_third=False, frame_activity=False, qualify_capture_frame=False):
     protocol = 0x4752594e if prefix is None else 0x5052594e
     if qualify is not None:
         protocol = 0x4452594e
@@ -34,6 +34,9 @@ def score(work, source, mic, ref, detector, index, build=BUILD, prefix=None, qua
     if frame_activity:
         assert wait_for_third
         protocol = 0x4152594e
+    if qualify_capture_frame:
+        assert frame_activity
+        protocol = 0x4652594e
     payload = struct.pack("<3I", protocol, index, len(mic)) + mic.tobytes() + ref.tobytes()
     log = work / "serial.log"
     listener.boot(build, log, work/"image.bin", b"LISTENER PASS", (2<<20, payload))

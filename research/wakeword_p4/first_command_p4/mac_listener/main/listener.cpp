@@ -55,7 +55,8 @@ void dump(const char* label, const int16_t* samples,int count) {
 void worker(void*) {
     uint32_t h[3];
     ESP_ERROR_CHECK(esp_flash_read(nullptr,h,kOffset,sizeof(h)));
-    const bool frame_activity = h[0] == 0x4152594e;
+    const bool qualify_capture_frame = h[0] == 0x4652594e;
+    const bool frame_activity = qualify_capture_frame || h[0] == 0x4152594e;
     const bool wait_for_third = frame_activity || h[0] == 0x5452594e;
     const bool signed_reference = wait_for_third || h[0] == 0x4452594e;
     const bool prefix_guarded = signed_reference || h[0] == 0x5052594e;
@@ -123,9 +124,14 @@ void worker(void*) {
             }
             std::memcpy(processed+emitted,adjusted,sizeof(adjusted));
             if (stereo) {
+                // AGC has already completed this frame. Its reference is available
+                // through the same last sample before the FIFO is written.
+                static_assert(kHop == nyx::ReferenceActivity::kFrame);
+                const bool loud_frame = !qualify_capture_frame || nyx::ReferenceActivity::active_frame(playback+emitted);
                 for (int j=0;j<kHop;++j) {
                     const int t=emitted+j;
-                    const bool active = frame_activity ? capture_activity.update(playback[t]) : std::abs(int(playback[t])) >= 64;
+                    const bool active = frame_activity && !qualify_capture_frame ? capture_activity.update(playback[t])
+                        : loud_frame && std::abs(int(playback[t])) >= 64;
                     selected[t]=capture.update_active(pcm[t],active,adjusted[j]);
                 }
             }

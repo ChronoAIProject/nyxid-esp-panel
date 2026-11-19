@@ -60,7 +60,8 @@ def channel(signal, setting, noise):
     return np.rint(-gain*filtered + floor*noise).clip(-32768, 32767).astype("<i2")
 
 
-def fifo(work, archive, index, mic, ref, result, reader, decoder, frame_activity=False):
+def fifo(work, archive, index, mic, ref, result, reader, decoder, frame_activity=False,
+         qualify_capture_frame=False):
     log = (work / "serial.log").read_text()
     emitted, first, count, blocks, *_ = listener.values(log, "FINISH")
     assert first == max(0, result["opened"][0]//160*160 - 32000)
@@ -68,6 +69,9 @@ def fifo(work, archive, index, mic, ref, result, reader, decoder, frame_activity
     mic = np.pad(mic, (0, blocks*256-len(mic)))
     ref = np.pad(ref, (0, blocks*256-len(ref)))
     activity = activity_pulses(ref[:emitted]) if frame_activity else ref[:emitted]
+    if qualify_capture_frame:
+        assert frame_activity and emitted % 160 == 0
+        activity = np.where(np.repeat(activity[159::160] != 0, 160), ref[:emitted], 0)
     blend = weights(activity)[first:]
     dry = np.pad(mic, (1440, 0))[first:emitted]
     processed = samples(log, "PROCESSED", count)
