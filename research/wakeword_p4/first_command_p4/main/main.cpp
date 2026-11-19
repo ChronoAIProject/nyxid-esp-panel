@@ -6,6 +6,7 @@
 
 #include "c161_coded_cue_v5.h"
 #include "esp_opus_enc.h"
+#include "esp_flash.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 extern "C" {
@@ -53,6 +54,16 @@ void packet(void* encoder, int pts, int source, int16_t* pcm) {
     std::printf("PACKET %d %d %s\n", pts, source, encoded);
 }
 
+esp_opus_enc_config_t encoder_config() {
+    esp_opus_enc_config_t cfg = ESP_OPUS_ENC_CONFIG_DEFAULT();
+    cfg.sample_rate = rate;
+    cfg.channel = 1;
+    cfg.bitrate = 24000;
+    cfg.complexity = 0;
+    cfg.enable_vbr = true;
+    return cfg;
+}
+
 void run(const Fixture& fixture, int delay_ms) {
     uint32_t size;
     std::memcpy(&size, fixture.wav + 40, 4);
@@ -60,12 +71,7 @@ void run(const Fixture& fixture, int delay_ms) {
     const int length = size / 2;
     panel_voice_pcm_t tail{lookback_memory, 2 * rate, 0, 0}, fifo{capture_memory, 4 * rate, 0, 0};
     nyx::CodedCueV5 detector;
-    esp_opus_enc_config_t cfg = ESP_OPUS_ENC_CONFIG_DEFAULT();
-    cfg.sample_rate = rate;
-    cfg.channel = 1;
-    cfg.bitrate = 24000;
-    cfg.complexity = 0;
-    cfg.enable_vbr = true;
+    auto cfg = encoder_config();
     void* encoder = nullptr;
     int detected = -1, handoff = -1, first = -1, cursor = -1, pts = 0, peak = 0;
     int call_clock = -1, next_send = -1;
@@ -131,7 +137,39 @@ void run(const Fixture& fixture, int delay_ms) {
     std::printf("END %s %d %d %d %d %d %d %d\n",fixture.name,delay_ms,detected,handoff,first,cursor,length,peak);
 }
 
+// This optional flash payload contains two complete, sample-aligned call captures.
+bool captured_pair() {
+    constexpr uint32_t offset = 2U << 20;
+    uint32_t header[3];
+    ESP_ERROR_CHECK(esp_flash_read(nullptr, header, offset, sizeof(header)));
+    if (header[0] != 0x3552504f) return false;
+    const unsigned samples = header[2];
+    if (!samples || samples > ((4U<<20)-offset-sizeof(header))/4) abort();
+    auto cfg = encoder_config();
+    for (unsigned lane=0; lane<2; ++lane) {
+        std::printf("UPLINK %lu %u %u\n",(unsigned long)header[1],lane,samples);
+        void* encoder = nullptr;
+        if (esp_opus_enc_open(&cfg,sizeof(cfg),&encoder) != ESP_AUDIO_ERR_OK) abort();
+        unsigned frames = 0;
+        for (unsigned start=0; start<samples; start+=frame) {
+            alignas(16) int16_t pcm[frame]{};
+            unsigned n = std::min(unsigned(frame),samples-start);
+            ESP_ERROR_CHECK(esp_flash_read(nullptr,pcm,offset+sizeof(header)+2*(lane*samples+start),2*n));
+            packet(encoder,frames*20,start,pcm);
+            ++frames;
+        }
+        esp_opus_enc_close(encoder);
+        std::printf("UPLINK_END %u %u\n",lane,frames);
+    }
+    return true;
+}
+
 void worker(void*) {
+    if (captured_pair()) {
+        std::puts("UPLINK PASS");
+        vTaskDelete(nullptr);
+        return;
+    }
     const Fixture fixtures[] = {{"digital",digital,events[0]},{"near",near_wave,events[1]},{"far",far_wave,events[2]}};
     for (const auto& fixture : fixtures) {
         run(fixture,0);

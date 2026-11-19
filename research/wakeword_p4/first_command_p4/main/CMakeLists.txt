@@ -27,7 +27,7 @@ if(DEFINED ENV{NYX_SR_COMPONENT})
         "$<TARGET_FILE:${dl_fft}>" "-Wl,--end-group")
 else()
     idf_component_register(SRCS "main.cpp" "${panel}/panel_voice_audio.c"
-        INCLUDE_DIRS "../../portable" "${panel}" PRIV_REQUIRES esp_audio_codec
+        INCLUDE_DIRS "../../portable" "${panel}" PRIV_REQUIRES esp_audio_codec spi_flash
         EMBED_FILES ${waves})
     if(NYX_AGC_FIXTURES)
         target_include_directories(${COMPONENT_LIB} PRIVATE "${NYX_AGC_FIXTURES}")
