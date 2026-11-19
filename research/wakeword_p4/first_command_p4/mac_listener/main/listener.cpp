@@ -5,6 +5,7 @@
 #include <cstring>
 #include "c161_coded_cue_reference_v5.h"
 #include "reference_capture.h"
+#include "reference_wake.h"
 #include "esp_aec.h"
 #include "esp_agc.h"
 #include "esp_flash.h"
@@ -51,7 +52,8 @@ void dump(const char* label, const int16_t* samples,int count) {
 void worker(void*) {
     uint32_t h[3];
     ESP_ERROR_CHECK(esp_flash_read(nullptr,h,kOffset,sizeof(h)));
-    const bool stereo = h[0] == 0x5352594e;
+    const bool guarded = h[0] == 0x4752594e;
+    const bool stereo = guarded || h[0] == 0x5352594e;
     if ((!stereo && h[0]!=0x584e594d) || !h[2] || h[2]>400000) abort();
     const int length=h[2];
     auto* pcm=buffer(length+2048);
@@ -87,6 +89,7 @@ void worker(void*) {
     panel_voice_pcm_t call{buffer(60*16000),60*16000,0,0};
     auto* processed=buffer(length+2048);
     auto* selected = stereo ? buffer(length+2048) : processed;
+    nyx::ReferenceWake model_route, cue_route;
     nyx::ReferenceCapture capture;
     nyx::CodedCueReferenceV5 guard;
     nyx::CodedCueV5 cue;
@@ -94,7 +97,7 @@ void worker(void*) {
     int64_t sum_us=0;
     std::printf("READY %lu %d %d %d\n",(unsigned long)h[1],length,chunk,prime);
     for (int at=0;at<length;at+=chunk) {
-        int hit161=-1, hitcue=-1, allowed_cue=-1;
+        int hit161=-1, hitcue=-1, allowed_cue=-1, allowed161=-1;
         int64_t begin=esp_timer_get_time();
         {
             DspSection lock;
@@ -122,16 +125,23 @@ void worker(void*) {
         for (int i=0;i<chunk;++i) {
             const bool matched=cue.update(pcm[at+i]);
             if (matched) hitcue=at+i+1;
-            if (stereo ? guard.allow(playback[at+i],matched) : matched) allowed_cue=at+i+1;
+            const int16_t reference = stereo ? playback[at+i] : 0;
+            const bool reference_clear = !stereo || guard.allow(reference,true);
+            const bool cue_ok = guarded ? cue_route.update(reference,reference_clear,matched) : matched && reference_clear;
+            if (cue_ok) allowed_cue=at+i+1;
+            bool model_hit=false;
             wake[wake_fill++]=pcm[at+i];
-            if (wake_fill!=kBlock) continue;
-            wake_fill=0;
-            DspSection lock;
-            const int hit=wn.detect(model,wake);
-            if (hit<0) abort();
-            if (hit>0) hit161=at+i+1;
+            if (wake_fill==kBlock) {
+                wake_fill=0;
+                DspSection lock;
+                const int hit=wn.detect(model,wake);
+                if (hit<0) abort();
+                model_hit=hit>0;
+                if (model_hit) hit161=at+i+1;
+            }
+            if (guarded ? model_route.update(reference,reference_clear,model_hit) : model_hit) allowed161=at+i+1;
         }
-        if (first<0 && (allowed_cue>=0 || hit161>=0)) {
+        if (first<0 && (allowed_cue>=0 || allowed161>=0)) {
             const size_t part=std::min(history.count,history.capacity-history.head);
             first=emitted-static_cast<int>(history.count);
             if (!panel_voice_pcm_push(&call,history.samples+history.head,part) ||
@@ -143,6 +153,8 @@ void worker(void*) {
         ++blocks; sum_us+=us; peak_us=std::max(peak_us,us); overruns+=us*16>chunk*1000;
         if (hit161>=0 || hitcue>=0) std::printf("HITS %d %d %d\n",at+chunk,hit161,hitcue);
         if (stereo && hitcue>=0) std::printf("CUE_ROUTE %d %d\n",hitcue,allowed_cue);
+        if (guarded && allowed_cue>=0) std::printf("V5_ALLOW %d\n",allowed_cue);
+        if (guarded && allowed161>=0) std::printf("C161_ALLOW %d\n",allowed161);
         if (blocks%64==0) vTaskDelay(1);
     }
     if (first>=0 && (call.count!=static_cast<size_t>(emitted-first) ||
