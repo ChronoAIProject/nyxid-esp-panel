@@ -678,3 +678,9 @@ Mac 数字输入包包含 16 组、80 个 16 kHz 单声道 PCM16 WAV，附场景
 从两个 14 房间组各取首、中、末的房间，音乐、−12 dB 唤醒音、标称时钟，原音及两条全强度重复音各做 6 次外放及 6 次自播。三条外放都在命令前开麦 6/6。以模拟固件实际交付的 FIFO 和 P4 Opus 为输入，small.en 与 large-v3-turbo 对三条音的完整命令均为 2/6。[客机 FIFO、逐条时钟与干声读音](../results/4090-c161-repeated-room-cue-p4.json) · [原始 Opus](../results/4090-c161-repeated-room-cue-p4.zip)
 
 再用之前与官方 Hey Willow 对照的厨房、客厅 16 条输入，沿用同一 256 样本交付时钟、两秒回看和 P4 编码。全强度学习重复音 16/16 的 OPEN 都比原 v5 提早 496 ms，两条音及时开麦均为 16/16。识别完整上行末尾的命令时，small.en 两者均 9/16，large-v3-turbo 从原 v5 的 13/16 降为 9/16，其中新识全 1 条、丢失 5 条。原 v5、重复音分别只在已解码 Opus 上匹配到一组、两组标记，各 16/16。服务端改从最后一组标记处开始转写后，turbo 分别完整 10/16、11/16；从 OPEN 前 100 ms 开始分别为 12/16、8/16。寻找第二组最多需看至 OPEN 后 720 ms。主测沿用原 v5 的完整上行。绝对声压、整机资源、真实双讲和首包时钟仍需实板记录。[逐句与两种转写器](../results/4090-c161-repeated-room-cue-commands.json) · [新增编码包](../results/4090-c161-repeated-room-cue-commands.zip) · [同一 Opus 上按标记裁剪](../results/4090-c161-repeated-room-cue-boundary.json)
+
+### 原 v5 整体提高 0.694 dB 的板测对照
+
+将原 v5 PCM 乘 1.083193546 后四舍五入，得到与全强度学习重复音相同的总 RMS，峰值在 PCM16 范围内，长 1.10 秒。两种无提示读音与原音相同。原监听器在 672 组中增加的 5 次及时开麦全部位于音乐、最低唤醒音量 −18 dB、外部时钟偏差 ±1,000 ppm。将这 5 个输入逐一送入 P4 模拟固件，原音外播开麦 0/5，增益音外播在命令前开麦 5/5，二者用同步参考自播各误开 0/5。新增开麦的 5 次中，small.en 识全首句 1 次、large-v3-turbo 识全 3 次。[增益对照干声](../results/hye-nyx-v5-plus-0p69db.wav) · [52 次固件回放的事件与识别](../results/4090-c161-v5-gain-control-p4.json) · [UART 与编码包](../results/4090-c161-v5-gain-control-p4.zip)
+
+在已用于官方 Willow 的 16 个房间命令上，再逐对回放两条 WAV 的 P4 监听、FIFO 和 Opus。两者 16/16 开麦时钟相同且提前。small.en 完整 9→10，large-v3-turbo 总计均为 13/16，其中 2 条新识全、2 条丢失。在真实扬声器、相同音量设置下，实际声压和收益仍需 Mac 测量。供数字注入的 ZIP 内含 5 个场景各自的原音、增益音麦克风轨 M 与同步参考轨 R，共 20 个 WAV。外播测试给 R 送零，自播测试给 R 送配对参考。清单记录每条 WAV/PCM 的 SHA256、场景、命令时钟及预期开麦时钟。归档 SHA256 为 `8d356622d7e0f8dfe06f8cd07688ae7da9e474ab7dcbc25b241c51c5ce41a89b`。[五组配对数字输入](../results/c161-v5-gain-five-pairs.zip)
