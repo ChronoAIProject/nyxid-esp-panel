@@ -988,3 +988,5 @@ P4 模拟复核两种编码实际保留固定延迟的全部 72 个正例，以�
 | 360 ms 后五类复核 | 0 | 0 | 0 | 0 | 23 |
 
 立即复核仍被日常句 “We need six cups of water.” 唤醒，同播的 Hey Nick、Hey Willow 也分别开麦 6/36、3/36。180 ms 复核保住的三次及时开麦都来自 af_river。历史 66 份背景完整复放，冻结 C161 共零事件。首句使用主机 INT8 的开麦时钟重建零参考 FIFO，22 组不同的麦克风与开麦时钟组合在 P4 模拟器上经原 24 kb/s Opus 编码、解码后交给 4090 转写。表中开麦时钟计入分帧及复核等待，板上推理与调度耗时仍待实测。Mac 主测继续使用原 C161 和已交接的标记音。[逐句模型行为](../results/4090-c161-connected-overlap-replay.json) · [背景事件](../results/4090-c161-connected-overlap-background.json) · [完整上行转写](../results/4090-c161-connected-overlap-commands.json) · [P4 编码包](../results/4090-c161-connected-overlap-commands.zip)
+
+从立即复核仍触发的全部 23 个背景位置，取原麦的 960 ms 判定窗和包含前后语境的四秒片段。Qwen 和 Whisper turbo 均在一些判定窗中转写出 “during the year” 或 “also new”；另一些极短片段，两种转写有明显分歧。结合日常句的 “six cups” 误触，再用四声线、两种语速重新合成八个句子，冻结模型与门槛。立即复核在 “We need six cups of water.” 为 0/8，换成 “We need four cups of water.” 为 1/8；含 “during the year”、 “ten years ago” 和 “Mr. Speaker” 的句子均为 0/8。同场 Hey Nyx 整句内有触发 6/8，Hey Nick 1/8。因而能确认普通讲话会误唤，这批结果还难以把原因归为某一个词。23 个位置沿用既有开发背景。[事件窗口及两套转写](../results/4090-c161-connected-overlap-background-context.json) · [64 条新合成的逐条判断](../results/4090-c161-connected-overlap-common-phrases.json)
