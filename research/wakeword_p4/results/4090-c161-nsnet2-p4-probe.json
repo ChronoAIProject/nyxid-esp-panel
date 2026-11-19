@@ -1,0 +1,66 @@
+{
+  "component": "espressif/esp-sr 2.6.1",
+  "idf": "5.5.4",
+  "model": "nsnet2",
+  "sampled_input": "arange(1600) PCM16LE at 16000 Hz",
+  "qemu": "esp-develop-9.2.2-20261109",
+  "hop": 512,
+  "rate": 16000,
+  "internal_create_delta_bytes": 1376,
+  "simulated_external_create_delta_bytes": 403000,
+  "frames_completed": 0,
+  "trials": [
+    {
+      "mode": "native-fft",
+      "log": "native-fft-smoke.log",
+      "sha256": "9ce07367b622fe14728bcaa184670de1eb2c5f086a576257feb3227081a8ae73",
+      "mepc": "0x40038baa",
+      "source": "dl_fft2r_fc32_arp4.S:41",
+      "instruction": "esp.lp.setup",
+      "elf_sha256": "d986672ab84dd8e66bf4f99dac9dd4d6840a0be25d26fa2fdf941709f42222ab"
+    },
+    {
+      "mode": "vendor-ansi-fft",
+      "log": "ansi-fft-smoke.log",
+      "sha256": "d4044fe38458af1b8a1b651e04ebdaf3c8b6ebc4e1d142fda91e8137fd3a7ff7",
+      "mepc": "0x400384c4",
+      "source": "dl_esp32p4_sr_memcpy.S:55",
+      "instruction": "esp.ld.128.usar.ip"
+    },
+    {
+      "mode": "reference-conv-dot8-copy",
+      "log": "s16-smoke.log",
+      "sha256": "94398327958167d119bcdd27e711a8dfde5954f2e23c2ee5def4bc6063280817",
+      "mepc": "0x40014d1a",
+      "source": "dl_esp32p4_sr_s16_dotproduct_test.S:27",
+      "instruction": "esp.zero.xacc",
+      "elf_sha256": "e6aac4fb50791717798e68a3b3731225c81ce5b480a2d5ad5905110a499b507d"
+    },
+    {
+      "mode": "diagnostic-scalar-dot16",
+      "log": "lstm-mul-smoke.log",
+      "sha256": "7d317b42d88ae2fd0f5f80306b8f1d9df50be690f308998000b32ff9189ff458",
+      "mepc": "0x40013122",
+      "source": "dl_lib_convq_queue_p4.c:73 (mul_rv16_rv16_rv16_riscv__)",
+      "instruction": "esp.movx.w.sar",
+      "elf_sha256": "a7a017c4c3ddae832914620bfbc0664c2d8e833a27bdafe218ab9fade5b65b06"
+    }
+  ],
+  "archive_sha256": "94284e8bb24bc8701efc1df09f31952ba46ca55bf2cffa2b18bb14b49a6eb6da",
+  "hashes": {
+    ".local/wakeword/c161-nsnet2-board/build/nyx_nsnet_probe.elf": "640446eec894d7a0c8bc233fd983549207d781d44fc8407bb912d7423822a005",
+    ".local/wakeword/c161-nsnet2-board/build/nyx_nsnet_probe.bin": "fa24fcb713e659697e27da390ef333d8adce8d94d0654cac455f08d72a70478f",
+    ".local/wakeword/c161-nsnet2-board/sdkconfig": "6dbad906af93f94f6bcdb2703f9aaac2d2bbc1788cf0af4019229ba916d8ae1c",
+    ".local/wakeword/c161-nsnet2/models.bin": "1ebc1446bb938f8596a2060be01bc5cc47f1d7ec70668f08319e9889be26da5c",
+    ".local/wakeword/hey-reference-qemu-project-v2/managed_components/espressif__esp-sr/lib/esp32p4/libnsnet.a": "ca1ba87002525b547a6435e104a8811538dce3063639d78214c0fd0169642b48",
+    ".local/wakeword/hey-reference-qemu-project-v2/managed_components/espressif__esp-sr/lib/esp32p4/libdl_lib.a": "07174a92fae60884998186a843e06e9955b78c2dc4d491fe2b6de2068f6eedd2"
+  },
+  "board_build": {
+    "min_revision": "3.1",
+    "psram_mhz": 200,
+    "application_bytes": 762576,
+    "psram_initialization": "ESP-IDF native",
+    "physical_execution": false
+  },
+  "policy": "Creation deltas exclude model-pack load, task stack, DSP working peak and other panel services. Original vendor P4 kernels stop on the first frame. Later reference substitutions diagnose additional unsupported instructions. No usable output or NSNet2 real-time result. The linked board build uses the original vendor kernels."
+}
