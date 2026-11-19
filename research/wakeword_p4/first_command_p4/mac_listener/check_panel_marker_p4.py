@@ -1,4 +1,5 @@
 """Replay original and panel-only marker orders in the digital P4 listener and its Opus encoder."""
+import argparse
 from collections import Counter, defaultdict
 from hashlib import sha256
 import json
@@ -17,8 +18,8 @@ WORK = Path(".local/wakeword/c161-panel-marker-order")
 OUT = ch.RESULTS/"4090-c161-panel-marker-order-p4.json"
 
 
-def cases():
-    known = ch.read(study.OUT)["records"]
+def cases(host_report):
+    known = ch.read(host_report)["records"]
     for i, (trial, old) in enumerate(zip(study.simultaneous(), known, strict=True)):
         meta, name, role, pcm, ref = trial
         assert (meta, name, role) == (old["source"], old["name"], old["role"])
@@ -26,10 +27,10 @@ def cases():
             yield i, meta, name, role, pcm, ref, old["result"]
 
 
-def capture(work, z, idx, case, small, turbo, decoder):
+def capture(work, z, idx, case, small, turbo, decoder, builds):
     source_idx, meta, name, role, mic, ref, known = case
     assert ch.digest(mic) == known["pcm_sha256"] and ch.digest(ref) == known["reference_sha256"]
-    build = prior.BUILD if name == "abc" else WORK/"build"
+    build = builds[name]
     source = dict(**meta, carrier=meta["command"], cue_at=meta["start"])
     packet = struct.pack("<3I", 0x4652594e, idx, len(mic)) + mic.tobytes() + ref.tobytes()
     serial = work/"serial.log"
@@ -67,12 +68,24 @@ def capture(work, z, idx, case, small, turbo, decoder):
     return result
 
 
-def main():
+def main(timed=False):
+    from check_timed_final_p4 import BUILD as timed_base
+    from check_timed_final_marker import HEADER as timed_header
+    root = WORK.with_name(WORK.name + "-timed") if timed else WORK
+    output = OUT.with_name(study.OUT.stem + "-timed-p4.json") if timed else OUT
+    host_report = study.OUT.with_name(study.OUT.stem + "-timed.json") if timed else study.OUT
+    builds = dict(abc=timed_base if timed else prior.BUILD, bca=root/"build")
     previous = ch.read(prior.OUT)
     versions = previous["versions"]
-    binaries = [b/"nyx_mac_listener.bin" for b in (prior.BUILD,WORK/"build")]
+    binaries = [b/"nyx_mac_listener.bin" for b in builds.values()]
     embedded = (phase.listener.WORK/"model/hey_nyx_model.bin").read_bytes()
-    assert ch.sha(binaries[0]) == versions["candidate"] and all(b.read_bytes().count(embedded)==1 for b in binaries)
+    assert sha256(embedded).hexdigest() == versions["model"] and all(b.read_bytes().count(embedded)==1 for b in binaries)
+    if timed:
+        for build in builds.values():
+            compiled_header = build.parent / "src/research/wakeword_p4/first_command_p4/mac_listener/main/final_marker.h"
+            assert compiled_header.read_bytes() == timed_header.read_bytes()
+    else:
+        assert ch.sha(binaries[0]) == versions["candidate"]
     assert grid.gap.uplink.firmware() == versions["codec"]
     small, identity = ch.load_reader()
     assert identity == versions["small"]
@@ -83,20 +96,20 @@ def main():
     decoder = grid.gap.uplink.decoder_api()
     versions = dict(original=ch.sha(binaries[0]), panel_order=ch.sha(binaries[1]), model=sha256(embedded).hexdigest(),
                     codec=versions["codec"], small=identity, turbo=info,
-                    sources={p.name:ch.sha(p) for p in (study.OUT,Path(__file__),Path(__file__).with_name("build_panel_marker_order.sh"))})
+                    sources={p.name:ch.sha(p) for p in (host_report,Path(__file__),Path(__file__).with_name("build_panel_marker_order.sh"))})
     key = sha256(json.dumps(versions,sort_keys=True).encode()).hexdigest()[:16]
-    work = WORK/"runs"/key
+    work = root/"runs"/key
     work.mkdir(exist_ok=True,parents=True)
     rows, summary = [], defaultdict(Counter)
-    archive = OUT.with_suffix(".zip")
+    archive = output.with_suffix(".zip")
     tmp = archive.with_suffix(".tmp")
     with ZipFile(tmp,"w",ZIP_DEFLATED) as logs:
-        for idx,case in enumerate(cases()):
+        for idx,case in enumerate(cases(host_report)):
             shard = work/f"{idx:03}.zip"
             if not shard.exists():
                 partial = shard.with_suffix(".tmp")
                 with ZipFile(partial,"w",ZIP_DEFLATED) as z:
-                    row = capture(work,z,idx,case,small,turbo,decoder)
+                    row = capture(work,z,idx,case,small,turbo,decoder,builds)
                     z.writestr("case.json",json.dumps(row))
                 partial.replace(shard)
             with ZipFile(shard) as z:
@@ -116,7 +129,7 @@ def main():
     with ZipFile(tmp) as z:
         assert z.testzip() is None and len(z.namelist())==len(set(z.namelist()))
     tmp.replace(archive)
-    ch.save(OUT,dict(records=rows,summary=summary,versions=versions,archive_sha256=ch.sha(archive),
+    ch.save(output,dict(records=rows,summary=summary,versions=versions,archive_sha256=ch.sha(archive),
                      policy="Both complete paired 60-condition overlaps, plus the panel-only and external-only "
                      "controls at simultaneous onset across all four geometries and three levels. External-only controls "
                      "are identical for both panels. Use P4 ESP-SR FIFO with the actual M and R, verify each admitted "
@@ -124,4 +137,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--timed", action="store_true")
+    main(parser.parse_args().timed)

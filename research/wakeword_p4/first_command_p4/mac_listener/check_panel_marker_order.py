@@ -1,4 +1,5 @@
 """Distinguish the panel's own demonstration from an external original v5 using marker order."""
+import argparse
 from collections import Counter, defaultdict
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -129,17 +130,22 @@ def score(mic, ref, detectors, cache):
                 opened=[(allowed[0]+255)//256*256] if allowed else [])
 
 
-def main():
+def main(timed=False):
+    from check_timed_final_marker import HEADER, OUT as timed_grid, binding as timed_binding
+    make_matcher = timed_binding if timed else host.binding
+    grid_report = timed_grid if timed else host.OUT
+    output = OUT.with_name(OUT.stem + "-timed.json") if timed else OUT
     v5, panel = panel_wave()
-    sf.write(WAV, panel, 16000, subtype="PCM_16")
+    if not timed:
+        sf.write(WAV, panel, 16000, subtype="PCM_16")
     assert ch.digest(sf.read(WAV,dtype="int16")[0]) == ch.digest(panel)
     reader, identity = ch.load_reader()
     readings = host.study.prior.p4.reading({"v5":v5,"panel":panel}, reader)
     singles, pairs, totals = [], [], defaultdict(Counter)
-    prior = ch.read(host.OUT)["records"]
+    prior = ch.read(grid_report)["records"]
     with TemporaryDirectory() as folder:
         work = Path(folder)
-        detectors = (ch.binding(work/"strict.so",coded="v5"), host.binding(work),
+        detectors = (ch.binding(work/"strict.so",coded="v5"), make_matcher(work),
                      ch.binding(work/"prefix.so",coded="aligned"), reference_binding(work/"ref"), grid.room.rooms.c161_binding())
         cache = {}
         for meta, name, role, mic, ref in simultaneous():
@@ -160,12 +166,12 @@ def main():
             totals["single_panel"].update(trials=1, unguarded=bool(result["original_opened"]),
                 guarded=bool(result["opened"]), pairs=bool(result["panel_pairs"]))
     assert len(pairs)==360 and len(singles)==672
-    ch.save(OUT, dict(records=pairs, single_panel=singles, summary=totals, readings=readings, reader=identity,
+    ch.save(output, dict(records=pairs, single_panel=singles, summary=totals, readings=readings, reader=identity,
         wav_sha256=ch.sha(WAV), original_wav_sha256=ch.sha(grid.fit.fixed.CUE),
         dry_rms_db_vs_v5=float(20*np.log10(np.linalg.norm(panel.astype(float))/np.linalg.norm(v5.astype(float)))),
-        sources={p.name:ch.sha(p) for p in (host.OUT, host.HEADER, PAIR_HEADER, COEFF, Path(__file__))},
+        sources={p.name:ch.sha(p) for p in (grid_report, HEADER if timed else host.HEADER, PAIR_HEADER, COEFF, Path(__file__))},
         policy="Only the panel-owned demonstration cyclically permutes the three additive markers. External playback "
-        "uses original v5 and its 0.30/0.30/0.20 microphone detector. Both reference checks operate on actual PCM. "
+        "uses original v5 with the microphone matcher identified by the input grid report. Both reference checks operate on actual PCM. "
         "An electrical B,C pair suppresses only C161 over the next 5432 samples. Compare both orders, both guards, "
         "single sources and overlap on shared gains. Offset-zero source identity is checked with source-only controls. "
         "All 28 single-panel rooms retain the external command, matching the earlier 672 trials."))
@@ -173,4 +179,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--timed", action="store_true")
+    main(parser.parse_args().timed)
