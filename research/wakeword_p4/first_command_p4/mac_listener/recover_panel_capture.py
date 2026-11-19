@@ -13,7 +13,11 @@ tx, pair, ch = middle.tx, middle.pair, middle.ch
 
 def main(mode, archive, digest):
     assert ch.sha(archive)==digest
-    run, output = {"timer":(tx.guest_main,tx.BOARD),"pair":(pair.guest_main,pair.BOARD),
+    if mode == "marked":
+        import check_marked_connected_panel as marked
+        run, output = marked.main, marked.OUT
+    else:
+        run, output = {"timer":(tx.guest_main,tx.BOARD),"pair":(pair.guest_main,pair.BOARD),
                    "middle":(middle.main,middle.OUT)}[mode]
     assert not output.exists()
     capture=tx.panel.capture
@@ -63,12 +67,12 @@ def main(mode, archive, digest):
             return r
         with patch.object(tx.panel,"capture",checked):
             run()
-    print(mode,"recovered",len(saved),"of",len(ch.read(output)["records"]))
+    print(mode,"recovered",len(saved),"of",len(ch.read(output)["guest" if mode == "marked" else "records"]))
 
 
 if __name__=="__main__":
     p=argparse.ArgumentParser()
-    p.add_argument("mode",choices=("timer","pair","middle"))
+    p.add_argument("mode",choices=("timer","pair","middle","marked"))
     p.add_argument("archive",type=Path)
     p.add_argument("sha256")
     args=p.parse_args()
