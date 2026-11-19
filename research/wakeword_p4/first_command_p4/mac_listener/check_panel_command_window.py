@@ -1,7 +1,6 @@
 """Compare full decoded Opus with the established 100 ms pre-OPEN command window on panel overlaps."""
 from collections import Counter, defaultdict
 from pathlib import Path
-import sys
 from zipfile import ZipFile
 
 from faster_whisper import WhisperModel
@@ -12,7 +11,8 @@ ch = panel.ch
 OUT = ch.RESULTS / "4090-c161-panel-command-window.json"
 
 
-def main(paths):
+def main():
+    paths = (panel.OUT, panel.OUT.with_name(panel.study.OUT.stem + "-timed-p4.json"))
     reader, small_info = ch.load_reader()
     readers = {"small":reader}
     decoder = panel.grid.gap.uplink.decoder_api()
@@ -63,4 +63,4 @@ def main(paths):
 
 
 if __name__ == "__main__":
-    main([Path(p) for p in sys.argv[1:]])
+    main()
