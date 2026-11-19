@@ -377,3 +377,9 @@ python3 measure_connected_command_clock.py board.wav --track 005 --open-sample 4
 ```
 
 `estimated_command_sample` 是房间主要声学路径上的命令边界估计，`estimated_lead_ms` 为该边界减去 OPEN，正值表示提前开麦。方法在命令前后两半各选 200 ms 语音做相关匹配，分别检查峰值、其他候选位置和两个时间估计的一致性。若返回 `inconclusive`，请保留原始录音、两个匹配窗口和串口时钟。强档 005 和弱档 050 均可使用。108 个已知房间与播放时钟的模拟输入全部返回估计，与房间脉冲绝对峰所在路径的偏差为 −2 至 +3 个样本。错命令、双次回放及缺失命令各 12 条，均未给出时钟。另 11 个房间和音乐组合加入 ±200 ppm 采样时钟差，10 个得到估计，误差在 14 个样本以内，其余一个无法判定。实板还需核对 OPEN 到录音起点的换算。[时钟和对照的逐项结果](../../results/4090-c161-connected-command-clock.json)
+
+第二批包含 af_bella、am_echo、bf_isabella 和 bm_lewis，文件夹编号为 000–011。播放 `marked.wav`，以整个外部 WAV 的起点为零，在同一行 `panel_at` 指定的 16 kHz 采样位置开始播放 `panel-minus6.wav`。同目录 `plain.wav` 和 `no_address.wav` 供同音量对照。选择第二批归档时显式传入 `--pack additional`。以下命令从第二批 000 的板录中定位命令，需要比较开麦提前量时追加同次采集的 `--open-sample`。第二批的 36 个模拟麦克风均成功定位，与外部房间响应的绝对峰对应时钟相差 −2 至 +47 个样本。错句、重复或缺少命令的 36 个对照均返回不确定。[第二批配平外播包](../../results/c161-additional-connected-voices.zip)
+
+```sh
+python3 measure_connected_command_clock.py board.wav --pack additional --track 000
+```

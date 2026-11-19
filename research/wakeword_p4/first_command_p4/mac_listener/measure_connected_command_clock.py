@@ -11,6 +11,11 @@ import numpy as np
 
 PACK = Path(__file__).resolve().parents[2] / "results/c161-balanced-connected-commands.zip"
 PACK_SHA = "00184ed5175fdd3bf738cbafc4c6d192a259c770b140acf3233291d8e29b6466"
+PACKS = {
+    "balanced": (PACK, PACK_SHA, "balanced_louder"),
+    "additional": (PACK.with_name("c161-additional-connected-voices.zip"),
+                   "addeb732bd617d8700a32f18f14503e3b07427a8d1c52beab8ef3bab2a60f603", "marked"),
+}
 RATE = 16000
 WINDOW = 3200
 
@@ -26,16 +31,17 @@ def channel(wav, permitted):
     return np.frombuffer(data, dtype="<i2").reshape(-1, channels)[:, 0].copy()
 
 
-def track(index):
-    contents = PACK.read_bytes()
-    if sha256(contents).hexdigest() != PACK_SHA:
-        raise ValueError("The balanced playback archive differs from the handoff")
+def track(index, pack_name="balanced"):
+    path, expected, variant = PACKS[pack_name]
+    contents = path.read_bytes()
+    if sha256(contents).hexdigest() != expected:
+        raise ValueError(f"The {pack_name} playback archive differs from the handoff")
     with ZipFile(BytesIO(contents)) as pack:
         entries = json.loads(pack.read("manifest.json"))["records"]
         entry = next((r for r in entries if r["index"] == index), None)
         if entry is None:
             raise ValueError(f"Unknown track index {index}")
-        item = entry["tracks"]["balanced_louder"]
+        item = entry["tracks"][variant]
         data = pack.read(item["file"])
         if sha256(data).hexdigest() != item["sha256"]:
             raise ValueError("Playback file digest mismatch")
@@ -109,13 +115,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("wav", type=Path, help="One isolated trial, 16 kHz PCM16 M/R or LCD-X8 four-slot TDM")
     parser.add_argument("--track", required=True, type=int, help="Balanced playback archive index (e.g. 005)")
+    parser.add_argument("--pack", choices=PACKS, default="balanced", help="Playback pack used for this recording")
     parser.add_argument("--open-sample", type=int, help="UART OPEN converted to elapsed samples from WAV start")
     args = parser.parse_args()
-    dry, command_at, member = track(args.track)
+    dry, command_at, member = track(args.track, args.pack)
     with wave.open(str(args.wav), "rb") as wav:
         mic = channel(wav, (2, 4))
     report = locate(mic, dry, command_at, args.open_sample)
-    print(json.dumps(dict(capture=args.wav.name, track=member, mic_sha256=sha256(mic.tobytes()).hexdigest(),
+    print(json.dumps(dict(capture=args.wav.name, pack=args.pack, track=member, mic_sha256=sha256(mic.tobytes()).hexdigest(),
                           **report), indent=2))
 
 
