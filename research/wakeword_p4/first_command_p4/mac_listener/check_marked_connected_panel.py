@@ -64,7 +64,7 @@ def save_speakers(z, row, tracks):
                 command_at=row["end"], source_sha256=row["sha256"], tracks=entries)
 
 
-def room_scene(s, group, quiet, v5, bed, bed_sha):
+def room_mix(s, group, quiet, v5, bed, bed_sha):
     (hp, _, ph), (hx, _, eh) = tx.diag.room(s["geometry"])
     assert (ph,eh,bed_sha) == (s["panel_rir_sha256"],s["external_rir_sha256"],s["music_sha256"])
     local = fftconvolve(quiet.astype(float), hp)
@@ -76,13 +76,25 @@ def room_scene(s, group, quiet, v5, bed, bed_sha):
     panel_sound[s["panel_at"]:s["panel_at"]+len(local)] = local
     mix += panel_sound
 
-    def scene(wave, *, include_music=True):
+    def render_mix(wave, *, include_music=True):
         wet = fftconvolve(wave.astype(float), hx)
         base = mix if include_music else panel_sound
-        signal = (base + np.pad(wet, (0, length-len(wet))) * 10**(s["external_db"]/20)) * s["preamp_gain"]
-        rounded = np.rint(signal)
-        clipped = int(np.count_nonzero((rounded < -32768) | (rounded > 32767)))
-        return tx.study.grid.room.quantize(signal), clipped
+        return base + np.pad(wet, (0, length-len(wet))) * 10**(s["external_db"]/20)
+    return render_mix
+
+
+def digitize(mix, gain):
+    signal = mix * gain
+    rounded = np.rint(signal)
+    clipped = int(np.count_nonzero((rounded < -32768) | (rounded > 32767)))
+    return tx.study.grid.room.quantize(signal), clipped
+
+
+def room_scene(s, group, quiet, v5, bed, bed_sha):
+    render_mix = room_mix(s, group, quiet, v5, bed, bed_sha)
+
+    def scene(wave, *, include_music=True):
+        return digitize(render_mix(wave, include_music=include_music), s["preamp_gain"])
     return scene
 
 

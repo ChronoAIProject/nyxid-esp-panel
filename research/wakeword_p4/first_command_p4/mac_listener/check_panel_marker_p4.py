@@ -49,6 +49,11 @@ def capture(work, z, idx, case, small, turbo, decoder, builds, *, tx_pair=None):
             assert get("V5_ALLOW") == known["allowed_fixed"]
             assert get("C161_ALLOW") == known["allowed_model"]
             assert get("OPEN") == known["opened"]
+            timing = phase.listener.values(log, "FINISH")
+            if known["opened"] and role != "panel":
+                # UART can lose a PCM fragment even if OPEN and LISTENER PASS arrive intact.
+                for lane in ("PROCESSED", "AUDIO"):
+                    phase.handoff.bench.samples(log, lane, timing[2])
             break
         except (AssertionError, TimeoutError, ValueError):
             if serial.exists():
@@ -57,7 +62,6 @@ def capture(work, z, idx, case, small, turbo, decoder, builds, *, tx_pair=None):
     events = [s for s in log.splitlines() if s.startswith(("READY ","HITS ","V5_ALLOW ","C161_ALLOW ","OPEN ","CUE_ROUTE ","FINISH ","LISTENER PASS"))]
     z.writestr(f"events/{idx:03}.txt","\n".join(events)+"\n")
     board = dict(opened=known["opened"], source=source)
-    timing = phase.listener.values(log,"FINISH")
     result = dict(index=idx, host_index=source_idx, name=name, role=role, source=meta,
                   opened=board["opened"], mic_sha256=known["pcm_sha256"], reference_sha256=known["reference_sha256"],
                   allowed_fixed=known["allowed_fixed"], allowed_model=known["allowed_model"],

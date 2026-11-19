@@ -15,7 +15,7 @@ ch, tx = panel.ch, panel.tx
 OUT = ch.RESULTS / "4090-c161-panel-music-transfer.json"
 
 
-def inputs(external_cue=None):
+def room_mixes(external_cue=None):
     songs = ch.read(music.fit.DEV)["records"][1:]
     rooms = sorted(music.ROOMS)
     v5, original = tx.study.panel_wave()
@@ -71,7 +71,12 @@ def inputs(external_cue=None):
                     ext_room_sha256=external_sha, voice=voice, command=text, command_pcm_sha256=ch.digest(command),
                     gain=float(gain), external_db=db, panel_at=local_at, start=start,
                     command_at=start+len(v5), lag=lag, assigned=(k==j%len(tx.study.OFFSETS)))
-                yield meta, {key:tx.study.grid.room.quantize(v*gain) for key,v in views.items()}
+                yield meta, views
+
+
+def inputs(external_cue=None):
+    for meta, views in room_mixes(external_cue):
+        yield meta, {key:tx.study.grid.room.quantize(v*meta["gain"]) for key,v in views.items()}
 
 
 def main():
