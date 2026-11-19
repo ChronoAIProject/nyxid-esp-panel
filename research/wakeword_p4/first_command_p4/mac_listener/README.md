@@ -313,3 +313,9 @@ python3 measure_command_capture.py playback.wav uplink-decoded.wav --command-at 
 | 联合监听器的 SpeexDSP 上行 | 16 | 15 | 15 | 15 |
 
 若从 OPEN 前 100 ms 开始转写，持续播报时 SpeexDSP 两个读者分别为 15/16、16/16；淡出时也分别为 15/16、16/16。新回放的 17,232 个 Opus 包复解后 PCM 哈希全部一致，其中原麦音轨的每个包还与旧运行逐字节相同。13,892 个模拟监听块有一个超过 16 ms。这里复用了相同的八段外部音，实机的声传播路径和任务调度仍需单独测量。[事件与编码包](../../results/4090-c161-joint-speex-rooms.zip)
+
+### 在同一个 P4 模拟固件内并发采音和编码
+
+以上一节的 Speex 构建为基础，使用独立构建目录 `$NYX_MAC_WORK/build-speex-opus`，增加 `-DNYX_CAPTURE_OPUS=ON`，将上行实验使用的 `esp_audio_codec` 2.4.1 加入 `EXTRA_COMPONENT_DIRS`。从仓库根目录运行 `check_concurrent_speex_opus.py`。模拟监听任务优先级 3，每 16 ms 的定时器通知提供 256 个采样。固定音触发后创建优先级 4、48 KiB 栈的独立编码任务，沿用产品的 320 样本帧和每批最多四帧的调度。两秒历史和实时音频进入同一 FIFO，编码包先存到模拟外部 RAM，结束后通过 UART 导出。此处收包端从 OPEN 起就绪。[模拟固件](main/capture_opus.h) · [复现脚本](check_concurrent_speex_opus.py)
+
+12 条固定音和 Bot 双讲回放均提前 36 ms 开麦，完整门锁命令经 Opus 解码后转写正确 12/12；两个不同的纯面板示范均未开麦。全部 3,564 个编码包与先前独立编码器输出逐字节相同，归档串口复解的 PCM 哈希一致。FIFO 峰值为 32,000 样本，从 OPEN 到编码器追至不足一帧为 26.910–35.275 ms。联合固件 627,472 B，含两路监听和 Speex 的上版为 457,424 B。双讲各次最低内部空闲堆均为 236,192 B，编码任务栈最小余量为 25,068 B。14 次共 8,750 个采音块，有 12 个处理耗时超过 16 ms，最慢 37.502 ms；有一个读块开始时还积压了一个定时器通知。实板的 I2S、UI、网络和服务端就绪等待需由同次板测日志确认。[逐次资源和首句](../../results/4090-c161-concurrent-speex-opus.json) · [带 PTS 的原始 Opus 包和调度计数](../../results/4090-c161-concurrent-speex-opus.zip)

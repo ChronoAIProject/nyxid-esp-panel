@@ -1,4 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 set(COMPONENTS main)
+if(NYX_CAPTURE_OPUS)
+    list(APPEND COMPONENTS esp_audio_codec)
+endif()
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 project(nyx_mac_listener)

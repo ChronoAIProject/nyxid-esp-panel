@@ -29,3 +29,8 @@ if(NYX_SPEEX_CAPTURE)
     set_property(SOURCE "${dsp}/fftwrap.c" APPEND PROPERTY COMPILE_OPTIONS "-Wno-error=maybe-uninitialized")
     target_compile_definitions(${COMPONENT_LIB} PRIVATE NYX_SPEEX_CAPTURE)
 endif()
+
+if(NYX_CAPTURE_OPUS)
+    idf_component_optional_requires(PRIVATE esp_audio_codec)
+    target_compile_definitions(${COMPONENT_LIB} PRIVATE NYX_CAPTURE_OPUS)
+endif()

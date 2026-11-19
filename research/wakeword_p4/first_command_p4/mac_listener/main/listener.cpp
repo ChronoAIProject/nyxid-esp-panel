@@ -12,6 +12,9 @@
 #ifdef NYX_SPEEX_CAPTURE
 #include "speex/speex_echo.h"
 #endif
+#ifdef NYX_CAPTURE_OPUS
+#include "capture_opus.h"
+#endif
 #include "esp_aec.h"
 #include "esp_agc.h"
 #include "esp_flash.h"
@@ -40,6 +43,7 @@ int16_t* buffer(size_t n) {
     return ptr;
 }
 
+#ifndef NYX_CAPTURE_OPUS
 void dump(const char* label, const int16_t* samples,int count) {
     static constexpr char hex[]="0123456789abcdef";
     char line[4*kHop+1];
@@ -54,6 +58,8 @@ void dump(const char* label, const int16_t* samples,int count) {
         std::printf("%s %d %s\n",label,start,line);
     }
 }
+
+#endif
 
 void worker(void*) {
     uint32_t h[3];
@@ -124,7 +130,13 @@ void worker(void*) {
     int fill=0, wake_fill=0, emitted=0, first=-1, peak_us=0, overruns=0, blocks=0;
     int64_t sum_us=0;
     std::printf("READY %lu %d %d %d\n",(unsigned long)h[1],length,chunk,prime);
+#ifdef NYX_CAPTURE_OPUS
+    CaptureOpus codec(call, length+chunk, chunk*1000/16);
+#endif
     for (int at=0;at<length;at+=chunk) {
+#ifdef NYX_CAPTURE_OPUS
+        codec.next_block();
+#endif
         int hit161=-1, hitcue=-1, allowed_cue=-1, allowed161=-1;
         int64_t begin=esp_timer_get_time();
         {
@@ -159,7 +171,11 @@ void worker(void*) {
             }
 #endif
             if (first<0) panel_voice_pcm_preroll_push(&history,selected+emitted,kHop);
+#ifdef NYX_CAPTURE_OPUS
+            else codec.push(selected+emitted,kHop);
+#else
             else if (!panel_voice_pcm_push(&call,selected+emitted,kHop)) abort();
+#endif
             emitted+=kHop;
         }
         for (int i=0;i<chunk;++i) {
@@ -195,6 +211,9 @@ void worker(void*) {
             if (!panel_voice_pcm_push(&call,history.samples+history.head,part) ||
                 !panel_voice_pcm_push(&call,history.samples,history.count-part)) abort();
             panel_voice_pcm_clear(&history);
+#ifdef NYX_CAPTURE_OPUS
+            codec.start();
+#endif
             std::printf("OPEN %d %d %d\n",at+chunk,emitted,first);
         }
         int us=esp_timer_get_time()-begin;
@@ -203,16 +222,25 @@ void worker(void*) {
         if (stereo && hitcue>=0) std::printf("CUE_ROUTE %d %d\n",hitcue,allowed_cue);
         if (guarded && allowed_cue>=0) std::printf("V5_ALLOW %d\n",allowed_cue);
         if (guarded && allowed161>=0) std::printf("C161_ALLOW %d\n",allowed161);
+#ifndef NYX_CAPTURE_OPUS
         if (blocks%64==0) vTaskDelay(1);
+#endif
     }
+    const unsigned captured = first>=0 ? emitted-first : 0;
+#ifdef NYX_CAPTURE_OPUS
+    codec.finish(captured);
+#else
     if (first>=0 && (call.count!=static_cast<size_t>(emitted-first) ||
         std::memcmp(call.samples,selected+first,call.count*sizeof(int16_t)))) abort();
-    std::printf("FINISH %d %d %u %d %lld %d %d %u\n",emitted,first,(unsigned)call.count,blocks,
+#endif
+    std::printf("FINISH %d %d %u %d %lld %d %d %u\n",emitted,first,captured,blocks,
                 (long long)sum_us,peak_us,overruns,(unsigned)heap_caps_get_minimum_free_size(MALLOC_CAP_INTERNAL));
+#ifndef NYX_CAPTURE_OPUS
     if (first>=0) {
         dump("AUDIO",call.samples,call.count);
         if (stereo) dump("PROCESSED",processed+first,call.count);
     }
+#endif
 #ifdef NYX_SPEEX_CAPTURE
     if (speex) speex_echo_state_destroy(speex);
 #endif
