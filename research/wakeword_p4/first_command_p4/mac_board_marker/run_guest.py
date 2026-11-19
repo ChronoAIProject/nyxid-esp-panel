@@ -62,26 +62,20 @@ def boot(qemu, image, log):
                 proc.kill()
 
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("guest", type=Path)
-    parser.add_argument("sim_build", type=Path)
-    parser.add_argument("qemu", type=Path)
-    parser.add_argument("work", type=Path)
-    args = parser.parse_args()
+def replay_cases(guest, sim_build, qemu, work, inputs):
     flash = bytearray([255]) * (4<<20)
-    config = json.loads((args.sim_build / "flasher_args.json").read_text())
+    config = json.loads((sim_build / "flasher_args.json").read_text())
     for offset, name in config["flash_files"].items():
         at = int(offset, 16)
-        data = (args.guest if name == config["app"]["file"] else args.sim_build/name).read_bytes()
+        data = (guest if name == config["app"]["file"] else sim_build/name).read_bytes()
         assert at+len(data) <= 2<<20
         flash[at:at+len(data)] = data
-    logs = args.work.resolve() / "uart"
+    logs = work.resolve() / "uart"
     logs.mkdir(exist_ok=True, parents=True)
     image = logs.parent / "image.bin"
     seen = set()
     rows = []
-    for label, mic, ref, expected, command_at in cases():
+    for label, mic, ref, expected, command_at in inputs:
         block = payload(mic, ref)
         key = sha256(block).hexdigest()
         log = logs / (key+".log")
@@ -89,7 +83,7 @@ def main():
             flash[2<<20:(2<<20)+len(block)] = block
             image.write_bytes(flash)
             log.unlink(missing_ok=True)
-            boot(args.qemu, image, log)
+            boot(qemu, image, log)
             seen.add(key)
         uart = log.read_text()
         count, = struct.unpack_from("<I", block)
@@ -102,8 +96,18 @@ def main():
             assert events == expected, (label, events, expected)
         rows.append(dict(label=label, input_sha256=key, uart_sha256=sha256(log.read_bytes()).hexdigest(),
                          events=events, command_at=command_at))
-    print(json.dumps(dict(guest_sha256=sha256(args.guest.read_bytes()).hexdigest(),
-                          qemu_sha256=sha256(args.qemu.read_bytes()).hexdigest(), records=rows), indent=2))
+    return dict(guest_sha256=sha256(guest.read_bytes()).hexdigest(),
+                qemu_sha256=sha256(qemu.read_bytes()).hexdigest(), records=rows)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("guest", type=Path)
+    parser.add_argument("sim_build", type=Path)
+    parser.add_argument("qemu", type=Path)
+    parser.add_argument("work", type=Path)
+    args = parser.parse_args()
+    print(json.dumps(replay_cases(args.guest, args.sim_build, args.qemu, args.work, cases()), indent=2))
 
 
 if __name__ == "__main__":
