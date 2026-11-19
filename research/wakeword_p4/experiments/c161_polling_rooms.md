@@ -205,3 +205,21 @@ RTX 4090 上的 wav2vec2-base-960h 直接转写同一前级的 583 个短语搜�
 用先前训练的字符模型作为初值，将 RTX 4090 英语识别器对每个 1.44 秒窗口的 71 帧字符分布蒸馏到原生 40 频带卷积模型。既有 918 个训练来源产生 1,525 个干声及训练房间视图，423 个在规定区间有真实前级提议，其余取同区间五步得分和的峰值。每批保留先前起声语料，另取有无唤醒词的提议窗，各视图的 PCM、原生特征哈希和提议时刻均已保存。训练 650 步，字符输出的 INT8 文件为 117,320 B。160 个校准窗的 11,360 个字符帧中，量化前后 11,279 个首选字符相同。[训练及取窗](../results/4090-c161-proposal-letters-fit.json) · [INT8 导出与量化对照](../results/4090-c161-proposal-letters-exports.json)
 
 实际 INT8 逐帧取最大字符并合并重复字符后，在三段连续对话中仍只保住 C161 原有的 7/36。与 Q8 及五类同时认可的路径合并后为 20/36；同一组合使用 GPU 英语识别器时为 30/36。Melo-BR 的原始 PCM 在英语识别器里有一窗为 “HAY NIX COULD YOU”，小模型为 “HEOE CAN YOU”；另一窗为 “HEY NIX IS THERE”，小模型为 “NIX E TEAU”。训练前和训练后的小模型独立合并 C161 在 28 小时背景中均为零误唤。仅用首选字符的规则没有取得 GPU 在 Melo-BR 上的识别收益。[逐窗字符及通知](../results/4090-c161-proposal-letters-context.json) · [28 小时背景](../results/4090-c161-proposal-letters-background.json)
+
+### 在小模型的字符分数中搜索整个称呼
+
+对相同的 117,320 B 字符模型，用 CTC Viterbi 搜索完整的目标拼写，并与 Nick、Max、Mike、Nicole 等称呼和普通短语竞争。每个字符使用实际 INT8 输出与同帧最大值的差，允许词中停顿，按拼写长度归一化。仅用 1,525 个原训练视图标定放行阈值，其中目标 373 个、带招呼语的负例 608 个、其余负例 544 个。标定后固定阈值，在八个已用开发组重新取窗，逐个核对 571 个输出阵列的 SHA256。[训练阈值及每个竞争拼写](../results/4090-c161-proposal-spellings-training.json) · [字符解码实现](../first_command_p4/mac_listener/score_proposal_spellings.py)
+
+| 冻结 C161 合并字符路径 | 只取首选字符 | 搜索整个称呼 |
+| --- | ---: | ---: |
+| 连续对话目标命中 /36 | 7 | 24 |
+| 普通对话误唤句数 /108 | 0 | 1 |
+| 独立日常句误唤句数 /96 | 0 | 1 |
+| 28.001 小时背景误唤次数 | 0 | 19 |
+| 12 首整曲误唤次数 | 0 | 0 |
+| 只加噪声，命令前首次通知 /16 | 2 | 6 |
+| 反射叠噪，命令前首次通知 /16 | 1 | 9 |
+
+字符路径在三个对话声音上分别命中 10/12、9/12、5/12。两次日常冲突是 “Hey Nick, is there any rain expected this afternoon?” 和 “Mix the ingredients together.”。普通 Bot 回复仍为 0/48，明确示范时为 3/8。加上既有 Q8 和五类共同确认的通知后，对话命中 27/36，28 小时背景误唤 20 次。字符模型与解码组合保留为研究候选。[对话](../results/4090-c161-proposal-spellings-context.json) · [独立日常句](../results/4090-c161-proposal-spellings-daily.json) · [背景](../results/4090-c161-proposal-spellings-background.json)
+
+在同声音、同房间、同命令时钟的 16 组配对场景，字符路径对普通 Nyx 在命令前通知 9/16，回看两秒后正确保留完整命令 8/16；官方 Hey Willow 在对应 Willow 输入上分别为 11/16、8/16。对照中的 Nick 有 2/16 在命令前误唤；静音及 Willow 输入均 0/16 误开 Nyx。另一批使用原命令时钟的反射叠噪组，9/16 命中，6/16 完整。以上使用已有模拟房间与合成声音，字符模型在主机用实际 INT8 内核执行，未计 P4 运行时延。[逐条命令捕获、转写和官方 Willow 返回](../results/4090-c161-proposal-spellings-commands.json)
