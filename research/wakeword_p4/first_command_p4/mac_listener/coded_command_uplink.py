@@ -94,7 +94,7 @@ def boot(build, log, marker, payload, failures):
                 raise
 
 
-def p4(meta, mic, detector, index, decoder, reader, previous, history):
+def p4(meta, mic, detector, index, decoder, reader, previous, history, require_timely=True):
     # Each listener and encoder is cold-booted with the same signed-reference protocol.
     incoming = np.column_stack((mic, np.zeros_like(mic)))
     payload = struct.pack("<3I",0x4452594e,index,len(mic))+incoming.T.copy().tobytes()
@@ -104,14 +104,15 @@ def p4(meta, mic, detector, index, decoder, reader, previous, history):
     details, lanes = analyze(text, dict(index=index,group="external",command_at=meta["command_at"]), incoming, detector)
     assert details["v5"] == [v["t"] for v in previous["fixed"]] and details["v5"] == details["allowed_v5"]
     assert not details["reference_v5"] and details["c161"] == previous["c161"]
-    assert meta["cue_at"] <= previous["events"]["nyx"][0] < meta["command_at"]
-    assert details["delivered"] == (previous["events"]["nyx"][0]+255)//256*256 < meta["command_at"]
+    assert meta["cue_at"] <= previous["events"]["nyx"][0]
+    assert details["delivered"] == (previous["events"]["nyx"][0]+255)//256*256
     selected, raw = lanes["selected"], lanes["raw"]
     assert details["samples_pure_raw"] == len(raw)
     assert digest(selected) == digest(lanes["delayed_raw"])
     capture = details["first"]
     assert capture == max(0,details["delivered"]//160*160-32000)
-    assert meta["command_at"] > details["delivered"]
+    if require_timely:
+        assert details["delivered"] < meta["command_at"]
     tags = ("READY ","OPEN ","HITS ","C161_ALLOW ","V5_ALLOW ","CUE_ROUTE ","FINISH ","LISTENER PASS")
     history.writestr(f"{index:02}-listener.log","\n".join(l for l in text.splitlines() if l.startswith(tags))+"\n")
     details["full_listener_uart_sha256"] = sha(log)

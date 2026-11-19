@@ -158,3 +158,20 @@ Mac 可独立纳入两个头文件。对每个连续采集的 16 kHz 单声道 P
 Willow 还有两次通知在命令开始后 99 ms，均来自 am_onyx；以整条录音计共有 13/16 次通知。两系统在 “Hey Nick.” 和静音替换各 16 条上均无通知，Nyx 系统在 Willow 16 条上、Willow 系统在普通和编码 Nyx 各 16 条上也均无通知。该表比较已知的编码播放与普通合成播放，日常任意声音的识别应看普通发音行。
 
 带数字参考提前检查的 P4 QEMU 固件又分别以外部和自播身份播放四种编码音，在相同的原麦样本上，外部开麦 16/16，自播误开 0/16。16 个自播参考均完成两段前缀、数字波形检查和三段匹配。32 次模拟共 15,532 个 16 ms 块，最慢 9.574 ms，超时为零。实机拾音、DAC 延迟、整机资源待 Mac 板测。播放包 SHA256 为 `80055a2fe848b8fabd1d18908d64656d5855ea69a6598dc98b2bbdb39e8dd53a`，每个声音的 `coded.wav` 后缀表示三段编码版本。[逐路 P4 时钟](../results/4090-c161-coded-voices-p4.json)
+
+## 唤醒音与命令的有效语音直接相接
+
+从训练声音库取 af_bella、am_eric、bf_lily、bm_fable，新合成两条命令 “Close the upstairs curtains” 和 “Switch off the garden lights”。每种声音各自合成普通 Nyx、Willow 和 Nick。16 组配对输入都在同一源采样点 57,600 将唤醒词最后一个有效 20 ms 帧接到命令第一个有效帧。命令采用既有发送端限幅，输入来自既有厨房空调和客厅音乐。无唤醒音的对照保留相同的命令与背景。使用首次交付时钟计分，Nyx 按 256 样本读块交付，官方 Willow 用自己的 512 样本时钟。[冻结的 80 条输入和生成方式](../results/4090-c161-coded-close-join-plan.json) · [未混音的合成源](../results/4090-c161-coded-close-join-dry.zip)
+
+| 系统及其测试音 | 命令开始前交付 /16 | 整段有通知 /16 | 有通知且两秒原麦回看转写末尾命令完整 /16 |
+| --- | ---: | ---: | ---: |
+| C161 加 v5，四声音普通 Hey Nyx | 0 | 0 | 0 |
+| C161 加 v5，四声音编码截至唤醒词尾 | 0 | 16 | 16 |
+| 官方 Hey Willow，四声音普通 Hey Willow | 2 | 5 | 5 |
+| C161 加 v5，同一四声音编码整体提前 80 ms | 16 | 16 | 16 |
+
+四声音词尾编码最初都在命令开始后 16 ms 交付。把三段编码原样提前 1,280 个样本，唤醒音总长、命令、房间、增益和音频源时钟均沿用原输入。P4 QEMU 的 16 次外部开麦都提前到命令开始前 64 ms。两版各 16 条实际 P4 通话队列的 Opus 包解码后首句也都完整，参考通道同步自播时分别误开 0/16。提前版的 13,892 个 16 ms 块均在周期内，最慢 6.220 ms；原词尾版有一次 25.986 ms。官方 Willow 另有三次交付晚 36–132 ms。两套系统在 Hey Nick、静音各 16 条中均无通知。[主机与官方 Willow 原始时钟](../results/4090-c161-coded-close-join.json) · [官方原始返回及 UART](../results/4090-c161-coded-close-join-uart.zip) · [提前与词尾 P4 结果](../results/4090-c161-coded-advance.json) · [P4 监听事件与原始 Opus 包](../results/4090-c161-coded-advance-uart.zip)
+
+270 个已消费 MIT 房间响应中，提前版固定音匹配在命令源时钟前交付的数量分别为 267、267、267、268，安静及加噪各自如此。该组输入在唤醒音后追加房间余响和噪声。将两条紧接命令和唤醒音整份经 libopus 1.3.1 编解码再进入房间，四声音提前版在语音及音频模式、12/16/24/48 kbit/s 的八种设置均提前交付 16/16；主机用完整解码播放流作自播参考，各设置均无放行。该项使用主机守卫，P4 自播表使用 PCM 数字参考。[4,320 条房间结果](../results/4090-c161-coded-advance-rooms.json) · [全部编解码设置和参考时钟](../results/4090-c161-coded-advance-transport.json)
+
+孤立播放提前版时，Whisper small.en 将 af_bella 读为 “Hey”，其余三个声音读为 “Hey next”；wav2vec2 对 bf_lily 读为 “HAY NIX”。可使用同声音的 ordinary、tail 和 advance 文件并排听辨，持续时间相同。[12 条孤立播放 WAV](../results/4090-c161-coded-advance-isolated.zip) · [两套 CUDA 转写](../results/4090-c161-coded-advance-isolated.json) · [16 条紧接命令的四声音播放包](../results/4090-c161-coded-advance-playback.zip)
