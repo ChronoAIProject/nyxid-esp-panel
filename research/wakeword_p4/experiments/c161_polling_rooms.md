@@ -170,3 +170,20 @@ RTX 4090 从相同的五类后验蒸馏权重开始，分别微调 450 步，两
 | Melo 字面 Hey Nyx，干声／房间完整命令，各 /8 | 8／2 | 7／1 | 7／1 |
 
 这次两组都拒绝了 Melo-US 的 “Hey Max”，也都漏掉相邻的真目标 “Hey Nicks, cancel the reminder about the laundry.”。Max 原句的 Nyx 码从 37 变为 −50、−61，真目标从 48 变为 −16、−19。原模型和训练后两组对 96 句独立日常语音和 48 条普通 Bot 回复均为零误唤，八句示范仍有四句触发。两次训练的收益和损失相近，静音增广在只加噪声组多保留了一条完整命令。实验模型保留作研究，实板普通语音继续用冻结 C161。[原始与编辑窗逐项复核](../results/4090-c161-address-suffix-parts.json) · [连续对话](../results/4090-c161-address-suffix-context.json) · [全部 66 条背景](../results/4090-c161-address-suffix-background.json) · [房间与噪声](../results/4090-c161-address-suffix-acoustics.json)
+
+### 用 Q8 短语搜索复听音乐前级的每一次提议
+
+在八个已用开发组的 341 条输入上，取冻结前级所有 583 次正时间提议（包括靠近流末尾的提议）。每次用已有 PocketSphinx Q8 原版和姓名对比版，在提议前 1.5 秒到提议后最多 300 ms 搜索 “hey nicks”，阈值沿用训练分区标定的 1e-15。分别比较短语搜索独立复核，以及要求短语搜索和原实际提议五类模型同时认可。所有路线单独合并冻结 C161 的通知，保留冷却。[复听程序](../first_command_p4/mac_listener/proposal_lexical_readout.py)
+
+| 同批已用开发录音 | 五类复核 | 原版短语复核 | 姓名对比短语复核 | 姓名对比与五类同时认可 |
+| --- | ---: | ---: | ---: | ---: |
+| 28.001 小时背景误唤次数 | 32 | 2 | 1 | 1 |
+| 12 首整曲误唤次数 | 12 | 0 | 0 | 0 |
+| 普通对话误唤句数 /108 | 1 | 1 | 1 | 0 |
+| 连续对话目标命中 /36 | 33 | 20 | 21 | 20 |
+| 独立日常句误唤 /96 | 0 | 2 | 0 | 0 |
+| 只加噪声，及时命中／首句完整 /16 | 8／6 | 2／2 | 4／4 | 3／3 |
+| 反射叠噪，及时命中／首句完整 /16 | 7／4 | 1／1 | 1／1 | 1／1 |
+| 同声音 Willow 对照场景的普通 Nyx，及时命中／首句完整 /16 | 7／5 | 1／1 | 1／1 | 1／1 |
+
+两种短语搜索均拒绝了 Melo-US 的 “Hey Max”，在普通连续对话误唤的是 “Hey Nick, is there any rain expected this afternoon?”。同时要求五类确认后这句被拒绝。背景中四条短语路线都被同一段广播触发，附近转写为 “have time and time again put the interest of banks and corporations …”。姓名对比版在这个背景的通知时刻为 17,033,760 样本，加五类确认后为 17,039,520 样本。普通 Bot 回复均为零，示范分别为五类 4/8、两种短语复核各 6/8、短语与五类同时确认 4/8。表中的通知时钟取音频可用时刻，未计板端计算。[背景的全部提议和误唤转写](../results/4090-c161-proposal-lexical-background.json) · [对话](../results/4090-c161-proposal-lexical-context.json) · [声学条件](../results/4090-c161-proposal-lexical-acoustics.json)
