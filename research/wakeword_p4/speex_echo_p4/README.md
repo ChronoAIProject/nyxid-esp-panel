@@ -34,6 +34,22 @@
 
 带后处理的 P4 初始化内部堆增量为 98,088 B，相对单独线性抵消增加 24,160 B；24,000 个块中位 1.524 ms，首条自播输入的第一个块耗时 11.503 ms，其余均在 10 ms 内。该计时只覆盖音频处理。复现时在纯浮点配置上增加 `-DNYX_SPEEX_PREPROCESS=ON`，构建目录 build-post，先运行 check_c161_speex_residual.py，再运行 check_c161_speex_residual_mix.py。check_c161_speex_history_splice.py 可直接读取原线性回放归档。
 
+### 四声音配对复核与官方 Hey Willow
+
+在四个既有开发声音上另配 48 条十秒场景，分别重放安静条件和面板说 “The next train leaves from platform six.” 时的插话。每个声音读两句 Hye Nyx 命令，以及 Hey Willow、Hey Nick、Hey Max 和一条日常句。音量按每个声音的第一条目标句匹配，在其余请求、安静和插话条件间共用。面板声经过卧室或办公室实测响应，外部声音为合成干声。每个输入独立在 P4 QEMU 运行两遍，共 96 次，随后用主机识别设备输出。半量与全量合并时优先最早可用通知，同刻取半量，单解码任务的实机排队时间待测。[冻结输入和比较规则](../results/4090-c161-speex-dialogues-plan.json) · [所有请求、前级提议、短语确认和首句](../results/4090-c161-speex-dialogues.json) · [P4 UART](../results/4090-c161-speex-dialogues-uart.zip)
+
+| 配置 | 安静时完整命令 /8 | 面板播报时完整命令 /8 | 干扰语流有通知 /32 |
+| --- | ---: | ---: | ---: |
+| 单 C161，线性抵消输出 | 3 | 0 | 0 |
+| C161 加提议与短语确认，线性抵消输出 | 6 | 2 | 0 |
+| 同一识别链，全量残余回声抑制 | 6 | 3 | 0 |
+| 同一识别链，半量混合 | 6 | 3 | 0 |
+| 半量与全量两路通知合并 | 6 | 3 | 0 |
+
+半量和全量均恢复 bm_lewis 的亮度命令。af_jessica 两句安静时便漏检，两句均有提议但未通过确认。af_nova 的两句及 am_santa 的亮度命令在安静时能唤醒，加入面板声音后两路均出现候选，均未通过确认。32 条干扰包含同一句的安静和播报版本，共四个声音，不能据此估计日常每小时误唤率。本轮 48,000 个线性块中位 0.682 ms、最大 4.029 ms，另 48,000 个带后处理的块中位 1.492 ms、最大 8.090 ms。
+
+针对相同的第一条亮度命令，将两种唤醒词各自的半量 PCM 交给双方，使用同一前文、播放器、声路和预热样本数。原厂 `wn9_heywillow_tts` 在经典 ESP32 QEMU 以 DEFAULT 运行，安静及播报时分别命中自己的唤醒词 4/4、4/4。Hye Nyx 加提议及 Q8 确认在这两个条件为 3/4、1/4。双方在这 8 条对方目标语流中各 0 次通知。官方对照计唤醒，Hye Nyx 命中的亮度命令也均被 4090 Whisper 完整转写。两种模型的原生阈值和处理步长各自保留。[配对音频 SHA256、官方运行环境和采样区间](../results/4090-c161-speex-dialogues-willow-plan.json) · [官方逐次结果](../results/4090-c161-speex-dialogues-willow.json) · [16 次官方 UART 与返回码](../results/4090-c161-speex-dialogues-willow-uart.zip)
+
 ## 已交付 v5 固定音
 
 两个房间各有四个 10 秒用例。面板命令为 “Play the evening news.”，外部命令为 “Turn off the desk lamp.”，双方使用相同的 v5 唤醒文件。对 8 个双通道输入，P4 同时运行浮点 SpeexDSP 和原 v5 匹配器。滤波器输出与前一次纯滤波器回放逐样本相同，设备上三个通知的样本位置也均与从同一 PCM 得到的主机结果吻合。
