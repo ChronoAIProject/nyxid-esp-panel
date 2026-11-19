@@ -287,3 +287,9 @@ python3 measure_command_capture.py playback.wav uplink-decoded.wav --command-at 
 工具将命令降到 4 kHz，用三个 160 ms 的波形窗口独立寻找开头、中段和尾部，同时检查是否有另一处相关性相近的位置。报告中的位置均已换算为 16 kHz 样本。三个窗口都匹配且相对时间一致时，状态为 `three_windows_matched`。该状态只覆盖取样的三个窗口。两个窗口一致且推算的活跃开头或结尾超出录音边界超过 20 ms 时，报告相应的边界缺失。其余情况保留各窗口的位置与相关系数，标为无法判定。
 
 对 30 条直连 P4 上行，干声对照找到三个窗口 29 次。对 16 条厨房和客厅回放，干声对照有 15 条无法判定，改用同一输入的原麦作参考后，16/16 均找到三个窗口。对 46 条上行分别截去前 200 ms、截去后 200 ms、或只将前 200 ms 置零，共 138 个对照均未报三段齐全。截断开头正确报出 25/46，截断尾部正确报出 41/46，其余截断样本均为无法判定。对两段各重复播放两次及两段静音对照也返回无法判定。实机可同时保存原麦、解码 WAV 和 OPEN 时钟，核对板上通话链路。[测量程序](measure_command_capture.py) · [逐窗口实测与合成故障](../../results/4090-c161-command-capture-windows.json)
+
+### 固定音与 Bot 同时说不同命令
+
+播放包内有 12 条外部 WAV、两条面板 WAV 和配对清单。Mac 可直接使用单声道 16 kHz PCM16 源。每对从同一时钟的零点起播，面板使用清单中的 `panel`，外部扬声器使用 `external`。外部轨在第 5 秒开始固定 v5，随后说 “can you unlock the side door?”；面板同时示范 “Hey Nicks, turn on the kitchen lights.”。文件名中的 −6、0、+6 dB 指模拟麦克风在唤醒音区间的相对电平，实机值随扬声器音量、摆位和房间而变。播放包 SHA256 为 `a86cb485789a859accbf916f34b000b28e24fcc0e689f86e141dc1f62c2879af`。[独立面板与外部播放轨、manifest](../../results/4090-c161-fixed-cue-over-spoken-bot-playback.zip)
+
+每组可分别播外部音、只让面板示范、两路同时播放。对同一配对保持摆位和音量，比较面板持续播报，以及在该次实板 OPEN 后请求面板淡出。外部命令需播完。从同次 UART、原麦 M、回采参考 R 和 Opus 解码 WAV 可分别读出开麦时钟、面板实际降音时钟、上行中是否保留了外部命令。清单内的 `qemu_open` 是模拟结果，实机淡出由本次 OPEN 驱动。上面两项时钟及捕获工具也可用于这组文件。[回放及完整转写](../../results/4090-c161-fixed-cue-playback-stop.json)
