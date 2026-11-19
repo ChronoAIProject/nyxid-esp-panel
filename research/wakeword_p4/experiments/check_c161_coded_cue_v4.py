@@ -21,7 +21,7 @@ HEADER=RESULTS.parent/"portable/c161_coded_cue_v4.h"
 TARGET = "v4"
 
 
-def command_streams(cue, noise_reference=None):
+def command_streams(cue, noise_reference=None, process_command=None):
     # Fresh room channels on the same dry matched triplets. The seed, carrier, timing
     # and absolute noise are identical for v4, original v3, Willow and silence.
     plan=read(RESULTS/"4090-c161-v3-command-willow-plan-v1.json")
@@ -37,9 +37,10 @@ def command_streams(cue, noise_reference=None):
         dry=load_wav(source)
         assert hashlib.sha256(dry.tobytes()).hexdigest()==source["pcm_sha256"]
         start,end=source["start"],source["end"]
+        command = dry[end:] if process_command is None else process_command(dry[end:])
         for kind in ((TARGET,"v3") if source["target_id"]=="nyx" else (source["target_id"],)):
             target=cue if kind==TARGET else dry[start:end]
-            stream=np.r_[dry[:start],target,dry[end:]]
+            stream=np.r_[dry[:start],target,command]
             for name,taps,cut,snr,rate in rooms:
                 pcm=stream
                 if taps:

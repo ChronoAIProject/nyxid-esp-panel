@@ -129,3 +129,21 @@ Mac 的实机播放包有三条 16 kHz 单声道 PCM16 WAV。两条外部音轨�
 数字直送及反相衰减、2% 增益参考均能提前确认两份 WAV。另以 20 ms 帧和八种 Opus 配置压缩后解码至参考端。在单位增益下，原 v5 的提前检查通过 3/8，增强版 6/8，完整三段参考两版都通过 8/8。两处同时播放相同固定音时，参考保护会抑制外部请求。板上需记录实际参考的来源和采样时钟。[输入传输与增益](../../results/4090-c161-mac-reference-prefix-qualification.json) · [90 次历史场景复验](../../results/4090-c161-mac-reference-prefix-signature-regressions.json)
 
 复验沿用本目录的 ESP-IDF 构建步骤，将构建目录设为 `.local/wakeword/c161-mac-listener/build-reference-prefix`。在研究 Python 环境运行 `prefix_guard.py rooms --signature`、`regressions --signature`、`collisions --signature` 和 `host --signature`，可用 `--out <新文件>` 指定输出。运行 `prefix_guard.py qualification` 可核对背景与传输格式。回放协议字为 `0x4452594e`，双声道依次放原麦克风和同步扬声器参考的连续 PCM16。
+
+## 外部设备连续播放固定音和合成命令时的电平
+
+四种既有合成声音的远场命令在唤醒后只剩 −6.36 至 −0.46 dB 命令信噪比。试验使用同一份增强版 v5，只处理紧接的数字命令。对照均沿用同一房间响应、接收增益、噪声波形和首音素位置。发送端给命令最多 12 dB 增益，PCM 样本峰值上限为 −1 dBFS。线性版本每句使用一个增益，限幅版本在短峰值附近收低增益，预先处理已生成的整句，输出样本数和采样时钟与原件一致。[发送端实现](../../experiments/check_c161_command_playback_level.py)
+
+| 同一组 12 条命令 | 按首音素截取，原始 / 线性 / 限幅全句 | 从两秒回看起点转写到录音末尾，原始 / 线性 / 限幅完整命令 |
+| --- | --- | --- |
+| 数字直送 | 11 / 11 / 11 | 12 / 12 / 12 |
+| 近场 | 8 / 10 / 7 | 11 / 10 / 12 |
+| 远场 | 0 / 1 / 2 | 0 / 1 / 3 |
+
+36 个目标的合并通知时钟逐条复现。将相同处理单独用于已经混入环境噪声的远场麦克风命令段，完整转写仍为 0/12。72 条相同前文和命令的 Willow 与静音替换对照，在发送端限幅后均零通知。[原始波形身份、通知与逐词转写](../../results/4090-c161-command-playback-level.json)
+
+在 4090 上另外合成四种已用训练声音的两条新命令，每条分别通过 MIT 训练分区厨房空调和客厅音乐。用原命令有效帧将两组基准都配到 0 dB，环境和公共接收增益随后固定。增强固定音各条件均唤醒 16/16。按整份主机原麦回看录音的转写末尾是否包含完整命令计分，原音厨房、客厅分别为 5/8、3/8，发送端限幅分别为 7/8、7/8。16 个逐句配对保留全部原有成功。限幅后命令信噪比为 9.03–11.18 dB。另做等能量对照，按同一批房间的原命令有效帧将限幅后的命令送入增益调回约 0 dB，厨房、客厅分别为 7/8、5/8。此对照用到了已知模拟房间响应。替换为字面普通合成 “Hey Nyx” 时，处理前后均唤醒且首句完整 1/16；相同噪声与命令的静音唤醒词对照均零通知。[原始干声](../../results/4090-c161-command-playback-level-new-dry.zip) · [新房间逐句比较](../../results/4090-c161-command-playback-level-new-rooms.json) · [等能量对照](../../results/4090-c161-command-playback-level-new-rooms-matched.json)
+
+旧远场原始与限幅输入各 12 条，全部经过带数字参考检查的 P4 QEMU 监听器。面板播放参考为零，从两秒回看开始，将实际通话队列和同期原麦分别送入 Espressif Opus 编码器。两路各解码 5,408 个 20 ms 包。两路的整段录音均从原始 0/12 提至限幅后 2/12。通话队列恢复 am_eric 的 “Lower the fan speed.” 和 am_fenrir 的 “Start the kitchen timer.”；后者转写开头还有一句多余的话，符合本表既定的命令末尾匹配口径。af_aoede 的同一句风扇命令在两组都失败。一次监听器回放在通过标记前重启，原失败串口未保留；相同 PCM 冷启动复验通过。另有一个 16 ms 读块耗时 18.457 ms。板上首词、延迟、丢帧和稳定性待 Mac 回采。[P4 开麦和逐包结果](../../results/4090-c161-command-playback-level-p4.json) · [串口事件及原始编码包](../../results/4090-c161-command-playback-level-p4-packets.zip)
+
+供 Mac A/B 的包中有两种声音各两条 16 kHz 单声道 PCM16，顺序为同一增强版 v5 后直接接合成命令。用同一外部扬声器、音量和摆位播放，记录面板原麦、通知点与实际 Opus 解码音。清单给出每条 WAV 和 PCM 的 SHA256、命令起点及对应远场模拟输入身份。归档 SHA256 为 `f0677ef6d325b198aedb6af9a6caf5e38e781ab6d64e76b5cd52cf75cd6adf54`。[四条实机播放 WAV](../../results/4090-c161-command-playback-level-board.zip)

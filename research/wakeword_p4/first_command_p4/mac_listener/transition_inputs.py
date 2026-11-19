@@ -25,7 +25,7 @@ SCHEDULES = ("quiet", "start", "stop", "burst")
 OLD = listener.RESULTS / "4090-c161-v5-playback-reference.json"
 
 
-def commands():
+def commands(utterances=None):
     from kokoro_onnx import Kokoro
     from check_c161_wake_phone_duration_v1 import session
 
@@ -38,7 +38,9 @@ def commands():
     engine = session(str(model))
     synth = Kokoro.from_session(engine, str(styles))
     rendered = []
-    for voice, text in (*COMMANDS, ("af_kore", PANEL)):
+    if utterances is None:
+        utterances = (*COMMANDS, ("af_kore", PANEL))
+    for voice, text in utterances:
         assert voice in training
         phones = synth.tokenizer.phonemize(text, "en-gb" if voice.startswith("b") else "en-us")
         ids = synth.tokenizer.tokenize(phones)
