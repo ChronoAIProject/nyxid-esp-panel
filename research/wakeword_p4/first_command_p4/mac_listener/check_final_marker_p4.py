@@ -64,7 +64,7 @@ def common_trials(matcher):
         yield meta, "candidate", False, pcm, np.zeros_like(pcm), opened, board["c161"]
 
 
-def run_case(work, request, versions, readers, decoder, matchers, i):
+def run_case(work, request, versions, readers, decoder, matchers, i, *, candidate_build=BUILD):
     meta, mode, local, pcm, ref, opened, c161 = request
     key = dict(source=meta, mode=mode, local=local, mic=ch.digest(pcm), ref=ch.digest(ref), opened=opened, versions=versions)
     checksum = sha256(json.dumps(key, sort_keys=True).encode()).hexdigest()
@@ -76,7 +76,7 @@ def run_case(work, request, versions, readers, decoder, matchers, i):
         return row, archive
     strict, candidate, prefix = matchers
     mic_matcher = strict if mode == "original" else candidate
-    build = phase.handoff.test.BUILD if mode == "original" else BUILD
+    build = phase.handoff.test.BUILD if mode == "original" else candidate_build
     tmp = archive.with_suffix(".tmp")
     with ZipFile(tmp, "w", ZIP_DEFLATED) as logs:
         for attempt in range(3):

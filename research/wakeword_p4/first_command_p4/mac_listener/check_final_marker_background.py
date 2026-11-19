@@ -13,10 +13,10 @@ ch = host.ch
 OUT = ch.RESULTS / "4090-c161-final-marker-background.json"
 
 
-def main():
+def main(*, output=OUT, make_matcher=host.binding, grid_report=host.OUT, extra_sources=()):
     groups, sources = {}, {}
     with TemporaryDirectory() as folder:
-        detector = host.binding(Path(folder))
+        detector = make_matcher(Path(folder))
         for cohort in ("melo", "primed", "jenny"):
             path = ch.RESULTS / f"4090-c161-history-gain-{cohort}-v1.json"
             rows = []
@@ -38,7 +38,7 @@ def main():
             groups[cohort] = dict(records=rows, summary=stats, hours=stats["samples"]/57600000)
             sources[path.name] = ch.sha(path)
             print(cohort, stats, flush=True)
-    ch.save(OUT, dict(groups=groups, sources={**sources, host.OUT.name:ch.sha(host.OUT),
+    ch.save(output, dict(groups=groups, sources={**sources, **{p.name:ch.sha(p) for p in (grid_report, *extra_sources)},
                      Path(__file__).name:ch.sha(Path(__file__))}, policy="Previously consumed background recordings. "
                      "Stream from the start of each file, verify complete PCM hashes, preserve state across blocks. "
                      "Include previously frozen C161 events in the combined count. Report each exposure separately."))

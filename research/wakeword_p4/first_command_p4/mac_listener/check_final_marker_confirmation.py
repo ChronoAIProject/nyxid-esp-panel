@@ -28,15 +28,15 @@ def candidate_header():
     return text.replace(old, new).replace("class CodedCueV5", "class FinalMarkerConfirmation")
 
 
-def binding(folder):
+def binding(folder, *, header_text=None, matcher_class="FinalMarkerConfirmation"):
     portable = folder / "portable"
     sources = folder / "frontend_probe"
     portable.mkdir()
     sources.mkdir()
-    (portable / "final_marker.h").write_text(candidate_header())
+    (portable / "final_marker.h").write_text(candidate_header() if header_text is None else header_text)
     coeff = HEADER.with_name("c161_coded_cue_coefficients_v5.h")
     (portable / coeff.name).symlink_to(coeff.resolve())
-    content = SOURCE.read_text().replace("c161_coded_cue_v5.h", "final_marker.h").replace("nyx::CodedCueV5", "nyx::FinalMarkerConfirmation")
+    content = SOURCE.read_text().replace("c161_coded_cue_v5.h", "final_marker.h").replace("nyx::CodedCueV5", "nyx::" + matcher_class)
     (sources / SOURCE.name).write_text(content)
     with patch.object(probe, "ROOT", folder):
         return probe.binding(folder / "candidate.so", coded="v5")
@@ -60,13 +60,13 @@ def interference(matcher):
     return music, conversations
 
 
-def main():
+def main(*, output=OUT, make_matcher=binding, sources=(), policy=None):
     history = ch.read(study.OUT)
     dry = study.tracks()
     rows, controls, counts = [], {}, defaultdict(Counter)
     with TemporaryDirectory() as folder:
         work = Path(folder)
-        candidate = binding(work)
+        candidate = make_matcher(work)
         full = ch.binding(work / "v5.so", coded="v5")
         pair = ch.binding(work / "pair.so", coded="aligned")
         for group, inputs in (("established", study.established(dry)), ("other_music", study.more_music(dry))):
@@ -101,11 +101,11 @@ def main():
         size = candidate.pcm_cue_bytes()
         assert size == full.pcm_cue_bytes()
     assert len(rows) == 1288 and len(controls) == 364 and len(tracks) == 12
-    ch.save(OUT, dict(records=rows, summary=counts, controls=controls, music=tracks, conversations=conversations,
+    ch.save(output, dict(records=rows, summary=counts, controls=controls, music=tracks, conversations=conversations,
                       state_bytes=size, original_wav_sha256=ch.sha(grid.fit.fixed.CUE), c161_sha256=history["model_sha256"],
                       sources={p.name:ch.sha(p) for p in (HEADER, HEADER.with_name("c161_coded_cue_coefficients_v5.h"),
-                              SOURCE, study.OUT, study.fit.DEV, spoken.diagnostic.INTERFERENCE, Path(__file__))},
-                      policy="One microphone matcher change on original v5 PCM. Require absolute correlation 0.30 "
+                              SOURCE, *sources, study.OUT, study.fit.DEV, spoken.diagnostic.INTERFERENCE, Path(__file__))},
+                      policy=policy or "One microphone matcher change on original v5 PCM. Require absolute correlation 0.30 "
                       "on the first two and 0.20 on the third with the original polarity, timing and cooldown. "
                       "Use the original reference detector, original frozen C161 per-input notifications and original "
                       "two-second pre-roll. Previously consumed rooms and tracks, no threshold sweep or new exposure."))
