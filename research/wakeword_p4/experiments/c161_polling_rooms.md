@@ -1128,3 +1128,25 @@ TX 提前 80 ms 时，完整上行中两条 “turn down” 被 Qwen 转成 “t
 | 有效 RMS 配平的 Hey Willow，官方 DEFAULT | 6 / 15 | 0 / 2 | 0 / 0 |
 
 普通 Nyx 在干声中多出的 9 次、Willow 干声多出的 9 次和正面多出的 2 次均在命令开始后 500 ms 以内。对普通音，干声连说已可观察到判定偏晚；由干声到正面混音同时引入房间、音乐、面板及采音增益，无法从这两组数分摊各声源的影响。Nyx 正面与直通时钟取自主机冻结 INT8 与标记匹配器，背面标记音使用既有 P4 固件实跑复核。Willow 三种条件均使用官方模拟运行时。补充的 144 路共重新核对 43,512 个原始帧返回。[补充输入](../results/4090-c161-eight-voice-willow-channels-plan.json) · [逐例时钟](../results/4090-c161-eight-voice-willow-channels.json) · [官方原始返回](../results/4090-c161-eight-voice-willow-channels.zip)
+
+### 干声和正面混音的完整上行，以及晚开时的两秒回看
+
+沿用上一组 144 条输入及各自接收器的首次开麦时钟。对开麦的 76 条按相同的 10 ms FIFO、两秒回看、选中通道 90 ms 延迟构造输入，经 P4 模拟器中的 Opus 固件编码，在 RTX 4090 上无命令提示转写完整上行。各格依次给出「命令前开麦数 / 全程开麦数 / Qwen 识全数 / Whisper turbo 识全数」，分母均为 24。两个识全数包含晚开后仍然识全的命令。
+
+| 接收方案 | 干声连说 | 正面混音 |
+| --- | --- | --- |
+| 增强 Hye Nyx，冻结 C161 加标记匹配器 | 24 / 24 / 23 / 23 | 24 / 24 / 20 / 16 |
+| 普通 Hye Nyx，同一接收器 | 2 / 11 / 11 / 11 | 0 / 0 / 0 / 0 |
+| 有效 RMS 配平的 Hey Willow，官方 DEFAULT | 6 / 15 / 15 / 15 | 0 / 2 / 1 / 2 |
+
+干声中普通 Nyx 的 9 条晚开延迟 34–133 ms，Willow 的 9 条为 5–151 ms；正面 Willow 的两条延迟 72 和 97 ms。从原始录音和开麦时钟重建两路编码前 PCM，逐条核对哈希，再从 UART 复解两路全部 41,774 个包。上表的干声和正面均按既有检测时钟重建 FIFO。背面增强音的既有完整监听固件回放中，同一顺序的四项为 24 / 24 / 15 / 11。[开麦、首句文本与 FIFO 时钟](../results/4090-c161-eight-voice-willow-channels-uplinks.json) · [76 路编码记录](../results/4090-c161-eight-voice-willow-channels-uplinks.zip)
+
+另将全部 20 条晚开的模拟回看长度从两秒设为零。保留同一开麦时刻、麦克风录音、90 ms 通道延迟、FIFO 的 10 ms 分帧和同一结束样本；每次由 Opus 从新的上行起点重新编码。下表给出开启回看和取消回看时的识全数。
+
+| 晚开子集 | Qwen，两秒 → 零 | Whisper turbo，两秒 → 零 |
+| --- | --- | --- |
+| 干声普通 Nyx，9 条 | 9 → 7 | 9 → 6 |
+| 干声官方 Willow，9 条 | 9 → 7 | 9 → 7 |
+| 正面官方 Willow，2 条 | 1 → 2 | 2 → 2 |
+
+普通 Nyx 干声第 21 例取消回看后，选中通道从命令起点之后 35 ms 才开始。两个转写器都保留了 “you unlock the side door”，丢失了 “can”。正面 Willow 第 70 例去掉回看后，Qwen 反而将 “turned down the hall light” 识别为目标 “turn down the hall light”。转写会受到上下文影响。逐例核对零回看的两路编码输入都与原两秒输入去掉前 32,000 个样本后的字节一致，并重新解码全部 6,244 个包。本对照只测试两秒和零两档。所有声音、房间和命令均复用既有开发材料。Mac 两板的采集与首包时钟、实际编码输入和最低内部堆仍待实测。[20 个配对时钟及原文](../results/4090-c161-eight-voice-willow-channels-late-history.json) · [零回看编码记录](../results/4090-c161-eight-voice-willow-channels-late-history.zip)
