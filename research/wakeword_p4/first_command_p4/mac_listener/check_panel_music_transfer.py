@@ -15,7 +15,7 @@ ch, tx = panel.ch, panel.tx
 OUT = ch.RESULTS / "4090-c161-panel-music-transfer.json"
 
 
-def inputs():
+def inputs(external_cue=None):
     songs = ch.read(music.fit.DEV)["records"][1:]
     rooms = sorted(music.ROOMS)
     v5, original = tx.study.panel_wave()
@@ -34,6 +34,9 @@ def inputs():
         command, _ = tx.balanced.match_level(v5, bank[voice,text])
         wet = fftconvolve(np.r_[v5,command].astype(float), hx)
         wet_cmd = fftconvolve(np.r_[np.zeros_like(v5),command].astype(float), hx)
+        if external_cue is not None:
+            assert external_cue.shape == v5.shape
+            alternate = fftconvolve(np.r_[external_cue,command].astype(float), hx)
         ref_rms = np.sqrt(np.mean(fftconvolve(v5.astype(float), hp)[:len(v5)]**2))
         panels = {name:fftconvolve(w.astype(float),hp) for name,w in (("original",original),("quiet",quiet))}
         longest = local_at + max(tx.study.OFFSETS) + len(wet) + 4800
@@ -56,6 +59,13 @@ def inputs():
                         signal[start:start+len(ext)] += ext*10**(db/20)
                         views[name,role] = signal
                 gain = min(1.,28000/max(np.abs(v).max() for v in views.values()))
+                if external_cue is not None:
+                    # Keep the exact preamp gain of the original scene. Rebuild the
+                    # alternate positive from its sources to avoid requantizing PCM.
+                    other = bg[:length].copy()
+                    other[local_at:local_at+len(panels["quiet"])] += panels["quiet"]
+                    other[start:start+len(alternate)] += alternate*10**(db/20)
+                    views["quiet_rms","both"] = other
                 meta = dict(track=j, music=song["source_path"], noise_sha256=song["sha256"], offset=offset,
                     panel_room=local_room, external_room=external_room, panel_sha256=local_sha,
                     ext_room_sha256=external_sha, voice=voice, command=text, command_pcm_sha256=ch.digest(command),
