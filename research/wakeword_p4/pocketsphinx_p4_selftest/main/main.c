@@ -15,6 +15,9 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "pocketsphinx.h"
+#ifdef NYX_LEXICAL_ADDRESSES
+#include "address_probe.h"
+#endif
 
 enum { block = 480, capacity = 28800, max_matches = 64 };
 static const uint32_t external = MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT;
@@ -27,6 +30,7 @@ static void report_heap(const char *stage)
            (unsigned)heap_caps_get_minimum_free_size(external), (unsigned)heap_caps_get_minimum_free_size(internal));
 }
 
+#ifndef NYX_LEXICAL_ADDRESSES
 struct match { int start, end, returned; };
 
 static int run_case(ps_decoder_t *ps, const char *cmn, int idx, const int16_t *pcm, int start, int end, int proposal)
@@ -87,6 +91,8 @@ static int run_case(ps_decoder_t *ps, const char *cmn, int idx, const int16_t *p
     return 0;
 }
 
+#endif
+
 #ifdef NYX_LEXICAL_Q8
 static int verify_music(void)
 {
@@ -127,7 +133,12 @@ static int replay(void)
     ESP_ERROR_CHECK(esp_vfs_spiffs_register(&packed));
     if (verify_music() < 0) return -1;
     ESP_ERROR_CHECK(esp_vfs_fat_spiflash_mount_ro("/vol", "cases", &mount));
-    const char *hmm = "/model/am", *dict = "/model/two.dict";
+    const char *hmm = "/model/am";
+#ifdef NYX_LEXICAL_ADDRESSES
+    const char *dict = "/model/addresses.dict";
+#else
+    const char *dict = "/model/two.dict";
+#endif
 #else
     ESP_ERROR_CHECK(esp_vfs_fat_spiflash_mount_ro("/vol", "storage", &mount));
     const char *hmm = "/vol/am", *dict = "/vol/two.dict";
@@ -140,9 +151,14 @@ static int replay(void)
     if (!config) return -1;
     ps_config_set_str(config, "hmm", hmm);
     ps_config_set_str(config, "dict", dict);
-    ps_config_set_str(config, "keyphrase", "hey nicks");
     ps_config_set_str(config, "loglevel", "WARN");
+#ifdef NYX_LEXICAL_ADDRESSES
+    ps_config_set_str(config, "sendump", "/app/address-sendump");
+    ps_config_set_str(config, "jsgf", "/model/addresses.jsgf");
+#else
+    ps_config_set_str(config, "keyphrase", "hey nicks");
     ps_config_set_float(config, "kws_threshold", 1e-15);
+#endif
 #ifdef NYX_LEXICAL_FLASH_MAP
     ps_config_set_bool(config, "mmap", TRUE);
 #else
@@ -157,6 +173,10 @@ static int replay(void)
     char *cmn = strdup(initial);
     if (!cmn) return -1;
     report_heap("ready");
+#ifdef NYX_LEXICAL_ADDRESSES
+    int idx = address_cases(ps, cmn, input, pcm, capacity);
+    if (idx < 0) return -1;
+#else
     uint32_t hdr[3];
     int idx = 0;
     while (fread(hdr, 1, sizeof(hdr), input) == sizeof(hdr)) {
@@ -168,6 +188,7 @@ static int replay(void)
         vTaskDelay(1);
     }
     if (ferror(input) || idx != 62) return -1;
+#endif
     report_heap("decoded");
     ps_free(ps);
     ps_config_free(config);

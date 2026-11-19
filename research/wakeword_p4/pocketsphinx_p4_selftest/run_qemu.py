@@ -13,10 +13,7 @@ from prepare import WORK, sha, read
 QEMU = Path(".local/wakeword/qemu-p4-release/qemu/bin/qemu-system-riscv32")
 
 
-def main(mode):
-    mapped = mode in ("mapped", "compact")
-    build = WORK / ("build" if mode == "read" else f"build-{mode}")
-    output = WORK if mode == "read" else build
+def boot(build, output):
     files = read(build / "flasher_args.json")["flash_files"]
     image = bytearray(b"\xff" * (16 << 20))
     for address, name in files.items():
@@ -43,7 +40,16 @@ def main(mode):
             if child.poll() is None:
                 child.kill()
     text = log.read_text(errors="replace")
-    assert child.returncode == 0 and "LEX_DONE cases=62" in text, (err[-250:],text[-1200:])
+    assert child.returncode == 0 and re.search(r"LEX_DONE cases=\d+\n", text), (err[-250:],text[-1200:])
+    return files, log, text
+
+
+def main(mode):
+    mapped = mode in ("mapped", "compact")
+    build = WORK / ("build" if mode == "read" else f"build-{mode}")
+    output = WORK if mode == "read" else build
+    files, log, text = boot(build, output)
+    assert "LEX_DONE cases=62\n" in text
     source = (WORK / mode if mode in ("compact", "q8") else WORK) / "inputs.json"
     manifest = read(source)
     inputs = manifest["records"]

@@ -175,7 +175,7 @@ Melo 的 40 条姓名中辅助路径误唤 4 条，均为不带逗号接 switch�
 
 RTX 4090 使用原速语流中实际检测到的语音起点训练四类卷积分类器，分别识别 Nyx、Nick、Mick 和其他。12 个 Kokoro 训练声音各合成 40 句，三种称呼在每个声音、命令、语速及标点条件下配对，另有 171 条已登记的 Chatterbox 日常训练负例。共 651 条合成语句、1,302 个音量窗口。每次在检测到讲话 1.32 秒后，对过去 144 帧的 40 维原生声学特征作一次判断。训练 650 步，54,388 个参数。开发回放前冻结权重，固定 Nyx 后验概率 ≥ 0.5，再与原 C161 通知按同一冷却时间合并。[训练语句与音素](../results/4090-c161-onset-names-sources.json) · [训练结果](../results/4090-c161-onset-names-fit.json) · [权重](../results/4090-c161-onset-names-weights.npz)
 
-冻结后，在已有 Melo EN-US、EN-BR 声音上另合成 save 和 turn 开头的两条命令。32 条目标、40 条姓名、16 条日常语句播放和 8 条 Hey Willow。下表的首句完整数包括未被唤醒的目标在内。两秒回看采用同一 Whisper small.en。[新输入、实际音素](../results/4090-c161-onset-names-melo-plan.json) · [原始语流 WAV](../results/4090-c161-onset-names-melo-wav.zip)
+冻结后，在已有 Melo EN-US、EN-BR 声音上另合成 save 和 turn 开头的两条命令。32 条目标、40 条姓名、16 条日常语句播放和 8 条 Hey Willow。下表的完整首句率以全部目标为分母。两秒回看采用同一 Whisper small.en。[新输入、实际音素](../results/4090-c161-onset-names-melo-plan.json) · [原始语流 WAV](../results/4090-c161-onset-names-melo-wav.zip)
 
 | 新命令，每条路径消费相同 PCM | 唤醒 /32 | 完整命令 /32 | 姓名误唤 /40 | 日常句误唤 /16 |
 | --- | ---: | ---: | ---: | ---: |
@@ -186,3 +186,34 @@ RTX 4090 使用原速语流中实际检测到的语音起点训练四类卷积�
 只看无逗号直接连说，三条路径对于 /heɪ/ 分别唤醒 0、1、3 条，首句分别完整 0、1、3 条，分母均为 8。对 /haɪ/ 各唤醒 5/8，首句分别完整 3、3、4 条。新分类器的 4 次日常误唤来自同一 EN-US 声音的两份波形，各在标点配对中播放两次，原句为 “Nick saved the last photo.” 和 “Can you see my shopping list?”。另在此前 96 条日常短句中误唤 “Nick, please turn on the light.”。普通 Bot 回复 0/48，Bot 示范唤醒词时 4/8；较早的 EN-BR 接 open 的八次漏唤仍全部漏掉。两批 Piper 合并该分类器后，分别唤醒 5/12、3/8，首句完整 4/12、1/8。[分类器逐窗口概率和转写](../results/4090-c161-onset-names-evaluation.json) · [原姓名语法在新载句上的复测](../results/4090-c161-onset-names-melo-grammar.json)
 
 官方 Hey Willow DEFAULT 在新载句八条自己的命令上唤醒 2 条、首句完整 2 条，均为 EN-US 带逗号，其他语句无事件。相同八种条件下，字面 Hey Nyx 的 C161 唤醒且完整 1 条，加新分类器 2 条，加此前姓名语法 4 条。以上都是合成开发对照。新增分类器的普通日常语句误唤及召回结果不足以支持实机替换 C161。[经典 ESP32 QEMU 报告](../results/4090-c161-onset-names-melo-willow.json) · [原始 UART 和逐块返回](../results/4090-c161-onset-names-melo-willow.zip)
+
+### 姓名语法的 P4 词段回放
+
+以编译出的有限状态语法图枚举每个词可能的左右音素，沿空转移传递上下文，再用 PocketSphinx 原生回退查询选取状态。保留 42 个基础音素、61 个三音素和 270 个共享状态。127 段已消费开发语流提供了 117 个不同的候选窗口。缩小模型后使用原浮点高斯表时，117 个窗口的文字和词边界全部与完整英文模型吻合，66 个分数有差异。换为既有 Q8 高斯表后，1 个窗口从 hey nicks 变成 hey mix，7 个窗口的分词时间有变化。该词段所属的连续命令仍会唤醒，主机通知晚 120 ms。[状态、文件及语法图哈希](../results/4090-c161-address-grammar-graph-inputs.json) · [逐窗口及完整语流比较](../results/4090-c161-address-grammar-graph-windows.json)
+
+声学文件及词典、语法合计 506,138 B。整套文件与原有三首音乐放入面板配置的 2 MiB SPIFFS 时，实际制卷报空间不足。自测把 104,320 B 的 am/sendump 放入应用映像，其余 401,818 B 和现有音乐放入 SPIFFS。P4 QEMU 启动后核对三首音乐的长度及 CRC，117 个词段的文字与逐词起止帧全部与独立 Q8 主机一致。自测应用 678,192 B，语法初始化 5.57 s，就绪占用外部堆 3,050,712 B。启动前外部堆至回放最低余量之差为 3,237,196 B。各词段从复位特征到识别完成耗时中位数 174.78 ms，范围 96.37–245.64 ms。首次将双核模拟器固定在宿主单个逻辑 CPU 上时触发空闲任务看门狗，给同一映像三个宿主逻辑 CPU 后完整回放通过。[设备测量](../results/4090-c161-address-grammar-p4.json) · [两次原始 UART](../results/4090-c161-address-grammar-p4-uart.zip)
+
+按每个候选实际可用的样本时钟，把 125 次语音起点短语匹配连同重复匹配送入单工作任务队列，逐项计入该词段对应的模拟设备耗时。供给候选至结束的中位数为 189.25 ms，最长 673.63 ms。下表采用两秒回看并在 RTX 4090 上重新转写。队列只计姓名语法这一步，前端、前级提议、其他面板任务和网络耗时仍需整机测量。[队列、通知和逐句转写](../results/4090-c161-address-grammar-p4-fifo.json)
+
+| 合成载句 | 目标数 | 唤醒 | 主机原语法首句完整 | 计入 P4 语法排队后首句完整 |
+| --- | ---: | ---: | ---: | ---: |
+| 首批 Piper | 12 | 11 | 10 | 10 |
+| 次批 Piper | 8 | 7 | 5 | 4 |
+| Melo，switch / open | 32 | 20 | 13 | 13 |
+| Melo，save / turn | 32 | 18 | 16 | 15 |
+
+研究包 489,617 B，SHA256 为 `6e16686d21664914155d09221ae025586b07ed0bd94a0e81717eabe71143edaf`，内含声学文件、词典、语法、许可和逐文件清单。普通语音整机使用的冻结 C161 和固定播放音 v5 均已有独立交接。[姓名语法研究包](../results/4090-c161-address-grammar-graph-q8.tar.gz)
+
+在已准备好上述 Q8 自测环境的研究工作树，从仓库根目录生成独立探针。主机生成脚本依赖本页前文的已锁定词典、语流、模型和开发输入。
+
+```sh
+export PYTHONPATH="research/wakeword_p4/experiments:.local/wakeword/c161-pocket-reference/site"
+python3 "$app/compact_addresses.py" --graph
+python3 "$app/check_address_windows.py"
+cp "$work/q8-sdkconfig" "$work/addresses-graph/sdkconfig"
+idf.py -C "$app" -B "$work/build-addresses" -DNYX_LEXICAL_Q8=ON -DNYX_LEXICAL_ADDRESSES=ON \
+  -DIDF_TARGET=esp32p4 -DSDKCONFIG="$work/addresses-graph/sdkconfig" \
+  "-DSDKCONFIG_DEFAULTS=$app/sdkconfig.defaults;$work/qemu.defaults" reconfigure
+cmake --build "$work/build-addresses" --parallel 2
+python3 "$app/run_address_qemu.py"
+```
