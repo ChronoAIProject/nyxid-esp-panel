@@ -11,8 +11,8 @@ ch = replay.ch
 OUT = replay.OUT.with_name(replay.STEM + "-commands.json")
 
 
-def main():
-    run = ch.read(replay.OUT)
+def main(input_report=replay.OUT, output=OUT, *, include_post120=False):
+    run = ch.read(input_report)
     ref = ch.read(reader.OUT)
     proc, model, qid = reader.gain.study.prefix.balanced.original.asr.load()
     small, sid = ch.load_reader()
@@ -29,10 +29,19 @@ def main():
         sources[path.name] = ch.sha(path)
         sources[archive.name] = doc["archive_sha256"]
         for index, entry in enumerate(doc["captures"]):
-            old[entry["pcm_sha256"],entry["opened"]] = entry,archive,index
+            old[entry["pcm_sha256"],entry["opened"]] = entry,archive,index,"external"
+    if include_post120:
+        doc = ch.read(OUT)
+        archive = OUT.with_suffix(".zip")
+        assert ch.sha(archive)==doc["archive_sha256"] and (doc["qwen"],doc["turbo"],doc["codec"])==(qid,ref["turbo"],ref["codec"])
+        sources[OUT.name] = ch.sha(OUT)
+        sources[archive.name] = doc["archive_sha256"]
+        for entry in doc["captures"]:
+            if entry["origin"]["archive"]==archive.name:
+                old[entry["mic_sha256"],entry["opened"]] = entry,archive,entry["origin"]["case"],"wake"
     captures, rows, stats = [], [], defaultdict(Counter)
-    archive = OUT.with_suffix(".zip")
-    with TemporaryDirectory(dir=OUT.parent) as folder:
+    archive = output.with_suffix(".zip")
+    with TemporaryDirectory(dir=output.parent) as folder:
         work = Path(folder)
         reader.uplink.WORK = work
         with ZipFile(work/archive.name,"w",ZIP_DEFLATED) as logs:
@@ -51,20 +60,20 @@ def main():
                         i = len(captures)
                         key = r["pcm_sha256"],at
                         if key in old:
-                            entry,where,j = old[key]
+                            entry,where,j,role = old[key]
                             with ZipFile(where) as previous:
-                                uart = previous.read(f"opus/{j:03}-external.log").decode().replace("\r\n","\n")
-                            fifo = entry["capture"]
+                                uart = previous.read(f"opus/{j:03}-{role}.log").decode().replace("\r\n","\n")
+                            fifo = entry["capture"] if role=="external" else entry["fifo"]
                             assert fifo["first"]==max(0,at//160*160-32000)
                             for lane,label in enumerate(("selected","raw")):
                                 pkts = reader.uplink.packets(uart,j,fifo["emitted"]-fifo["first"],lane)
                                 pcm = reader.uplink.decode(decoder,pkts)
                                 assert ch.digest(pcm)==fifo["lanes"][label]["decoded_sha256"]
                             cap = dict(fifo=fifo,qwen=entry["qwen"],turbo=entry["turbo"])
-                            origin = dict(archive=where.name,case=j)
+                            origin = dict(archive=where.name,case=j,role=role)
                         else:
                             cap = reader.recognize(work,logs,i,mic,dict(carrier=s["command"]),at,readers)
-                            origin = dict(archive=archive.name,case=i)
+                            origin = dict(archive=archive.name,case=i,role="wake")
                         assert cap["fifo"]["lanes"]["selected"]["decoded_sha256"]==cap["qwen"]["pcm_sha256"]
                         captures.append(dict(case=i,cohort=cohort,source=s,mic_sha256=key[0],opened=at,origin=origin,**cap))
                         clocks[at] = i
@@ -78,13 +87,20 @@ def main():
         assert len(rows)==72
         with ZipFile(work/archive.name) as logs:
             assert logs.testzip() is None and len(logs.namelist())==len(set(logs.namelist()))
-        ch.save(work/OUT.name,dict(records=rows,captures=captures,summary=stats,archive_sha256=ch.sha(work/archive.name),
-                replay_sha256=ch.sha(replay.OUT),script_sha256=ch.sha(Path(__file__)),sources=sources,codec=ref["codec"],
+        ch.save(work/output.name,dict(records=rows,captures=captures,summary=stats,archive_sha256=ch.sha(work/archive.name),
+                replay_sha256=ch.sha(input_report),script_sha256=ch.sha(Path(__file__)),sources=sources,codec=ref["codec"],
                 small=sid,turbo=ref["turbo"],qwen=qid,policy="Same two-second history and full selected 24 kb/s uplink. "
                 "Decode verified prior captures at equal input and OPEN; encode uncovered clocks on simulated P4."))
         (work/archive.name).replace(archive)
-        (work/OUT.name).replace(OUT)
+        (work/output.name).replace(output)
 
 
 if __name__=="__main__":
-    main()
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--dwell", action="store_true")
+    if parser.parse_args().dwell:
+        import replay_unmarked_dwell as dwell
+        main(input_report=dwell.OUT, output=dwell.OUT.with_name(dwell.fit.STEM+"-commands.json"), include_post120=True)
+    else:
+        main()
