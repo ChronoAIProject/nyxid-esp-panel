@@ -351,3 +351,9 @@ nice -n 10 taskset -c 2,4 /usr/bin/python3 "$app/rearm_repeat_reference.py" p4
 ```
 
 研究脚本在创建 JSON 时要求输出路径可新建。复现时在独立工作树保留冻结输入，先将待重建的同名 JSON、ZIP 移入本地备份目录。已有模拟构建用 `check_repeat_p4.py` 回放六个房间的 P4 FIFO，用 `check_repeat_command_audio.py` 对照已有 16 个厨房和客厅命令，用 `score_repeat_command_boundary.py` 复解同一批编码包。新开关使播放参考每次完整匹配后重新开始检测，已知自播误开消失，同时在 20 次外部同音插话中少接住一次。Mac 的主测 WAV 使用原 v5。[配对结果与音频参数](../../experiments/c161_polling_rooms.md#在同一条-hye-nyx-中提前-500-ms-重复标记)
+
+### 原音与等 RMS 标记音的实物和数字配对
+
+两条干声各为 1.10 秒，16 kHz 单声道 PCM16。等 RMS 版沿用原固定匹配器和冻结 C161，峰值 29,913，原音为 29,250。在 11 首音乐和 28 个房间的 616 个已用条件中，两者分别提前开麦 556 和 515 次。机内自播的同步数字参考下均无误开。[等 RMS 单独唤醒音](../../results/hye-nyx-v5-marker-gains-rms.wav) · [原 v5 单独唤醒音](../../results/hye-nyx-c161-v5-early-80ms.wav)
+
+五组板测 A/B 包中，每组有原 v5 和等 RMS 版，每版各有 `speaker`、`mic`、`reference` 三个 WAV。实际扬声器播放 `speaker`，同一对文件从第 17,600 个样本起是完全相同的命令，保持系统音量和摆位一致。数字回放将 `mic` 接入麦克风通道，外放测试的参考设为零，自播测试使用同名 `reference` 从样本零同步注入。数字输入的命令时钟见该场景的 `source.command_at`。四组取自新音此前多出的命中，另有一组重放较高电平版本曾发生自唤醒的条件，均已在原 P4 模拟固件做两种 WAV、两种参考的共 20 次复核。实板回传同一次采集的板型、音轨标识、M/R、OPEN、首包/解码首句和最低内部堆。[30 个 WAV、UART、清单](../../results/c161-marker-rms-mac-ab.zip) · [各场景时钟和校验和](../../results/c161-marker-rms-mac-ab.json)
