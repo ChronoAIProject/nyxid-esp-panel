@@ -42,12 +42,12 @@ def coefficients():
         f.write("\n".join(lines))
 
 
-def fresh(lib,cue, target="v4", seed_base=937757):
+def fresh_streams(cue, target, seed_base, noise_reference=None):
     from scipy.signal import butter, fftconvolve, sosfilt, lfilter
     from check_c161_event_transcripts_v1 import source_pcm
     bot=dict(source_pcm("bot"))
     bot_plan=read(RESULTS/"4090-c161-bot-replies-v1.json")
-    rows=[]
+    reference = cue if noise_reference is None else noise_reference
     for i in range(24):
         rng=np.random.default_rng(seed_base+i)
         voice=("af_kore","bm_fable")[i%2]
@@ -70,7 +70,7 @@ def fresh(lib,cue, target="v4", seed_base=937757):
         count=round(len(tail)/rate)+len(ir)-1
         noise=lfilter([1],[1,-.78],rng.normal(size=count))
         snr=rng.uniform(6,22)
-        noise*=.60*np.sqrt(np.mean(cue.astype(float)**2)/np.mean(noise**2))*10**(-snr/20)
+        noise*=.60*np.sqrt(np.mean(reference.astype(float)**2)/np.mean(noise**2))*10**(-snr/20)
         for role,wave in ((target,cue),("silence",np.zeros_like(cue))):
             dry=np.r_[history,np.zeros(start-len(history)),wave,cmd]
             resampled=np.interp(np.arange(round(len(dry)/rate))*rate,np.arange(len(dry)),dry)
@@ -78,8 +78,12 @@ def fresh(lib,cue, target="v4", seed_base=937757):
             pcm=np.rint(analog).clip(-32768,32767).astype("<i2")
             r=dict(case=i,seed=seed_base+i,bot=voice,utterance=a["text"],command=src["carrier"],role=role,rate=rate,
                    snr=snr,cutoffs=cuts,start=round(start/rate),end=round(end/rate),clipped=int((abs(analog)>32767).sum()),
-                   pcm_sha256=original.hashlib.sha256(pcm.tobytes()).hexdigest(),events=detect(lib,[pcm]))
-            rows.append(r)
+                   pcm_sha256=original.hashlib.sha256(pcm.tobytes()).hexdigest())
+            yield r, pcm
+
+
+def fresh(lib,cue, target="v4", seed_base=937757):
+    rows = [dict(r, events=detect(lib,[pcm])) for r,pcm in fresh_streams(cue,target,seed_base)]
     save(RESULTS/f"{STEM}-fresh.json",dict(header_sha256=sha(HEADER),coefficients_sha256=sha(COEFF),cue_sha256=sha(WAV),records=rows))
 
 

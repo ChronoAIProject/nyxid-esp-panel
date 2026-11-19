@@ -60,7 +60,7 @@ def command_streams(cue, noise_reference=None):
                            room_taps=taps,band_hz=cut,noise_db=snr),pcm
 
 
-def measured(cue):
+def measured(cue, gain_reference=None):
     # v3 and v4 have identical lengths. Apply identical h, gain and noise per response.
     v3=load_wav(dict(path=RESULTS/"hye-nyx-c161-synthetic-cue-v3.wav",sha256=read(RESULTS/"4090-c161-coded-cue-v4-source.json")["v3_sha256"]))
     for i,r in enumerate(read(RESULTS/"4090-mit-rir-audit.json")["records"]):
@@ -70,7 +70,8 @@ def measured(cue):
         assert rate==16000
         h/=np.linalg.norm(h)
         waves=[fftconvolve(w,h) for w in (v3,cue)]
-        gain=min(.65,.78*32767/max(np.abs(w).max() for w in waves))
+        gain_target = waves[1] if gain_reference is None else fftconvolve(gain_reference,h)
+        gain=min(.65,.78*32767/max(np.abs(w).max() for w in (waves[0],gain_target)))
         lead=14537
         noise=lfilter([1],[1,-.85],np.random.default_rng(52631+i).normal(size=lead+len(waves[0])+8000))
         noise*=gain*np.sqrt(np.mean(v3.astype(float)**2)/np.mean(noise**2))/10
