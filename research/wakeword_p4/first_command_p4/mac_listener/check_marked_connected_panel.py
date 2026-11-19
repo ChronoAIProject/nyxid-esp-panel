@@ -64,6 +64,28 @@ def save_speakers(z, row, tracks):
                 command_at=row["end"], source_sha256=row["sha256"], tracks=entries)
 
 
+def room_scene(s, group, quiet, v5, bed, bed_sha):
+    (hp, _, ph), (hx, _, eh) = tx.diag.room(s["geometry"])
+    assert (ph,eh,bed_sha) == (s["panel_rir_sha256"],s["external_rir_sha256"],s["music_sha256"])
+    local = fftconvolve(quiet.astype(float), hp)
+    length = max(max(len(x) for _,x in group.values())+len(hx)-1, s["panel_at"]+len(local)) + 4800
+    bg = bed[(s["music_offset"] + np.arange(length)) % len(bed)]
+    ref = fftconvolve(v5.astype(float),hp)[:len(v5)]
+    mix = bg * (0.35*np.linalg.norm(ref)/np.sqrt(len(ref))/np.sqrt(np.mean(bg**2)))
+    panel_sound = np.zeros(length)
+    panel_sound[s["panel_at"]:s["panel_at"]+len(local)] = local
+    mix += panel_sound
+
+    def scene(wave, *, include_music=True):
+        wet = fftconvolve(wave.astype(float), hx)
+        base = mix if include_music else panel_sound
+        signal = (base + np.pad(wet, (0, length-len(wet))) * 10**(s["external_db"]/20)) * s["preamp_gain"]
+        rounded = np.rint(signal)
+        clipped = int(np.count_nonzero((rounded < -32768) | (rounded > 32767)))
+        return tx.study.grid.room.quantize(signal), clipped
+    return scene
+
+
 def main():
     spec, v5, _, markers = tx.study.grid.fit.original()
     groups = study.sources()
@@ -95,21 +117,7 @@ def main():
             for db in study.LEVELS:
                 ordinary = inputs[row["index"], db]
                 s = ordinary["source"]
-                (hp, _, ph), (hx, _, eh) = tx.diag.room(s["geometry"])
-                assert (ph,eh,bed_sha) == (s["panel_rir_sha256"],s["external_rir_sha256"],s["music_sha256"])
-                local = fftconvolve(quiet.astype(float), hp)
-                length = max(max(len(x) for _,x in group.values())+len(hx)-1, s["panel_at"]+len(local)) + 4800
-                bg = bed[(s["music_offset"] + np.arange(length)) % len(bed)]
-                ref = fftconvolve(v5.astype(float),hp)[:len(v5)]
-                mix = bg * (0.35*np.linalg.norm(ref)/np.sqrt(len(ref))/np.sqrt(np.mean(bg**2)))
-                mix[s["panel_at"]:s["panel_at"]+len(local)] += local
-
-                def scene(wave):
-                    wet = fftconvolve(wave.astype(float), hx)
-                    signal = (mix + np.pad(wet, (0, length-len(wet))) * 10**(db/20)) * s["preamp_gain"]
-                    rounded = np.rint(signal)
-                    clipped = int(np.count_nonzero((rounded < -32768) | (rounded > 32767)))
-                    return tx.study.grid.room.quantize(signal), clipped
+                scene = room_scene(s, group, quiet, v5, bed, bed_sha)
 
                 assert ch.digest(scene(plain)[0]) == ordinary["result"]["pcm_sha256"]
                 assert ch.digest(scene(fixed)[0]) == inputs[fixed_row["index"],db]["result"]["pcm_sha256"]
