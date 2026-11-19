@@ -49,9 +49,19 @@ def command_uplink(work, archive, index, source, mic, ref, detector, reader, dec
 def encode_uplink(work, archive, index, selected, raw, carrier, reader, decoder):
     payload = struct.pack("<3I", 0x3552504f, index, len(selected)) + selected.tobytes() + raw.tobytes()
     codec = work / "opus.log"
-    listener.boot(uplink.CODEC, codec, work / "image.bin", b"UPLINK PASS", (2 << 20, payload))
+    for attempt in range(2):
+        try:
+            listener.boot(uplink.CODEC, codec, work / "image.bin", b"UPLINK PASS", (2 << 20, payload))
+            text = codec.read_text()
+            encoded = uplink.packets(text, index, len(selected), 0)
+            uplink.packets(text, index, len(selected), 1)
+            break
+        except AssertionError:
+            if codec.exists():
+                archive.write(codec, f"{index:02}-opus-attempt{attempt+1}.log")
+            if attempt:
+                raise
     archive.write(codec, f"{index:02}-opus.log")
-    encoded = uplink.packets(codec.read_text(), index, len(selected), 0)
     decoded = uplink.decode(decoder, encoded)
     return dict(packets=len(encoded), pcm_sha256=listener.digest(decoded), fifo_sha256=listener.digest(selected),
                 recognition=uplink.recognition(reader, decoded, carrier))
