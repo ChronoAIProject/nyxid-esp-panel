@@ -1,0 +1,155 @@
+ESP-ROM:esp32p4-eco5-20250430
+Build:Apr 30 2025
+rst:0x1 (POWERON),boot:0x30f (SPI_FAST_FLASH_BOOT)
+SPI mode:DIO, clock div:1
+load:0x4ffb60d0,len:0x15e4
+load:0x4ffac2c0,len:0xe88
+load:0x4ffaefc0,len:0x3560
+entry 0x4ffac2ca
+I (61) boot: ESP-IDF v5.5.4 2nd stage bootloader
+I (62) boot: compile time Nov 19 2026 00:05:44
+I (62) boot: Multicore bootloader
+I (69) boot: chip revision: v3.1
+I (70) boot: efuse block revision: v0.0
+I (70) boot.esp32p4: SPI Speed      : 80MHz
+I (70) boot.esp32p4: SPI Mode       : SLOW READ
+I (70) boot.esp32p4: SPI Flash Size : 16MB
+I (71) boot: Enabling RNG early entropy source...
+I (73) boot: Partition Table:
+I (73) boot: ## Label            Usage          Type ST Offset   Length
+I (73) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (74) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (74) boot:  2 factory          factory app      00 00 00010000 00200000
+I (74) boot:  3 storage          Unknown data     01 81 00210000 00df0000
+I (80) boot: End of partition table
+I (81) esp_image: segment 0: paddr=00010020 vaddr=40060020 size=17f0ch ( 98060) map
+I (92) esp_image: segment 1: paddr=00027f34 vaddr=30100000 size=00124h (   292) load
+I (100) esp_image: segment 2: paddr=00028060 vaddr=30100130 size=00048h (    72) load
+I (106) esp_image: segment 3: paddr=000280b0 vaddr=4ff20000 size=07f68h ( 32616) load
+I (114) esp_image: segment 4: paddr=00030020 vaddr=40000020 size=5b52ch (374060) map
+I (138) esp_image: segment 5: paddr=0008b554 vaddr=4ff27f68 size=06894h ( 26772) load
+I (145) esp_image: segment 6: paddr=00091df0 vaddr=4ff2e800 size=0246ch (  9324) load
+I (152) boot: Loaded app from partition at offset 0x10000
+I (153) boot: Disabling RNG early entropy source...
+W (162) pmu_pvt: blk_version is less than 2, pvt auto dbias init not supported in efuse.
+I (164) cpu_start: Multicore app
+I (181) cpu_start: GPIO 38 and 37 are used as console UART I/O pins
+I (182) cpu_start: Pro cpu start user code
+I (182) cpu_start: cpu freq: 400000000 Hz
+I (182) app_init: Application information:
+I (182) app_init: Project name:     nyx_lexical_probe
+I (182) app_init: App version:      v0.6.28-2558-g65119dac
+I (182) app_init: Compile time:     Nov 19 2026 00:05:50
+I (182) app_init: ELF file SHA256:  61e9f847b...
+I (183) app_init: ESP-IDF:          v5.5.4
+I (183) efuse_init: Min chip rev:     v3.1
+I (183) efuse_init: Max chip rev:     v3.99 
+I (183) efuse_init: Chip rev:         v3.1
+I (183) heap_init: Initializing. RAM available for dynamic allocation:
+I (184) heap_init: At 4FF330F0 len 00087ED0 (543 KiB): RETENT_RAM
+I (184) heap_init: At 4FFBAFC0 len 00004BF0 (18 KiB): RAM
+I (184) heap_init: At 50108080 len 00007F80 (31 KiB): RTCRAM
+I (184) heap_init: At 30100178 len 00001E88 (7 KiB): TCM
+W (188) spi_flash: Detected ISSI flash chip but using generic driver. For optimal functionality, enable `SPI_FLASH_SUPPORT_ISSI_CHIP` in menuconfig
+I (190) spi_flash: detected chip: generic
+I (190) spi_flash: flash io: dio
+I (192) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (192) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+I (196) main_task: Started on CPU0
+I (206) main_task: Calling app_main()
+LEX_HEAP stage=before ext=16674108 int=438032 min_ext=16674108 min_int=434020
+LEX_INIT us=2859962
+LEX_HEAP stage=ready ext=8733196 int=438032 min_ext=8578356 min_int=433756
+LEX_MATCH id=0 start=87840 end=95680 returned=97920
+LEX_CASE id=0 count=1 confirmed=98880 history_us=336649 compute_us=424897 confirm_us=319024 max_chunk_us=9942
+I (3516) main_task: Returned from app_main()
+LEX_MATCH id=1 start=110080 end=117440 returned=120000
+LEX_CASE id=1 count=1 confirmed=120960 history_us=326972 compute_us=413640 confirm_us=308575 max_chunk_us=9901
+LEX_MATCH id=2 start=91680 end=100480 returned=102720
+LEX_CASE id=2 count=1 confirmed=103680 history_us=352013 compute_us=444904 confirm_us=334040 max_chunk_us=10223
+LEX_MATCH id=3 start=91680 end=100480 returned=102720
+LEX_CASE id=3 count=1 confirmed=104640 history_us=352819 compute_us=445894 confirm_us=317685 max_chunk_us=10516
+LEX_MATCH id=4 start=107200 end=116800 returned=119040
+LEX_CASE id=4 count=1 confirmed=119040 history_us=340320 compute_us=427484 confirm_us=340320 max_chunk_us=9251
+LEX_MATCH id=5 start=107200 end=116800 returned=119040
+LEX_CASE id=5 count=1 confirmed=119520 history_us=341725 compute_us=429607 confirm_us=332710 max_chunk_us=10136
+LEX_CASE id=6 count=0 confirmed=-1 history_us=225222 compute_us=311320 confirm_us=-1 max_chunk_us=9764
+LEX_MATCH id=7 start=112960 end=121280 returned=123840
+LEX_CASE id=7 count=1 confirmed=124800 history_us=340908 compute_us=434057 confirm_us=323013 max_chunk_us=10763
+LEX_MATCH id=8 start=112960 end=121280 returned=123840
+LEX_CASE id=8 count=1 confirmed=125280 history_us=348779 compute_us=439256 confirm_us=322314 max_chunk_us=10537
+LEX_CASE id=9 count=0 confirmed=-1 history_us=223564 compute_us=310251 confirm_us=-1 max_chunk_us=9482
+LEX_MATCH id=10 start=97440 end=108480 returned=110880
+LEX_CASE id=10 count=1 confirmed=111840 history_us=353240 compute_us=442560 confirm_us=333169 max_chunk_us=10378
+LEX_MATCH id=11 start=110240 end=122880 returned=125280
+LEX_CASE id=11 count=1 confirmed=125280 history_us=345211 compute_us=430421 confirm_us=361900 max_chunk_us=9599
+LEX_MATCH id=12 start=110240 end=122880 returned=125280
+LEX_CASE id=12 count=1 confirmed=125280 history_us=351664 compute_us=435999 confirm_us=360994 max_chunk_us=9703
+LEX_MATCH id=13 start=119200 end=130720 returned=132960
+LEX_CASE id=13 count=1 confirmed=133920 history_us=353582 compute_us=443831 confirm_us=334714 max_chunk_us=9991
+LEX_MATCH id=14 start=119200 end=130720 returned=132960
+LEX_CASE id=14 count=1 confirmed=134400 history_us=362302 compute_us=452399 confirm_us=334368 max_chunk_us=10093
+LEX_MATCH id=15 start=82240 end=89920 returned=92160
+LEX_CASE id=15 count=1 confirmed=93120 history_us=330526 compute_us=419775 confirm_us=312603 max_chunk_us=9745
+LEX_MATCH id=16 start=97280 end=106720 returned=108960
+LEX_CASE id=16 count=1 confirmed=108960 history_us=323548 compute_us=406366 confirm_us=331662 max_chunk_us=9645
+LEX_MATCH id=17 start=97280 end=106720 returned=108960
+LEX_CASE id=17 count=1 confirmed=109920 history_us=334288 compute_us=416235 confirm_us=317061 max_chunk_us=10283
+LEX_MATCH id=18 start=104480 end=112000 returned=114240
+LEX_CASE id=18 count=1 confirmed=115200 history_us=324594 compute_us=411045 confirm_us=306143 max_chunk_us=9917
+LEX_MATCH id=19 start=18880 end=29440 returned=31680
+LEX_CASE id=19 count=1 confirmed=33120 history_us=350967 compute_us=436472 confirm_us=323952 max_chunk_us=9941
+LEX_CASE id=20 count=0 confirmed=-1 history_us=355139 compute_us=446347 confirm_us=-1 max_chunk_us=9873
+LEX_MATCH id=21 start=253280 end=264480 returned=266880
+LEX_CASE id=21 count=1 confirmed=266880 history_us=353068 compute_us=442710 confirm_us=353068 max_chunk_us=9649
+LEX_CASE id=22 count=0 confirmed=-1 history_us=347203 compute_us=437259 confirm_us=-1 max_chunk_us=10101
+LEX_CASE id=23 count=0 confirmed=-1 history_us=356433 compute_us=446052 confirm_us=-1 max_chunk_us=10639
+LEX_CASE id=24 count=0 confirmed=-1 history_us=353829 compute_us=448072 confirm_us=-1 max_chunk_us=10671
+LEX_CASE id=25 count=0 confirmed=-1 history_us=357315 compute_us=452533 confirm_us=-1 max_chunk_us=10658
+LEX_MATCH id=26 start=19040 end=28480 returned=30720
+LEX_CASE id=26 count=1 confirmed=31680 history_us=355890 compute_us=449014 confirm_us=337106 max_chunk_us=10673
+LEX_MATCH id=27 start=19040 end=28480 returned=30720
+LEX_CASE id=27 count=1 confirmed=32640 history_us=350771 compute_us=439026 confirm_us=313953 max_chunk_us=9794
+LEX_MATCH id=28 start=232320 end=243680 returned=246240
+LEX_CASE id=28 count=1 confirmed=246720 history_us=345586 compute_us=432016 confirm_us=336332 max_chunk_us=9395
+LEX_MATCH id=29 start=232320 end=243680 returned=246240
+LEX_CASE id=29 count=1 confirmed=247680 history_us=358520 compute_us=445665 confirm_us=331988 max_chunk_us=10243
+LEX_MATCH id=30 start=22080 end=32320 returned=34560
+LEX_CASE id=30 count=1 confirmed=34560 history_us=332157 compute_us=415598 confirm_us=332157 max_chunk_us=9355
+LEX_MATCH id=31 start=22080 end=32320 returned=34560
+LEX_CASE id=31 count=1 confirmed=35040 history_us=333602 compute_us=420347 confirm_us=327524 max_chunk_us=10298
+LEX_MATCH id=32 start=264800 end=276000 returned=278400
+LEX_CASE id=32 count=1 confirmed=278400 history_us=344063 compute_us=425399 confirm_us=344063 max_chunk_us=10551
+LEX_MATCH id=33 start=264800 end=276000 returned=278400
+LEX_CASE id=33 count=1 confirmed=278880 history_us=345097 compute_us=429698 confirm_us=338835 max_chunk_us=9208
+LEX_CASE id=34 count=0 confirmed=-1 history_us=439551 compute_us=529899 confirm_us=-1 max_chunk_us=11180
+LEX_CASE id=35 count=0 confirmed=-1 history_us=444126 compute_us=537798 confirm_us=-1 max_chunk_us=10949
+LEX_CASE id=36 count=0 confirmed=-1 history_us=444829 compute_us=535012 confirm_us=-1 max_chunk_us=11299
+LEX_CASE id=37 count=0 confirmed=-1 history_us=425332 compute_us=513658 confirm_us=-1 max_chunk_us=10460
+LEX_CASE id=38 count=0 confirmed=-1 history_us=437217 compute_us=525518 confirm_us=-1 max_chunk_us=10009
+LEX_CASE id=39 count=0 confirmed=-1 history_us=456022 compute_us=546462 confirm_us=-1 max_chunk_us=10922
+LEX_CASE id=40 count=0 confirmed=-1 history_us=436745 compute_us=533396 confirm_us=-1 max_chunk_us=10848
+LEX_CASE id=41 count=0 confirmed=-1 history_us=442105 compute_us=527264 confirm_us=-1 max_chunk_us=9829
+LEX_CASE id=42 count=0 confirmed=-1 history_us=443911 compute_us=533409 confirm_us=-1 max_chunk_us=10614
+LEX_CASE id=43 count=0 confirmed=-1 history_us=443168 compute_us=525370 confirm_us=-1 max_chunk_us=9894
+LEX_CASE id=44 count=0 confirmed=-1 history_us=448547 compute_us=542316 confirm_us=-1 max_chunk_us=11122
+LEX_CASE id=45 count=0 confirmed=-1 history_us=441187 compute_us=529179 confirm_us=-1 max_chunk_us=11742
+LEX_CASE id=46 count=0 confirmed=-1 history_us=436112 compute_us=527475 confirm_us=-1 max_chunk_us=10877
+LEX_CASE id=47 count=0 confirmed=-1 history_us=446834 compute_us=534952 confirm_us=-1 max_chunk_us=9933
+LEX_CASE id=48 count=0 confirmed=-1 history_us=440248 compute_us=531399 confirm_us=-1 max_chunk_us=10835
+LEX_CASE id=49 count=0 confirmed=-1 history_us=437962 compute_us=536358 confirm_us=-1 max_chunk_us=11782
+LEX_CASE id=50 count=0 confirmed=-1 history_us=446676 compute_us=539469 confirm_us=-1 max_chunk_us=12496
+LEX_CASE id=51 count=0 confirmed=-1 history_us=422480 compute_us=513348 confirm_us=-1 max_chunk_us=10086
+LEX_CASE id=52 count=0 confirmed=-1 history_us=428695 compute_us=516772 confirm_us=-1 max_chunk_us=10815
+LEX_CASE id=53 count=0 confirmed=-1 history_us=453837 compute_us=545474 confirm_us=-1 max_chunk_us=10870
+LEX_CASE id=54 count=0 confirmed=-1 history_us=454143 compute_us=542034 confirm_us=-1 max_chunk_us=11113
+LEX_CASE id=55 count=0 confirmed=-1 history_us=455144 compute_us=548445 confirm_us=-1 max_chunk_us=11476
+LEX_CASE id=56 count=0 confirmed=-1 history_us=451236 compute_us=548604 confirm_us=-1 max_chunk_us=10675
+LEX_CASE id=57 count=0 confirmed=-1 history_us=442668 compute_us=532399 confirm_us=-1 max_chunk_us=10242
+LEX_CASE id=58 count=0 confirmed=-1 history_us=448673 compute_us=541944 confirm_us=-1 max_chunk_us=11363
+LEX_CASE id=59 count=0 confirmed=-1 history_us=455579 compute_us=545271 confirm_us=-1 max_chunk_us=10319
+LEX_CASE id=60 count=0 confirmed=-1 history_us=456161 compute_us=548498 confirm_us=-1 max_chunk_us=10061
+LEX_CASE id=61 count=0 confirmed=-1 history_us=452696 compute_us=554601 confirm_us=-1 max_chunk_us=11748
+LEX_HEAP stage=decoded ext=8732948 int=472000 min_ext=8578356 min_int=433756
+LEX_STACK remaining=92420
+LEX_DONE cases=62
