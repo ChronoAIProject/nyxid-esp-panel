@@ -13,13 +13,14 @@ STEM = listener.STEM + "-uplink"
 BASE = listener.RESULTS/(listener.STEM+".json")
 
 
-def main():
+def main(output):
+    output.mkdir(parents=True, exist_ok=True)
     before=listener.read(BASE)
     sources=listener.read(listener.rooms.PLAN)["records"]
     reader, wh=listener.load_reader()
     assert wh==before["asr"]
     lib=decoder_api()
-    compressed=listener.RESULTS/(STEM+"-uart.zip")
+    compressed=output/(STEM+"-uart.zip")
     firmware=BUILD/"nyx_first_command.bin"
     directory=listener.WORK/("uplink-"+listener.sha(firmware)[:16])
     directory.mkdir(exist_ok=True)
@@ -66,11 +67,14 @@ def main():
             print(i,len(rows),flush=True)
     assert len(rows)==sum(r["first"]>=0 for r in before["records"])
     compressed.with_suffix(".tmp").replace(compressed)
-    listener.save(listener.RESULTS/(STEM+".json"),dict(records=rows,previous_sha256=listener.sha(BASE),asr=wh,
+    listener.save(output/(STEM+".json"),dict(records=rows,previous_sha256=listener.sha(BASE),asr=wh,
          firmware_sha256=listener.sha(firmware),code_sha256=listener.sha(Path(__file__)),
          firmware_source_sha256=listener.sha(listener.APP.parent/"main/main.cpp"),uart_sha256=listener.sha(compressed),
          decoder=lib.opus_get_version_string().decode(),policy="Original P4 FIFO capture versus raw mic at identical sample boundaries for every actual wake, two independent fresh P4 esp_audio_codec 2.4.1 Opus encoders. Mono 16 kHz, 20 ms, 24 kbit/s VBR, complexity 0, zero pad final packet only. Decode all packets in order from a new decoder; whole utterance ASR including codec delay. No packet loss; panel speaker silent."))
 
 
 if __name__=="__main__":
-    main()
+    import argparse
+    parser=argparse.ArgumentParser()
+    parser.add_argument("--out",type=Path,default=listener.WORK/"recheck")
+    main(parser.parse_args().out)

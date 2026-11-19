@@ -69,7 +69,7 @@ def parse(log, i, src, pcm, reader):
     return rows
 
 
-def main(action):
+def main(action, output):
     plan=read(rooms.PLAN)
     refs=RESULTS/f"{rooms.STEM}-v1.json"
     cue_ref=RESULTS/f"{rooms.STEM}-audio.json"
@@ -108,7 +108,8 @@ def main(action):
         if (i+1)%12==0:
             print(action,i+1,flush=True)
     if action=="score":
-        archive=RESULTS/f"{STEM}-uart.zip"
+        output.mkdir(parents=True, exist_ok=True)
+        archive=output/f"{STEM}-uart.zip"
         with ZipFile(archive.with_suffix(".tmp"),"w",ZIP_DEFLATED,compresslevel=3) as z:
             for i in range(len(records)):
                 z.write(logs/f"{i:03}.log",f"{i:03}.log")
@@ -117,7 +118,7 @@ def main(action):
         files=[APP/"main/listener.cpp",Path(__file__),runtime/"panel_wake_runtime.cpp",runtime/"panel_wake_runtime.h",
                model,config,CUE,WORK/"features.zip",WORK/"features/src/filterbank_util.c",rooms.PLAN,refs,cue_ref,
                Path("components/panel_services/panel_voice_audio.c"),APP.parents[1]/"portable/c161_coded_cue_v5.h"]
-        save(RESULTS/f"{STEM}.json",dict(mac_commit=MAC,files={str(p):sha(p) for p in files},qemu_sha256=sha(QEMU),
+        save(output/f"{STEM}.json",dict(mac_commit=MAC,files={str(p):sha(p) for p in files},qemu_sha256=sha(QEMU),
              app_sha256=elf_hash,app_bytes=firmware.stat().st_size,asr=identity,uart_sha256=sha(archive),
              policy="One boot per existing input. Raw mic to Mac single C161 and frozen v5, zero idle playback reference to embedded ESP-SR AEC/AGC. First event wins at the end of an AEC read block. Transfer last 32000 adjusted samples into panel FIFO then append remaining processed audio. Device compares FIFO against its complete processed stream sample-by-sample. Continue running detectors for shadow comparisons. Speech-presence labels and transcripts do not enter device code. Final partial input read zero padded. QEMU reference FFT and esp-nn ANSI C.",records=records))
 
@@ -125,4 +126,6 @@ def main(action):
 if __name__=="__main__":
     p=argparse.ArgumentParser()
     p.add_argument("action",choices=("run","score"))
-    main(p.parse_args().action)
+    p.add_argument("--out", type=Path, default=WORK/"recheck")
+    args=p.parse_args()
+    main(args.action,args.out)
