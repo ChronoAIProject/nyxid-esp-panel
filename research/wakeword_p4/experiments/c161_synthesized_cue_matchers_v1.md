@@ -222,3 +222,25 @@ python3 research/wakeword_p4/first_command_p4/mac_listener/expand_piper_matched_
     "$results/4090-c161-piper-matched-willow-cues.zip" \
     "$results/4090-c161-piper-matched-willow-plan.json" .local/wakeword/piper-matched-playback --pair 0
 ```
+
+### 同一批命令上的四种合成声线与固定音的首句
+
+在上述四个普通 Hey Nyx 的原始声音上各叠加一次既有 v5 三段编码。沿用提前 80 ms 的生成参数。每个声音保留原有效语音长度，叠加后的有效 RMS 调回 −18.47 dBFS。替换片段前的背景、从首词起的整段命令及拼接位置逐样本相同。接收端使用同一个冻结 C161 和 v5 匹配器。每条分两次独立冷启动 P4 QEMU，麦克风输入相同，播放参考分别为静音与同步的本机唤醒音。[四条 16 kHz 单声道播放 WAV 和清单](../results/4090-c161-piper-matched-coded-cues.zip) · [监听时钟、输入哈希和转写](../results/4090-c161-piper-matched-coded.json)
+
+四个声音各 18/18 在命令前开麦，领先 66.0–80.4 ms。面板播放参考同步时误开 0/72。相同电平、相同命令下，普通版本开麦 0/72。外部播放的 19,568 个 16 ms 块中，客机最慢 4.953 ms，最低内部空闲堆 381,132 B。选中通道解码 15,340 个 Opus 包，两秒回看转写含完整命令末尾的次数按 af_heart、am_onyx、bf_isabella、bm_lewis 分别为 13、11、7、12，总计 43/72。GPU 上单独识别四条编码音时，转写分别为 “Hey, next.”、“Hell he knows.”、“Hey Nixxers!”、“Hey, Nick.”。独立 ASR 对名称本身的转写和设备对三段标记的检测衡量不同的能力。[P4 UART 与原始上行包](../results/4090-c161-piper-matched-coded-uart.zip)
+
+| 合成音与命令条件 | 原两秒回看逐词一致 / 末尾完整 | 从开麦前 100 ms 逐词一致 / 末尾完整 | 按末段编码裁切后逐词一致 / 末尾完整 |
+| --- | ---: | ---: | ---: |
+| 交接原字节固定 v5，18 条 Piper 命令片段 | 2 / 15 | 14 / 14 | 15 / 15 |
+| 四声音编码，72 种 Piper 配对 | 6 / 43 | 26 / 43 | 35 / 42 |
+| 固定 v5，先前厨房和客厅的 16 条命令 | 4 / 16 | 16 / 16 | 16 / 16 |
+| 四声音编码，先前厨房和客厅的 16 条命令 | 6 / 16 | 16 / 16 | 15 / 16 |
+
+裁切只改变送给 Whisper 的解码后音频。用本次开麦时已经确认的第三段编码检测时钟加 80 ms 预测固定音结束，前留一个 20 ms 的 Opus 包，在选中通道补上已知 90 ms 通道延迟。所有 122 次捕获均重新核验两条通道的解码哈希。干声预测的结束点比拼接命令早 0.75–0.875 ms，厨房和客厅比源端命令晚 4.75–6.75 ms。原固定音 18 条里，有 13 条从带额外词变成整句逐词一致；原本完整的 15 条均保留。四声音组有 7 条从不完整转为完整，另有 8 条从完整转为不完整。因此仍以原字节固定 v5 供 Mac 主板测，另附四个声音供配对复核。研究分支保留完整上行包，板端实测可在同一次捕获中比较两种读法。[逐句文本、时钟、解码哈希及孤立称呼的识别](../results/4090-c161-piper-matched-coded-command-start.json)
+
+Mac 可直接播放四条独立唤醒音。若需要验证紧接命令的时钟，在仓库根目录执行以下命令可从原有 18 条播放录音和四条补充 WAV 还原全部 72 种输入；加 `--pair 0` 则只还原第一条命令对应的四个声音。每个输出均按实际 P4 输入的 PCM SHA256 校验。
+
+```bash
+python3 research/wakeword_p4/first_command_p4/mac_listener/expand_coded_piper_audio.py \
+    research/wakeword_p4/results .local/wakeword/coded-piper-playback
+```
