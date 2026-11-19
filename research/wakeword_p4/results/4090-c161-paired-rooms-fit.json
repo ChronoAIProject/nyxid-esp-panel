@@ -1,0 +1,129 @@
+{
+  "models": {
+    "ce": {
+      "history": [
+        {
+          "step": 1,
+          "ce": 0.6013448238372803,
+          "kl": 0.5447127223014832,
+          "loss": 0.6013448238372803
+        },
+        {
+          "step": 100,
+          "ce": 0.23358328640460968,
+          "kl": 0.20022772252559662,
+          "loss": 0.23358328640460968
+        },
+        {
+          "step": 450,
+          "ce": 0.1549178957939148,
+          "kl": 0.062183450907468796,
+          "loss": 0.1549178957939148
+        }
+      ],
+      "batch_sha256": "8e86e1471d61d784cbc31951eb889257087edb29e0d0220b95d4230cfa5d44bd",
+      "weights_sha256": "b1ea3631ee03d8cc0243a663abeba5859b99a2a41914eee0ecaafdb9b947ee15"
+    },
+    "teacher": {
+      "history": [
+        {
+          "step": 1,
+          "ce": 0.6013448238372803,
+          "kl": 0.5447127223014832,
+          "loss": 2.780195713043213
+        },
+        {
+          "step": 100,
+          "ce": 0.21772825717926025,
+          "kl": 0.16696611046791077,
+          "loss": 0.8855926990509033
+        },
+        {
+          "step": 450,
+          "ce": 0.1596602350473404,
+          "kl": 0.046828415244817734,
+          "loss": 0.34697389602661133
+        }
+      ],
+      "batch_sha256": "8e86e1471d61d784cbc31951eb889257087edb29e0d0220b95d4230cfa5d44bd",
+      "weights_sha256": "8b2e33c9700888098159cf9a97399b25f24e7d8172338fd8736e37bc7bdf2b1b"
+    }
+  },
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "torch": "2.15.0+cu132",
+  "steps": 450,
+  "seed": 935841,
+  "temperature": 2.0,
+  "files": {
+    "/home/heca/.local/share/heca/worktrees/00518cb4/crystal-salmon/research/wakeword_p4/experiments/train_c161_paired_rooms.py": "55d995505aa9529e61b747bba9046a2c3d1d63739192233fe25550831f9f9cbc",
+    "research/wakeword_p4/results/4090-c161-onset-evidence-posterior.npz": "e0074c2ff08891b3f2d4e138cc825a8886f53176441aa6ccbddd562847a1d93f",
+    "research/wakeword_p4/results/4090-c161-onset-evidence-fit.json": "b463703ed48ae1f3eee71fa7a0fec8e5d581f50ed54582a82312d92227b42301",
+    "research/wakeword_p4/results/4090-c161-polling-rooms-clean.npz": "fc517e55fb1de15e95732968ba03b0969a9b5ef899beaba1ff83ca5c6d404ed6",
+    "research/wakeword_p4/results/4090-c161-polling-rooms-fit.json": "f65a6bbaf2a61712f195cf25674ea2c410b1d678b00cfcc406f60bb9b63b010e",
+    ".local/wakeword/c161-polling-rooms/windows.npz": "2e822800477ec527a4557aedab188ab62c1593c56d91c8c3ae7be972caffcd14",
+    "research/wakeword_p4/results/4090-c161-polling-rooms-sources.json": "f4c46e3ba708ad9f16cd8838fd516c9516e84a660b420fa07a758e20a558285a",
+    ".local/wakeword/c161-onset-letters/features.npz": "d82baa5a072fab27fac43371ed226f634a85c0a89ee8a7dc8b8356ee4ef8813a",
+    "research/wakeword_p4/results/4090-c161-onset-letters-sources.json": "57fef78e6f77c7e0a3fd8c800a9f487dd2a6a013950375c9021fb9750f182372"
+  },
+  "classes": [
+    "Nyx",
+    "Nick",
+    "Next",
+    "Mick",
+    "other"
+  ],
+  "training_counts": [
+    [
+      960,
+      319,
+      312,
+      96,
+      3380
+    ],
+    [
+      1056,
+      597,
+      576,
+      96,
+      4290
+    ]
+  ],
+  "teacher_clean_training_confusion": [
+    [
+      1056,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      597,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      576,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      96,
+      0
+    ],
+    [
+      0,
+      0,
+      2,
+      0,
+      4288
+    ]
+  ],
+  "policy": "Shared batches of 40 original, 40 clean and 40 aligned room examples. CE on all 120. Teacher arm adds T^2 KL on 40 room windows against frozen clean-head posteriors on their clean partners. Single-word proposal + 360 ms, Nyx code >=0, union with frozen C161. Report the first notification on the 80 matched scenes and replay all consumed background proposals."
+}

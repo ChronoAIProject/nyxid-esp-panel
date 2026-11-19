@@ -7,19 +7,19 @@ import train_c161_polling_rooms as fit
 from export_c161_onset_evidence import transfer
 
 
-def main():
+def main(experiment=fit):
     import tensorflow as tf
     tf.config.set_visible_devices([], "GPU")
     torch.set_num_threads(1)
-    cfg = fit.read(fit.FIT)
+    cfg = fit.read(experiment.FIT)
     assert fit.sha(fit.CACHE)==fit.read(fit.SOURCES)["cache_sha256"]
     rng=np.random.default_rng(79183)
     with np.load(fit.CACHE) as z:
         ids=np.concatenate([rng.choice(np.flatnonzero(z["labels"]==k),20,replace=False) for k in range(5)])
         x=np.concatenate([z[k][ids] for k in fit.MODES]).astype(np.float32)[:,:,:,None]/255
     reports = {}
-    for mode in fit.MODES:
-        weights = fit.weights(mode)
+    for mode in experiment.MODES:
+        weights = experiment.weights(mode)
         assert fit.sha(weights)==cfg["models"][mode]["weights_sha256"]
         net=fit.BASE.Small(fit.read(fit.base.FIT)["alphabet"]).eval()
         with np.load(weights) as z:
@@ -40,7 +40,7 @@ def main():
         inp,=vm.get_input_details()
         out,=vm.get_output_details()
         assert inp["dtype"]==out["dtype"]==np.int8 and out["quantization"]==(1/256,-128)
-        target=fit.RESULTS/(fit.STEM+"-"+mode+".tflite")
+        target=fit.RESULTS/(experiment.STEM+"-"+mode+".tflite")
         with target.open("xb") as f:
             f.write(raw)
         scale,zero=inp["quantization"]
@@ -52,9 +52,16 @@ def main():
         reports[mode]=dict(file=target.name,sha256=fit.sha(target),bytes=len(raw),calibration_codes=codes,
             input_quantization=[scale,zero],float_transfer_max_error=float(abs(tf_float-original).max()),
             nyx_decision_flips=int(((np.array(codes)[:,0]>=0)!=(original[:,0]>=.5)).sum()))
-    fit.save(fit.RESULTS/(fit.STEM+"-exports.json"),dict(models=reports,representative_indices=ids.tolist(),
-        fit_sha256=fit.sha(fit.FIT),tensorflow=tf.__version__))
+    fit.save(fit.RESULTS/(experiment.STEM+"-exports.json"),dict(models=reports,representative_indices=ids.tolist(),
+        fit_sha256=fit.sha(experiment.FIT),tensorflow=tf.__version__))
 
 
 if __name__=="__main__":
-    main()
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--paired", action="store_true")
+    if parser.parse_args().paired:
+        import train_c161_paired_rooms as paired
+        main(paired)
+    else:
+        main()
