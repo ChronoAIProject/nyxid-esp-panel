@@ -47,3 +47,29 @@ taskset -c 2,3 /usr/bin/python3 "$app/replay.py" score
 按上级首次命令项目说明，在 `.local/wakeword/c161-first-command-v5/build` 重建 Opus 应用；在研究 Python 环境运行 `taskset -c 2,3 /usr/bin/python3 research/wakeword_p4/first_command_p4/mac_listener/uplink.py`。脚本直接从上一节已归档的 UART 还原通话队列，并逐条检查其 SHA256。
 
 两个评分程序将复核报告和串口归档默认写入本地 `.local/wakeword/c161-mac-listener/recheck`；用 `--out` 可指定新的复核目录。重读归档回放已复现 96 条监听结果、30 组成对编码结果及两份 UART 归档的 SHA256。
+
+## 面板开始或停止播报时的首句
+
+先在 `3527edf2` 固定切换规则，再用 RTX 4090 合成两种声音的两条命令和一路面板播报。将每条命令放入厨房空调和客厅音乐，背景信噪比 6 dB。外部声音和面板回声分别用同类房间的两条独立 MIT 响应模拟。面板连续播放时，命令有效帧内外部语音与回声为 0 dB。每对房间、声音各观察全程安静、命令中途开始播报、中途停播、仅命令中段播报四种时序。后面三种共享同一潜在播报和增益。16 个条件各独立启动 P4 QEMU，固定 v5 在全部条件均通知。最迟开始的录音也早于命令干声起点 2.225 秒。
+
+切换只读取同步播放参考的当前和历史采样。PCM16 绝对幅值达到 64 时，录音在 10 ms 内转向 AEC/AGC，最后一个有效样本后保持 500 ms，再用 10 ms 淡回原麦。原麦用 1,440 样本环形延迟对齐。实际进入两秒回看和通话 FIFO 的全部 1,908,480 个选路样本（含旧场景触发）与主机独立计算逐一相等。四种录音截取完全相同的时间窗，分开经 P4 Opus 编码。共解码 23,868 个包。英文 Whisper small.en 在 RTX 4090 上读取整份解码音频，以命令完整出现在转写末尾计分。表内每格分母 4，总计分母 16。`20%`、`20 percent` 和 `twenty percent` 在此表计为相同，逐条报告另存此前的逐词计分。
+
+| 面板播报 | 原麦 | 延迟 90 ms 的原麦 | 始终 AEC/AGC | 随参考切换 |
+| --- | ---: | ---: | ---: | ---: |
+| 全程安静 | 4 | 4 | 3 | 4 |
+| 中途开始 | 1 | 2 | 2 | 2 |
+| 中途停止 | 1 | 1 | 1 | 1 |
+| 仅命令中段 | 1 | 2 | 2 | 2 |
+| 总完整 | 7 | 9 | 8 | 9 |
+| 原逐词计分总完整 | 5 | 7 | 7 | 7 |
+
+切换与延迟对齐原麦的总数相同，但停播时厨房的 “Move the reading light…” 仅经处理或切换才完整，客厅的同一句经处理或切换则被转写为 “remove”。另用六条归档双声道回放核对，面板连续回复期间两次外部命令，处理与切换均完整 2/2，原麦两路均 0/2。面板自播固定音两次，参考匹配都否决了 v5，C161 两次均无独立通知。单播普通回复两次也未通知。在四条原单声道回归中，旧协议的两路通知、录音范围和触发后样本哈希复现。这里的两间房、两句命令和固定开发声音构成配对诊断，实际 I2S 参考、扬声器延迟和整机行为依赖 Mac 板测。[输入清单](../../results/4090-c161-mac-playback-transition-inputs.json) · [双声道 FLAC](../../results/4090-c161-mac-playback-transition-stereo.zip) · [逐句转写](../../results/4090-c161-mac-playback-transition.json) · [P4 UART 与编码包](../../results/4090-c161-mac-playback-transition-uart.zip) · [配对统计](../../results/4090-c161-mac-playback-transition-summary.json)
+
+沿用上方 Mac 运行时构建和 P4 Opus 固件。在研究 Python 环境运行下列命令即可从已冻结的输入重测，输出在本地 `.local/wakeword/c161-mac-listener/transition`。用 `transition_inputs.py --out <新的目录>` 可另行合成输入。
+
+```sh
+app=research/wakeword_p4/first_command_p4/mac_listener
+src=research/wakeword_p4/results
+taskset -c 2,3 /usr/bin/python3 "$app/transition.py" score --inputs "$src" --out .local/wakeword/c161-mac-listener/transition/recheck
+taskset -c 2,3 /usr/bin/python3 "$app/transition_summary.py" --inputs "$src" --output .local/wakeword/c161-mac-listener/transition/recheck
+```
