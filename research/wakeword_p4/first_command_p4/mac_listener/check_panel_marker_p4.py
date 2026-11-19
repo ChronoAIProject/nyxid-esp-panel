@@ -31,7 +31,7 @@ def capture(work, z, idx, case, small, turbo, decoder, builds, *, tx_pair=None):
     source_idx, meta, name, role, mic, ref, known = case
     assert ch.digest(mic) == known["pcm_sha256"] and ch.digest(ref) == known["reference_sha256"]
     build = builds[name]
-    source = dict(**meta, carrier=meta["command"], cue_at=meta["start"])
+    source = dict(meta, carrier=meta["command"], cue_at=meta["start"])
     protocol = 0x4652594e if tx_pair is None else 0x5854594e
     packet = struct.pack("<3I", protocol, idx, len(mic)) + mic.tobytes() + ref.tobytes()
     if tx_pair is not None:
