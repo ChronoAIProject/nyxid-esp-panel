@@ -9,7 +9,6 @@ from fit_c161_history_gain_v1 import RESULTS, read, save, sha
 from select_c161_synthesized_cue_v2 import load_wav
 
 STEM = "4090-c161-lexical-p4"
-INPUTS = RESULTS / f"{STEM}-inputs.json"
 MAPPED = RESULTS / f"{STEM}-mapped.json"
 SPEECH = RESULTS / "4090-c161-midlevel-pocketsphinx-v1.json"
 BACKGROUND = RESULTS / "4090-c161-midlevel-pocketsphinx-background-v1.json"
@@ -77,9 +76,10 @@ def schedule(input_path, measurement_path):
     return streams
 
 
-def main(compact):
-    input_path = RESULTS / f"{STEM}-compact-inputs.json" if compact else INPUTS
-    measurement_path = RESULTS / f"{STEM}-compact.json" if compact else MAPPED
+def main(mode):
+    prefix = STEM if mode == "mapped" else f"{STEM}-{mode}"
+    input_path = RESULTS / f"{prefix}-inputs.json"
+    measurement_path = MAPPED if mode == "mapped" else RESULTS / f"{prefix}.json"
     streams = schedule(input_path, measurement_path)
     by_audio = {(s["cohort"], s["pcm_sha256"]): s for s in streams.values()}
     model, files = load_reader()
@@ -98,11 +98,12 @@ def main(compact):
                          "Merge actual notifications with 67-step cooldown, capture on 160-sample boundary.",
                   asr="Whisper small.en CUDA FP16, unprompted; immediate or 32000 samples before capture boundary",
                   model_files=files, streams=list(streams.values()), targets=targets, transcripts=readings)
-    prefix = f"{STEM}-compact" if compact else STEM
     save(RESULTS / f"{prefix}-fifo-first-command.json", result)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--compact", action="store_true")
-    main(parser.parse_args().compact)
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument("--compact", dest="mode", action="store_const", const="compact")
+    group.add_argument("--q8", dest="mode", action="store_const", const="q8")
+    main(parser.parse_args().mode or "mapped")

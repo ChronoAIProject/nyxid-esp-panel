@@ -23,11 +23,13 @@ def sources():
             yield cohort, str(i), load_wav(row)
 
 
-def main(output):
+def main(output, mode):
     source = RESULTS / f"{STEM}-v1.json"
     rows = {(r["cohort"], r["key"]): r for r in read(source)["records"]}
-    files = WORK / "compact/files"
-    manifest = read(WORK / "compact/inputs.json")
+    folder = WORK / mode
+    files = folder / "files"
+    identity = folder / ("inputs.json" if mode == "compact" else "packing.json")
+    manifest = read(identity)
     assert all(sha(files / n) == h for n, h in manifest["files"].items())
     decoder = Decoder(hmm=str(files/"am"), dict=str(files/"two.dict"), keyphrase="hey nicks",
                       kws_threshold=1e-15, loglevel="ERROR", lm=None)
@@ -44,7 +46,7 @@ def main(output):
                             decisions_equal=events == full["events"],
                             differences=[dict(compact=a, full=b) for a,b in zip(checked, full["checked"]) if a != b]))
     assert not rows
-    save(output, dict(full_reference_sha256=sha(source), compact_inputs_sha256=sha(WORK/"compact/inputs.json"),
+    save(output, dict(full_reference_sha256=sha(source), model_manifest_sha256=sha(identity),
                       records=records))
     print(len(records), "streams;", sum(r["windows"] for r in records), "windows;",
           sum(not r["exact"] for r in records), "streams with segment/score changes;",
@@ -54,4 +56,6 @@ def main(output):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=OUT)
-    main(parser.parse_args().output)
+    parser.add_argument("--mode", choices=("compact", "q7", "q8"), default="compact")
+    args = parser.parse_args()
+    main(args.output, args.mode)

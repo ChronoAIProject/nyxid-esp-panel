@@ -5,6 +5,7 @@ import json
 import re
 import subprocess
 import time
+import zlib
 from pathlib import Path
 
 from prepare import WORK, sha, read
@@ -13,9 +14,9 @@ QEMU = Path(".local/wakeword/qemu-p4-release/qemu/bin/qemu-system-riscv32")
 
 
 def main(mode):
-    mapped = mode != "read"
+    mapped = mode in ("mapped", "compact")
     build = WORK / ("build" if mode == "read" else f"build-{mode}")
-    output = build if mapped else WORK
+    output = WORK if mode == "read" else build
     files = read(build / "flasher_args.json")["flash_files"]
     image = bytearray(b"\xff" * (16 << 20))
     for address, name in files.items():
@@ -43,7 +44,7 @@ def main(mode):
                 child.kill()
     text = log.read_text(errors="replace")
     assert child.returncode == 0 and "LEX_DONE cases=62" in text, (err[-250:],text[-1200:])
-    source = (WORK / "compact" if mode == "compact" else WORK) / "inputs.json"
+    source = (WORK / mode if mode in ("compact", "q8") else WORK) / "inputs.json"
     manifest = read(source)
     inputs = manifest["records"]
     mappings = {}
@@ -53,6 +54,21 @@ def main(mode):
         digest = hashlib.sha256(storage[offset:offset+size]).hexdigest()
         assert name not in mappings and digest == manifest["files"][name]
         mappings[name] = dict(offset=offset, size=size, sha256=digest)
+    music = {}
+    if mode == "q8":
+        assert "Task watchdog got triggered" not in text
+        for size, crc, name in re.findall(r"LEX_MUSIC size=(\d+) crc=([0-9a-f]+) name=([^\n]+)", text):
+            content = (Path("spiffs/music")/name).read_bytes()
+            assert len(content) == int(size) and zlib.crc32(content) == int(crc,16)
+            digest = hashlib.sha256(content).hexdigest()
+            assert digest == manifest["files"]["music/"+name]
+            music[name] = dict(bytes=len(content), crc32=crc, sha256=digest)
+        assert len(music) == 3
+        assert len(storage) == 0x200000 and files["0xe00000"] == "storage.bin"
+        expanded = re.findall(r"LEX_UNPACK file=/model/(\S+) bytes=(\d+) expanded=(\d+)", text)
+        assert sorted(name for name, _, _ in expanded) == ["am/means", "am/variances"]
+        for name, size, decoded in expanded:
+            assert int(decoded) == 838732 and (WORK/"q8/volume"/name).stat().st_size == int(size)
     assert set(mappings) == ({"am/mdef", "am/sendump"} if mapped else set())
     cases = []
     pattern = (r"LEX_CASE id=(\d+) count=(\d+) confirmed=(-?\d+) history_us=(-?\d+) "
@@ -89,9 +105,11 @@ def main(mode):
     assert set(heaps) == {"before","ready","decoded"}
     result = dict(physical_board=False, heap=heaps, init_us=int(re.search(r"LEX_INIT us=(\d+)",text)[1]),
         images={f:sha(build/f) for f in files.values()}, elf_sha256=sha(build/"nyx_lexical_probe.elf"),
-        input_sha256=sha(source), qemu_sha256=sha(QEMU), sdkconfig_sha256=sha(WORK/"sdkconfig"),
+        input_sha256=sha(source), qemu_sha256=sha(QEMU), sdkconfig_sha256=sha(WORK/("q8-sdkconfig" if mode == "q8" else "sdkconfig")),
         uart_sha256=sha(log), records=cases)
     result.update(mappings=mappings, stack_remaining_bytes=int(re.search(r"LEX_STACK remaining=(\d+)", text)[1]))
+    if music:
+        result["music_readback"] = music
     (output/"result.json").write_text(json.dumps(result,indent=2)+"\n")
     print("P4 cases",len(cases),"segment clocks equal",sum(c["matches_equal"] for c in cases),
           "decisions equal",sum(c["confirmed"]==c["host_confirmed"] for c in cases))
@@ -102,4 +120,5 @@ if __name__ == "__main__":
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--mapped", dest="mode", action="store_const", const="mapped")
     group.add_argument("--compact", dest="mode", action="store_const", const="compact")
+    group.add_argument("--q8", dest="mode", action="store_const", const="q8")
     main(parser.parse_args().mode or "read")

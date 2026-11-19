@@ -69,3 +69,29 @@ idf.py -C "$app" -B "$work/build-compact" -DNYX_LEXICAL_FLASH_MAP=ON -DNYX_LEXIC
 cmake --build "$work/build-compact" --parallel 2
 /usr/bin/python3 "$app/run_qemu.py" --compact
 ```
+
+## 保留现有音乐的 2 MiB SPIFFS 实测
+
+RTX 4090 对专用模型的均值和方差分别拟合标量码本。每张表按 3 个特征流、每流首系数与其余系数分为 6 组，保留精确零值。在 8 位版本上，两张表再用 zlib 压缩，设备初始化时通过 P4 ROM 解压并恢复浮点输入，上游读表函数核对恢复值的 S3 校验和。声学文件与两词词典最终为 **455,703 B**。三份现有 MP3 共 1,446,087 B。按面板页大小和元数据配置，在 0xe00000 生成并挂载实际 2,097,152 B SPIFFS 镜像，逐份读回音乐并核对长度及 CRC32。测试 PCM 单独存放在研究 FatFs 分区。[权重、文件身份及参考窗口](../results/4090-c161-lexical-p4-q8-inputs.json) · [设备读回和逐块计时](../results/4090-c161-lexical-p4-q8.json)
+
+| 已消费的 625 段语流、220 个提议 | 7 位 | 8 位 |
+| --- | ---: | ---: |
+| 匹配分数或匹配段有变化的语流 | 52 | 51 |
+| 最终通知有变化的语流 | 5 | 0 |
+
+7 位涉及连续对话、Joe 和家庭场景。8 位在 P4 重放 62 个窗口，短语段与首次返回时钟逐项匹配其自身主机参考；相对未量化的完整模型，58/62 个窗口的所有匹配段及返回时钟相同，62/62 的确认决定与确认音频时钟相同。28 个已知背景候选均被拒绝。两种位宽使用相同提议、阈值和已消费语料。[7 位逐项差异](../results/4090-c161-lexical-p4-q7-transfer.json) · [8 位逐项差异](../results/4090-c161-lexical-p4-q8-transfer.json)
+
+首次模拟启动时，SPIFFS 连续读取和解码器初始化触发两次 CPU0 空闲任务看门狗。改为分块读取并显式让出处理器后，启动及 62 个窗口重放均通过，未再触发看门狗。该次解码器初始化 6.501 s，就绪外部堆增量 2,825,128 B，初始化前至最低外部余量之差为 2,979,968 B。27 个成功窗口的单任务 FIFO 确认中位数 336 ms，最大 747 ms，包含同一句的重复提议。旧组 11/12 和新对话 6/8 唤醒。RTX 4090 对两秒回看录音完整转写这 17 句，即时起录为 0/12、1/8。实际发布固件的 OTA 空间、全机调度、首句和长期资源需整机验证。[初次启动 UART](../results/4090-c161-lexical-p4-q8-watchdog-uart.log) · [通过 UART](../results/4090-c161-lexical-p4-q8-uart.log) · [逐句转写](../results/4090-c161-lexical-p4-q8-fifo-first-command.json)
+
+Mac 研究包共 445,116 B，含声学文件、两词词典、上游许可和逐文件清单。归档 SHA256 为 `39aff8920e9849650399079fbc81804f211025a77b7c68dd4ec796e794bc8366`。均值和方差文件使用本工程的设备读表适配器。[模型归档](../results/4090-c161-lexical-p4-q8-model.tar.gz)
+
+```sh
+/usr/bin/python3 "$app/pack_gaussians.py" --bits 8
+PYTHONPATH=research/wakeword_p4/experiments:.local/wakeword/c161-pocket-reference/site \
+  /usr/bin/python3 "$app/prepare_packed.py"
+sed 's/partitions.csv/partitions-packed.csv/g' "$work/sdkconfig" > "$work/q8-sdkconfig"
+idf.py -C "$app" -B "$work/build-q8" -DNYX_LEXICAL_Q8=ON -DIDF_TARGET=esp32p4 \
+  -DSDKCONFIG="$work/q8-sdkconfig" "-DSDKCONFIG_DEFAULTS=$app/sdkconfig.defaults;$work/qemu.defaults" reconfigure
+cmake --build "$work/build-q8" --parallel 2
+/usr/bin/python3 "$app/run_qemu.py" --q8
+```

@@ -8,6 +8,10 @@
 #include "esp_heap_caps_init.h"
 #include "esp_timer.h"
 #include "esp_vfs_fat.h"
+#ifdef NYX_LEXICAL_Q8
+#include "esp_spiffs.h"
+#include "esp_rom_crc.h"
+#endif
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "pocketsphinx.h"
@@ -83,6 +87,32 @@ static int run_case(ps_decoder_t *ps, const char *cmn, int idx, const int16_t *p
     return 0;
 }
 
+#ifdef NYX_LEXICAL_Q8
+static int verify_music(void)
+{
+    const char *names[] = {"BGM 1.mp3", "For Elise.mp3", "Something.mp3"};
+    uint8_t data[1024];
+    for (size_t i = 0; i < sizeof(names) / sizeof(names[0]); ++i) {
+        char path[64];
+        snprintf(path, sizeof(path), "/model/music/%s", names[i]);
+        FILE *fp = fopen(path, "rb");
+        if (!fp) return -1;
+        uint32_t crc = 0;
+        size_t n, total = 0;
+        while ((n = fread(data, 1, sizeof(data), fp))) {
+            crc = esp_rom_crc32_le(crc, data, n);
+            total += n;
+            if (total % 16384 == 0) vTaskDelay(1);
+        }
+        int error = ferror(fp);
+        fclose(fp);
+        if (error) return -1;
+        printf("LEX_MUSIC size=%u crc=%08x name=%s\n", (unsigned)total, (unsigned)crc, names[i]);
+    }
+    return 0;
+}
+#endif
+
 static int replay(void)
 {
 #ifdef CONFIG_NYX_LEXICAL_QEMU_RAM
@@ -92,15 +122,24 @@ static int replay(void)
     heap_caps_malloc_extmem_enable(0);
 #endif
     esp_vfs_fat_mount_config_t mount = {.max_files = 8};
+#ifdef NYX_LEXICAL_Q8
+    esp_vfs_spiffs_conf_t packed = {.base_path = "/model", .partition_label = "storage", .max_files = 8};
+    ESP_ERROR_CHECK(esp_vfs_spiffs_register(&packed));
+    if (verify_music() < 0) return -1;
+    ESP_ERROR_CHECK(esp_vfs_fat_spiflash_mount_ro("/vol", "cases", &mount));
+    const char *hmm = "/model/am", *dict = "/model/two.dict";
+#else
     ESP_ERROR_CHECK(esp_vfs_fat_spiflash_mount_ro("/vol", "storage", &mount));
+    const char *hmm = "/vol/am", *dict = "/vol/two.dict";
+#endif
     FILE *input = fopen("/vol/cases.bin", "rb");
     int16_t *pcm = malloc(capacity * sizeof(*pcm));
     if (!input || !pcm) return -1;
     report_heap("before");
     ps_config_t *config = ps_config_init(NULL);
     if (!config) return -1;
-    ps_config_set_str(config, "hmm", "/vol/am");
-    ps_config_set_str(config, "dict", "/vol/two.dict");
+    ps_config_set_str(config, "hmm", hmm);
+    ps_config_set_str(config, "dict", dict);
     ps_config_set_str(config, "keyphrase", "hey nicks");
     ps_config_set_str(config, "loglevel", "WARN");
     ps_config_set_float(config, "kws_threshold", 1e-15);

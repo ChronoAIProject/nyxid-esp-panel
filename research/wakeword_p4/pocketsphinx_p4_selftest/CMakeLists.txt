@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.16)
 set(COMPONENTS main)
+if(NYX_LEXICAL_Q8)
+    list(APPEND COMPONENTS spiffs)
+endif()
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 project(nyx_lexical_probe)
 
