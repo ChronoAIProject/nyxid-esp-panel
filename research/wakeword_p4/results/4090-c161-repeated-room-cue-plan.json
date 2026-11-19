@@ -1,0 +1,53 @@
+{
+  "records": {
+    "original": {
+      "wav_sha256": "fc29892481cf6e136c29c32750f7dd792d66fbe2ad88bf4d3b5ea8631c44803d",
+      "pcm_sha256": "29d176688c5f47927701ca359dec763f1bacdee9bb637c8894ed46902828b309",
+      "peak": 29250,
+      "total_rms_change_db": 0.6928326593260042
+    },
+    "trained": {
+      "wav_sha256": "032d8d381294827c0d253fa25da71e8445da2b051980afd73600bd6aad3350c3",
+      "pcm_sha256": "c004aaa02e11692e2da68aab6e346d2e8a45b08967c8bdc062a3250a7e34babd",
+      "peak": 29250,
+      "total_rms_change_db": 0.6941212737720535
+    }
+  },
+  "advance_samples": 8000,
+  "length_samples": 17600,
+  "early_starts": [
+    2560,
+    5120,
+    7040
+  ],
+  "original_starts": [
+    10560,
+    13120,
+    15040
+  ],
+  "extra_room_ids": [
+    2,
+    8,
+    14,
+    15,
+    16,
+    17,
+    20,
+    23,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31
+  ],
+  "source_commit": "6549eea5",
+  "input_sha256": {
+    "hye-nyx-c161-v5-early-80ms.wav": "cc59349578cbca6c63ba13a45f7303d9de98d11560a31799b0a884e227eabf0f",
+    "4090-c161-room-trained-cue-fit.json": "f1dde28c40895643fe5d77446f2cc57f4c63c3b75b7cd005135fcfcfddad219a",
+    "hye-nyx-v5-room-trained.wav": "2ada546fdc31cd19552666bab0ab59b2341a9ed3a3a10e92458ba1d76f86df2b",
+    "c161_coded_cue_coefficients_v5.h": "0517d02f451cf859236e096af0ba9b40c4252eb4dd23b0835b5fb3068e69638d"
+  },
+  "script_sha256": "02840dbd351dbb2463e39fdc1e48edab88e53b2d0f25b07d853c21a4b104e13f",
+  "policy": "Transmit another full triple 500 ms ahead in the same fixed utterance. Keep the original final triple and duration. Early triple is either the identical known markers or equal-energy learned markers. Both consume another triple of code energy. Compare on old 14 scenes plus an additional 14 specified training-pool room IDs, excluding any fitted RIR from the additional group. No new threshold."
+}
