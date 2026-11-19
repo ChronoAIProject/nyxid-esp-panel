@@ -54,12 +54,14 @@ def acoustics():
     return beds, fit["sources"]["music"], room_bank, local
 
 
-def collect():
+def collect(*, suffix_test=False):
     native = prior.letters.native_frontend()
     teacher = prior.parent_model().eval()
     rng = np.random.default_rng(SEED)
     beds, music, rooms, panel = acoustics()
-    rows, bank = [], {arm:dict(positive=[], absent=[], negative=[]) for arm in ARMS}
+    arms = ("background", "command") if suffix_test else ARMS
+    rows, bank = [], {arm:dict(positive=[], absent=[], negative=[]) for arm in arms}
+    original = {r["key"]:r for r in ch.read(SRC)["records"]} if suffix_test else {}
     admitted = {r["key"]:r for r in ch.read(prior.base.RESULTS/(prior.STEM+"-sources.json"))["records"]
                 if r["condition"]=="dry"}
     external_eval = {r["original_source_pcm_sha256"] for r in ch.read(mixed.study.connected.PLAN)["records"]}
@@ -89,18 +91,33 @@ def collect():
         row = dict(**src, pcm_sha256=digest, room_sha256=rooms[hx][0], panel_rir_sha256=rooms[hp][0],
                    music_sha256=music[k]["sha256"], music_offset=offset, snr_db=snr, panel_rms_db=panel_db,
                    panel_at=panel_at, gain=gain, inputs={})
-        for arm, bg in (("room", np.zeros_like(sound)), ("overlap", sound)):
+        # Delete the address at the source, before room convolution, to preserve the command.
+        suffix = None
+        if suffix_test and src["positive"]:
+            left = int(src["end"])
+            clean = wave.copy()
+            clean[:left] = 0
+            assert np.array_equal(clean[left:], wave[left:])
+            suffix = np.pad(fftconvolve(clean.astype(float), rooms[hx][1]), (onset, 16000))
+            row["retained_suffix_samples"] = len(clean[left:])
+            row["retained_suffix_sha256"] = ch.digest(clean[left:])
+        old = original.pop(src["key"]) if suffix_test else None
+        for arm in arms:
+            bg = np.zeros_like(sound) if arm == "room" else sound
             inputs = [("positive" if src["positive"] else "negative", ext+bg)]
             if src["positive"]:
-                inputs.append(("absent", bg))
+                inputs.append(("absent", bg + suffix if arm == "command" else bg))
             for label, signal in inputs:
-                mic = np.rint(signal*gain).astype("<i2")
+                rounded = np.rint(signal*gain)
+                mic = rounded.clip(-32768, 32767).astype("<i2")
+                if old is not None and (arm != "command" or label != "absent"):
+                    assert ch.digest(mic) == old["inputs"]["overlap."+label]["pcm_sha256"]
                 _, bands, clock = prior.base.native_inputs(native, mic)
                 patches = np.lib.stride_tricks.sliding_window_view(bands, 32, axis=0)
                 clocks = clock[31:]
                 blocks = (clocks+255)//256*256
                 if src["positive"]:
-                    end = int(np.searchsorted(blocks, onset+src["end"], side="left"))
+                    end = int(np.searchsorted(blocks, onset+src["end"]+(1920 if suffix_test else 0), side="left"))
                 else:
                     candidates = np.flatnonzero((clocks >= onset) & (clocks <= onset+len(wave)))
                     with torch.no_grad():
@@ -110,29 +127,35 @@ def collect():
                 assert end >= 5
                 bank[arm][label].append(patches[end-5:end].copy())
                 row["inputs"][arm+"."+label] = dict(pcm_sha256=ch.digest(mic), blocks=blocks[end-5:end].tolist())
+                if suffix_test:
+                    row["inputs"][arm+"."+label]["clipped"] = int(np.count_nonzero(rounded != mic))
+            if suffix_test and arm == "command" and src["positive"]:
+                assert bank["command"]["positive"][-1].tobytes() == bank["background"]["positive"][-1].tobytes()
         rows.append(row)
-    assert not admitted
+    assert not admitted and not original
     return bank, rows
 
 
-def train():
+def train(*, suffix_test=False):
+    stem = STEM + "-post120" if suffix_test else STEM
+    source_path = ch.RESULTS / (stem + "-sources.json")
     torch.set_num_threads(1)
     assert "4090" in torch.cuda.get_device_name()
     torch.manual_seed(SEED)
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
-    bank, rows = collect()
+    bank, rows = collect(suffix_test=suffix_test)
     mining = prior.music.mining.WORK/"negative-banks.npz"
     assert ch.sha(mining)==ch.read(ch.RESULTS/(prior.music.mining.PREFIX+"-mining-v1.json"))["cache_sha256"]
     with np.load(mining, allow_pickle=False) as z:
         hard = torch.from_numpy(z["hard"]).cuda().float()/255
     with TemporaryDirectory(dir=ch.RESULTS) as folder:
         work = Path(folder)
-        ch.save(work/SRC.name,dict(records=rows, seed=SEED, panel_sha256=ch.sha(mixed.panel.demo.WAVE),
+        ch.save(work/source_path.name,dict(records=rows, seed=SEED, panel_sha256=ch.sha(mixed.panel.demo.WAVE),
                 training_music_manifest_sha256=ch.sha(ch.RESULTS/"4090-c161-causal-speech-mask-fit.json"),
                 parent_sha256=ch.sha(ch.RESULTS/(prior.music.STEM+"-weights-v1.npz")),
                 hard_sha256=ch.sha(mining), script_sha256=ch.sha(Path(__file__))))
-        for arm in ARMS:
+        for arm in bank:
             p,a,n = (torch.from_numpy(np.stack(bank[arm][k])).cuda().float()/255
                      for k in ("positive","absent","negative"))
             model = prior.parent_model()
@@ -150,30 +173,39 @@ def train():
                 if step in (1,100,200,400):
                     logs.append(dict(step=step, loss=loss.item()))
             def path(kind):
-                return work / f"{STEM}-{arm}-{kind}-v1.npz"
+                return work / f"{stem}-{arm}-{kind}-v1.npz"
             np.savez_compressed(path("weights"), **{k:v.detach().cpu().numpy() for k,v in model.state_dict().items()})
             cal = torch.cat([b[rng.choice(len(b),64),rng.integers(0,5,64)] for b in (p,a,n,hard)])
             with torch.no_grad():
                 np.savez_compressed(path("calibration"), inputs=(cal*255).round().byte().cpu().numpy(),
                                     probabilities=model(cal).sigmoid().flatten().cpu().numpy())
-            ch.save(work/f"{STEM}-{arm}-training-v1.json", dict(arm=arm, steps=STEPS, seed=SEED, logs=logs,
+            ch.save(work/f"{stem}-{arm}-training-v1.json", dict(arm=arm, steps=STEPS, seed=SEED, logs=logs,
                     gpu=torch.cuda.get_device_name(), torch=torch.__version__, positive_bags=len(p),
                     paired_absent_bags=len(a), negative_bags=len(n), hard_bags=len(hard),
-                    sources_sha256=ch.sha(work/SRC.name), weights_sha256=ch.sha(path("weights")),
-                    calibration_sha256=ch.sha(path("calibration")), policy="Last five consecutive ticks with the "
+                    sources_sha256=ch.sha(work/source_path.name), weights_sha256=ch.sha(path("weights")),
+                    calibration_sha256=ch.sha(path("calibration")), policy=("Five ticks deliverable before address end plus 120 ms. Background and command arms "
+                    "use identical targets, other negatives, hard negatives, RNG and initialization. The command "
+                    "arm keeps the external suffix of its paired absent input before room filtering. "
+                    "Threshold and smoothing frozen for evaluation." if suffix_test else "Last five consecutive ticks with the "
                     "256-sample delivery strictly before the training target end. Both arms share sources, external "
                     "room, gain, initialization, hard bank and minibatch IDs. Overlap adds training music plus the "
-                    "known panel demo before selecting negative peaks; paired absent control removes external source."))
+                    "known panel demo before selecting negative peaks; paired absent control removes external source.")))
             print(arm, logs[-1],flush=True)
         for f in work.iterdir():
             f.replace(ch.RESULTS/f.name)
 
 
 if __name__ == "__main__":
-    if sys.argv[1:] == ["export"]:
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("action", nargs="?", choices=("train", "export"), default="train")
+    parser.add_argument("--post120", action="store_true")
+    args = parser.parse_args()
+    if args.action == "export":
         import export_c161_word_window_v1 as exporter
-        for arm in ARMS:
-            exporter.STEM = STEM+"-"+arm
+        stem = STEM + "-post120" if args.post120 else STEM
+        for arm in (("background", "command") if args.post120 else ARMS):
+            exporter.STEM = stem+"-"+arm
             exporter.main()
     else:
-        train()
+        train(suffix_test=args.post120)
