@@ -167,3 +167,11 @@ Mac 可用同一外部扬声器、相同音量和摆位，配对播放每种声�
 ## 低码率的固定音自播
 
 使用上面的 ESP-IDF 构建步骤，将构建目录设为 `.local/wakeword/c161-mac-listener/build-reference-third`。在研究 Python 环境运行 `third_reference.py` 可复现浴室与淋浴间的双路回放、参考时钟偏移和普通讲话碰撞。协议字 `0x5452594e` 在原双路协议的同一采样点读取麦克风与播放参考，对未经签名确认的前两段匹配等候第三段。Mac 可优先对照加噪浴室的 12 kbps 自播和普通讲话参考同时收到外部唤醒这两个情形。[固定 WAV、模拟结果与实机取样要求](../../experiments/c161_synthesized_cue_matchers_v1.md#低码率自播的修复与时钟偏差)
+
+## LCD-X8 待机参考与实机回采
+
+Mac 提交 `0d8e1935` 的 LCD-X8 使用 ES7210 采集四槽 TDM，同帧依次为 MIC1、MIC3、MIC2、MIC4。板级适配器输出 MIC1 麦克风与 MIC3 扬声器线路回采，MIC3 的 ADC 增益为 0 dB。待机循环在通话指针为空时把送入 AEC 的参考置零。实机集成研究匹配器时，其输入可直接取归一化采集帧的第二槽 `capture[2*i+1]`。其他板型须按各自的音频布局取样。[板级格式](https://github.com/ChronoAIProject/nyxid-esp-panel/blob/0d8e1935702a561b535a8c1a0921fd8034943d2c/boards/lcd_x8/product_audio_layout.h#L6) · [ADC 配置](https://github.com/ChronoAIProject/nyxid-esp-panel/blob/0d8e1935702a561b535a8c1a0921fd8034943d2c/boards/lcd_x8/product_backend.c#L54) · [待机取样](https://github.com/ChronoAIProject/nyxid-esp-panel/blob/0d8e1935702a561b535a8c1a0921fd8034943d2c/components/panel_services/panel_voice.c#L1093)
+
+在主机编译上述 Mac 提交的板级格式函数，按最多 128 帧一块解包四槽合成输入，再送入同一版 P4 QEMU 研究监听器。四个条件为两个已用加噪房间，各自播放原始 PCM 和 12 kbps Opus 唤醒音，随后紧接相同命令。模拟待机置零时，自播误开 4/4；输入同步理想参考或四种线路处理后的参考时，每组自播均误开 0/4。所有组外部播放都开麦。理想参考和低底噪线路均 4/4 在命令前交付，上行 Opus 完整命令 4/4。给线路加标准差 24 个 PCM16 单位的合成底噪时，两项均降至 2/4。现有算法仅需一个样本幅度达到 64 就将参考视为活动 500 ms，导致这组静音底噪期间几乎全程选择 AEC/AGC。三种高底噪设置的外部输入完全相同。48 次回放共 18,240 个读块，最慢 7.992 ms。这些衰减、滤波及底噪参数均为人工设置，板上频响与底噪仍待测量。[实验与参数](lcd_x8_reference.py) · [输入身份、参考标记和逐句结果](../../results/4090-c161-lcd-x8-reference.json) · [UART 与 Opus 包](../../results/4090-c161-lcd-x8-reference.zip)
+
+对 Mac 实采的 16 kHz PCM16 WAV，运行 `python3 read_mr_capture.py capture.wav`。接受已归一化的双声道 M/R 或上述 LCD-X8 四槽格式。若开头恰有一秒已知静音，可加 `--idle-frames 16000`。工具需要 Python 3 与 C++17 编译器，使用仓库内与固件相同的固定音匹配器，输出每路幅度、静音段 RMS、参考两段与三段事件的采样时钟及 PCM 哈希。两路各有一个三段匹配时，额外给出参考减麦克风的标记时钟差；C161 回退开麦需结合板上 UART 时钟判读。用同一批 12 kbps 加噪浴室数据复算双声道及四槽输入，四个对照的全部固定音时钟与归档逐一相等，已知 ±256 样本偏移均能还原。[回采分析工具](read_mr_capture.py)

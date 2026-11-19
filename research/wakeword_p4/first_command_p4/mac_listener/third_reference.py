@@ -43,14 +43,18 @@ def command_uplink(work, archive, index, source, mic, ref, detector, reader, dec
                                  np.column_stack((mic, ref)), detector)
     selected = lanes["selected"]
     raw = lanes["raw"]
+    return encode_uplink(work, archive, index, selected, raw, source["carrier"], reader, decoder)
+
+
+def encode_uplink(work, archive, index, selected, raw, carrier, reader, decoder):
     payload = struct.pack("<3I", 0x3552504f, index, len(selected)) + selected.tobytes() + raw.tobytes()
     codec = work / "opus.log"
     listener.boot(uplink.CODEC, codec, work / "image.bin", b"UPLINK PASS", (2 << 20, payload))
     archive.write(codec, f"{index:02}-opus.log")
     encoded = uplink.packets(codec.read_text(), index, len(selected), 0)
     decoded = uplink.decode(decoder, encoded)
-    return dict(packets=len(encoded), pcm_sha256=listener.digest(decoded), fifo_sha256=info["capture_sha256"]["selected"],
-                recognition=uplink.recognition(reader, decoded, source["carrier"]))
+    return dict(packets=len(encoded), pcm_sha256=listener.digest(decoded), fifo_sha256=listener.digest(selected),
+                recognition=uplink.recognition(reader, decoded, carrier))
 
 
 def main():
