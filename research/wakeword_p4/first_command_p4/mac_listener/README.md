@@ -263,3 +263,15 @@ Mac 可循环播放板用素材中的 `panel.wav`。若面板从文件开头播�
 | 48 kHz SBC | 16 | 0 | 16 | 3 |
 
 全部 80 条有固定音的主机回放均提前 64 ms 开麦。AAC 和 SBC 的 32 条正例另用现有 P4 QEMU 监听固件和 Opus 编码器冷启动复核，通知时刻全部与主机一致。解码收到的完整上行包后，从开麦前 100 ms 开始转写，两种编码分别为 16/16 整段逐词相同。实验采用软件编解码，没有蓝牙空口传输；真实 Mac 扬声器、P4 麦克风与上行的联合结果仍待板端采集。[解码与回放程序](handoff_playback_codecs.py) · [监听串口与全部上行包](../../results/4090-c161-handoff-playback-codecs.zip) · [交接用八条播放 WAV](../../results/4090-c161-single-cue-advance-commands.zip)
+
+### 测量固定音播放与回采的时钟
+
+解压并单次连续播放 63 秒的 `hye-nyx-v5-clock-63s.wav`，同时保留完整的 16 kHz PCM16 双通道 M/R 或 LCD-X8 四槽录音和板上 UART。音频内含七次原字节固定音，首末间隔 60 秒。录音可提前开始。自播时让面板连续播放整份 WAV，麦克风和电气播放参考均从同一份录音取出。外部设备播放时，麦克风一路即可估计相对播放端的速率。压缩包 SHA256 为 `f36d1b6d12040b7c625d4cdd80e96b98429fa595555a68f6a6f98239fcfd0df6`，解压后 WAV 为 `e2e0ad2c49ffa85de45fa19263ac98dc4ef59d2e5944da3ef2bfb6784bbe7e5e`。[播放包](../../results/4090-c161-cue-clock-reader.zip)
+
+在本目录运行以下命令。工具调用现有 C++17 固定音匹配器，逐样本读取录音。也可以用 `python3 measure_cue_clock.py generate playback.wav` 从仓库的单次固定音重建播放文件。
+
+```bash
+python3 measure_cue_clock.py measure capture.wav > capture-clock.json
+```
+
+`mic.excess_capture_ppm` 和 `reference.excess_capture_ppm` 的正值表示相同源间隔在录音中占了更多采样点。若两路都能测量，`ref_minus_mic_samples` 列出七次的相对时钟差，正值表示参考较晚。固定差值可包含声传播、处理和缓冲延迟，线性变化表示观测期间相对位置在移动。两路共用 ADC 时，单路相对播放端的速率只能描述端到端比值。某一路标记数量与播放计划不符或最大拟合残差超过 16 样本时，该路报告无法估计，保留原始事件供比对 UART。报告中的 ±100 ppm 模拟自测覆盖双通道及四槽格式。[读取程序](measure_cue_clock.py) · [已知时钟和异常的合成验证](../../results/4090-c161-cue-clock-reader.json)
