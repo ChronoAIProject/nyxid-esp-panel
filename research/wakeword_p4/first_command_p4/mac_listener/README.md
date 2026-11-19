@@ -331,3 +331,7 @@ python3 measure_command_capture.py playback.wav uplink-decoded.wav --command-at 
 包内 36 个 16 kHz 单声道 PCM16 WAV，覆盖四个声音、三条命令和三个称呼。每个文件从头到尾一次播放，按同一声线和命令比较三种称呼，保持外部扬声器、摆位及音量相同。每组三条的命令都从样本 48,000（3 秒）开始，此后 PCM 逐字节相同。门锁命令的 Nyx 文件以 001、028、055、082 开头，冻结 C161 单独开麦 2/4；加整数提前复核的研究路线开麦 4/4、Opus 首句完整 4/4，其中 1 条在命令开始前开麦。另两条命令也保留了 Hey Nick 的误开样本。清单中模拟时钟以 16 kHz 样本计。实板可按文件名回传 M/R、OPEN、首包及解码后的首句。固定 v5 的板测包见上文。[下载 36 条 WAV 和 manifest](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/c161-connected-names-mac-playback-v1.zip) · [逐文件清单和校验和](../../results/c161-connected-names-mac-playback-v1.json)
 
 已从 Release 匿名重新下载，校验 2,091,542 B 归档及全部 36 条 WAV、PCM、称呼区间和命令区间。归档 SHA256 为 `bfaad614a4fdef31f01b7edc9c6a86da03a8b38d1e8b6e1e5da1019010053932`。
+
+### 可直接播放的普通 Nyx
+
+`hye-nyx-c161-lewis-200ms.wav` 包含 655 ms 合成称呼和 200 ms 尾静音。16 kHz 单声道 PCM16，总长 855 ms，SHA256 为 `7821129f336c482997a1c7b0e6fdd01c3fe41bb40682f85fbe04d6e16dd56328`，已从 Release 匿名重下载并核对 WAV、PCM 和尾静音。可单播，或在文件末接入测试命令，对照固定 v5 记录 M/R、C161、实际 OPEN 和 Opus 首句。在先前用过的 18 条数字命令上，P4 模拟固件均于命令前开麦，其中 12 条 Opus 首句完整。已有厨房和客厅混音中开麦 4/16。此段选自在开发数据上测过的声音。[下载普通 Nyx WAV](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/hye-nyx-c161-lewis-200ms.wav) · [两种合成方式的 Nyx 和 Nick 原始片段](../../results/4090-c161-reusable-nyx-cues.zip) · [逐案对照和原始包](../../experiments/c161_polling_rooms.md#给可单播的普通-nyx-增加-200-ms-尾静音)
