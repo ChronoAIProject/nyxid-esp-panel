@@ -6,6 +6,9 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "speex/speex_echo.h"
+#ifdef NYX_SPEEX_PREPROCESS
+#include "speex/speex_preprocess.h"
+#endif
 
 #ifdef NYX_SPEEX_FIXED_CUE
 int cue_step(int16_t pcm);
@@ -45,6 +48,16 @@ static void replay(void *arg)
     SpeexEchoState *state = speex_echo_state_init(frame, 2048);
     int rate = 16000;
     if (!state || speex_echo_ctl(state, SPEEX_ECHO_SET_SAMPLING_RATE, &rate)) abort();
+#ifdef NYX_SPEEX_PREPROCESS
+    SpeexPreprocessState *post = speex_preprocess_state_init(frame, rate);
+    int noise, echo, active, agc;
+    if (!post || speex_preprocess_ctl(post, SPEEX_PREPROCESS_SET_ECHO_STATE, state)
+        || speex_preprocess_ctl(post, SPEEX_PREPROCESS_GET_NOISE_SUPPRESS, &noise)
+        || speex_preprocess_ctl(post, SPEEX_PREPROCESS_GET_ECHO_SUPPRESS, &echo)
+        || speex_preprocess_ctl(post, SPEEX_PREPROCESS_GET_ECHO_SUPPRESS_ACTIVE, &active)
+        || speex_preprocess_ctl(post, SPEEX_PREPROCESS_GET_AGC, &agc)) abort();
+    printf("SPEEX_POST noise=%d echo=%d active=%d agc=%d\n", noise, echo, active, agc);
+#endif
     unsigned ready = heap_caps_get_free_size(caps);
     int16_t mic[frame], ref[frame], pcm[frame];
     char hex[frame * 4 + 1];
@@ -70,6 +83,9 @@ static void replay(void *arg)
 #endif
         int64_t begin = esp_timer_get_time();
         speex_echo_cancellation(state, mic, ref, pcm);
+#ifdef NYX_SPEEX_PREPROCESS
+        speex_preprocess_run(post, pcm);
+#endif
 #ifdef NYX_SPEEX_FIXED_CUE
         unsigned hits[frame], count = 0;
 #ifdef NYX_SPEEX_COLD_GUARD
@@ -105,6 +121,9 @@ static void replay(void *arg)
         printf("SPEEX_PCM %u %u %s\n", at, cost, hex);
         if ((at/frame) % 32 == 0) vTaskDelay(1);
     }
+#ifdef NYX_SPEEX_PREPROCESS
+    speex_preprocess_state_destroy(post);
+#endif
     speex_echo_state_destroy(state);
     printf("SPEEX_HEAP before=%u ready=%u after=%u stack=%u\n", before, ready,
            (unsigned)heap_caps_get_free_size(caps), (unsigned)uxTaskGetStackHighWaterMark(NULL));
