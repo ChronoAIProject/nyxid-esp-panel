@@ -14,6 +14,18 @@
 
 30 次打开 FIFO 均保留完整的命令开始区间，最小提前量 2.07 秒。只改变首句来源、保持相同录音起止位置后，原始麦克风在固定音组恢复六条完整命令，普通 Nyx 组恢复一条。真实面板播放时需要同步参考和回声处理；此组覆盖面板扬声器静默时的背景音乐和空调。独立模拟应用 435,056 B，在 41,040 个 16 ms 块上，测量到的处理均值为 0.716 ms、最大 11.350 ms。真实 I2S、全应用并发、实际丢帧及整机最低堆仍依赖板测。[逐条通知和转写](../../results/4090-c161-mac-listener-household.json) · [96 份 UART 及触发后的 FIFO 样本](../../results/4090-c161-mac-listener-household-uart.zip)
 
+## Mac 双板复测固定 af_bella 唤醒音
+
+单播文件长 1.45 秒，16 kHz 单声道 PCM16，WAV SHA256 为 `3adea27b05e1f541b0c525cc3e5a2f18454ae839951c43bb50bbc771d5c0e30b`。板测使用冻结 C161 加已交接的标记匹配器。原 INT8 模型为 60,952 bytes，SHA256 为 `c16154040378b8acccdb57c19917c46cea0a9ea6a39f105004b964ddd093ab81`，阈值 0.91796875，平滑五步，预热 81,600 个样本。[单播 WAV](../../results/hye-nyx-af-bella-marker-rms-v1.wav) · [原模型和 profile](../../results/4090-c161-mac-development-handoff-v1.json) · [接收器与数字注入样例](../../results/c161-panel-level-reference-mac.zip)
+
+每组 A/B 共用一段命令。A 取八声线包中清单 `paired_original` 指向的 WAV，B 取固定音包内同一行的 `file`。B 把完整的 af_bella 文件接到原命令起点，保留外部播放器的音量、原时序以及命令后的全部采样。24 条轨已覆盖八种**命令**声音，B 的称呼始终来自同一个文件。源文件中的 `command_at` 和 `cue_file_start` 是从零起算的 16 kHz 样本。固定音包可用本目录的 `package_bella_command_playback.py OUTPUT.zip` 从同一提交重建。[A 的八声线包](../../results/c161-eight-voice-marker-gains.zip) · [B 的 24 条固定音连说轨与清单](../../results/c161-bella-command-playback.zip)
+
+大板、中板分别沿用同一外部扬声器、音量和朝向交替播放 A/B。对每次播放，在 #18 记录板型、固件提交、WAV 文件名，附同步的麦克风 M、面板播放参考 R、OPEN、首份送编样本和首包时钟。保留完整解码上行，记录首词与整句转写、最低内部堆及连续运行期间的采集丢块或复位。把实采时钟与文件时钟对齐后可逐句判断是否在命令前开麦。已有的 M/R 和首句定位工具可从同一份录音复核标记与命令位置。[M/R 读取器](read_mr_capture.py) · [首句定位工具](measure_command_capture.py) · [Mac 回执与实机反馈入口](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/18)
+
+在脚本提交 `ebd0e3e2` 固定的背面扬声器回放中，主机 INT8 加标记匹配器在三档外部电平分别及时开麦 22/24、24/24、24/24。两种称呼的 72 个开麦时钟列表逐场一致，保留命令并静音称呼的同一批输入为 0/72。仿真中沿用原播放器增益。用相同的命令前 1.45 秒计算 RMS，固定音相对各原声线为 −2.67 至 +1.42 dB。[逐例主机开麦、板模拟事件与转写](../../results/4090-c161-bella-command-prefix.json)
+
+在此前选定的背面 24 个条件上，P4 模拟固件使用固定音时全部提前 59–75 ms 开麦。完整上行中，Qwen 逐词识全从原来的 15/24 变为 14/24，Whisper turbo 从 11/24 变为 9/24。两者各找回 2 条，又分别丢失 3 条和 4 条。复解了选中通道与原麦通道合计 14,866 个 Opus 包。12 份串口日志在 FINISH 之后、LISTENER PASS 之前报告 IDLE0 看门狗，保留完整日志。输入复用了开发中的房间、音乐与命令，实物板稳定性和首句仍以 Mac 实采为准。[UART 和 Opus 原始归档](../../results/4090-c161-bella-command-prefix.zip) · [回放程序](replay_bella_command_prefix.py)
+
 ## 复现
 
 从仓库根目录运行，Mac 源提交须已获取。使用 ESP-IDF 5.5.4、ESP-SR 2.6.1、esp-tflite-micro 1.3.3~1、esp-nn 1.1.2 与 esp-micro-speech-features 1.2.3，前端使用 Mac 提交中的分配检查补丁。QEMU 使用 ANSI 神经网络内核和参考 FFT，并在 DSP 运算时屏蔽 tick 以避开模拟器浮点舍入 CSR 的延迟上下文切换问题；C161 内部进度日志在此模拟构建关闭。源 WAV 的生成和路径见上方配对实验。
