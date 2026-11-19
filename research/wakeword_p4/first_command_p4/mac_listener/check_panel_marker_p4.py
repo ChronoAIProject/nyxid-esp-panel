@@ -27,12 +27,15 @@ def cases(host_report):
             yield i, meta, name, role, pcm, ref, old["result"]
 
 
-def capture(work, z, idx, case, small, turbo, decoder, builds):
+def capture(work, z, idx, case, small, turbo, decoder, builds, *, tx_pair=None):
     source_idx, meta, name, role, mic, ref, known = case
     assert ch.digest(mic) == known["pcm_sha256"] and ch.digest(ref) == known["reference_sha256"]
     build = builds[name]
     source = dict(**meta, carrier=meta["command"], cue_at=meta["start"])
-    packet = struct.pack("<3I", 0x4652594e, idx, len(mic)) + mic.tobytes() + ref.tobytes()
+    protocol = 0x4652594e if tx_pair is None else 0x5854594e
+    packet = struct.pack("<3I", protocol, idx, len(mic)) + mic.tobytes() + ref.tobytes()
+    if tx_pair is not None:
+        packet += struct.pack("<I", tx_pair)
     serial = work/"serial.log"
     for attempt in range(3):
         try:
