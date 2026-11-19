@@ -227,3 +227,21 @@ python3 "$app/run_address_qemu.py"
 冻结规则后，RTX 4090 使用相同两种 Melo 声音生成 “open the kitchen blinds” 和 “unlock the garden gate”，每种称呼配带逗号及直接连说。open 在词典内，unlock 在词典外。32 条目标的唤醒数、首句完整数，原 C161 为 9、8，原姓名语法为 17、15，新语法确认称呼为 18、17，要求同时出现命令首词为 18、16。各方案对这批 40 条姓名、16 条日常句及 8 条 Hey Willow 均无通知。要求首词的辅助路在目标中独立命中 11 条，其中四条说 open 却匹配 stop、close 或 call，七条说 unlock 时匹配其他词。实际首词未被正确识别，不能用这一步解释为命令语义得到确认。
 
 无逗号 /heɪ/ 与 /haɪ/ 各有八条，要求首词的合并路径分别唤醒 4、4 条，首句完整 4、2 条。字面 Hey Nyx 为 4/8 唤醒且完整。官方 Hey Willow DEFAULT 在自己的八条命令中为 2/8 唤醒且完整，均为 EN-US 带逗号。此前的 108 条连续普通句在新首词路径误唤 1 条，96 条独立日常句及普通 Bot 回复 0/48 均无误唤，主动示范 4/8。[新音频与音素](../results/4090-c161-address-verb-challenge-plan.json) · [逐句解码与首句转写](../results/4090-c161-address-verb-challenge.json) · [原姓名语法对照](../results/4090-c161-address-verb-challenge-grammar.json) · [官方 Willow](../results/4090-c161-address-verb-challenge-willow.json) · [原始串口与逐块返回](../results/4090-c161-address-verb-challenge-willow.zip)
+
+### 用预训练语音特征区分 Nyx、Nick、Next 和 Mick
+
+在 RTX 4090 上对齐三种分类器的输入时刻。真实 VAD 起点后 1.32 秒取已收到的 1.44 秒音频，固定以 Nyx 概率 ≥ 0.5 通知。训练仅使用 4,320 条既有 Piper、576 条 Kokoro 和 171 条 Chatterbox 合成训练语句，合计 5,067 个不同波形窗口。五类为 Nyx、Nick、Next、Mick、其他。第一种用冻结 wav2vec2-base-960h 的第六层在六个时间区间的特征训练分类器。另外两种小卷积网络均使用原生 40 维前端、相同初始化、相同训练批次和 1,000 次更新，其中一种额外学习预训练模型逐帧的字符概率。[训练来源、预训练文件身份](../results/4090-c161-onset-letters-sources.json) · [训练记录和权重哈希](../results/4090-c161-onset-letters-fit.json)
+
+冻结权重后，继续使用 EN-US 和 EN-BR 合成两条新命令。104 句中有 32 个目标、48 个近音称呼（包括 16 次 Hey Next 或 Hi Next）、16 个日常句和 8 个 Hey Willow。下表均在同一完整语流上保留 C161 的通知并使用两秒回看。普通语音的实际设备仍使用 C161。
+
+| 新载句 dim / move | 唤醒 /32 | 完整首句 /32 | 称呼误唤 /48 | 日常句误唤 /16 |
+| --- | ---: | ---: | ---: | ---: |
+| C161 | 10 | 4 | 5 | 0 |
+| 加此前词段姓名语法，主机音频时钟 | 17 | 6 | 8 | 0 |
+| 加预训练语音特征分类器，RTX 4090 | 27 | 14 | 6 | 0 |
+| 加小卷积分类器 | 12 | 5 | 5 | 0 |
+| 加逐帧字符监督的小卷积分类器 | 10 | 4 | 5 | 0 |
+
+预训练路径补回旧 EN-BR 接 open 的 4/8 次唤醒，完整命令 2/8；新 EN-BR 接 move 则由 0/8 提到 6/8，完整 4/8。新载句直接连说 /heɪ/ 为 8/8 唤醒、4/8 完整，/haɪ/ 为 6/8、2/8。新组相对 C161 新增的一个误唤为 Hey Next；此前 save / turn 组另有日常句误唤 1/16。已有连续对话目标 21/36，普通句 0/108，独立日常句 0/96，普通 Bot 回复 0/48，Bot 明确示范 4/8。Piper 两批分别唤醒 7/12、5/8，首句完整 6/12、3/8。该路径依赖主机预训练声学编码器；两种小模型均未复现其跨口音增益。
+
+字面 Hey Nyx 在八条自己的命令中，预训练路径唤醒 7 条，首句完整 4 条。官方 Hey Willow DEFAULT 在相同八种条件下唤醒 2 条、完整 2 条，均为 EN-US 带逗号。八次官方回放全部消费对应 PCM。[原始语流及音素](../results/4090-c161-onset-letters-challenge-plan.json) · [五类概率、通知和转写](../results/4090-c161-onset-letters-evaluation.json) · [官方 Willow](../results/4090-c161-onset-letters-challenge-willow.json) · [UART 与逐块返回](../results/4090-c161-onset-letters-challenge-willow.zip)
