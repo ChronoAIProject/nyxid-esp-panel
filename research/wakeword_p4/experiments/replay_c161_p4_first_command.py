@@ -78,6 +78,8 @@ def schedule(input_path, measurement_path):
 
 def main(mode):
     prefix = STEM if mode == "mapped" else f"{STEM}-{mode}"
+    if mode in ("keyword-map", "name-contrast"):
+        prefix = f"4090-c161-q8-{mode}-p4"
     input_path = RESULTS / f"{prefix}-inputs.json"
     measurement_path = MAPPED if mode == "mapped" else RESULTS / f"{prefix}.json"
     streams = schedule(input_path, measurement_path)
@@ -106,4 +108,6 @@ if __name__ == "__main__":
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--compact", dest="mode", action="store_const", const="compact")
     group.add_argument("--q8", dest="mode", action="store_const", const="q8")
+    group.add_argument("--keyword-map", dest="mode", action="store_const", const="keyword-map")
+    group.add_argument("--name-contrast", dest="mode", action="store_const", const="name-contrast")
     main(parser.parse_args().mode or "mapped")
