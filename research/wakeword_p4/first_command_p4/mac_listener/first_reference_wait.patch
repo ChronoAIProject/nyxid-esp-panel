@@ -1,0 +1,65 @@
+--- a/research/wakeword_p4/portable/c161_coded_cue_aligned_v4.h
++++ b/research/wakeword_p4/portable/c161_coded_cue_aligned_v4.h
+@@ -43,4 +43,18 @@
+     }
+
++    // At a model hit, search the existing four-sample ring for a first marker
++    // whose second marker could arrive within 48 ms after the normal 30 ms wait.
++    int model_wait_samples() const {
++        constexpr int ordinary = 480, extra = 768;
++        constexpr int second_deadline = 2560 + 24 + 1;
++        const int youngest = second_deadline - ordinary - extra;
++        const int oldest = second_deadline - ordinary - 1;
++        for (int blocks = (youngest - phase_ + 3) / 4; phase_ + 4 * blocks <= oldest; ++blocks) {
++            if (first_[(slot_ + 1024 - blocks) & 1023])
++                return second_deadline - phase_ - 4 * blocks;
++        }
++        return ordinary;
++    }
++
+ private:
+     int sign(int pattern) const {
+--- a/research/wakeword_p4/first_command_p4/mac_listener/main/reference_prefix.h
++++ b/research/wakeword_p4/first_command_p4/mac_listener/main/reference_prefix.h
+@@ -9,4 +9,6 @@
+     static constexpr int kWindowSamples = 1920 + 24;
+     enum class State { clear, confirmed, awaiting_third };
++
++    int model_wait_samples() const { return pair_.model_wait_samples(); }
+
+     template <typename Qualify>
+--- a/research/wakeword_p4/first_command_p4/mac_listener/main/reference_wake.h
++++ b/research/wakeword_p4/first_command_p4/mac_listener/main/reference_wake.h
+@@ -12,5 +12,5 @@
+     }
+
+-    bool update_active(bool active, bool reference_clear, bool hit, bool awaiting_third) {
++    bool update_active(bool active, bool reference_clear, bool hit, bool awaiting_third, int playback_wait = 480) {
+         if (active) recent_ = 8001;
+         const bool playing = recent_ > 0;
+@@ -26,5 +26,5 @@
+         }
+         if (!hit) return false;
+-        if (playing) pending_ = 480;
++        if (playing) pending_ = playback_wait;
+         else if (awaiting_third) pending_ = 1;
+         else return true;
+--- a/research/wakeword_p4/first_command_p4/mac_listener/main/listener.cpp
++++ b/research/wakeword_p4/first_command_p4/mac_listener/main/listener.cpp
+@@ -56,5 +56,6 @@
+     uint32_t h[3];
+     ESP_ERROR_CHECK(esp_flash_read(nullptr,h,kOffset,sizeof(h)));
+-    const bool qualify_capture_frame = h[0] == 0x4652594e;
++    const bool first_reference_wait = h[0] == 0x5752594e;
++    const bool qualify_capture_frame = first_reference_wait || h[0] == 0x4652594e;
+     const bool frame_activity = qualify_capture_frame || h[0] == 0x4152594e;
+     const bool wait_for_third = frame_activity || h[0] == 0x5452594e;
+@@ -165,5 +166,7 @@
+                 if (model_hit) hit161=at+i+1;
+             }
+-            if (guarded ? model_route.update_active(active,reference_clear,model_hit,awaiting_third) : model_hit) allowed161=at+i+1;
++            const int wait = first_reference_wait && model_hit ? prefix.model_wait_samples() : 480;
++            if (guarded ? model_route.update_active(active,reference_clear,model_hit,awaiting_third,wait) : model_hit)
++                allowed161=at+i+1;
+         }
+         if (first<0 && (allowed_cue>=0 || allowed161>=0)) {
