@@ -32,6 +32,9 @@ static int run_case(ps_decoder_t *ps, const char *cmn, int idx, const int16_t *p
     int64_t before = esp_timer_get_time();
     if (ps_reinit_feat(ps, NULL) < 0 || ps_set_cmn(ps, cmn) < 0 || ps_start_utt(ps) < 0) return -1;
     int64_t compute = esp_timer_get_time() - before;
+    int64_t setup = compute;
+    uint32_t costs[(capacity + block - 1) / block];
+    int blocks = 0;
     int64_t finish = compute, history = -1, confirm_us = -1, max_chunk = 0;
     for (int offset = 0; offset < end - start; offset += block) {
         int n = end - start - offset;
@@ -51,6 +54,7 @@ static int run_case(ps_decoder_t *ps, const char *cmn, int idx, const int16_t *p
             seen[count++] = (struct match){begin, stop, delivered};
         }
         int64_t cost = esp_timer_get_time() - before;
+        costs[blocks++] = (uint32_t)cost;
         if (cost > max_chunk) max_chunk = cost;
         compute += cost;
         // The proposal starts a worker. Historical chunks are already available;
@@ -66,7 +70,12 @@ static int run_case(ps_decoder_t *ps, const char *cmn, int idx, const int16_t *p
             }
         }
     }
+    before = esp_timer_get_time();
     if (ps_end_utt(ps) < 0) return -1;
+    int64_t close_us = esp_timer_get_time() - before;
+    printf("LEX_COST id=%d setup=%lld close=%lld blocks=", idx, (long long)setup, (long long)close_us);
+    for (int i = 0; i < blocks; ++i) printf("%s%u", i ? "," : "", (unsigned)costs[i]);
+    putchar('\n');
     for (int i = 0; i < count; ++i)
         printf("LEX_MATCH id=%d start=%d end=%d returned=%d\n", idx, seen[i].start, seen[i].end, seen[i].returned);
     printf("LEX_CASE id=%d count=%d confirmed=%d history_us=%lld compute_us=%lld confirm_us=%lld max_chunk_us=%lld\n",
@@ -95,7 +104,11 @@ static int replay(void)
     ps_config_set_str(config, "keyphrase", "hey nicks");
     ps_config_set_str(config, "loglevel", "WARN");
     ps_config_set_float(config, "kws_threshold", 1e-15);
+#ifdef NYX_LEXICAL_FLASH_MAP
+    ps_config_set_bool(config, "mmap", TRUE);
+#else
     ps_config_set_bool(config, "mmap", FALSE);
+#endif
     int64_t before = esp_timer_get_time();
     ps_decoder_t *ps = ps_init(config);
     if (!ps) return -1;

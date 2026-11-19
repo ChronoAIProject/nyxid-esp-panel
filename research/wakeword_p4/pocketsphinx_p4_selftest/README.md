@@ -18,3 +18,36 @@ idf.py -C "$app" -B "$work/build" -DIDF_TARGET=esp32p4 -DSDKCONFIG="$work/sdkcon
 cmake --build "$work/build" --parallel 2
 /usr/bin/python3 "$app/run_qemu.py"
 ```
+
+## 闪存映射与首句
+
+映射构建从实际生成的 FatFs 镜像中定位两个完整且唯一连续的文件，结合准备清单核对 SHA256。解码器通过 esp_partition_mmap 映射 mdef（2,959,176 B）和 sendump（1,969,024 B），退出时释放映射。映射偏移相对本次 storage 分区。运行脚本按 UART 报出的实际偏移再校验镜像内字节，逐项核对 62 个窗口的匹配段、首次返回时钟及确认决定。[映射测量](../results/4090-c161-lexical-p4-mapped.json) · [原始 UART](../results/4090-c161-lexical-p4-mapped-uart.log)
+
+| 独立 P4 QEMU 应用 | FatFs 读取 | 只读映射 |
+| --- | ---: | ---: |
+| 就绪时外部堆增量 | 7,940,912 B | 2,927,432 B |
+| 初始化 | 2.860 s | 2.145 s |
+| 单个窗口确认中位数 | 332 ms | 348 ms |
+| 最慢 30 ms 输入块 | 12.496 ms | 15.773 ms |
+
+每种实现各测一次。映射版节省 63.1% 外部堆；就绪时还占用 160 B 内部堆增量。模型和两词词典共 6,607,989 B。研究自测的 FatFs 镜像另含测试 PCM，面板现有 2 MiB SPIFFS 分区容不下这套完整模型。[面板分区表](../../../partitions.csv)
+
+首句回放使用上述映射版每个窗口的启动、每个 30 ms 块和收尾耗时，按音频实际到达时刻排队。假定一个专用任务按先来先服务完整处理所有提议，原 C161 可独立通知，所有通知按 67 步冷却合并，录音从下一个 160 样本边界取数。62 个窗口中 13 个需要排队，最长等候 439 ms。27 个确认窗口从各自提议算起为 318–798 ms，中位数 357 ms，其中包含同一句的重复候选。实机采集、任务争用、通信就绪和 Opus 编码另需测量。
+
+| 20 个合成目标 | 唤醒 | 即时起录后转写完整命令 | 回看两秒后转写完整命令 |
+| --- | ---: | ---: | ---: |
+| 旧四声音连说 | 11/12 | 0/12 | 11/12 |
+| 四段新对话 | 6/8 | 1/8 | 6/8 |
+
+分母包括全部目标。RTX 4090 运行无提示 Whisper small.en，比较转写末尾与命令全部单词。两秒回看也保留了 17 次唤醒的首个命令音素。旧语流 af_aoede 的一条请求没有提议。新对话 af_jessica 的两条请求都有提议，短语搜索均未确认。同批 66 段完整背景此前产生的 28 个候选仍为零确认。普通语音的实机基准为冻结 C161，固定音用 v5。[逐句、转写与队列记录](../results/4090-c161-lexical-p4-fifo-first-command.json)
+
+复用上面的 app、work 和 SDK 配置，在仓库根目录运行：
+
+```sh
+idf.py -C "$app" -B "$work/build-mapped" -DNYX_LEXICAL_FLASH_MAP=ON -DIDF_TARGET=esp32p4 \
+  -DSDKCONFIG="$work/sdkconfig" "-DSDKCONFIG_DEFAULTS=$app/sdkconfig.defaults;$work/qemu.defaults" reconfigure
+cmake --build "$work/build-mapped" --parallel 2
+/usr/bin/python3 "$app/run_qemu.py" --mapped
+```
+
+逐块测量写入本地 build-mapped/result.json 和 uart.log。首句脚本从已提交的映射版测量开始，生成文件时使用独占创建以保存原始报告。[首句脚本](../experiments/replay_c161_p4_first_command.py)

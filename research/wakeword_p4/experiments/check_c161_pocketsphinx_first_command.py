@@ -50,7 +50,7 @@ def inputs(use_midlevel):
                 yield "new", src, target, routes("new", str(i), src, existing)
 
 
-def main(use_midlevel):
+def load_reader():
     path = Path(".local/wakeword/whisper-small-en")
     expected = read(RESULTS / "4090-parallel-melo-context-asr-plan-v1.json")["files"]
     identity = {p.name: sha(p) for p in path.iterdir() if p.is_file()}
@@ -59,6 +59,28 @@ def main(use_midlevel):
     }
     model = WhisperModel(str(path), device="cuda", compute_type="float16", cpu_threads=1, num_workers=1)
     assert model.model.device == "cuda"
+    return model, identity
+
+
+def capture_commands(model, readings, pcm, span, hit):
+    captures = {}
+    block_end = (hit + 159) // 160 * 160
+    for label, lookback in (("immediate", 0), ("preroll", 32000)):
+        start = max(0, block_end - lookback)
+        audio = pcm[start:span["end"]]
+        key = digest(audio)
+        if key not in readings:
+            readings[key] = transcripts(model, audio)
+        text = normalized(readings[key]["text"])
+        command = normalized(span["command"])
+        captures[label] = dict(first_sample=start, samples=len(audio), sha256=key,
+            onset_retained=start <= span["first_phone"], first_word_present=command[0] in text,
+            exact_command_suffix=text[-len(command):] == command)
+    return captures
+
+
+def main(use_midlevel):
+    model, identity = load_reader()
     rows, readings = [], {}
     for cohort, src, span, routes in inputs(use_midlevel):
         pcm = load_wav(src)
@@ -67,18 +89,7 @@ def main(use_midlevel):
             row = dict(cohort=cohort, voice=src["voice"], mode=mode, source_pcm_sha256=digest(pcm),
                        span=span, hits=hits, captures={})
             if hits:
-                block_end = (hits[0] + 159) // 160 * 160
-                for label, lookback in (("immediate", 0), ("preroll", 32000)):
-                    start = max(0, block_end - lookback)
-                    audio = pcm[start:span["end"]]
-                    key = digest(audio)
-                    if key not in readings:
-                        readings[key] = transcripts(model, audio)
-                    text = normalized(readings[key]["text"])
-                    command = normalized(span["command"])
-                    row["captures"][label] = dict(first_sample=start, samples=len(audio), sha256=key,
-                        onset_retained=start <= span["first_phone"], first_word_present=command[0] in text,
-                        exact_command_suffix=text[-len(command):] == command)
+                row["captures"] = capture_commands(model, readings, pcm, span, hits[0])
             rows.append(row)
     results = dict(model_files=identity, asr="Whisper small.en CUDA FP16, unprompted English",
                    forward_sha256=sha(RESULTS / "4090-c161-signed-forward-v1.json"),

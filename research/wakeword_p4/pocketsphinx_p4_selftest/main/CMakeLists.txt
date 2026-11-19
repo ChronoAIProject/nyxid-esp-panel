@@ -33,7 +33,19 @@ file(READ "${ps}/src/util/profile.c" profile)
 string(REPLACE "(! defined(_HPUX_SOURCE))" "(! defined(ESP_PLATFORM) && ! defined(_HPUX_SOURCE))" profile "${profile}")
 file(WRITE "${gen}/profile.c" "${profile}")
 list(APPEND sources "${gen}/profile.c")
-idf_component_register(SRCS ${sources} PRIV_INCLUDE_DIRS "${gen}" "${ps}/include" "${ps}/src" PRIV_REQUIRES fatfs esp_timer heap)
+idf_component_register(SRCS ${sources} PRIV_INCLUDE_DIRS "${gen}" "${ps}/include" "${ps}/src" PRIV_REQUIRES fatfs esp_timer heap esp_partition)
 target_compile_definitions(${COMPONENT_LIB} PRIVATE HAVE_CONFIG_H)
 target_compile_options(${COMPONENT_LIB} PRIVATE -Wno-error)
 fatfs_create_rawflash_image(storage "${work}/files" FLASH_IN_PROJECT)
+
+if(NYX_LEXICAL_FLASH_MAP)
+    idf_build_get_property(python PYTHON)
+    add_custom_target(nyx_map_offsets
+        COMMAND "${python}" "${CMAKE_CURRENT_LIST_DIR}/../map_offsets.py"
+                "${CMAKE_BINARY_DIR}/storage.bin" "${work}" "${gen}/map_offsets.inc"
+        BYPRODUCTS "${gen}/map_offsets.inc"
+        VERBATIM)
+    add_dependencies(nyx_map_offsets fatfs_storage_bin)
+    add_dependencies(${COMPONENT_LIB} nyx_map_offsets)
+    set_source_files_properties(main.c port.c PROPERTIES COMPILE_DEFINITIONS NYX_LEXICAL_FLASH_MAP)
+endif()

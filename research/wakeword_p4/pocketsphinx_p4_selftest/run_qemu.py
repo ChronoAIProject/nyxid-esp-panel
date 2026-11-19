@@ -1,4 +1,6 @@
 """Boot the P4 application and pair online keyword returns with the frozen host clocks."""
+import argparse
+import hashlib
 import json
 import re
 import subprocess
@@ -10,8 +12,9 @@ from prepare import WORK, sha, read
 QEMU = Path(".local/wakeword/qemu-p4-release/qemu/bin/qemu-system-riscv32")
 
 
-def main():
-    build = WORK / "build"
+def main(mapped):
+    build = WORK / ("build-mapped" if mapped else "build")
+    output = build if mapped else WORK
     files = read(build / "flasher_args.json")["flash_files"]
     image = bytearray(b"\xff" * (16 << 20))
     for address, name in files.items():
@@ -19,9 +22,9 @@ def main():
         start = int(address, 16)
         assert start + len(data) <= len(image)
         image[start:start+len(data)] = data
-    flash = WORK / "flash.bin"
+    flash = output / "flash.bin"
     flash.write_bytes(image)
-    log = WORK / "uart.log"
+    log = output / "uart.log"
     log.unlink(missing_ok=True)
     args = [str(QEMU), "-machine", "esp32p4", "-serial", f"file:{log.resolve()}", "-display", "none",
             "-monitor", "stdio", "-snapshot", "-drive", f"file={flash},if=mtd,format=raw"]
@@ -40,7 +43,16 @@ def main():
     text = log.read_text(errors="replace")
     assert child.returncode == 0 and "LEX_DONE cases=62" in text, (err[-250:],text[-1200:])
     source = WORK / "inputs.json"
-    inputs = read(source)["records"]
+    manifest = read(source)
+    inputs = manifest["records"]
+    mappings = {}
+    storage = (build / "storage.bin").read_bytes()
+    for name, offset_text, size_text in re.findall(r"LEX_MAP file=/vol/(\S+) offset=(\d+) length=(\d+)", text):
+        offset, size = int(offset_text), int(size_text)
+        digest = hashlib.sha256(storage[offset:offset+size]).hexdigest()
+        assert name not in mappings and digest == manifest["files"][name]
+        mappings[name] = dict(offset=offset, size=size, sha256=digest)
+    assert set(mappings) == ({"am/mdef", "am/sendump"} if mapped else set())
     cases = []
     pattern = (r"LEX_CASE id=(\d+) count=(\d+) confirmed=(-?\d+) history_us=(-?\d+) "
                r"compute_us=(\d+) confirm_us=(-?\d+) max_chunk_us=(\d+)")
@@ -60,6 +72,17 @@ def main():
                           confirmed=None if decision<0 else decision, history_us=history, compute_us=total,
                           modeled_confirm_us=None if confirmed_us<0 else confirmed_us, max_chunk_us=maximum))
     assert len(cases) == len(inputs) == 62
+    assert all(c["matches_equal"] and c["confirmed"] == c["host_confirmed"] for c in cases)
+    cost_rows = re.findall(r"LEX_COST id=(\d+) setup=(\d+) close=(\d+) blocks=([\d,]+)\n", text)
+    if mapped or cost_rows:
+        assert len(cost_rows) == len(cases)
+        for (idx, setup, close, blocks), case in zip(cost_rows, cases, strict=True):
+            assert int(idx) == case["index"]
+            costs = list(map(int, blocks.split(",")))
+            src = inputs[int(idx)]
+            assert len(costs) == (src["end"] - src["start"] + 479) // 480
+            assert sum(costs) + int(setup) == case["compute_us"] and max(costs) == case["max_chunk_us"]
+            case.update(setup_us=int(setup), close_us=int(close), block_cost_us=costs)
     heaps = {stage:dict(zip(("ext","int","min_ext","min_int"), map(int, nums))) for stage,*nums in
              re.findall(r"LEX_HEAP stage=(\w+) ext=(\d+) int=(\d+) min_ext=(\d+) min_int=(\d+)", text)}
     assert set(heaps) == {"before","ready","decoded"}
@@ -67,10 +90,13 @@ def main():
         images={f:sha(build/f) for f in files.values()}, elf_sha256=sha(build/"nyx_lexical_probe.elf"),
         input_sha256=sha(source), qemu_sha256=sha(QEMU), sdkconfig_sha256=sha(WORK/"sdkconfig"),
         uart_sha256=sha(log), records=cases)
-    (WORK/"result.json").write_text(json.dumps(result,indent=2)+"\n")
+    result.update(mappings=mappings, stack_remaining_bytes=int(re.search(r"LEX_STACK remaining=(\d+)", text)[1]))
+    (output/"result.json").write_text(json.dumps(result,indent=2)+"\n")
     print("P4 cases",len(cases),"segment clocks equal",sum(c["matches_equal"] for c in cases),
           "decisions equal",sum(c["confirmed"]==c["host_confirmed"] for c in cases))
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--mapped", action="store_true")
+    main(parser.parse_args().mapped)
