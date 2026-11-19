@@ -306,3 +306,14 @@ Mac 可播放 63 秒的单文件时钟测试音，同时录下双通道 M/R 或 
 Piper 第 10 条 “dim the light” 在送入编码器前，两种识别器就分别将命令首词读为 “in” 和 “and”；small.en 在原始连续合成句中也将该处读为 “in”。第 14 条 “water the basil” 在标注的干声区间由 Turbo 完整读出，经 Opus 解码后变为 “sets a reminder …”，缺少原来的命令动词形式。硬件侧如遇首词错误，可用同一开麦时钟的编码前 PCM 与上行包核对。换识别器或录音起点，均会影响部分样本的文本。[逐句读数](../results/4090-c161-first-command-audio-attribution.json)
 
 官方 DEFAULT Hey Willow 按相同读法计分。Kokoro 上 Willow 命中 8/12、及时 2/12；已开麦的八条在短窗口两种识别器下都保留完整命令，端到端得分均为 8/12。固定音为 12/12 及时，两种读法的短窗口也均为 12/12 完整。Piper 的 18 段下文各配四个 Willow 声音，形成 72 组，72 组均命中，10 组及时。原回看下两识别器各 60/72 完整，短窗口下 small.en 为 49/72、Turbo 为 64/72。该组多个 Willow 唤醒较晚，按 OPEN 裁切时可能丢掉前文。板端记录完整缓冲并保留 OPEN，有助于按同一次捕获复核。[两套系统逐项开麦与转写](../results/4090-c161-willow-first-command-readers.json)
+
+在两组直连输入中，将同一固定 WAV 提前 120 ms。第一组在固定音末尾与原命令起点之间留 120 ms 静音；第二组只将这段静音换成原连续合成句中紧邻命令前的 120 ms。30 对从标注命令起点到录音结尾逐样本相同。60 次 P4 QEMU 均在命令前 185–200 ms 开麦。双路 27,940 个实际 Opus 包经独立解码核验，18,562 个 16 ms 块最慢 5.355 ms，零超时，最低内部空闲堆 381,132 B。[逐句结果与所有时钟](../results/4090-c161-fixed-cue-command-splice.json) · [原始 Opus 包和 UART](../results/4090-c161-fixed-cue-command-splice.zip)
+
+| 从实际开麦前 100 ms 开始识别 | 原拼接 | 留 120 ms 静音 | 保留 120 ms 原连续发音 |
+| --- | ---: | ---: | ---: |
+| Piper，small.en 完整命令 | 14/18 | 14/18 | 10/18 |
+| Piper，Turbo 完整命令 | 15/18 | 16/18 | 9/18 |
+| Kokoro，small.en 完整命令 | 12/12 | 12/12 | 11/12 |
+| Kokoro，Turbo 完整命令 | 12/12 | 12/12 | 12/12 |
+
+保留的 120 ms 可能含前一个称呼的词尾。例如 Piper 第 10 条由 small.en 转写为 “Next in the light above the reading chair”，由 Turbo 转写为 “Extend the light above the reading chair”。以当前证据，Mac 使用原交接音与原命令拼接。该表复用了同一批声音与命令，尚无物理播放测量。[生成与复现](../first_command_p4/mac_listener/check_first_command_splice.py)
