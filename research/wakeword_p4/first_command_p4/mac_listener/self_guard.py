@@ -44,13 +44,15 @@ def streams():
         yield key,mic,ref,dict(meta,role="overlap")
 
 
-def expected(events, refs, reference):
+def expected(events, refs, reference, prefix_refs=()):
     active = np.flatnonzero(np.abs(reference.astype(np.int32))>=64)+1
     accepted = []
     for at in events:
         delayed = bool(np.any((at-8000<=active)&(active<=at)))
         end = at+480*delayed
-        if not any(r<=end and r+3488>=at for r in refs):
+        blocked = any(r<=end and r+3488>=at for r in refs)
+        blocked |= any(r<=end and r+1944>=at for r in prefix_refs)
+        if not blocked:
             accepted.append(end)
     return accepted
 

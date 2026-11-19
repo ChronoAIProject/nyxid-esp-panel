@@ -5,6 +5,8 @@
 #include <cstring>
 #include "c161_coded_cue_reference_v5.h"
 #include "reference_capture.h"
+#include "reference_prefix.h"
+#include "reference_signature.h"
 #include "reference_wake.h"
 #include "esp_aec.h"
 #include "esp_agc.h"
@@ -52,7 +54,9 @@ void dump(const char* label, const int16_t* samples,int count) {
 void worker(void*) {
     uint32_t h[3];
     ESP_ERROR_CHECK(esp_flash_read(nullptr,h,kOffset,sizeof(h)));
-    const bool guarded = h[0] == 0x4752594e;
+    const bool signed_reference = h[0] == 0x4452594e;
+    const bool prefix_guarded = signed_reference || h[0] == 0x5052594e;
+    const bool guarded = prefix_guarded || h[0] == 0x4752594e;
     const bool stereo = guarded || h[0] == 0x5352594e;
     if ((!stereo && h[0]!=0x584e594d) || !h[2] || h[2]>400000) abort();
     const int length=h[2];
@@ -92,6 +96,8 @@ void worker(void*) {
     nyx::ReferenceWake model_route, cue_route;
     nyx::ReferenceCapture capture;
     nyx::CodedCueReferenceV5 guard;
+    nyx::ReferencePrefix prefix;
+    nyx::ReferenceSignature signature;
     nyx::CodedCueV5 cue;
     int fill=0, wake_fill=0, emitted=0, first=-1, peak_us=0, overruns=0, blocks=0;
     int64_t sum_us=0;
@@ -126,7 +132,12 @@ void worker(void*) {
             const bool matched=cue.update(pcm[at+i]);
             if (matched) hitcue=at+i+1;
             const int16_t reference = stereo ? playback[at+i] : 0;
-            const bool reference_clear = !stereo || guard.allow(reference,true);
+            const bool full_clear = !stereo || guard.allow(reference,true);
+            if (signed_reference) signature.update(reference);
+            const bool prefix_clear = !prefix_guarded || prefix.clear(reference, [&] {
+                return !signed_reference || signature.matches();
+            });
+            const bool reference_clear = full_clear && prefix_clear;
             const bool cue_ok = guarded ? cue_route.update(reference,reference_clear,matched) : matched && reference_clear;
             if (cue_ok) allowed_cue=at+i+1;
             bool model_hit=false;
