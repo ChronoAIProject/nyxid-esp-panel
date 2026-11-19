@@ -13,7 +13,7 @@ import check_room_rnnoise as rn
 import compare_selected_room_transcripts as readers
 
 ch, room, gap = rn.ch, rn.room, rn.gap
-OUT = ch.RESULTS / "4090-c161-fixed-v5-rnnoise-uplink.json"
+OUT = rn.RESULT_DIR / "4090-c161-fixed-v5-rnnoise-uplink.json"
 FIRST = 64
 
 
@@ -35,6 +35,8 @@ def inputs():
 
 
 def main():
+    if rn.archived(OUT):
+        return
     rn.collect(inputs(), FIRST)
     frozen = ch.read(readers.OUT)
     previous = ch.read(room.parent.OUT)

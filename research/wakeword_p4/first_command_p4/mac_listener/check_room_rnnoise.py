@@ -2,6 +2,7 @@
 import argparse
 from collections import Counter, defaultdict
 import gzip
+import os
 from pathlib import Path
 import struct
 import time
@@ -17,9 +18,21 @@ from run_c161_first_command_v5 import QEMU, boot
 ch, room, gap = parent.ch, parent.room, parent.gap
 WORK = Path(".local/wakeword/c161-rnnoise")
 BUILD = WORK / "build"
-OUT = ch.RESULTS / "4090-c161-room-rnnoise-p4.json"
+RESULT_DIR = Path(os.environ.get("NYX_NOISE_RESULTS", ch.RESULTS))
+OUT = RESULT_DIR / "4090-c161-room-rnnoise-p4.json"
 ELF = BUILD / "nyx_nsnet_probe.elf"
 HOP = 160
+
+
+def archived(path):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if not path.exists():
+        return False
+    report = ch.read(path)
+    if ch.sha(path.with_suffix(".zip")) != report["archive_sha256"]:
+        raise ValueError(f"Archive checksum mismatch for {path}")
+    print(f"Verified existing {path}. Set NYX_NOISE_RESULTS to a new directory for a fresh score.")
+    return True
 
 
 def inputs():
@@ -110,6 +123,8 @@ def wall_clock(events, costs):
 
 
 def score():
+    if archived(OUT):
+        return
     old = ch.read(parent.OUT)
     firmware = ch.sha(ELF)
     fw = gap.uplink.firmware()
@@ -177,7 +192,8 @@ def score():
         for p in sorted(work.glob("*-attempt*.gz")):
             logs.write(p, "opus-retry/" + p.name)
         for p in sorted(cached.parent.glob("*.attempt-*.gz")):
-            logs.write(p, "frontend-retry/" + p.name)
+            if int(p.name.split("-")[0]) < len(records):
+                logs.write(p, "frontend-retry/" + p.name)
     assert len(records) == 64 and len(old["records"]) == 48
     with ZipFile(tmp_archive) as logs:
         assert logs.testzip() is None
