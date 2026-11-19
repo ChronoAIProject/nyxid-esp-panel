@@ -147,3 +147,19 @@ Mac 的实机播放包有三条 16 kHz 单声道 PCM16 WAV。两条外部音轨�
 旧远场原始与限幅输入各 12 条，全部经过带数字参考检查的 P4 QEMU 监听器。面板播放参考为零，从两秒回看开始，将实际通话队列和同期原麦分别送入 Espressif Opus 编码器。两路各解码 5,408 个 20 ms 包。两路的整段录音均从原始 0/12 提至限幅后 2/12。通话队列恢复 am_eric 的 “Lower the fan speed.” 和 am_fenrir 的 “Start the kitchen timer.”；后者转写开头还有一句多余的话，符合本表既定的命令末尾匹配口径。af_aoede 的同一句风扇命令在两组都失败。一次监听器回放在通过标记前重启，原失败串口未保留；相同 PCM 冷启动复验通过。另有一个 16 ms 读块耗时 18.457 ms。板上首词、延迟、丢帧和稳定性待 Mac 回采。[P4 开麦和逐包结果](../../results/4090-c161-command-playback-level-p4.json) · [串口事件及原始编码包](../../results/4090-c161-command-playback-level-p4-packets.zip)
 
 供 Mac A/B 的包中有两种声音各两条 16 kHz 单声道 PCM16，顺序为同一增强版 v5 后直接接合成命令。用同一外部扬声器、音量和摆位播放，记录面板原麦、通知点与实际 Opus 解码音。清单给出每条 WAV 和 PCM 的 SHA256、命令起点及对应远场模拟输入身份。归档 SHA256 为 `f0677ef6d325b198aedb6af9a6caf5e38e781ab6d64e76b5cd52cf75cd6adf54`。[四条实机播放 WAV](../../results/4090-c161-command-playback-level-board.zip)
+
+## 四声音编码唤醒后的首句与 P4 上行
+
+四声音、两条命令、两个房间的 16 组原始编码音，在同声音 Willow 对照的统一命令时钟上均命中。每条合成命令另生成一个最多增加 12 dB、峰值限制在 −1 dBFS 的版本。两组采用相同的唤醒音、房间、背景、命令起点和接收增益。发送端处理前后的麦克风前缀逐样本相等，32 次模拟开麦均早于命令文件起点 273–712 ms，无接收样本削波。面板播放参考为静音。[逐句原始、限幅、时钟、识别和 P4 资源](../../results/4090-c161-coded-command-uplink.json)
+
+| 16 个配对条件，转写末尾包含完整命令 | 原始命令 | 提高电平并限幅 |
+| --- | ---: | ---: |
+| 已知命令起点截取的主机麦克风 | 9 | 16 |
+| 从两秒回看起点转写主机麦克风 | 11 | 12 |
+| P4 通话队列经 Opus，解码整段两秒回看 | 8 | 15 |
+| 同一批 P4 通话队列 Opus 包，解码后从开麦前 100 ms 转写 | 7 | 15 |
+| 同期原麦经 P4 Opus，解码整段两秒回看 | 9 | 15 |
+
+原两秒回看五条漏转写中，am_onyx 的厨房命令 “Raise the bedroom blinds halfway” 仅将末词拆为 “half way”；客厅同句还将 “blinds” 读成了 “blind”。客厅的另三条漏转写涉及 am_onyx 的日历命令，以及 bm_lewis 的两句命令。评分沿用原词序和分词口径。提高命令电平后，P4 通话队列原有八次成功均保留，并找回七条，仅 am_onyx 在客厅的 “Read tomorrow's first calendar entry” 仍将首词读成 “Breathe”。本组 32 次监听模拟共 15,670 个 16 ms 块，有一次超过周期，耗时 27.956 ms。最低内部空闲堆为 381,132 B。两路各解码 10,866 个 20 ms 包。[监听事件与实际 P4 编码包](../../results/4090-c161-coded-command-uplink-uart.zip)
+
+Mac 可用同一外部扬声器、相同音量和摆位，配对播放每种声音每条命令的 original 和 limited 文件。16 条 WAV 都是 16 kHz 单声道 PCM16；清单给出唤醒音哈希、发送端命令起点、整份 WAV 和 PCM 哈希。归档 SHA256 为 `a6ee56d7d2390fd676040eeb1ce6834abdf0e4c386768d2893bb5d735df678a7`。[四声音、两命令的实机播放包](../../results/4090-c161-coded-command-uplink-playback.zip)
