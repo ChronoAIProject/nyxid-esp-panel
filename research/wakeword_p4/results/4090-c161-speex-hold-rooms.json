@@ -1,0 +1,1681 @@
+{
+  "plan_sha256": "50aef52964721985429779e9bdc3fd6a8dc8c87fb3ea730cbc7913b49d85a404",
+  "asr": {
+    "model.bin": "62b2a45b05ee59acb4a5341b33ee35e041395d378d418a18acfe4c9e768ee37a",
+    "config.json": "666a9605530ac1f61fa8177f3702b4dacec9966749e42610839fcc32661d5fae",
+    "tokenizer.json": "929c5252409436dce1b38a75d1abbcb5e132d170d8e324e4e04ed915fa2d22df",
+    "vocabulary.txt": "ff77588746d3a2595d32ab5b69ffd7b95ce2441ac57533cb66fc3eb575a115cf"
+  },
+  "qemu_sha256": "053a4ad154c61fb3bb5d545b9c4411eb89ea12448e675b1d2abe6b1f7b1c1308",
+  "elfs": {
+    "build-hold": "7300ccdd385663ed74d96452985a053db5120136cd804967963d7e651ff82239",
+    "build-cue": "1a633221b309643d78e77db0434d6ae1f9a7962db1582c6e09f39a77802d14dc"
+  },
+  "records": [
+    {
+      "key": "0-1-self-0-0",
+      "arms": {
+        "baseline": {
+          "pcm_sha256": "c1f3926736816641e3818b0e2d619f07d9d1f4f966c343a392b28f019f17c459",
+          "uart_sha256": "9314de46ba7d9929d6aab18cd61d8bc99eaec6545504ac689268034cc2c97e65",
+          "hits": [],
+          "median_us": 721.0,
+          "max_us": 3095,
+          "over_10ms": 0
+        },
+        "hold": {
+          "pcm_sha256": "eb65bb5f92408f48eca6229ba40ed8df2bf546c16e67ae3189dfbf53d9ca3605",
+          "uart_sha256": "6ddada02ade1696fac6242132b7dafbdf5eeae25bc59a4d2a41af4f17e8d9024",
+          "hits": [],
+          "median_us": 716.0,
+          "max_us": 3170,
+          "over_10ms": 0
+        }
+      }
+    },
+    {
+      "key": "0-1-simultaneous-0-0",
+      "arms": {
+        "baseline": {
+          "pcm_sha256": "97ff1245fa787d19e2ebc13b13b37eb770b7a16581b47cb58fa2963ad9694fb7",
+          "uart_sha256": "f52bc5db30e2397282c9fa2490f136a7fb30bbf82ac6b659a92382d119cd03fa",
+          "hits": [],
+          "median_us": 716.0,
+          "max_us": 3105,
+          "over_10ms": 0,
+          "external_window_hits": []
+        },
+        "hold": {
+          "pcm_sha256": "963599df0ca4594381ddb5ca195eb93175d67a4ca732e8cd58b2a5129e9afa07",
+          "uart_sha256": "717abb226a88084ddceb6d8288d85de3b3430a1f296f359c20c8907a2037e033",
+          "hits": [
+            97648
+          ],
+          "median_us": 714.0,
+          "max_us": 3160,
+          "over_10ms": 0,
+          "external_window_hits": [
+            97648
+          ],
+          "first_sample": 65760,
+          "transcript": {
+            "text": "Hey, Nix. Turn off the desk lamps.",
+            "words": [
+              {
+                "word": " Hey,",
+                "start": 0.8000000000000003,
+                "end": 1.26
+              },
+              {
+                "word": " Nix.",
+                "start": 1.48,
+                "end": 1.62
+              },
+              {
+                "word": " Turn",
+                "start": 2.58,
+                "end": 2.72
+              },
+              {
+                "word": " off",
+                "start": 2.72,
+                "end": 2.92
+              },
+              {
+                "word": " the",
+                "start": 2.92,
+                "end": 3.08
+              },
+              {
+                "word": " desk",
+                "start": 3.08,
+                "end": 3.32
+              },
+              {
+                "word": " lamps.",
+                "start": 3.32,
+                "end": 3.6
+              }
+            ]
+          },
+          "exact_suffix": false
+        }
+      }
+    },
+    {
+      "key": "0-1-external_only-0-0",
+      "arms": {
+        "baseline": {
+          "pcm_sha256": "cbf67e4523ae75effcacb1b6ea1bbf56d953d11e47547949b18724c4e98066c8",
+          "uart_sha256": "86de664ebdd2a5df3d883666196a9f91a6b6e1815af4379091a123ddd1ca68a9",
+          "hits": [
+            97648
+          ],
+          "median_us": 708.0,
+          "max_us": 3787,
+          "over_10ms": 0,
+          "external_window_hits": [
+            97648
+          ],
+          "first_sample": 65760,
+          "transcript": {
+            "text": "Hey, Nix. Turn off the desk lamp.",
+            "words": [
+              {
+                "word": " Hey,",
+                "start": 0.8600000000000003,
+                "end": 1.28
+              },
+              {
+                "word": " Nix.",
+                "start": 1.48,
+                "end": 1.6
+              },
+              {
+                "word": " Turn",
+                "start": 2.58,
+                "end": 2.72
+              },
+              {
+                "word": " off",
+                "start": 2.72,
+                "end": 2.92
+              },
+              {
+                "word": " the",
+                "start": 2.92,
+                "end": 3.08
+              },
+              {
+                "word": " desk",
+                "start": 3.08,
+                "end": 3.3
+              },
+              {
+                "word": " lamp.",
+                "start": 3.3,
+                "end": 3.6
+              }
+            ]
+          },
+          "exact_suffix": true
+        },
+        "hold": {
+          "pcm_sha256": "cbf67e4523ae75effcacb1b6ea1bbf56d953d11e47547949b18724c4e98066c8",
+          "uart_sha256": "1449fe4576ad15e7c8c91ef4da0b376c247790b07d5a9126dcf2a6f62a0b383c",
+          "hits": [
+            97648
+          ],
+          "median_us": 625.0,
+          "max_us": 3743,
+          "over_10ms": 0,
+          "external_window_hits": [
+            97648
+          ],
+          "first_sample": 65760,
+          "transcript": {
+            "text": "Hey, Nix. Turn off the desk lamp.",
+            "words": [
+              {
+                "word": " Hey,",
+                "start": 0.8600000000000003,
+                "end": 1.28
+              },
+              {
+                "word": " Nix.",
+                "start": 1.48,
+                "end": 1.6
+              },
+              {
+                "word": " Turn",
+                "start": 2.58,
+                "end": 2.72
+              },
+              {
+                "word": " off",
+                "start": 2.72,
+                "end": 2.92
+              },
+              {
+                "word": " the",
+                "start": 2.92,
+                "end": 3.08
+              },
+              {
+                "word": " desk",
+                "start": 3.08,
+                "end": 3.3
+              },
+              {
+                "word": " lamp.",
+                "start": 3.3,
+                "end": 3.6
+              }
+            ]
+          },
+          "exact_suffix": true
+        }
+      }
+    },
+    {
+      "key": "0-1-reply_only-0-0",
+      "arms": {
+        "baseline": {
+          "pcm_sha256": "ffd337e21708529c38022e3456c986c321b8e9a658928f2626dda536fea5bec5",
+          "uart_sha256": "5ab7d01a43b2fc53d3fd0df339830c1126a07fb18e817b646c8e8b74a811d85c",
+          "hits": [],
+          "median_us": 725.0,
+          "max_us": 3521,
+          "over_10ms": 0
+        },
+        "hold": {
+          "pcm_sha256": "ffd337e21708529c38022e3456c986c321b8e9a658928f2626dda536fea5bec5",
+          "uart_sha256": "32d33316a8488cade5b0ffb2675905ee429dbeb8db25d24b2af169116fd4bc35",
+          "hits": [],
+          "median_us": 723.0,
+          "max_us": 3124,
+          "over_10ms": 0
+        }
+      }
+    },
+    {
+      "key": "0-1-simultaneous--1600--6",
+      "arms": {
+        "baseline": {
+          "pcm_sha256": "c329f90f6de4fb312fd8d9ecc6ae5389f25f5288435975c1173cd6239498be5a",
+          "uart_sha256": "dc99acb3dc18c72a441afdc69a6418adf0a25654a826e86bf94c6420623db491",
+          "hits": [
+            96048
+          ],
+          "median_us": 724.0,
+          "max_us": 3117,
+          "over_10ms": 0,
+          "external_window_hits": [
+            96048
+          ],
+          "first_sample": 64160,
+          "transcript": {
+            "text": "Hey, Nix. Turn off the desk lamp.",
+            "words": [
+              {
+                "word": " Hey,",
+                "start": 0.8200000000000003,
+                "end": 1.26
+              },
+              {
+                "word": " Nix.",
+                "start": 1.48,
+                "end": 1.6
+              },
+              {
+                "word": " Turn",
+                "start": 2.58,
+                "end": 2.7
+              },
+              {
+                "word": " off",
+                "start": 2.7,
+                "end": 2.92
+              },
+              {
+                "word": " the",
+                "start": 2.92,
+                "end": 3.08
+              },
+              {
+                "word": " desk",
+                "start": 3.08,
+                "end": 3.3
+              },
+              {
+                "word": " lamp.",
+                "start": 3.3,
+                "end": 3.6
+              }
+            ]
+          },
+          "exact_suffix": true
+        },
+        "hold": {
+          "pcm_sha256": "3818686912d11224882e1572aea2e8533fae7f9575281bbfeedacf1e573bd8a2",
+          "uart_sha256": "ae722acb1232b6548006863e4a8946277fdcd76058074b55554d57023aff954e",
+          "hits": [
+            96048
+          ],
+          "median_us": 729.0,
+          "max_us": 3162,
+          "over_10ms": 0,
+          "external_window_hits": [
+            96048
+          ],
+          "first_sample": 64160,
+          "transcript": {
+            "text": "Hey, Nix. Turn off the desk lamp.",
+            "words": [
+              {
+                "word": " Hey,",
+                "start": 0.8200000000000003,
+                "end": 1.26
+              },
+              {
+                "word": " Nix.",
+                "start": 1.48,
+                "end": 1.64
+              },
+              {
+                "word": " Turn",
+                "start": 2.58,
+                "end": 2.7
+              },
+              {
+                "word": " off",
+                "start": 2.7,
+                "end": 2.92
+              },
+              {
+                "word": " the",
+                "start": 2.92,
+                "end": 3.08
+              },
+              {
+                "word": " desk",
+                "start": 3.08,
+                "end": 3.3
+              },
+              {
+                "word": " lamp.",
+                "start": 3.3,
+                "end": 3.6
+              }
+            ]
+          },
+          "exact_suffix": true
+        }
+      }
+    },
+    {
+      "key": "0-1-simultaneous--1600-0",
+      "arms": {
+        "baseline": {
+          "pcm_sha256": "0455aa861db959a2227e6fe9d82635dfc98f3bb15b86a3ea7e6bb91604aa5ba0",
+          "uart_sha256": "7480115e1a4792ffeac429b6190fdf8a2cca3ecce8dfaafb5d7ddd3b039809ad",
+          "hits": [
+            96048
+          ],
+          "median_us": 739.0,
+          "max_us": 3358,
+          "over_10ms": 0,
+          "external_window_hits": [
+            96048
+          ],
+          "first_sample": 64160,
+          "transcript": {
+            "text": "Hey, Nix. Turn off the desk lamp.",
+            "words": [
+              {
+                "word": " Hey,",
+                "start": 0.8200000000000003,
+                "end": 1.26
+              },
+              {
+                "word": " Nix.",
+                "start": 1.48,
+                "end": 1.6
+              },
+              {
+                "word": " Turn",
+                "start": 2.58,
+                "end": 2.7
+              },
+              {
+                "word": " off",
+                "start": 2.7,
+                "end": 2.92
+              },
+              {
+                "word": " the",
+                "start": 2.92,
+                "end": 3.08
+              },
+              {
+                "word": " desk",
+                "start": 3.08,
+                "end": 3.3
+              },
+              {
+                "word": " lamp.",
+                "start": 3.3,
+                "end": 3.6
+              }
+            ]
+          },
+          "exact_suffix": true
+        },
+        "hold": {
+          "pcm_sha256": "ae1b7b36053e7d8b87a977a6b1fa665689fdbbb621285e2783855df2f0585d59",
+          "uart_sha256": "6ca8ab45115a087e892b6d323f06479e46fbe5a360fcd6a0ad685f6cdbbc1812",
+          "hits": [
+            96048
+          ],
+          "median_us": 739.0,
+          "max_us": 3269,
+          "over_10ms": 0,
+          "external_window_hits": [
+            96048
+          ],
+          "first_sample": 64160,
+          "transcript": {
+            "text": "Hey, Nix. Turn off the desk lamp.",
+            "words": [
+              {
+                "word": " Hey,",
+                "start": 0.8200000000000003,
+                "end": 1.26
+              },
+              {
+                "word": " Nix.",
+                "start": 1.48,
+                "end": 1.6
+              },
+              {
+                "word": " Turn",
+                "start": 2.58,
+                "end": 2.7
+              },
+              {
+                "word": " off",
+                "start": 2.7,
+                "end": 2.92
+              },
+              {
+                "word": " the",
+                "start": 2.92,
+                "end": 3.08
+              },
+              {
+                "word": " desk",
+                "start": 3.08,
+                "end": 3.3
+              },
+              {
+                "word": " lamp.",
+                "start": 3.3,
+                "end": 3.6
+              }
+            ]
+          },
+          "exact_suffix": true
+        }
+      }
+    },
+    {
+      "key": "0-1-simultaneous-0--6",
+      "arms": {
+        "baseline": {
+          "pcm_sha256": "d27c009ad1074a2ef87ee7b2f3bd922187453518d0abaa910ffc6f1c6c163d27",
+          "uart_sha256": "4eb7d43b4d4010b487667d7eeb3eaa27ee8f4fbf13f1b393c5749743e2c43e48",
+          "hits": [],
+          "median_us": 754.5,
+          "max_us": 3566,
+          "over_10ms": 0,
+          "external_window_hits": []
+        },
+        "hold": {
+          "pcm_sha256": "ddc4e66d5f752ab53bd9785a5e124538545fa78dea072a974479d37e958ba785",
+          "uart_sha256": "58ef6eae89eb66d9460a8654283358c46121c5e2afbdb2c088281b60f1993368",
+          "hits": [
+            97648
+          ],
+          "median_us": 749.0,
+          "max_us": 3441,
+          "over_10ms": 0,
+          "external_window_hits": [
+            97648
+          ],
+          "first_sample": 65760,
+          "transcript": {
+            "text": "Hey, Nix. Turn off the desk lamp.",
+            "words": [
+              {
+                "word": " Hey,",
+                "start": 0.8000000000000003,
+                "end": 1.26
+              },
+              {
+                "word": " Nix.",
+                "start": 1.48,
+                "end": 1.64
+              },
+              {
+                "word": " Turn",
+                "start": 2.6,
+                "end": 2.72
+              },
+              {
+                "word": " off",
+                "start": 2.72,
+                "end": 2.92
+              },
+              {
+                "word": " the",
+                "start": 2.92,
+                "end": 3.08
+              },
+              {
+                "word": " desk",
+                "start": 3.08,
+                "end": 3.32
+              },
+              {
+                "word": " lamp.",
+                "start": 3.32,
+                "end": 3.58
+              }
+            ]
+          },
+          "exact_suffix": true
+        }
+      }
+    },
+    {
+      "key": "0-1-simultaneous-2400--6",
+      "arms": {
+        "baseline": {
+          "pcm_sha256": "5ac04e2d8244b4cfa620a8875c74269818e22c96d04c0ea26ffbdc2b5839db99",
+          "uart_sha256": "2e441a9deab16d31829e32e3fe28e88807e1a80263e4546fdeed0d0b361d914c",
+          "hits": [
+            100048
+          ],
+          "median_us": 786.0,
+          "max_us": 3556,
+          "over_10ms": 0,
+          "external_window_hits": [
+            100048
+          ],
+          "first_sample": 68160,
+          "transcript": {
+            "text": "Hey Nix, turn off the desk lamp.",
+            "words": [
+              {
+                "word": " Hey",
+                "start": 0.0,
+                "end": 1.26
+              },
+              {
+                "word": " Nix,",
+                "start": 1.26,
+                "end": 1.66
+              },
+              {
+                "word": " turn",
+                "start": 2.38,
+                "end": 2.7
+              },
+              {
+                "word": " off",
+                "start": 2.7,
+                "end": 2.92
+              },
+              {
+                "word": " the",
+                "start": 2.92,
+                "end": 3.08
+              },
+              {
+                "word": " desk",
+                "start": 3.08,
+                "end": 3.3
+              },
+              {
+                "word": " lamp.",
+                "start": 3.3,
+                "end": 3.62
+              }
+            ]
+          },
+          "exact_suffix": true
+        },
+        "hold": {
+          "pcm_sha256": "09887ef4012626244c0e04fd4dd4caeaa406ccb82921a7a60f4954aea765324f",
+          "uart_sha256": "a04888fa79c6b6642d2527469b02a1e8300d654e54f9b9f367281b42a758f1de",
+          "hits": [
+            100048
+          ],
+          "median_us": 776.0,
+          "max_us": 3724,
+          "over_10ms": 0,
+          "external_window_hits": [
+            100048
+          ],
+          "first_sample": 68160,
+          "transcript": {
+            "text": "Hey, Nix. Turn off the desk lamp.",
+            "words": [
+              {
+                "word": " Hey,",
+                "start": 0.8600000000000003,
+                "end": 1.28
+              },
+              {
+                "word": " Nix.",
+                "start": 1.48,
+                "end": 1.66
+              },
+              {
+                "word": " Turn",
+                "start": 2.56,
+                "end": 2.7
+              },
+              {
+                "word": " off",
+                "start": 2.7,
+                "end": 2.9
+              },
+              {
+                "word": " the",
+                "start": 2.9,
+                "end": 3.08
+              },
+              {
+                "word": " desk",
+                "start": 3.08,
+                "end": 3.3
+              },
+              {
+                "word": " lamp.",
+                "start": 3.3,
+                "end": 3.6
+              }
+            ]
+          },
+          "exact_suffix": true
+        }
+      }
+    },
+    {
+      "key": "0-1-simultaneous-2400-0",
+      "arms": {
+        "baseline": {
+          "pcm_sha256": "f0836b4cb448d4445d95ecf1c34af934f0b55a6a283d99b12a300eda50bd1b7e",
+          "uart_sha256": "905c4ede3dbae072bdfa5f4254abb4e1a9d987466937983027aad50df9c9a56f",
+          "hits": [
+            100048
+          ],
+          "median_us": 719.0,
+          "max_us": 3317,
+          "over_10ms": 0,
+          "external_window_hits": [
+            100048
+          ],
+          "first_sample": 68160,
+          "transcript": {
+            "text": "Hey, Nix. Turn off the desk lamp.",
+            "words": [
+              {
+                "word": " Hey,",
+                "start": 0.8400000000000005,
+                "end": 1.28
+              },
+              {
+                "word": " Nix.",
+                "start": 1.48,
+                "end": 1.66
+              },
+              {
+                "word": " Turn",
+                "start": 2.58,
+                "end": 2.7
+              },
+              {
+                "word": " off",
+                "start": 2.7,
+                "end": 2.92
+              },
+              {
+                "word": " the",
+                "start": 2.92,
+                "end": 3.08
+              },
+              {
+                "word": " desk",
+                "start": 3.08,
+                "end": 3.3
+              },
+              {
+                "word": " lamp.",
+                "start": 3.3,
+                "end": 3.6
+              }
+            ]
+          },
+          "exact_suffix": true
+        },
+        "hold": {
+          "pcm_sha256": "f0bf47b7a163192329f6a6a0f944ee21e7f97f14b727519bb122a133d142e6cb",
+          "uart_sha256": "9bb608227ae479c0dcead14d0234cb447de15290227178fbf4f03da9840e9d7e",
+          "hits": [
+            100048
+          ],
+          "median_us": 769.0,
+          "max_us": 3369,
+          "over_10ms": 0,
+          "external_window_hits": [
+            100048
+          ],
+          "first_sample": 68160,
+          "transcript": {
+            "text": "Hey, Nix. Turn off the desk lamp.",
+            "words": [
+              {
+                "word": " Hey,",
+                "start": 0.8400000000000005,
+                "end": 1.28
+              },
+              {
+                "word": " Nix.",
+                "start": 1.48,
+                "end": 1.66
+              },
+              {
+                "word": " Turn",
+                "start": 2.58,
+                "end": 2.7
+              },
+              {
+                "word": " off",
+                "start": 2.7,
+                "end": 2.92
+              },
+              {
+                "word": " the",
+                "start": 2.92,
+                "end": 3.08
+              },
+              {
+                "word": " desk",
+                "start": 3.08,
+                "end": 3.3
+              },
+              {
+                "word": " lamp.",
+                "start": 3.3,
+                "end": 3.6
+              }
+            ]
+          },
+          "exact_suffix": true
+        }
+      }
+    },
+    {
+      "key": "0-0-self-0-0",
+      "arms": {
+        "baseline": {
+          "pcm_sha256": "6c7045885ba64c0e68534ee8d4068b3f22853bcb243b8ca1c382a5fdc8fb4f6f",
+          "uart_sha256": "eb0ad5af26760cb6d5a5081d01fca0677eff47a21329602d8e4f30f919f87f74",
+          "hits": [],
+          "median_us": 725.0,
+          "max_us": 3414,
+          "over_10ms": 0
+        },
+        "hold": {
+          "pcm_sha256": "546f363786d010dde41108be68ce836089f5fbde5d838f29a40b8a64347f1082",
+          "uart_sha256": "01f3b0269fcf1dd9ad6120ffe595241375c6dfab201a7533fb575d326b085273",
+          "hits": [
+            17684
+          ],
+          "median_us": 722.0,
+          "max_us": 3274,
+          "over_10ms": 0
+        }
+      }
+    },
+    {
+      "key": "0-0-simultaneous-0-0",
+      "arms": {
+        "baseline": {
+          "pcm_sha256": "8248477e2f73b9ff515cfc5cc963037d27543a94e414f86f367615fac3ad621c",
+          "uart_sha256": "b63e694a342b784421ceb1d306943fa66e404421de1bafee377ed2c1f0970feb",
+          "hits": [],
+          "median_us": 722.0,
+          "max_us": 3260,
+          "over_10ms": 0,
+          "external_window_hits": []
+        },
+        "hold": {
+          "pcm_sha256": "b83dce5231d0b3100ada4f8a2f3e15e062a73504876903e35297fbed40a74072",
+          "uart_sha256": "ba5bf6c73e2f234cba05f432773f3669c4a24dda84dd6befde0b961190fcea5a",
+          "hits": [
+            17656
+          ],
+          "median_us": 722.0,
+          "max_us": 3174,
+          "over_10ms": 0,
+          "external_window_hits": [
+            17656
+          ],
+          "first_sample": 0,
+          "transcript": {
+            "text": "Hey, Nix. Turn off the desk lamps.",
+            "words": [
+              {
+                "word": " Hey,",
+                "start": 0.0,
+                "end": 0.38
+              },
+              {
+                "word": " Nix.",
+                "start": 0.6,
+                "end": 0.76
+              },
+              {
+                "word": " Turn",
+                "start": 1.7,
+                "end": 1.82
+              },
+              {
+                "word": " off",
+                "start": 1.82,
+                "end": 2.04
+              },
+              {
+                "word": " the",
+                "start": 2.04,
+                "end": 2.2
+              },
+              {
+                "word": " desk",
+                "start": 2.2,
+                "end": 2.42
+              },
+              {
+                "word": " lamps.",
+                "start": 2.42,
+                "end": 2.74
+              }
+            ]
+          },
+          "exact_suffix": false
+        }
+      }
+    },
+    {
+      "key": "1-1-self-0-0",
+      "arms": {
+        "baseline": {
+          "pcm_sha256": "6c6bb0f51505fea9fa21401ad9f03046c9381ac2fc5c1226a059386bc2154ff1",
+          "uart_sha256": "d2737e4cf740d2fddb00dda234db455ef51695913f9d52407ea2af42f451c934",
+          "hits": [],
+          "median_us": 716.0,
+          "max_us": 3193,
+          "over_10ms": 0
+        },
+        "hold": {
+          "pcm_sha256": "e0e1f326a8e338d452cef1ca9ba63621b321efc68b88bfea714db2f002a0bb98",
+          "uart_sha256": "e7738ab61d6d73c4577871f5932202fc2133c59958d33d757d41479f54204b3b",
+          "hits": [],
+          "median_us": 789.0,
+          "max_us": 3601,
+          "over_10ms": 0
+        }
+      }
+    },
+    {
+      "key": "1-1-simultaneous-0-0",
+      "arms": {
+        "baseline": {
+          "pcm_sha256": "198cf17bba97c0c5a90b53116f72bd82bde32b713ed2daa4e288195b7930a1e8",
+          "uart_sha256": "acb8155ef6115892eedc79c115edf321442dc254356577f81c81fdd585a31eb7",
+          "hits": [],
+          "median_us": 725.0,
+          "max_us": 3130,
+          "over_10ms": 0,
+          "external_window_hits": []
+        },
+        "hold": {
+          "pcm_sha256": "24b5e9fe74840a33b51474bf0b22eb8cec947415c0fe9bfdf198a176851f694c",
+          "uart_sha256": "ce5cf845d9ce0daf5242cbbae4943e81d4f3737b7a21fc84a12a1c1035378a39",
+          "hits": [
+            97704
+          ],
+          "median_us": 718.0,
+          "max_us": 3234,
+          "over_10ms": 0,
+          "external_window_hits": [
+            97704
+          ],
+          "first_sample": 65760,
+          "transcript": {
+            "text": "Hey, Nix. Turn off the desk lamp.",
+            "words": [
+              {
+                "word": " Hey,",
+                "start": 0.8200000000000003,
+                "end": 1.26
+              },
+              {
+                "word": " Nix.",
+                "start": 1.48,
+                "end": 1.66
+              },
+              {
+                "word": " Turn",
+                "start": 2.56,
+                "end": 2.72
+              },
+              {
+                "word": " off",
+                "start": 2.72,
+                "end": 2.9
+              },
+              {
+                "word": " the",
+                "start": 2.9,
+                "end": 3.08
+              },
+              {
+                "word": " desk",
+                "start": 3.08,
+                "end": 3.3
+              },
+              {
+                "word": " lamp.",
+                "start": 3.3,
+                "end": 3.6
+              }
+            ]
+          },
+          "exact_suffix": true
+        }
+      }
+    },
+    {
+      "key": "1-1-external_only-0-0",
+      "arms": {
+        "baseline": {
+          "pcm_sha256": "40d3b64a52e2fe46bd90e96ec56972c7e566512acb9c70ae49886ec850f0e37e",
+          "uart_sha256": "cb04d922d2124ff91fcdf2179fa6e45cae07ec6071dcbf81a8e874847b3bf077",
+          "hits": [
+            97704
+          ],
+          "median_us": 622.0,
+          "max_us": 3780,
+          "over_10ms": 0,
+          "external_window_hits": [
+            97704
+          ],
+          "first_sample": 65760,
+          "transcript": {
+            "text": "Hey, Nix. Turn off the desk lamp.",
+            "words": [
+              {
+                "word": " Hey,",
+                "start": 0.8600000000000003,
+                "end": 1.28
+              },
+              {
+                "word": " Nix.",
+                "start": 1.48,
+                "end": 1.66
+              },
+              {
+                "word": " Turn",
+                "start": 2.54,
+                "end": 2.72
+              },
+              {
+                "word": " off",
+                "start": 2.72,
+                "end": 2.9
+              },
+              {
+                "word": " the",
+                "start": 2.9,
+                "end": 3.08
+              },
+              {
+                "word": " desk",
+                "start": 3.08,
+                "end": 3.3
+              },
+              {
+                "word": " lamp.",
+                "start": 3.3,
+                "end": 3.6
+              }
+            ]
+          },
+          "exact_suffix": true
+        },
+        "hold": {
+          "pcm_sha256": "40d3b64a52e2fe46bd90e96ec56972c7e566512acb9c70ae49886ec850f0e37e",
+          "uart_sha256": "537689036b9dd7e9a045c1c49885426157088e1620c9f7e4f9a054f7a9a50fe3",
+          "hits": [
+            97704
+          ],
+          "median_us": 630.0,
+          "max_us": 3208,
+          "over_10ms": 0,
+          "external_window_hits": [
+            97704
+          ],
+          "first_sample": 65760,
+          "transcript": {
+            "text": "Hey, Nix. Turn off the desk lamp.",
+            "words": [
+              {
+                "word": " Hey,",
+                "start": 0.8600000000000003,
+                "end": 1.28
+              },
+              {
+                "word": " Nix.",
+                "start": 1.48,
+                "end": 1.66
+              },
+              {
+                "word": " Turn",
+                "start": 2.54,
+                "end": 2.72
+              },
+              {
+                "word": " off",
+                "start": 2.72,
+                "end": 2.9
+              },
+              {
+                "word": " the",
+                "start": 2.9,
+                "end": 3.08
+              },
+              {
+                "word": " desk",
+                "start": 3.08,
+                "end": 3.3
+              },
+              {
+                "word": " lamp.",
+                "start": 3.3,
+                "end": 3.6
+              }
+            ]
+          },
+          "exact_suffix": true
+        }
+      }
+    },
+    {
+      "key": "1-1-reply_only-0-0",
+      "arms": {
+        "baseline": {
+          "pcm_sha256": "5270f64f4988a10719e178dcd195a853590a0092bb0d3c3c592dc1f9a7fbc6be",
+          "uart_sha256": "291f289526649019809922b6e2f0a3a02a57527a99f37292a2b385dd1972e005",
+          "hits": [],
+          "median_us": 751.5,
+          "max_us": 3338,
+          "over_10ms": 0
+        },
+        "hold": {
+          "pcm_sha256": "5270f64f4988a10719e178dcd195a853590a0092bb0d3c3c592dc1f9a7fbc6be",
+          "uart_sha256": "4cff652fd61354982a1cbf25f87b4a85560239bf519c71208087f623b1ce6a9a",
+          "hits": [],
+          "median_us": 832.0,
+          "max_us": 3279,
+          "over_10ms": 0
+        }
+      }
+    },
+    {
+      "key": "1-1-simultaneous--1600--6",
+      "arms": {
+        "baseline": {
+          "pcm_sha256": "c95a95e49be239a9eb7d41cf1c31a03db3f35867b20487179f428422039ab5d3",
+          "uart_sha256": "5744c05bf664d605b6ceccf56e4c0b9d64103b95a7b99297f5485978aa5b748e",
+          "hits": [
+            96096
+          ],
+          "median_us": 752.0,
+          "max_us": 3372,
+          "over_10ms": 0,
+          "external_window_hits": [
+            96096
+          ],
+          "first_sample": 64160,
+          "transcript": {
+            "text": "Hey, Nix. Turn off the desk lamp.",
+            "words": [
+              {
+                "word": " Hey,",
+                "start": 0.8600000000000003,
+                "end": 1.28
+              },
+              {
+                "word": " Nix.",
+                "start": 1.48,
+                "end": 1.66
+              },
+              {
+                "word": " Turn",
+                "start": 2.54,
+                "end": 2.72
+              },
+              {
+                "word": " off",
+                "start": 2.72,
+                "end": 2.92
+              },
+              {
+                "word": " the",
+                "start": 2.92,
+                "end": 3.08
+              },
+              {
+                "word": " desk",
+                "start": 3.08,
+                "end": 3.3
+              },
+              {
+                "word": " lamp.",
+                "start": 3.3,
+                "end": 3.6
+              }
+            ]
+          },
+          "exact_suffix": true
+        },
+        "hold": {
+          "pcm_sha256": "f6e00cf7e7eccc488d324437a921c23723b906005c74b084562a51f37dd8829c",
+          "uart_sha256": "8b58269a8db289a849f530e30af9ba24c741b27613949f3295ecdcf7ae0b6f71",
+          "hits": [
+            96096
+          ],
+          "median_us": 753.0,
+          "max_us": 3762,
+          "over_10ms": 0,
+          "external_window_hits": [
+            96096
+          ],
+          "first_sample": 64160,
+          "transcript": {
+            "text": "Turn off the desk lamp.",
+            "words": [
+              {
+                "word": " Turn",
+                "start": 0.0,
+                "end": 1.32
+              },
+              {
+                "word": " off",
+                "start": 1.32,
+                "end": 2.9
+              },
+              {
+                "word": " the",
+                "start": 2.9,
+                "end": 3.06
+              },
+              {
+                "word": " desk",
+                "start": 3.06,
+                "end": 3.3
+              },
+              {
+                "word": " lamp.",
+                "start": 3.3,
+                "end": 3.62
+              }
+            ]
+          },
+          "exact_suffix": true
+        }
+      }
+    },
+    {
+      "key": "1-1-simultaneous--1600-0",
+      "arms": {
+        "baseline": {
+          "pcm_sha256": "e3e8fe518d5dc693eb5a6205fee716a698f3a80632c6ced07e9fbcf286936f3b",
+          "uart_sha256": "9ef08b3bad261bba2fdc21c01c9eb9563c2e9d8e1e3fe35dd4c1e4a81940ed89",
+          "hits": [
+            96104
+          ],
+          "median_us": 773.0,
+          "max_us": 3444,
+          "over_10ms": 0,
+          "external_window_hits": [
+            96104
+          ],
+          "first_sample": 64160,
+          "transcript": {
+            "text": "Turn off the desk lamp.",
+            "words": [
+              {
+                "word": " Turn",
+                "start": 0.0,
+                "end": 1.34
+              },
+              {
+                "word": " off",
+                "start": 1.34,
+                "end": 2.92
+              },
+              {
+                "word": " the",
+                "start": 2.92,
+                "end": 3.06
+              },
+              {
+                "word": " desk",
+                "start": 3.06,
+                "end": 3.3
+              },
+              {
+                "word": " lamp.",
+                "start": 3.3,
+                "end": 3.62
+              }
+            ]
+          },
+          "exact_suffix": true
+        },
+        "hold": {
+          "pcm_sha256": "b7d11802b64f5a0b83a8ebf76a9652530eb4bd70c9a77c66a8971a9f6637099a",
+          "uart_sha256": "0042a933f0bcb5a0f844d9e9f309902ae01f205ac400b7ac955b456ae9cfccf3",
+          "hits": [
+            96104
+          ],
+          "median_us": 715.0,
+          "max_us": 3706,
+          "over_10ms": 0,
+          "external_window_hits": [
+            96104
+          ],
+          "first_sample": 64160,
+          "transcript": {
+            "text": "Turn off the desk lamp.",
+            "words": [
+              {
+                "word": " Turn",
+                "start": 0.0,
+                "end": 1.48
+              },
+              {
+                "word": " off",
+                "start": 1.48,
+                "end": 2.9
+              },
+              {
+                "word": " the",
+                "start": 2.9,
+                "end": 3.06
+              },
+              {
+                "word": " desk",
+                "start": 3.06,
+                "end": 3.3
+              },
+              {
+                "word": " lamp.",
+                "start": 3.3,
+                "end": 3.64
+              }
+            ]
+          },
+          "exact_suffix": true
+        }
+      }
+    },
+    {
+      "key": "1-1-simultaneous-0--6",
+      "arms": {
+        "baseline": {
+          "pcm_sha256": "465befa2bf9d6fd9a5017bd9f2cd2967affb0f505338ffb3db8a973495adceab",
+          "uart_sha256": "7c9ddbed4478196760cacce3fa8c0e047e955bba1c3325763c59e6cd85c76c60",
+          "hits": [],
+          "median_us": 719.0,
+          "max_us": 5585,
+          "over_10ms": 0,
+          "external_window_hits": []
+        },
+        "hold": {
+          "pcm_sha256": "5ebe5ea54556dcbd08840b05fae719b97c23b677f3b0069f84873f606d1070fb",
+          "uart_sha256": "41ca78d30b573dd2baab8c602019ea5ea7e07f28170b63ef73b470d9de45a9cc",
+          "hits": [
+            97704
+          ],
+          "median_us": 712.0,
+          "max_us": 3302,
+          "over_10ms": 0,
+          "external_window_hits": [
+            97704
+          ],
+          "first_sample": 65760,
+          "transcript": {
+            "text": "Hey, Nix. Turn off the desk lamp.",
+            "words": [
+              {
+                "word": " Hey,",
+                "start": 0.8200000000000003,
+                "end": 1.26
+              },
+              {
+                "word": " Nix.",
+                "start": 1.48,
+                "end": 1.66
+              },
+              {
+                "word": " Turn",
+                "start": 2.56,
+                "end": 2.72
+              },
+              {
+                "word": " off",
+                "start": 2.72,
+                "end": 2.92
+              },
+              {
+                "word": " the",
+                "start": 2.92,
+                "end": 3.08
+              },
+              {
+                "word": " desk",
+                "start": 3.08,
+                "end": 3.3
+              },
+              {
+                "word": " lamp.",
+                "start": 3.3,
+                "end": 3.6
+              }
+            ]
+          },
+          "exact_suffix": true
+        }
+      }
+    },
+    {
+      "key": "1-1-simultaneous-2400--6",
+      "arms": {
+        "baseline": {
+          "pcm_sha256": "151ae13753a0c31e91e6e36a45e59a51b68d84b10ffd6ae5413bf12066593bb4",
+          "uart_sha256": "5abcdb466b61e52fe539c64c8656686cd51da6a9c4457b95c68c1ab1d3b98426",
+          "hits": [
+            100104
+          ],
+          "median_us": 718.0,
+          "max_us": 3241,
+          "over_10ms": 0,
+          "external_window_hits": [
+            100104
+          ],
+          "first_sample": 68160,
+          "transcript": {
+            "text": "Hey, Nix. Turn off the desk lamp.",
+            "words": [
+              {
+                "word": " Hey,",
+                "start": 0.8200000000000003,
+                "end": 1.26
+              },
+              {
+                "word": " Nix.",
+                "start": 1.48,
+                "end": 1.66
+              },
+              {
+                "word": " Turn",
+                "start": 2.56,
+                "end": 2.7
+              },
+              {
+                "word": " off",
+                "start": 2.7,
+                "end": 2.92
+              },
+              {
+                "word": " the",
+                "start": 2.92,
+                "end": 3.08
+              },
+              {
+                "word": " desk",
+                "start": 3.08,
+                "end": 3.3
+              },
+              {
+                "word": " lamp.",
+                "start": 3.3,
+                "end": 3.6
+              }
+            ]
+          },
+          "exact_suffix": true
+        },
+        "hold": {
+          "pcm_sha256": "73a8cff6575aec695b408d31b019d6efeb440d16e544c7e5465c9267373bfda6",
+          "uart_sha256": "93d89e769c60c1312ac5b9571fc8bc2b33632974170407269fef77a391edd8d9",
+          "hits": [
+            100104
+          ],
+          "median_us": 714.5,
+          "max_us": 3128,
+          "over_10ms": 0,
+          "external_window_hits": [
+            100104
+          ],
+          "first_sample": 68160,
+          "transcript": {
+            "text": "Hey, Nix. Turn off the desk lamp.",
+            "words": [
+              {
+                "word": " Hey,",
+                "start": 0.8200000000000003,
+                "end": 1.26
+              },
+              {
+                "word": " Nix.",
+                "start": 1.48,
+                "end": 1.66
+              },
+              {
+                "word": " Turn",
+                "start": 2.56,
+                "end": 2.7
+              },
+              {
+                "word": " off",
+                "start": 2.7,
+                "end": 2.92
+              },
+              {
+                "word": " the",
+                "start": 2.92,
+                "end": 3.08
+              },
+              {
+                "word": " desk",
+                "start": 3.08,
+                "end": 3.3
+              },
+              {
+                "word": " lamp.",
+                "start": 3.3,
+                "end": 3.6
+              }
+            ]
+          },
+          "exact_suffix": true
+        }
+      }
+    },
+    {
+      "key": "1-1-simultaneous-2400-0",
+      "arms": {
+        "baseline": {
+          "pcm_sha256": "49a05326bbd8bc49223e956c0e9128342e852ce75575a67c688449db52f766f4",
+          "uart_sha256": "1f1c68aa987bb1504502d9cb150bc25a34ffda11254c8bd211b3e5fbc01d16f8",
+          "hits": [
+            100104
+          ],
+          "median_us": 779.0,
+          "max_us": 3547,
+          "over_10ms": 0,
+          "external_window_hits": [
+            100104
+          ],
+          "first_sample": 68160,
+          "transcript": {
+            "text": "Hey, Nix. Turn off the desk lamp",
+            "words": [
+              {
+                "word": " Hey,",
+                "start": 0.8200000000000005,
+                "end": 1.26
+              },
+              {
+                "word": " Nix.",
+                "start": 1.48,
+                "end": 1.66
+              },
+              {
+                "word": " Turn",
+                "start": 2.56,
+                "end": 2.7
+              },
+              {
+                "word": " off",
+                "start": 2.7,
+                "end": 2.92
+              },
+              {
+                "word": " the",
+                "start": 2.92,
+                "end": 3.08
+              },
+              {
+                "word": " desk",
+                "start": 3.08,
+                "end": 3.3
+              },
+              {
+                "word": " lamp",
+                "start": 3.3,
+                "end": 3.6
+              }
+            ]
+          },
+          "exact_suffix": true
+        },
+        "hold": {
+          "pcm_sha256": "915a7cdb126759ffa5d149c9adafd431ec4544707b2eda7e0f34e07fe02a0e05",
+          "uart_sha256": "31cfceef0e7cef42055aeb83e19d1ceb03ea06527fbe8567891207f3bbde1d42",
+          "hits": [
+            100104
+          ],
+          "median_us": 711.0,
+          "max_us": 3150,
+          "over_10ms": 0,
+          "external_window_hits": [
+            100104
+          ],
+          "first_sample": 68160,
+          "transcript": {
+            "text": "Hey, Nix. Turn off the desk lamp",
+            "words": [
+              {
+                "word": " Hey,",
+                "start": 0.8200000000000005,
+                "end": 1.26
+              },
+              {
+                "word": " Nix.",
+                "start": 1.48,
+                "end": 1.66
+              },
+              {
+                "word": " Turn",
+                "start": 2.56,
+                "end": 2.72
+              },
+              {
+                "word": " off",
+                "start": 2.72,
+                "end": 2.92
+              },
+              {
+                "word": " the",
+                "start": 2.92,
+                "end": 3.08
+              },
+              {
+                "word": " desk",
+                "start": 3.08,
+                "end": 3.3
+              },
+              {
+                "word": " lamp",
+                "start": 3.3,
+                "end": 3.6
+              }
+            ]
+          },
+          "exact_suffix": true
+        }
+      }
+    },
+    {
+      "key": "1-0-self-0-0",
+      "arms": {
+        "baseline": {
+          "pcm_sha256": "11651d46c9b73b4a0265aa9ccfa71589f1daac3b18451d508828af7247aa677b",
+          "uart_sha256": "d01d39781b69684ad07294f8c833a15c139c49d2ef42c89e75acdb3527794fd4",
+          "hits": [],
+          "median_us": 734.0,
+          "max_us": 3180,
+          "over_10ms": 0
+        },
+        "hold": {
+          "pcm_sha256": "1d99f0e4eb7b26f727bf3ff7bd7815ad0561b95c615e0da44c624af607435e95",
+          "uart_sha256": "cba5f10bdae4c81f8c937ef9f45fc5a60e091a724079076494766bb8b10122d6",
+          "hits": [
+            17632
+          ],
+          "median_us": 740.0,
+          "max_us": 3251,
+          "over_10ms": 0
+        }
+      }
+    },
+    {
+      "key": "1-0-simultaneous-0-0",
+      "arms": {
+        "baseline": {
+          "pcm_sha256": "9ccf25f3dc97a842ce951ebaef46d0cecf8d633f7c184a668822d2887a26d0fc",
+          "uart_sha256": "ce1462b306792d04aca19da1865d0444906264ade3876e2b332d12c5d6979eab",
+          "hits": [],
+          "median_us": 743.0,
+          "max_us": 3320,
+          "over_10ms": 0,
+          "external_window_hits": []
+        },
+        "hold": {
+          "pcm_sha256": "ff106bac00499d31c9e11e1b6b07a0b0fcd669feeaac6daef9c98d426a7575d3",
+          "uart_sha256": "8a4c3530f74d64f26593bc6ac6b0188da48adce70d23b5a052bbe404c18009bd",
+          "hits": [
+            17640
+          ],
+          "median_us": 749.0,
+          "max_us": 3290,
+          "over_10ms": 0,
+          "external_window_hits": [
+            17640
+          ],
+          "first_sample": 0,
+          "transcript": {
+            "text": "Hey Nix, turn off the desk lamp.",
+            "words": [
+              {
+                "word": " Hey",
+                "start": 0.0,
+                "end": 0.38
+              },
+              {
+                "word": " Nix,",
+                "start": 0.38,
+                "end": 0.8
+              },
+              {
+                "word": " turn",
+                "start": 1.6,
+                "end": 1.82
+              },
+              {
+                "word": " off",
+                "start": 1.82,
+                "end": 2.06
+              },
+              {
+                "word": " the",
+                "start": 2.06,
+                "end": 2.18
+              },
+              {
+                "word": " desk",
+                "start": 2.18,
+                "end": 2.42
+              },
+              {
+                "word": " lamp.",
+                "start": 2.42,
+                "end": 2.72
+              }
+            ]
+          },
+          "exact_suffix": true
+        }
+      }
+    }
+  ],
+  "uart_archive_sha256": "6cca7342ae27ab09a2a755935a3d81d98bfc27f94fd5dae5a171aa3696345ff4"
+}
