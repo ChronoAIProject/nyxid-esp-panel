@@ -166,7 +166,8 @@ def score(build=BUILD, log=LOG, stem=STEM, fixture_report=RESULTS / "4090-c161-c
     check = next(r for r in read(WORK/"codec-checksums.json")["files"] if r["path"]=="lib/esp32p4/libesp_audio_codec.a")
     assert sha(component)==check["hash"]
     save(RESULTS/f"{stem}.json",dict(fixture_report_sha256=sha(fixture_report),
-        **({"frontend_report_sha256": audit["frontend_report_sha256"], "prepared_fixtures": audit["witnesses"]} if clocked else {}),
+        **({"prepared_fixtures": audit["witnesses"]} if clocked else {}),
+        **({"frontend_report_sha256": audit["frontend_report_sha256"]} if clocked and "frontend_report_sha256" in audit else {}),
         fifo_source_sha256=sha(Path("components/panel_services/panel_voice_audio.c")),fixture_source_sha256=sha(RESULTS.parent/"first_command_p4/main/main.cpp"),
         qemu_sha256=sha(QEMU),elf_sha256=sha(build/"nyx_first_command.elf"),uart_sha256=sha(log),archive_sha256=sha(archive),
         codec_component_version="2.4.1",p4_codec_sha256=sha(component),codec_archive_sha256=sha(WORK/"codec.zip"),

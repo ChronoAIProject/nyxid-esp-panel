@@ -1,0 +1,680 @@
+{
+  "fixture_report_sha256": "0b6ecb3ad7ea418abcff7681f35ed3f6155604666806fe44b9e26abdd6a5425c",
+  "prepared_fixtures": [
+    {
+      "channel": "digital",
+      "mode": "voip-12",
+      "scene": 0,
+      "voice": "af_aoede",
+      "wav": "4090-c161-coded-cue-v5-command-digital.wav",
+      "sha256": "a7799a10727033e09d793f439d80047e9be1d6f10238948582c6bcb22bd3f7bd",
+      "command_start": 106400,
+      "notification": [
+        {
+          "t": 102788,
+          "cue_bits": 8
+        }
+      ],
+      "capture_step": 160,
+      "prime_samples": 81600,
+      "aec_chunk_samples": 160,
+      "command": "lower the fan speed."
+    },
+    {
+      "channel": "near",
+      "mode": "audio-12",
+      "scene": 0,
+      "voice": "af_aoede",
+      "wav": "4090-c161-coded-cue-v5-command-near.wav",
+      "sha256": "4016a150d1635dc742c6b61ad3def5b8b07434b3a671d35ef14dbd0f81c667ad",
+      "command_start": 106315,
+      "notification": [
+        {
+          "t": 102704,
+          "cue_bits": 8
+        }
+      ],
+      "capture_step": 160,
+      "prime_samples": 81600,
+      "aec_chunk_samples": 160,
+      "command": "lower the fan speed."
+    },
+    {
+      "channel": "far",
+      "mode": "audio-16",
+      "scene": 1,
+      "voice": "af_aoede",
+      "wav": "4090-c161-coded-cue-v5-command-far.wav",
+      "sha256": "91f2c51fe9459ef9b9fa5bd9e94a1467ff0ddc12654c57e64d4e2b469ad459c0",
+      "command_start": 120957,
+      "notification": [
+        {
+          "t": 117584,
+          "cue_bits": 8
+        }
+      ],
+      "capture_step": 160,
+      "prime_samples": 81600,
+      "aec_chunk_samples": 160,
+      "command": "start the kitchen timer."
+    }
+  ],
+  "fifo_source_sha256": "5b6feb313074d72d3b0ce0a5f8cec3be409ffdc3a1cdbd620a581cc8bd172aa3",
+  "fixture_source_sha256": "f55950090ffd47c5179057cf0ff97b2f31ddbcb2cbec26c398c4fd9044003dca",
+  "qemu_sha256": "053a4ad154c61fb3bb5d545b9c4411eb89ea12448e675b1d2abe6b1f7b1c1308",
+  "elf_sha256": "4c0bbbc9b43212914f95d1e876da1312edfc2b80b411c1122550fe0133773d35",
+  "uart_sha256": "376156227d90ff18fb6290315f499025bffc5e59d893fabd0fd3119ac5a15565",
+  "archive_sha256": "957df4813884673152db89b870ae7d6ed9b0bb134506b2c977831c93e05535ea",
+  "codec_component_version": "2.4.1",
+  "p4_codec_sha256": "92b1f2bd77d4dfdc13e9fba7995083e1c7cf6f0010c38e6dcffb6626c06873cc",
+  "codec_archive_sha256": "84a3d4dd7b0c77da238c5ade70b87db085efee0ecefedefd2c89030c8ef60a63",
+  "decoder": "libopus 1.3.1",
+  "asr_files": {
+    "model.bin": "62b2a45b05ee59acb4a5341b33ee35e041395d378d418a18acfe4c9e768ee37a",
+    "config.json": "666a9605530ac1f61fa8177f3702b4dacec9966749e42610839fcc32661d5fae",
+    "tokenizer.json": "929c5252409436dce1b38a75d1abbcb5e132d170d8e324e4e04ed915fa2d22df",
+    "vocabulary.txt": "ff77588746d3a2595d32ab5b69ffd7b95ce2441ac57533cb66fc3eb575a115cf"
+  },
+  "records": [
+    {
+      "channel": "digital",
+      "ready_delay_ms": 0,
+      "wav_sha256": "a7799a10727033e09d793f439d80047e9be1d6f10238948582c6bcb22bd3f7bd",
+      "detected": 102788,
+      "handoff": 102880,
+      "first_encoder_source_sample": 70880,
+      "command_onset": 106400,
+      "command_packet_pts_ms": 2220,
+      "command_offset_in_packet": 0,
+      "encoder_source_end": 140640,
+      "source_samples": 140400,
+      "peak_fifo_samples": 32000,
+      "standin_silence_packets": 0,
+      "total_packets": 218,
+      "decoded_sha256": "85f01566502c6fef1ae6deb4a8ffbb3ffc6a8011a0c157dd9eedabd2781d43a8",
+      "estimated_codec_delay_samples": 103,
+      "command_correlation": 0.8757359484259122,
+      "command_source": {
+        "text": "Lower the fan speed.",
+        "words": [
+          {
+            "word": " Lower",
+            "start": 0.0,
+            "end": 0.16
+          },
+          {
+            "word": " the",
+            "start": 0.16,
+            "end": 0.28
+          },
+          {
+            "word": " fan",
+            "start": 0.28,
+            "end": 0.52
+          },
+          {
+            "word": " speed.",
+            "start": 0.52,
+            "end": 0.84
+          }
+        ]
+      },
+      "command_decoded": {
+        "text": "Lower the fan speed.",
+        "words": [
+          {
+            "word": " Lower",
+            "start": 0.0,
+            "end": 0.12
+          },
+          {
+            "word": " the",
+            "start": 0.12,
+            "end": 0.28
+          },
+          {
+            "word": " fan",
+            "start": 0.28,
+            "end": 0.52
+          },
+          {
+            "word": " speed.",
+            "start": 0.52,
+            "end": 0.84
+          }
+        ]
+      },
+      "full_decoded": {
+        "text": "Hey Nix, lower the fan speed.",
+        "words": [
+          {
+            "word": " Hey",
+            "start": 0.0,
+            "end": 1.28
+          },
+          {
+            "word": " Nix,",
+            "start": 1.28,
+            "end": 1.68
+          },
+          {
+            "word": " lower",
+            "start": 2.14,
+            "end": 2.34
+          },
+          {
+            "word": " the",
+            "start": 2.34,
+            "end": 2.52
+          },
+          {
+            "word": " fan",
+            "start": 2.52,
+            "end": 2.74
+          },
+          {
+            "word": " speed.",
+            "start": 2.74,
+            "end": 3.1
+          }
+        ]
+      },
+      "capture_clock_at_handoff": 102880
+    },
+    {
+      "channel": "digital",
+      "ready_delay_ms": 1500,
+      "wav_sha256": "a7799a10727033e09d793f439d80047e9be1d6f10238948582c6bcb22bd3f7bd",
+      "detected": 102788,
+      "handoff": 102880,
+      "first_encoder_source_sample": 70880,
+      "command_onset": 106400,
+      "command_packet_pts_ms": 3720,
+      "command_offset_in_packet": 0,
+      "encoder_source_end": 140640,
+      "source_samples": 140400,
+      "peak_fifo_samples": 56000,
+      "standin_silence_packets": 75,
+      "total_packets": 293,
+      "decoded_sha256": "0250797a1c958d97147e76d5dca077ecf159281b6991380cb88904a452243097",
+      "estimated_codec_delay_samples": 103,
+      "command_correlation": 0.8718483981626342,
+      "command_source": {
+        "text": "Lower the fan speed.",
+        "words": [
+          {
+            "word": " Lower",
+            "start": 0.0,
+            "end": 0.16
+          },
+          {
+            "word": " the",
+            "start": 0.16,
+            "end": 0.28
+          },
+          {
+            "word": " fan",
+            "start": 0.28,
+            "end": 0.52
+          },
+          {
+            "word": " speed.",
+            "start": 0.52,
+            "end": 0.84
+          }
+        ]
+      },
+      "command_decoded": {
+        "text": "Lower the fan speed.",
+        "words": [
+          {
+            "word": " Lower",
+            "start": 0.0,
+            "end": 0.12
+          },
+          {
+            "word": " the",
+            "start": 0.12,
+            "end": 0.3
+          },
+          {
+            "word": " fan",
+            "start": 0.3,
+            "end": 0.52
+          },
+          {
+            "word": " speed.",
+            "start": 0.52,
+            "end": 0.84
+          }
+        ]
+      },
+      "full_decoded": {
+        "text": "Hey Nix, lower the fan speed.",
+        "words": [
+          {
+            "word": " Hey",
+            "start": 2.02,
+            "end": 2.78
+          },
+          {
+            "word": " Nix,",
+            "start": 2.78,
+            "end": 3.18
+          },
+          {
+            "word": " lower",
+            "start": 3.68,
+            "end": 3.86
+          },
+          {
+            "word": " the",
+            "start": 3.86,
+            "end": 4.04
+          },
+          {
+            "word": " fan",
+            "start": 4.04,
+            "end": 4.24
+          },
+          {
+            "word": " speed.",
+            "start": 4.24,
+            "end": 4.6
+          }
+        ]
+      },
+      "capture_clock_at_handoff": 102880
+    },
+    {
+      "channel": "near",
+      "ready_delay_ms": 0,
+      "wav_sha256": "4016a150d1635dc742c6b61ad3def5b8b07434b3a671d35ef14dbd0f81c667ad",
+      "detected": 102704,
+      "handoff": 102720,
+      "first_encoder_source_sample": 70720,
+      "command_onset": 106315,
+      "command_packet_pts_ms": 2220,
+      "command_offset_in_packet": 75,
+      "encoder_source_end": 141440,
+      "source_samples": 141134,
+      "peak_fifo_samples": 32000,
+      "standin_silence_packets": 0,
+      "total_packets": 221,
+      "decoded_sha256": "ac2bf86f720bd01cd7ab7bee9afca4ccf0adc1052a9b58a9fd0020c9b21dac38",
+      "estimated_codec_delay_samples": 103,
+      "command_correlation": 0.9362767051518541,
+      "command_source": {
+        "text": "lower the fan speed.",
+        "words": [
+          {
+            "word": " lower",
+            "start": 0.0,
+            "end": 0.18
+          },
+          {
+            "word": " the",
+            "start": 0.18,
+            "end": 0.3
+          },
+          {
+            "word": " fan",
+            "start": 0.3,
+            "end": 0.52
+          },
+          {
+            "word": " speed.",
+            "start": 0.52,
+            "end": 0.84
+          }
+        ]
+      },
+      "command_decoded": {
+        "text": "lower the fan speed.",
+        "words": [
+          {
+            "word": " lower",
+            "start": 0.0,
+            "end": 0.18
+          },
+          {
+            "word": " the",
+            "start": 0.18,
+            "end": 0.3
+          },
+          {
+            "word": " fan",
+            "start": 0.3,
+            "end": 0.52
+          },
+          {
+            "word": " speed.",
+            "start": 0.52,
+            "end": 0.84
+          }
+        ]
+      },
+      "full_decoded": {
+        "text": "Hey Nix, lower the fan speed.",
+        "words": [
+          {
+            "word": " Hey",
+            "start": 0.0,
+            "end": 1.3
+          },
+          {
+            "word": " Nix,",
+            "start": 1.3,
+            "end": 1.72
+          },
+          {
+            "word": " lower",
+            "start": 2.34,
+            "end": 2.36
+          },
+          {
+            "word": " the",
+            "start": 2.36,
+            "end": 2.54
+          },
+          {
+            "word": " fan",
+            "start": 2.54,
+            "end": 2.74
+          },
+          {
+            "word": " speed.",
+            "start": 2.74,
+            "end": 3.08
+          }
+        ]
+      },
+      "capture_clock_at_handoff": 102720
+    },
+    {
+      "channel": "near",
+      "ready_delay_ms": 1500,
+      "wav_sha256": "4016a150d1635dc742c6b61ad3def5b8b07434b3a671d35ef14dbd0f81c667ad",
+      "detected": 102704,
+      "handoff": 102720,
+      "first_encoder_source_sample": 70720,
+      "command_onset": 106315,
+      "command_packet_pts_ms": 3720,
+      "command_offset_in_packet": 75,
+      "encoder_source_end": 141440,
+      "source_samples": 141134,
+      "peak_fifo_samples": 56000,
+      "standin_silence_packets": 75,
+      "total_packets": 296,
+      "decoded_sha256": "79e848565d0332d2dd839b1ba95a0c36c5be00c24558a8b80215e100119ab16a",
+      "estimated_codec_delay_samples": 103,
+      "command_correlation": 0.9387051757655999,
+      "command_source": {
+        "text": "lower the fan speed.",
+        "words": [
+          {
+            "word": " lower",
+            "start": 0.0,
+            "end": 0.18
+          },
+          {
+            "word": " the",
+            "start": 0.18,
+            "end": 0.3
+          },
+          {
+            "word": " fan",
+            "start": 0.3,
+            "end": 0.52
+          },
+          {
+            "word": " speed.",
+            "start": 0.52,
+            "end": 0.84
+          }
+        ]
+      },
+      "command_decoded": {
+        "text": "lower the fan speed.",
+        "words": [
+          {
+            "word": " lower",
+            "start": 0.0,
+            "end": 0.18
+          },
+          {
+            "word": " the",
+            "start": 0.18,
+            "end": 0.3
+          },
+          {
+            "word": " fan",
+            "start": 0.3,
+            "end": 0.52
+          },
+          {
+            "word": " speed.",
+            "start": 0.52,
+            "end": 0.84
+          }
+        ]
+      },
+      "full_decoded": {
+        "text": "Hey Nix, lower the fan speed.",
+        "words": [
+          {
+            "word": " Hey",
+            "start": 2.06,
+            "end": 2.8
+          },
+          {
+            "word": " Nix,",
+            "start": 2.8,
+            "end": 3.22
+          },
+          {
+            "word": " lower",
+            "start": 3.84,
+            "end": 3.86
+          },
+          {
+            "word": " the",
+            "start": 3.86,
+            "end": 4.04
+          },
+          {
+            "word": " fan",
+            "start": 4.04,
+            "end": 4.24
+          },
+          {
+            "word": " speed.",
+            "start": 4.24,
+            "end": 4.56
+          }
+        ]
+      },
+      "capture_clock_at_handoff": 102720
+    },
+    {
+      "channel": "far",
+      "ready_delay_ms": 0,
+      "wav_sha256": "91f2c51fe9459ef9b9fa5bd9e94a1467ff0ddc12654c57e64d4e2b469ad459c0",
+      "detected": 117584,
+      "handoff": 117600,
+      "first_encoder_source_sample": 85600,
+      "command_onset": 120957,
+      "command_packet_pts_ms": 2200,
+      "command_offset_in_packet": 157,
+      "encoder_source_end": 158880,
+      "source_samples": 158561,
+      "peak_fifo_samples": 32000,
+      "standin_silence_packets": 0,
+      "total_packets": 229,
+      "decoded_sha256": "89aa517a99e40f6e3dc639103b403e350bfb9e129465ccaaef9ebfd88002918f",
+      "estimated_codec_delay_samples": 104,
+      "command_correlation": 0.8723723903058259,
+      "command_source": {
+        "text": "It's probably getting colder.",
+        "words": [
+          {
+            "word": " It's",
+            "start": 0.0,
+            "end": 0.04
+          },
+          {
+            "word": " probably",
+            "start": 0.04,
+            "end": 0.2
+          },
+          {
+            "word": " getting",
+            "start": 0.2,
+            "end": 0.48
+          },
+          {
+            "word": " colder.",
+            "start": 0.48,
+            "end": 0.84
+          }
+        ]
+      },
+      "command_decoded": {
+        "text": "That's probably the key point.",
+        "words": [
+          {
+            "word": " That's",
+            "start": 0.0,
+            "end": 0.26
+          },
+          {
+            "word": " probably",
+            "start": 0.26,
+            "end": 0.26
+          },
+          {
+            "word": " the",
+            "start": 0.26,
+            "end": 0.42
+          },
+          {
+            "word": " key",
+            "start": 0.42,
+            "end": 0.56
+          },
+          {
+            "word": " point.",
+            "start": 0.56,
+            "end": 0.84
+          }
+        ]
+      },
+      "full_decoded": {
+        "text": "in here probably",
+        "words": [
+          {
+            "word": " in",
+            "start": 0.0,
+            "end": 1.34
+          },
+          {
+            "word": " here",
+            "start": 1.34,
+            "end": 1.58
+          },
+          {
+            "word": " probably",
+            "start": 1.58,
+            "end": 2.4
+          }
+        ]
+      },
+      "capture_clock_at_handoff": 117600
+    },
+    {
+      "channel": "far",
+      "ready_delay_ms": 1500,
+      "wav_sha256": "91f2c51fe9459ef9b9fa5bd9e94a1467ff0ddc12654c57e64d4e2b469ad459c0",
+      "detected": 117584,
+      "handoff": 117600,
+      "first_encoder_source_sample": 85600,
+      "command_onset": 120957,
+      "command_packet_pts_ms": 3700,
+      "command_offset_in_packet": 157,
+      "encoder_source_end": 158880,
+      "source_samples": 158561,
+      "peak_fifo_samples": 56000,
+      "standin_silence_packets": 75,
+      "total_packets": 304,
+      "decoded_sha256": "a6ae7f5117fc071a9fdbbb3c17a0625a643c29b66ae902c4bd343e883e1dd7b1",
+      "estimated_codec_delay_samples": 104,
+      "command_correlation": 0.887995352114569,
+      "command_source": {
+        "text": "It's probably getting colder.",
+        "words": [
+          {
+            "word": " It's",
+            "start": 0.0,
+            "end": 0.04
+          },
+          {
+            "word": " probably",
+            "start": 0.04,
+            "end": 0.2
+          },
+          {
+            "word": " getting",
+            "start": 0.2,
+            "end": 0.48
+          },
+          {
+            "word": " colder.",
+            "start": 0.48,
+            "end": 0.84
+          }
+        ]
+      },
+      "command_decoded": {
+        "text": "That's probably the key point.",
+        "words": [
+          {
+            "word": " That's",
+            "start": 0.0,
+            "end": 0.28
+          },
+          {
+            "word": " probably",
+            "start": 0.28,
+            "end": 0.28
+          },
+          {
+            "word": " the",
+            "start": 0.28,
+            "end": 0.42
+          },
+          {
+            "word": " key",
+            "start": 0.42,
+            "end": 0.56
+          },
+          {
+            "word": " point.",
+            "start": 0.56,
+            "end": 0.84
+          }
+        ]
+      },
+      "full_decoded": {
+        "text": "You",
+        "words": [
+          {
+            "word": " You",
+            "start": 4.66,
+            "end": 6.06
+          }
+        ]
+      },
+      "capture_clock_at_handoff": 117600
+    }
+  ]
+}

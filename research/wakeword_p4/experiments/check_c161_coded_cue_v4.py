@@ -21,10 +21,11 @@ HEADER=RESULTS.parent/"portable/c161_coded_cue_v4.h"
 TARGET = "v4"
 
 
-def command_streams(cue):
+def command_streams(cue, noise_reference=None):
     # Fresh room channels on the same dry matched triplets. The seed, carrier, timing
     # and absolute noise are identical for v4, original v3, Willow and silence.
     plan=read(RESULTS/"4090-c161-v3-command-willow-plan-v1.json")
+    noise_source = cue if noise_reference is None else noise_reference
     rooms=(
         ("digital",None,None,None,1.),
         ("near",[(0,.83),(92,-.17),(389,.27),(846,.14)],(110,6400),18,1.0008),
@@ -50,7 +51,7 @@ def command_streams(cue):
                     seed=33601+source["scene"]+19*("af_aoede","am_eric","bf_lily","am_fenrir").index(source["voice"])
                     # Fixed noise level from the original cue; common leading sequence even for different file lengths.
                     noise=lfilter([1],[1,-.82],np.random.default_rng(seed).normal(size=len(wet)))
-                    noise*=.53*np.sqrt(np.mean(cue.astype(float)**2))*np.sqrt(1-.82**2)*10**(-snr/20)
+                    noise*=.53*np.sqrt(np.mean(noise_source.astype(float)**2))*np.sqrt(1-.82**2)*10**(-snr/20)
                     signal=wet+noise
                     assert np.abs(signal).max()<32768
                     pcm=np.rint(signal).astype("<i2")

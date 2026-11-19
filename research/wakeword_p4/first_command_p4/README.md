@@ -92,3 +92,19 @@ P4 QEMU 运行按根目录依赖锁校验的 ESP-SR 库。原生 dl_fft 0.8.0 �
 新 ELF 在 12 段既有输入复现全部原始 AEC 和 AGC 样本、所有麦克风通知时钟。在厨房和客厅回放中送入合成的同步播放参考后，两次面板自播通知均被抑制，两次外部唤醒都在原样本 104228 放行。参考置零时面板自播仍为 2/2。四条新增回放使用另一种 Bot 声音、另两份实测办公室和客厅响应以及 “Play the evening news.”。面板先播 v5，3 秒后外部扬声器再播时，两间房均压下第一次、放行第二次，两次外部通知都在样本 147024。两台扬声器同时播放同一固定音时，两间房都没有最终通知。办公室原麦克风分支有一次通知被抑制，客厅在保护之前就没有麦克风通知。两份相同标记重叠时，本试验无法区分外部唤醒意图。[16 次逐路事件与实测时间](../results/4090-c161-v5-playback-reference-guard.json) · [原始串口输出](../results/4090-c161-v5-playback-reference-guard-uart.zip) · [生成和独立核对程序](../experiments/check_c161_v5_reference_guard.py)
 
 Mac 可先使用上面的双声道 WAV 做数字注入，按 WAV 第一帧作为样本零。左声道为麦克风，右声道为播放参考。再用相同输入做实体播放，记录真实同步参考、麦克风、v5 原始通知、保护后的通知和送往编码器的第一条命令；输入房间响应、左右声道同步、I2S 级别、循环运行成本和整体稳定性需要实机确认。
+
+## 播放前经 Opus 压缩的固定 v5
+
+把原 v5 WAV 单独送入 libopus 1.3.1，再把解码后的唤醒音接回原命令。16 kHz 单声道、每帧 20 ms，使用编码器报告的前瞻长度对齐。VOIP 和 AUDIO 两种模式分别测试 12、16、24、48 kbit/s。模拟房间、命令声音、噪声波形及增益均沿用原配对条件。原 WAV 的 36 段输入和通知逐项复现。八个压缩配置也分别在数字、近场、远场各 12/12 次于唤醒音内通知，每条恰好一次。各配置在两批 Piper 的 80 条非固定音语句上均无 v5 模板匹配；这些是重复处理同一批语句。原 WAV 及八个压缩版本的 RTX 4090 Whisper 转写均为 “Hey, Nix”，标点有别。[原 v5 WAV](../results/hye-nyx-c161-synthetic-cue-v5.wav) · [逐条比较](../results/4090-c161-v5-playback-opus.json) · [解码后的 WAV 和有长度前缀的原始 Opus 包](../results/4090-c161-v5-playback-opus-cues.zip)
+
+取数字 VOIP 12、近场 AUDIO 12 和远场 AUDIO 16 kbit/s 三例，在 ESP32-P4 QEMU 运行面板采集队列与 Espressif Opus 2.4.1 上行编码器。远场取主机所有条件中最迟的一次通知。每个样本分别运行服务即时就绪和延迟 1.5 s 两次。六次通知均逐样本匹配主机，编码前 PCM 均通过逐样本比较，排队峰值分别为 32,000 和 56,000 样本。
+
+| 输入 | 通知样本 | 命令开始样本 | 提前量 | 上行解码后的命令转写 |
+| --- | ---: | ---: | ---: | --- |
+| 数字 | 102788 | 106400 | 225.75 ms | lower the fan speed |
+| 近场 | 102704 | 106315 | 225.69 ms | lower the fan speed |
+| 远场 | 117584 | 120957 | 210.81 ms | 未正确转写 start the kitchen timer |
+
+远场输入在上行编码前也未正确转写。三例均为模拟麦克风 PCM 的数字注入。实际扬声器、麦克风、音量、丢帧和整机内存需由 Mac 的实机记录确认。[P4 输入包](../results/4090-c161-v5-playback-opus-p4-wav.zip) · [文件 SHA256 与预期时钟](../results/4090-c161-v5-playback-opus-p4-inputs.json) · [P4 结果](../results/4090-c161-v5-playback-opus-p4.json) · [UART 和上行 Opus 包](../results/4090-c161-v5-playback-opus-p4-uart.zip)
+
+复现时先运行 check_c161_v5_playback_opus.py，再运行 replay_c161_v5_playback_opus_p4.py prepare。沿用本项目的 ESP-IDF 5.5.4 和 esp_audio_codec 2.4.1 配置，指定 NYX_AGC_FIXTURES 为 .local/wakeword/c161-first-command-v5/playback-opus/fixtures 的绝对路径，并在同级 build 目录编译，再运行 replay_c161_v5_playback_opus_p4.py run。
