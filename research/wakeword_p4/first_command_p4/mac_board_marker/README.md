@@ -50,3 +50,20 @@ qemu=.local/wakeword/qemu-p4-release/qemu/bin/qemu-system-riscv32
 python3 "$fixture/build_guest.py" "$patched_board" "$sim" "$work"
 python3 "$fixture/run_guest.py" "$work/board.bin" "$sim" "$qemu" "$work/run" > "$work/results.json"
 ```
+
+## First commands with the panel speaker active
+
+The original-level af_bella study reuses 24 rear-facing development room mixes with music and panel speech. The digital reference control places the panel's own WAV at its known playout time on R. The fixed marker opened all 24 clips 31–46 ms before their commands, with zero openings on the 24 address-erased controls. Both the board feeder and the listener capture fixture returned the same allowed routes and first read ends. [Board feeder and paired controls](../../results/4090-c161-bella-board-reference.json)
+
+The table counts complete command suffixes after the entire two-second preroll and P4 Opus stream were decoded. All four rows use the same microphone and wake clocks, with eight examples at each of three external levels.
+
+| Audio presented to Opus, with the synthetic panel reference present | Qwen | Whisper turbo |
+|---|---:|---:|
+| Board policy. AEC receives R from the first read after wake, followed by AGC | 12/24 | 9/24 |
+| AEC receives R throughout listening and the call, followed by AGC | 10/24 | 5/24 |
+| Reference activity selects continuous AEC/AGC or delayed microphone | 13/24 | 6/24 |
+| Microphone delayed by 90 ms | 14/24 | 11/24 |
+
+With a zero reference, the board-policy scores were 9/24 and 5/24. The earlier 14/24 and 9/24 scores came from delayed microphone PCM. Restoring R can move the wake time, so comparisons between the two reference conditions include the corresponding change in preroll. Each lane uses a fresh encoder. The Mac measures electrical R, connection fill packets, packet arrival and first-sentence quality on the physical panel. [Zero-reference comparison](../../results/4090-c161-bella-product-uplink.json) · [Restored-reference clocks and transcriptions](../../results/4090-c161-bella-reference-uplink.json)
+
+The retained capture archive contains 48 UART logs. Its SHA256 is `25b231cad37dd780e395467d5283974698f4e8a9c33a421fd8f5032fbcc4fe21`. The separate 48 codec logs contain 96 encoded lanes. One codec boot recorded two idle watchdog warnings during its second lane and completed all packets. [Capture UART archive](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/4090-c161-bella-reference-uplink-uart.zip) · [Opus UART archive](../../results/4090-c161-bella-reference-uplink.zip)
