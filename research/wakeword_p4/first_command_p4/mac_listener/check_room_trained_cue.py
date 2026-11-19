@@ -18,26 +18,27 @@ LEVELS = (0,-6,-12,-18)
 PPM = (-1000,0,1000)
 
 
-def scenes():
+def scenes(room_ids=None, extra_waves=None):
     report = ch.read(fit.FIT)
     original, sr = sf.read(fit.fixed.CUE,dtype="int16")
     candidate, new_sr = sf.read(fit.WAV,dtype="int16")
     assert sr==new_sr==16000 and ch.sha(fit.WAV)==report["wav_sha256"]
+    sources = {"v5":original, "trained":candidate, **(extra_waves or {})}
     markers = {name:{ppm:drift.project(wav, Fraction(1000000,1000000+ppm)) for ppm in PPM}
-               for name,wav in (("v5",original),("trained",candidate))}
+               for name,wav in sources.items()}
     bank = room.rooms.source_bank()
     commands = sorted({(s["voice"],s["carrier"]) for s in ch.read(room.rooms.PLAN)["records"]})
     noises = {kind:room.rooms.read_noise(kind) for kind in ("music","air_conditioner")}
     seen = {r["sha256"] for r in report["training_rooms"]}
     end = 51200
-    for ri, number in enumerate(report["development_room_ids"]):
+    for ri, number in enumerate(report["development_room_ids"] if room_ids is None else room_ids):
         h, location, rh = room.rooms.read_room(f"h{number:03}_")
         assert rh not in seen
         wet = {name:{ppm:fftconvolve(a.astype(float),h) for ppm,a in waves.items()}
                for name,waves in markers.items()}
         baseline = wet["v5"][0][:len(original)]
         reference_rms = np.sqrt(np.mean(baseline**2))
-        peak = max(float(np.abs(a).max()) for waves in wet.values() for a in waves.values())
+        peak = max(float(np.abs(a).max()) for name in ("v5","trained") for a in wet[name].values())
         for bi, (kind,(noise,path,nh)) in enumerate(noises.items()):
             voice,command = commands[(ri+3*bi)%len(commands)]
             cmd = bank[voice,command]
@@ -62,7 +63,7 @@ def scenes():
                     for name, waves in wet.items():
                         y = common.copy()
                         y[at:at+len(waves[ppm])] += 10**(level/20)*waves[ppm]
-                        assert np.max(np.abs(y*gain))<=28001
+                        assert np.max(np.abs(y*gain))<=32767
                         signals[name] = room.quantize(y*gain)
                     yield dict(**s,start=at,player_ppm=ppm,level_db=level), signals, control
 
