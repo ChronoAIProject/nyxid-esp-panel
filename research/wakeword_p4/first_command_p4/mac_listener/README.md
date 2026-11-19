@@ -357,3 +357,13 @@ nice -n 10 taskset -c 2,4 /usr/bin/python3 "$app/rearm_repeat_reference.py" p4
 两条干声各为 1.10 秒，16 kHz 单声道 PCM16。等 RMS 版沿用原固定匹配器和冻结 C161，峰值 29,913，原音为 29,250。在 11 首音乐和 28 个房间的 616 个已用条件中，两者分别提前开麦 556 和 515 次。机内自播的同步数字参考下均无误开。[等 RMS 单独唤醒音](../../results/hye-nyx-v5-marker-gains-rms.wav) · [原 v5 单独唤醒音](../../results/hye-nyx-c161-v5-early-80ms.wav)
 
 五组板测 A/B 包中，每组有原 v5 和等 RMS 版，每版各有 `speaker`、`mic`、`reference` 三个 WAV。实际扬声器播放 `speaker`，同一对文件从第 17,600 个样本起是完全相同的命令，保持系统音量和摆位一致。数字回放将 `mic` 接入麦克风通道，外放测试的参考设为零，自播测试使用同名 `reference` 从样本零同步注入。数字输入的命令时钟见该场景的 `source.command_at`。四组取自新音此前多出的命中，另有一组重放较高电平版本曾发生自唤醒的条件，均已在原 P4 模拟固件做两种 WAV、两种参考的共 20 次复核。实板回传同一次采集的板型、音轨标识、M/R、OPEN、首包/解码首句和最低内部堆。[30 个 WAV、UART、清单](../../results/c161-marker-rms-mac-ab.zip) · [各场景时钟和校验和](../../results/c161-marker-rms-mac-ab.json)
+
+### 面板播出事件与 M/R 的实测时差
+
+在大板或中板单独播放低电平 B、C、A 面板示范。导出 16 kHz PCM16 双声道 M/R 或 LCD-X8 四槽录音，并把软件报告的 B、C 配对事件换算成相对于 WAV 起点的采样计数，从 1 开始计数。例如第一条事件在样本 46388 时，在本目录运行以下命令。多次示范按时间顺序重复传入 `--panel-tx-sample`，两次示范之间留出接收器的静默期。
+
+```sh
+python3 read_mr_capture.py capture.wav --panel-tx-sample 46388
+```
+
+`panel_playout` 分别报告 TX 减去 R、M 上 B、C 匹配时刻的有符号差值。正值表示软件事件晚于该通道的观测。M 还包含声学传播与麦克风通路的延迟，R 的含义取决于板上回采接线。各通道按完整单播序列配对，事件数对不上时保留原始观测。两槽、四槽、缺失一次 R 事件均有合成输入复核。工具需要 Python 3、C++17 编译器及工作树中的 Mac 对照包。[数字验证](../../results/4090-c161-panel-tx-capture-reader.json)
