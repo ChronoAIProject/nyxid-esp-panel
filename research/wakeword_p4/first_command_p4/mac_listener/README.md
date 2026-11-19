@@ -32,6 +32,12 @@
 
 构建 `build_panel_marker_order.sh middle-uart` 后，在仓库根目录使用上文研究环境运行 `check_bella_uart_watchdog.py`，与冻结的 `middle` 构建对照。原始 52 份 UART 共 19,770,541 B（ZIP），归档 SHA256 为 `10a8d566008a16c194549cec215147227225afe7c1815947f5058a6706acd03e`。[逐场结果](../../results/4090-c161-bella-uart-watchdog.json) · [下载 UART 归档](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/4090-c161-bella-uart-watchdog.zip)
 
+### 弱声源的固定音电平 A/B
+
+原固定 af_bella 峰值为 −6.68 dBFS。电平对照版将同一个称呼提高 5.68 dB 至 −1 dBFS，保留同组命令的原始字节、起点和时长。在既有背面房间混音中，−6 dB 弱档从 22/24 恢复至 24/24 次及时开麦，另两档均为 24/24。三档共 72 条去称呼对照均无通知，模拟麦克风未削波。选定的 24 个既有 P4 模拟条件加两条原漏开条件均提前 59–76 ms 开麦。原 24 条完整上行的 Qwen 首句逐词识全从 14 条变为 12 条，Whisper turbo 从 9 条变为 8 条。另两条弱音中，turbo 识全了门锁命令。这是同一批开发条件上的播放电平取舍。
+
+Mac 可沿用原固定音为 A，将下方 ZIP 中同路径的 WAV 作 B，保持外部播放器音量、位置和板端配置一致。同目录 `first/015.wav` 和 `second/011.wav` 对应两条弱档漏开条件。独立 B 音长 1.45 秒，采样率 16 kHz。[B 单播 WAV](../../results/hye-nyx-af-bella-peak-minus1.wav) · [B 的 24 条连说 WAV 和清单](../../results/c161-bella-peak-command-playback.zip) · [72 条主机回放](../../results/4090-c161-bella-peak-playback.json) · [26 次 P4 模拟与完整首句](../../results/4090-c161-bella-peak-playback-p4.json)
+
 ## 复现
 
 从仓库根目录运行，Mac 源提交须已获取。使用 ESP-IDF 5.5.4、ESP-SR 2.6.1、esp-tflite-micro 1.3.3~1、esp-nn 1.1.2 与 esp-micro-speech-features 1.2.3，前端使用 Mac 提交中的分配检查补丁。QEMU 使用 ANSI 神经网络内核和参考 FFT，并在 DSP 运算时屏蔽 tick 以避开模拟器浮点舍入 CSR 的延迟上下文切换问题；C161 内部进度日志在此模拟构建关闭。源 WAV 的生成和路径见上方配对实验。
