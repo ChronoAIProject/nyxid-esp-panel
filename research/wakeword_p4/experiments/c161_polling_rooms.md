@@ -1214,3 +1214,19 @@ RTX 4090 合成了 192 条完整语音。干声、训练混音和去称呼对照
 三种新方案在 96 句日常话、48 段普通 Bot 回复及其标注区间之外均无误开。可移动五帧覆盖六种命令声音，但 16 次及时开麦中有 5 次的配对去称呼轨也开麦，2 次甚至在同一采样块打开。重选负例窗口后只命中了两种声音。逐次复核了 10,444,092 个整数分数，55 个方案内去重的首句上行记录中，两个通道合计重新解码 32,630 个 Opus 包；两份报告之间可能复用相同输入。背景时长是同一批已用录音。[两组逐例回放](../results/4090-c161-connected-alignment-replay.json) · [两组首句](../results/4090-c161-connected-alignment-commands.json) · [重选窗口回放](../results/4090-c161-connected-alignment-refreshed-replay.json) · [重选窗口首句](../results/4090-c161-connected-alignment-refreshed-commands.json) · [两组背景](../results/4090-c161-connected-alignment-background.json) · [重选窗口背景](../results/4090-c161-connected-alignment-refreshed-background.json)
 
 另在全部 432 条已消费的 Melo EN-US 与 EN-BR 开发语音上，用存档的原始分数逐条重建 C161 通知，再对同一份音频运行三个新辅助模型。以整段出现过通知计，EN-US 连说为 C161 24/27、固定五帧 26/27、可移动五帧 26/27、重选负例窗口 27/27；EN-BR 对应 14/27、17/27、15/27、19/27。两种单独称呼的命中分别维持 9/9 和 7/9。重选负例窗口后，EN-US 的 “next” 从 15/36 到 24/36，EN-BR 的 “mix” 从 4/36 到 15/36。Melo 整段通知与面板混音中命令前及时开麦是两种不同的计分。三组保留作研究，Mac 双板验收继续使用已交接的固定合成音与冻结接收器。[分声音与文本的全部通知](../results/4090-c161-connected-alignment-melo.json)
+
+按 Mac 回执将重选负例窗口前后的相同录音逐一配对。72 组无标记命令的及时开麦保住 2 次、失去 14 次、找回 2 次。及时且 Qwen 识全保住 2 次、失去 11 次、找回 1 次；turbo 对应为 1、11、1。去称呼误开的 18 组全部消除。Bot 明说称呼时，原有 2 次误开均保留，又新增 2 次。两组对全部 96 条日常话和 48 段普通回复都无误开。背景事件涉及的文件从 11 份减为 2 份，剩下两份都在两组触发，逐文件的事件时间可核对。[逐场命令、背景和自播对照](../results/4090-c161-connected-alignment-paired-refresh.json)
+
+### 固定 af_bella 称呼在 Surrey 听音室中的两条实测声路
+
+采用 Jon Francombe 于 2017 年发布的 University of Surrey IoSR Listening Room Multichannel BRIR 数据。头部模拟器朝向固定为 0°，取左耳到正前方、正后方扬声器的两条声路作为外部播放，面板示范走右前方扬声器。原 MATLAB 通道依次为 3、9、2。保留 48 kHz 原测量的起始延迟和完整尾音，重采样至 16 kHz，并对三条响应使用同一正面归一化系数。这里模拟的是声源相对听者的位置。测量包含头部和实际扬声器的声学响应。物理板的麦克风、面板扬声器回声和实时采集需在双板另测。[数据和 CC BY 4.0 许可](https://github.com/IoSR-Surrey/IoSR_ListeningRoom_BRIRs/tree/d36af1bbd0f4083a9f9ee678ff8f499044e851a7) · [原始数据 DOI](https://doi.org/10.15126/surreydata.00813511)
+
+取八种声音各自原来的第一条命令及预选外部电平。在命令前接同一条 af_bella 标记 Nyx、同声线普通 Nyx、同声线已配平的 Willow，或仅保留命令。四种方案有逐样本相同的干声后缀、面板时钟和音乐位置，全部输入均无削顶。安静单播时，三种称呼均在结束前被各自的接收器检出。用官方 WakeNet DEFAULT 的实际返回和冻结 C161 加匹配器的主机时钟触发两秒回看，由 P4 模拟器运行完整 Opus 编码，在 RTX 4090 无提示转写。下表各格依次为命令前开麦、Qwen 识全、Whisper turbo 识全。未开麦计入分母。
+
+| 播放与接收方案，每格 8 条 | 正前方扬声器 | 正后方扬声器 |
+| --- | --- | --- |
+| 固定增强 Nyx，C161 加标记匹配器 | 8 / 8 / 6 | 8 / 8 / 7 |
+| 同声线普通 Nyx，同一接收器 | 0 / 0 / 0 | 0 / 0 / 0 |
+| 固定 Hey Willow，官方 DEFAULT | 2 / 2 / 2 | 3 / 3 / 3 |
+
+两种接收器对去称呼音轨和对方称呼均无开麦。已核验 68 份官方原始 UART、23,236 个逐帧返回、21 份完整上行的 14,702 个双通道 Opus 包。八条命令和两种扬声器位置共用一个人头模拟器和一个房间。与既有开发实验共用命令和干扰素材。[输入时钟和数据身份](../results/4090-c161-surrey-fixed-cues-plan.json) · [逐例通知与转写](../results/4090-c161-surrey-fixed-cues.json) · [官方返回与编码包](../results/4090-c161-surrey-fixed-cues.zip)
