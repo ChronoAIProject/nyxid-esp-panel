@@ -217,3 +217,13 @@ idf.py -C "$app" -B "$work/build-addresses" -DNYX_LEXICAL_Q8=ON -DNYX_LEXICAL_AD
 cmake --build "$work/build-addresses" --parallel 2
 python3 "$app/run_address_qemu.py"
 ```
+
+### 从语音起点同时查称呼和命令首词
+
+直接以 WebRTC VAD 的讲话起点启动完整英文 PocketSphinx，在最多 2.10 秒内持续比较 Nyx、Nick、Mick、next、Willow 和常用语句。每 30 ms 更新，比较连续三个返回保持同一称呼、或保持同一称呼及命令首词的两种通知条件。后一条件用预先列出的 36 个命令首词。每条辅助方案都与冻结 C161 合并，使用同一冷却与两秒回看。这是主机音频时钟实验。[规则和词典](../experiments/check_c161_address_verb.py) · [已消费数据的候选变化、通知及首句](../results/4090-c161-address-verb.json)
+
+在 EN-BR 的八条 “open the garage window” 目标中，VAD 八次均启动。原短语搜索八次均未匹配；其中三条带逗号语句有前级双速提议。直接解码也八次均未唤醒，搜索窗口末尾把五个第二词读作 next、三个读作 nick。固定 Whisper 对原始完整输入的八条中有六条转写以 “Hey Nix” 或 “Hi Nix” 开头。后一项使用了完整输入。[真实候选与遮盖对照](../results/4090-c161-melo-address-grammar-boundary.json) · [原始音素与语流](../results/4090-c161-melo-address-grammar-plan.json)
+
+冻结规则后，RTX 4090 使用相同两种 Melo 声音生成 “open the kitchen blinds” 和 “unlock the garden gate”，每种称呼配带逗号及直接连说。open 在词典内，unlock 在词典外。32 条目标的唤醒数、首句完整数，原 C161 为 9、8，原姓名语法为 17、15，新语法确认称呼为 18、17，要求同时出现命令首词为 18、16。各方案对这批 40 条姓名、16 条日常句及 8 条 Hey Willow 均无通知。要求首词的辅助路在目标中独立命中 11 条，其中四条说 open 却匹配 stop、close 或 call，七条说 unlock 时匹配其他词。实际首词未被正确识别，不能用这一步解释为命令语义得到确认。
+
+无逗号 /heɪ/ 与 /haɪ/ 各有八条，要求首词的合并路径分别唤醒 4、4 条，首句完整 4、2 条。字面 Hey Nyx 为 4/8 唤醒且完整。官方 Hey Willow DEFAULT 在自己的八条命令中为 2/8 唤醒且完整，均为 EN-US 带逗号。此前的 108 条连续普通句在新首词路径误唤 1 条，96 条独立日常句及普通 Bot 回复 0/48 均无误唤，主动示范 4/8。[新音频与音素](../results/4090-c161-address-verb-challenge-plan.json) · [逐句解码与首句转写](../results/4090-c161-address-verb-challenge.json) · [原姓名语法对照](../results/4090-c161-address-verb-challenge-grammar.json) · [官方 Willow](../results/4090-c161-address-verb-challenge-willow.json) · [原始串口与逐块返回](../results/4090-c161-address-verb-challenge-willow.zip)
