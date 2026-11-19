@@ -1,0 +1,100 @@
+{
+  "records": {
+    "0": {
+      "early_amplitude": 1.0,
+      "global_scale": 0.9231960471821877,
+      "rms_delta_db": 4.049076703296573e-07,
+      "peak": 27003,
+      "pcm_sha256": "ece9ef73bcb7688284554410cec8f3a2c0d36823a6c6de098264831f3a96c135",
+      "readings": {
+        "whisper": "Hey Nix",
+        "wav2vec2": "OAK SIR"
+      },
+      "matches_v5": false
+    },
+    "1": {
+      "early_amplitude": 0.7071067811865476,
+      "global_scale": 0.9593487140794306,
+      "rms_delta_db": 1.3658135935136634e-06,
+      "peak": 28061,
+      "pcm_sha256": "f6efdc1fc37068de76d378d75d5e596a3e2241b1aaf5c8bad26efa427c15d7eb",
+      "readings": {
+        "whisper": "Hey, Nix.",
+        "wav2vec2": "IONLIK"
+      },
+      "matches_v5": false
+    },
+    "2": {
+      "early_amplitude": 0.5,
+      "global_scale": 0.9790787627024509,
+      "rms_delta_db": 7.1436769148546315e-06,
+      "peak": 28638,
+      "pcm_sha256": "93d347ec5d880e4b9b6ec99dc64c6b24d20231023414df2f405f81014591dac2",
+      "readings": {
+        "whisper": "Hey, Nix.",
+        "wav2vec2": "HEMIX"
+      },
+      "matches_v5": false
+    },
+    "3": {
+      "early_amplitude": 0.3535533905932738,
+      "global_scale": 0.9894003750261279,
+      "rms_delta_db": -1.731487777443389e-06,
+      "peak": 28940,
+      "pcm_sha256": "d434c4d26a364d2a8b1916f36f5faa018fd333cb1b5e21a44917962d3b1a7e43",
+      "readings": {
+        "whisper": "Hey, Nix.",
+        "wav2vec2": "HENIX"
+      },
+      "matches_v5": false
+    },
+    "4": {
+      "early_amplitude": 0.25,
+      "global_scale": 0.9946771265973539,
+      "rms_delta_db": -1.7517702313534745e-06,
+      "peak": 29094,
+      "pcm_sha256": "e4e1642c4708bf64492df5905102bebe8cd3497db8510ad8fa04929724a20f28",
+      "readings": {
+        "whisper": "Hey, Nix.",
+        "wav2vec2": "PENIX"
+      },
+      "matches_v5": false
+    },
+    "5": {
+      "early_amplitude": 0.125,
+      "global_scale": 0.9986779427672283,
+      "rms_delta_db": 7.386745781291654e-06,
+      "peak": 29211,
+      "pcm_sha256": "d04e6933e04b33c4071a7445a43acdde88b89639cabbaa9d9626b94ff95a4c41",
+      "readings": {
+        "whisper": "Hey, Nix.",
+        "wav2vec2": "HEYNIX"
+      },
+      "matches_v5": true
+    }
+  },
+  "selected": "5",
+  "audio": {
+    "file": "hye-nyx-v5-early-repeat-equal-rms.wav",
+    "sha256": "6c5636d9bea8c8b915a3f9fe2dc2944e61e41fac8d680977390201dfe6c779df",
+    "samples": 17600
+  },
+  "baseline_readings": {
+    "whisper": "Hey, Nix.",
+    "wav2vec2": "HEYNIX"
+  },
+  "asr": {
+    "model.bin": "62b2a45b05ee59acb4a5341b33ee35e041395d378d418a18acfe4c9e768ee37a",
+    "config.json": "666a9605530ac1f61fa8177f3702b4dacec9966749e42610839fcc32661d5fae",
+    "tokenizer.json": "929c5252409436dce1b38a75d1abbcb5e132d170d8e324e4e04ed915fa2d22df",
+    "vocabulary.txt": "ff77588746d3a2595d32ab5b69ffd7b95ce2441ac57533cb66fc3eb575a115cf"
+  },
+  "sources": {
+    "4090-c161-repeated-room-cue-plan.json": "a3722d4ce3e793bd562a71502d9d7e23621c8d6951e4a3c69aec3cb8317363aa",
+    "hye-nyx-v5-early-repeat-trained.wav": "032d8d381294827c0d253fa25da71e8445da2b051980afd73600bd6aad3350c3",
+    "hye-nyx-c161-v5-early-80ms.wav": "cc59349578cbca6c63ba13a45f7303d9de98d11560a31799b0a884e227eabf0f",
+    "4090-c161-single-cue-advance-source.json": "8a8c563ad55967864bcf76a6c34d9bfa17ff9c683ffe36e5a204e1ab82bfc920",
+    "select_repeat_level.py": "178a9f06868daf2f0dba1fa086c1c6968e7afa44622422cac83d824b12084b1c"
+  },
+  "policy": "Scale only the extra early trained markers, then match total PCM RMS to original v5. Pick the strongest tested repeat whose dry small.en and wav2vec2 greedy transcript letters both equal the original. Selection uses only the dry tracks and no room scores."
+}
