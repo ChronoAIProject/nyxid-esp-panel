@@ -14,12 +14,13 @@ ch = prior.ch
 OUT = channels.OUT.with_name(channels.OUT.stem + "-uplinks.json")
 
 
-def capture(work, cache, logs, row, source, mic, readers):
+def capture(work, cache, logs, row, source, mic, readers, *, history_samples=32000):
     index = row["index"]
     shard = cache / f"{index:03}.zip"
     if not shard.exists():
         with ZipFile(work / shard.name, "w", ZIP_DEFLATED) as part:
-            result = prior.recognize(work, part, index, mic, source, row["decision"]["opened"], readers)
+            result = prior.recognize(work, part, index, mic, source, row["decision"]["opened"], readers,
+                                     history_samples=history_samples)
             part.writestr("capture.json", json.dumps(result))
         (work / shard.name).replace(shard)
     with ZipFile(shard) as part:

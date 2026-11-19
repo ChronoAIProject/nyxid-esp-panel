@@ -17,9 +17,9 @@ from fit_c161_history_gain_v1 import MODEL, MODEL_SHA, RESULTS, read, save, sha
 uplink, host = fixed.uplink, fixed.host
 
 
-def capture(reader, decoder, work, archive, i, name, mic, opened, carrier):
+def capture(reader, decoder, work, archive, i, name, mic, opened, carrier, *, history_samples=32000):
     # Identical FIFO, 10 ms production and raw/90 ms delay with a silent reference.
-    first = max(0, opened//160*160-32000)
+    first = max(0, opened//160*160-history_samples)
     blocks = (len(mic)+255)//256
     emitted = blocks*256//160*160
     padded = np.pad(mic,(0,blocks*256-len(mic)))

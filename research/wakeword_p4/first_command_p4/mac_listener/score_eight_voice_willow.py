@@ -23,9 +23,9 @@ def timing(s, opened):
                 relative_to_end_ms=(opened-s["end"])/16 if opened is not None else None)
 
 
-def recognize(work, logs, i, mic, s, opened, readers):
+def recognize(work, logs, i, mic, s, opened, readers, *, history_samples=32000):
     small, turbo, decoder, processor, model = readers
-    count = capture(small,decoder,work,logs,i,"wake",mic,opened,s["carrier"])
+    count = capture(small,decoder,work,logs,i,"wake",mic,opened,s["carrier"],history_samples=history_samples)
     raw = logs.read(f"opus/{i:03}-wake.log").decode().replace("\r\n","\n")
     n = count["emitted"]-count["first"]
     streams = {}
