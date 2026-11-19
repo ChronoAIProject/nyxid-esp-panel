@@ -16,14 +16,24 @@ from check_c161_v3_two_anchor_v1 import binding
 from replay_c161_pcm_cues_v1 import detect
 
 
+def activity_pulses(reference):
+    frames = reference[:len(reference)//160*160].reshape(-1, 160)
+    pulses = np.zeros_like(reference)
+    pulses[159::160] = (np.std(frames, axis=1) >= 64) * 64
+    return pulses
+
+
 def score(work, source, mic, ref, detector, index, build=BUILD, prefix=None, qualify=None,
-          wait_for_third=False):
+          wait_for_third=False, frame_activity=False):
     protocol = 0x4752594e if prefix is None else 0x5052594e
     if qualify is not None:
         protocol = 0x4452594e
     if wait_for_third:
         assert qualify is not None and prefix is not None
         protocol = 0x5452594e
+    if frame_activity:
+        assert wait_for_third
+        protocol = 0x4152594e
     payload = struct.pack("<3I", protocol, index, len(mic)) + mic.tobytes() + ref.tobytes()
     log = work / "serial.log"
     listener.boot(build, log, work/"image.bin", b"LISTENER PASS", (2<<20, payload))
@@ -38,9 +48,10 @@ def score(work, source, mic, ref, detector, index, build=BUILD, prefix=None, qua
     accepted_prefixes = prefixes if qualify is None else [t for t in prefixes if qualify(ref, t)]
     tentative = sorted(set(prefixes) - set(accepted_prefixes)) if wait_for_third else []
     allows = []
+    activity = activity_pulses(ref) if frame_activity else ref
     for label, events in (("C161_ALLOW", c161), ("V5_ALLOW", fixed)):
         actual = [int(s) for s in re.findall("^"+label+r" (\d+)$", log_text, re.M)]
-        assert actual == expected(events, refs, ref, accepted_prefixes, tentative)
+        assert actual == expected(events, refs, activity, accepted_prefixes, tentative)
         allows.extend(actual)
     opened = [int(s) for s in re.findall(r"^OPEN (\d+) ", log_text, re.M)]
     assert opened == ([(min(allows)+255)//256*256] if allows else [])

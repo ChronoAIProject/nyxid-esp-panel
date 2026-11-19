@@ -1,4 +1,5 @@
 """Compare the LCD-X8 idle reference selection and the captured MIC3 slot in P4 QEMU."""
+import argparse
 import ctypes
 from hashlib import sha256
 from pathlib import Path
@@ -10,6 +11,7 @@ import numpy as np
 from scipy.signal import butter, sosfilt
 
 import third_reference as probe
+from code_gain_guard import activity_pulses
 from transition import samples, weights
 
 listener = probe.listener
@@ -58,14 +60,15 @@ def channel(signal, setting, noise):
     return np.rint(-gain*filtered + floor*noise).clip(-32768, 32767).astype("<i2")
 
 
-def fifo(work, archive, index, mic, ref, result, reader, decoder):
+def fifo(work, archive, index, mic, ref, result, reader, decoder, frame_activity=False):
     log = (work / "serial.log").read_text()
     emitted, first, count, blocks, *_ = listener.values(log, "FINISH")
     assert first == max(0, result["opened"][0]//160*160 - 32000)
     assert count == emitted-first
     mic = np.pad(mic, (0, blocks*256-len(mic)))
     ref = np.pad(ref, (0, blocks*256-len(ref)))
-    blend = weights(ref[:emitted])[first:]
+    activity = activity_pulses(ref[:emitted]) if frame_activity else ref[:emitted]
+    blend = weights(activity)[first:]
     dry = np.pad(mic, (1440, 0))[first:emitted]
     processed = samples(log, "PROCESSED", count)
     mixed = dry*(160-blend) + processed*blend
@@ -77,10 +80,12 @@ def fifo(work, archive, index, mic, ref, result, reader, decoder):
                 delayed_raw_samples=int((blend == 0).sum()))
 
 
-def main():
+def main(frame_activity=False):
     previous = listener.read(probe.BASE.with_suffix(".json"))
-    fw = probe.BUILD / "nyx_mac_listener.bin"
-    assert listener.sha(fw) == previous["listener_sha256"]
+    build = listener.WORK/"build-reference-energy" if frame_activity else probe.BUILD
+    fw = build / "nyx_mac_listener.bin"
+    assert listener.sha(probe.BUILD/"nyx_mac_listener.bin") == previous["listener_sha256"]
+    assert fw.read_bytes().count((listener.WORK/"model/hey_nyx_model.bin").read_bytes()) == 1
     assert listener.sha(probe.uplink.CODEC/"nyx_first_command.bin") == previous["opus_sha256"]
     identity = {(r["source"]["room"], r["source"]["mode"], r["source"]["noisy"], r["source"]["player"]):r
                 for r in previous["records"] if r["group"] == "rooms"}
@@ -88,7 +93,9 @@ def main():
     assert asr == previous["asr_files"]
     decoder = probe.uplink.decoder_api()
     records = []
-    archive = BASE.with_suffix(".zip")
+    output = BASE.with_name(BASE.name+"-energy") if frame_activity else BASE
+    archive = output.with_suffix(".zip")
+    baseline = listener.read(BASE.with_suffix(".json"))["records"] if frame_activity else []
     with TemporaryDirectory() as tmp, ZipFile(archive.with_suffix(".tmp"), "w", ZIP_DEFLATED) as logs:
         work = Path(tmp)
         unpack, files = board_adapter(work)
@@ -110,22 +117,27 @@ def main():
                 ref = np.zeros_like(captured) if setting == "idle_mask" else mr[:, 1].copy()
                 meta = dict(source, reference_path=setting)
                 i = len(records)
-                result = probe.score(work, meta, mr[:, 0].copy(), ref, full, i, build=probe.BUILD, prefix=pair,
-                                     qualify=probe.qualify, wait_for_third=True)
+                result = probe.score(work, meta, mr[:, 0].copy(), ref, full, i, build=build, prefix=pair,
+                                     qualify=probe.qualify, wait_for_third=True, frame_activity=frame_activity)
                 assert (result["c161"], result["fixed"]) == (old["c161"], old["fixed"])
-                if setting == "ideal":
+                if setting == "ideal" and not frame_activity:
                     assert result["opened"] == old["opened"]
                 result.update(tdm_sha256=listener.digest(tdm), captured_reference_sha256=listener.digest(captured),
                               floor_rms=float(np.sqrt(np.mean(captured[:source["cue_at"]].astype(float)**2))),
                               peak_reference=int(abs(captured.astype(np.int32)).max()))
                 if source["player"] == "external" and result["opened"]:
-                    result["uplink"] = fifo(work, logs, i, mic, ref, result, reader, decoder)
+                    result["uplink"] = fifo(work, logs, i, mic, ref, result, reader, decoder, frame_activity)
+                if frame_activity:
+                    for key in ("source", "mic_sha256", "reference_sha256", "tdm_sha256", "c161", "fixed",
+                                "reference_events", "prefix_reference", "qualified_prefix"):
+                        assert result[key] == baseline[i][key]
                 logs.writestr(f"{i:02}-listener.log", "\n".join(result["uart_events"])+"\n")
                 records.append(result)
                 print(i, source["player"], setting, result["opened"], flush=True)
         assert len(records) == 48
     archive.with_suffix(".tmp").replace(archive)
-    listener.save(BASE.with_suffix(".json"), dict(records=records, mac_commit=listener.MAC, mac_files=files,
+    listener.save(output.with_suffix(".json"), dict(records=records, mac_commit=listener.MAC, mac_files=files,
+        frame_activity=frame_activity, baseline_sha256=listener.sha(BASE.with_suffix(".json")) if frame_activity else None,
         prior_sha256=listener.sha(probe.BASE.with_suffix(".json")), cue_sha256=listener.sha(probe.fixed.CUE),
         model_sha256=listener.C161, listener_sha256=listener.sha(fw), opus_sha256=previous["opus_sha256"],
         qemu_sha256=listener.sha(listener.QEMU), asr=asr, archive_sha256=listener.sha(archive),
@@ -136,4 +148,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--energy", action="store_true")
+    main(parser.parse_args().energy)

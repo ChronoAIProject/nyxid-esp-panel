@@ -9,10 +9,14 @@ namespace nyx {
 class ReferenceCapture {
 public:
     int16_t update(int16_t mic, int16_t reference, int16_t processed) {
+        return update_active(mic, std::abs(int(reference)) >= 64, processed);
+    }
+
+    int16_t update_active(int16_t mic, bool active, int16_t processed) {
         const int dry = delay_[cursor_];
         delay_[cursor_] = mic;
         cursor_ = (cursor_ + 1) % kDelay;
-        if (std::abs(int(reference)) >= 64) hold_ = 8001;
+        if (active) hold_ = 8001;
         if (hold_) {
             --hold_;
             weight_ = std::min(weight_ + 1, kFade);

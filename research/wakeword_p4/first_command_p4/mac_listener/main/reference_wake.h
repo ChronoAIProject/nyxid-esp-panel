@@ -8,7 +8,11 @@ namespace nyx {
 class ReferenceWake {
 public:
     bool update(int16_t reference, bool reference_clear, bool hit, bool awaiting_third = false) {
-        if (std::abs(int(reference)) >= 64) recent_ = 8001;
+        return update_active(std::abs(int(reference)) >= 64, reference_clear, hit, awaiting_third);
+    }
+
+    bool update_active(bool active, bool reference_clear, bool hit, bool awaiting_third) {
+        if (active) recent_ = 8001;
         const bool playing = recent_ > 0;
         if (playing) --recent_;
         if (!reference_clear) {

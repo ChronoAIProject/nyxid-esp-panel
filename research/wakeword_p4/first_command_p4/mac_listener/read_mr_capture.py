@@ -43,6 +43,7 @@ def analyze(path, idle_frames=0):
 def parse_events(lines):
     hits = {name:[] for name in ("mic_three", "ref_three", "ref_two", "ref_signed_two")}
     levels = {}
+    activity = {}
     for line in lines:
         tag, name, *fields = line.split()
         if tag == "EVENT":
@@ -51,11 +52,14 @@ def parse_events(lines):
             count, peak, rms, active, full = fields
             levels[name] = dict(samples=int(count), peak=int(peak), rms=float(rms),
                                 magnitude_at_least_64=int(active), full_scale_samples=int(full))
+        elif tag == "ACTIVITY":
+            active, total = map(int, fields)
+            activity[name] = dict(active_frames=active, complete_frames=total)
     # Compare only unambiguous fixed-code event pairs. A C161-only microphone wake has no such clock.
     delta = None
     if len(hits["ref_three"]) == len(hits["mic_three"]) == 1:
         delta = hits["ref_three"][0] - hits["mic_three"][0]
-    return dict(events=hits, levels=levels, ref_minus_mic_three_samples=delta)
+    return dict(events=hits, levels=levels, reference_activity=activity, ref_minus_mic_three_samples=delta)
 
 
 if __name__ == "__main__":

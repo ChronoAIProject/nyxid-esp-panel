@@ -5,6 +5,7 @@
 #include <cstring>
 #include "c161_coded_cue_reference_v5.h"
 #include "reference_capture.h"
+#include "reference_activity.h"
 #include "reference_prefix.h"
 #include "reference_signature.h"
 #include "reference_wake.h"
@@ -54,7 +55,8 @@ void dump(const char* label, const int16_t* samples,int count) {
 void worker(void*) {
     uint32_t h[3];
     ESP_ERROR_CHECK(esp_flash_read(nullptr,h,kOffset,sizeof(h)));
-    const bool wait_for_third = h[0] == 0x5452594e;
+    const bool frame_activity = h[0] == 0x4152594e;
+    const bool wait_for_third = frame_activity || h[0] == 0x5452594e;
     const bool signed_reference = wait_for_third || h[0] == 0x4452594e;
     const bool prefix_guarded = signed_reference || h[0] == 0x5052594e;
     const bool guarded = prefix_guarded || h[0] == 0x4752594e;
@@ -96,6 +98,7 @@ void worker(void*) {
     auto* selected = stereo ? buffer(length+2048) : processed;
     nyx::ReferenceWake model_route, cue_route;
     nyx::ReferenceCapture capture;
+    nyx::ReferenceActivity capture_activity, wake_activity;
     nyx::CodedCueReferenceV5 guard;
     nyx::ReferencePrefix prefix;
     nyx::ReferenceSignature signature;
@@ -122,7 +125,8 @@ void worker(void*) {
             if (stereo) {
                 for (int j=0;j<kHop;++j) {
                     const int t=emitted+j;
-                    selected[t]=capture.update(pcm[t],playback[t],adjusted[j]);
+                    const bool active = frame_activity ? capture_activity.update(playback[t]) : std::abs(int(playback[t])) >= 64;
+                    selected[t]=capture.update_active(pcm[t],active,adjusted[j]);
                 }
             }
             if (first<0) panel_voice_pcm_preroll_push(&history,selected+emitted,kHop);
@@ -133,6 +137,7 @@ void worker(void*) {
             const bool matched=cue.update(pcm[at+i]);
             if (matched) hitcue=at+i+1;
             const int16_t reference = stereo ? playback[at+i] : 0;
+            const bool active = frame_activity ? wake_activity.update(reference) : std::abs(int(reference)) >= 64;
             const bool full_clear = !stereo || guard.allow(reference,true);
             if (signed_reference) signature.update(reference);
             using PrefixState = nyx::ReferencePrefix::State;
@@ -141,7 +146,7 @@ void worker(void*) {
             }) : PrefixState::clear;
             const bool reference_clear = full_clear && prefix_state != PrefixState::confirmed;
             const bool awaiting_third = wait_for_third && prefix_state == PrefixState::awaiting_third;
-            const bool cue_ok = guarded ? cue_route.update(reference,reference_clear,matched,awaiting_third) : matched && reference_clear;
+            const bool cue_ok = guarded ? cue_route.update_active(active,reference_clear,matched,awaiting_third) : matched && reference_clear;
             if (cue_ok) allowed_cue=at+i+1;
             bool model_hit=false;
             wake[wake_fill++]=pcm[at+i];
@@ -153,7 +158,7 @@ void worker(void*) {
                 model_hit=hit>0;
                 if (model_hit) hit161=at+i+1;
             }
-            if (guarded ? model_route.update(reference,reference_clear,model_hit,awaiting_third) : model_hit) allowed161=at+i+1;
+            if (guarded ? model_route.update_active(active,reference_clear,model_hit,awaiting_third) : model_hit) allowed161=at+i+1;
         }
         if (first<0 && (allowed_cue>=0 || allowed161>=0)) {
             const size_t part=std::min(history.count,history.capacity-history.head);

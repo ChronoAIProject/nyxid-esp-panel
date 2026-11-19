@@ -7,6 +7,7 @@
 #include "c161_coded_cue_v5.h"
 #include "c161_coded_cue_aligned_v4.h"
 #include "reference_signature.h"
+#include "reference_activity.h"
 
 struct Levels {
     std::uint64_t count = 0, full_scale = 0, at_least_64 = 0;
@@ -46,6 +47,8 @@ int main(int argc, char **argv) {
     nyx::CodedCueV5 mic_match, ref_match;
     nyx::AlignedCodedCueV4 pair;
     nyx::ReferenceSignature signature;
+    nyx::ReferenceActivity activity;
+    std::uint64_t active_frames = 0, idle_active_frames = 0;
     while (const auto bytes = std::fread(buffer.data(), 1, buffer.size(), stdin)) {
         if (bytes % width) return 1;
         for (std::size_t i = 0; i < bytes; i += width) {
@@ -57,6 +60,10 @@ int main(int argc, char **argv) {
                 ref_idle.update(ref);
             }
             signature.update(ref);
+            if (activity.update(ref)) {
+                ++active_frames;
+                if (clock <= idle) ++idle_active_frames;
+            }
             const auto at = static_cast<unsigned long long>(clock);
             if (mic_match.update(mic)) std::printf("EVENT mic_three %llu\n", at);
             if (ref_match.update(ref)) std::printf("EVENT ref_three %llu\n", at);
@@ -71,4 +78,8 @@ int main(int argc, char **argv) {
     ref_levels.print("ref");
     mic_idle.print("mic_idle");
     ref_idle.print("ref_idle");
+    std::printf("ACTIVITY ref %llu %llu\n", static_cast<unsigned long long>(active_frames),
+                static_cast<unsigned long long>(clock / 160));
+    if (idle) std::printf("ACTIVITY ref_idle %llu %llu\n", static_cast<unsigned long long>(idle_active_frames),
+                          static_cast<unsigned long long>(idle / 160));
 }
