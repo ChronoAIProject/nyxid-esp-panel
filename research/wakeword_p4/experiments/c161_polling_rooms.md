@@ -1098,3 +1098,5 @@ TX 提前 80 ms 时，完整上行中两条 “turn down” 被 Qwen 转成 “t
 表中为冻结 C161 加标记匹配器的主机回放。四条播放路径逐场核对原版麦克风 PCM 与去称呼对照哈希。找回的 11 次全部位于 −6 dB 弱档。两批、四个方向条件复用同一批 24 条外部命令。[原版与增强版的 288 个配对结果](../results/4090-c161-connected-marker-gains.json)
 
 取每种声音的独立称呼，在该声线场景的面板房间冲激响应下做 P4 模拟自播对照。每一次都向固件提供相同的 M，分别把 R 置零或同步接入播放的干声。原版在零 R 时开麦 7/8，增强版 8/8；同步 R 时两版均 0/8。这 32 次只包含单个称呼，未加入面板示范、命令或音乐。同一冻结接收端又在主机上复放 100 份完整既有录音，96 句日常话、48 段 Bot 普通回复、8 段 Bot 明说称呼、所有标注外区间均无事件。板上能否得到同步参考仍以实际 M/R 接线和采音为准。[32 次模拟与完整普通讲话回归](../results/4090-c161-eight-voice-self-play.json) · [串口事件](../results/4090-c161-eight-voice-self-play.zip)
+
+八个独立称呼均用 RTX 4090 作无提示干声转写。增强前后 Whisper small.en 的逐词读数一致，af_bella 均为 “Hey, Nix”，Wav2Vec2 对她的两条干声均输出 “HAYNIC”。其他声线中有 “Hey Nick”、“Hey next” 和 “Hey Nixis”。供直接试听的 af_bella 文件与归档内 `wake/af_bella.wav` 字节相同，长 1.45 秒。该读音是按已有开发声音中的转写挑选，尚无听辨标注。[直接下载 af_bella 的独立唤醒音](../results/hye-nyx-af-bella-marker-rms-v1.wav) · [逐个声音的两种原始转写](../results/4090-c161-eight-voice-dry-readings.json)
