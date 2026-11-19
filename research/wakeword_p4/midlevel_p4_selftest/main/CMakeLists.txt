@@ -1,3 +1,10 @@
+if(NYX_PROPOSAL_SPELLINGS)
+    set(model "${CMAKE_CURRENT_LIST_DIR}/../../results/4090-c161-proposal-letters-student.tflite")
+    idf_component_register(SRCS "proposal_spellings.cpp" INCLUDE_DIRS "." REQUIRES esp-tflite-micro esp_timer spi_flash
+                           EMBED_FILES "${model}")
+    return()
+endif()
+
 if(NYX_ONSET_EVIDENCE)
     set(model "${CMAKE_CURRENT_LIST_DIR}/../../results/4090-c161-onset-evidence-posterior-int8.tflite")
     if(NYX_ONSET_MODEL)

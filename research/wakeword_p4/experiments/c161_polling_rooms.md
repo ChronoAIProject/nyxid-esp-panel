@@ -287,3 +287,27 @@ RTX 4090 复现 12 个 Kokoro 训练声音的 480 条录音，逐条 PCM 哈希�
 | Joe | 再加条件拒绝 | 26/72 | 17／17 | 2/288 |
 
 Joe 的两个误唤是 “Hey Next.” 和 “Hey Mix.”。句号版 “Hey Nicks.” 的 18 条都有前级提议，最终命中 9 条；感叹号版的 18 条均无提议。六对相同生成速度与抽样序号的干声，按完整原音对齐 /n/ 开头，交换招呼词与姓名段。保留感叹语气招呼、接句号版姓名，六条全部重新出现提议，五条通过后续复核。反向组合六条均无提议。两种同源拼接逐样本复现原音。对这六对合成录音，姓名起点之后的声学差异决定了前级能否收到足够证据。自然语音研究继续使用冻结 C161 为实板基准。[逐音素时钟、互换结果及独立英语识别器转写](../results/4090-c161-joe-punctuation-parts.json)
+
+### 字符模型在 P4 模拟器上的逐字节复核与首句时钟
+
+把 117,320 字节的 INT8 字符模型和 31 种拼写的 CTC 解码编进 ESP32-P4 自测。8 次冷启动覆盖 707 条已用开发音频的全部 757 个完整窗口，含 6 段连续新对话和 360 条 Joe 语音。每窗比较决策使用的 71 × 32 个有符号字节。共 1,719,904 字节逐一吻合，最佳目标、竞争拼写、两个归一化代价、词间空白帧数及两种规则的决定也逐窗一致。72 KiB 静态张量区中 TFLM 报告使用 65,052 字节。QEMU 客机计时里推理加解码的中位数为 33.34 ms，第 95 百分位约 34.00 ms，最大 37.65 ms。计时范围从 Invoke 开始至两种规则完成判定。连续音频前端仍在主机，P4 整机资源和时延需由实板测量。[原始 UART](../results/4090-c161-spelling-p4-uart.zip) · [逐窗时钟、哈希与内存](../results/4090-c161-spelling-p4.json)
+
+将每个窗口的实际客机耗时计入一条串行复核队列，保留原 C161 通知及其共用冷却时间。房间配对普通称呼上，C161 加拼写和词间空白上限及时 9/16，完整命令 8/16。冻结 C161 单独为 1/16 和 1/16，官方 Willow 在自己的配对称呼上为 11/16 和 8/16。Nyx 的七次漏唤中五次在命令前没有完整候选窗，两次已有窗口但拼写规则拒绝。仅加噪声的十次漏唤里这两类各五次。28.001 小时历史背景中拼写加空白上限出现 16 次通知，C161 单独为零。本轮对 25 个新增捕获起点在 RTX 4090 上重新转写。[逐句计数、失败原因和转写](../results/4090-c161-spelling-p4-commands.json)
+
+复现使用固定的 ESP-IDF v5.5.4，并从仓库根目录启动。以下命令使用与已有研究相同的音频、Python 环境及 P4 QEMU。每次独立复核使用空的工作目录，报告按仓库惯例首次写入。
+
+```bash
+work="$PWD/.local/wakeword/c161-spelling-p4"
+app="$PWD/research/wakeword_p4/midlevel_p4_selftest"
+scripts=research/wakeword_p4/first_command_p4/mac_listener
+mkdir -p "$work"
+export IDF_TOOLS_PATH="$PWD/.local/wakeword/idf-tools"
+source .local/wakeword/esp-idf/export.sh
+nice -n 10 taskset -c 2,3 idf.py -C "$app" -B "$work/build" -DIDF_TARGET=esp32p4 \
+    -DSDKCONFIG="$work/sdkconfig" -DNYX_PROPOSAL_SPELLINGS=ON -DNYX_FC_SINGLE_ROUNDING=OFF reconfigure
+nice -n 10 taskset -c 2,3 cmake --build "$work/build" --parallel 2
+source .local/wakeword/c161-onset-names/env
+nice -n 10 taskset -c 2,3 /usr/bin/python3 "$scripts/check_spelling_p4.py" collect "$work"
+nice -n 10 taskset -c 2,3 /usr/bin/python3 "$scripts/check_spelling_p4.py" run "$work"
+nice -n 10 taskset -c 2,3 /usr/bin/python3 "$scripts/score_spelling_p4_commands.py"
+```
