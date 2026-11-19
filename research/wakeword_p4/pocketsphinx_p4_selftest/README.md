@@ -145,3 +145,11 @@ Piper 对 Hey Nyx 和 Hey Nicks 给出相同音素，但两种拼写分别合成
 | Bot 示范唤醒词时通知 | 4/8 | 4/8 | 4/8 |
 
 两种额外搜索均误唤了英国南部合成女声的 Hey Nick 和 Hey Max。双发音搜索也误唤 “Do not mix those colors.”、“This is a nice mix of songs.”，以及 Bot 播报 “Nick sent you a message about dinner.” 的数字和反射两个版本。此次额外路径只作主机诊断，原确认器的 28 小时背景结果只适用于原提议策略。[逐帧候选、匹配音素短语及各句结果](../results/4090-c161-q8-vad-pronunciations.json)
+
+### 用训练声音复核额外的短语匹配
+
+另在 RTX 4090 上用 12 个已登记的 Kokoro 训练声音生成 384 句。两种首词配 Nyx 为正例，Nick、Mick、Max、Chris 等称呼和普通词为负例，每种称呼都用同一对载句。用合成时的音素边界构造两种音量和有起止扰动的 9,216 个训练窗口。在原有 20 频带前端上训练 13,097 参数的小卷积模型 500 步，固定以 logit ≥ 0 通过。只检查语音起点额外产生的短语匹配。原姓名对比双速的通知仍直接通过。[训练来源与词边界](../results/4090-c161-vad-word-check-sources.json) · [训练记录](../results/4090-c161-vad-word-check-training.json)
+
+模型冻结后，再用同两个 Piper 声音生成 44 条新语句，包含两条新命令、Hi Nick、Hey Nick、Hey Mick、Hi Max、Hi Chris、Hi Nikki、Hey Willow 和日常句。加入复核后的 /haɪ/ 及 /heɪ/ 均唤醒 4/4，两秒回看后的完整命令分别为 3/4、4/4。原姓名对比双速合计 5/8 唤醒、3/8 完整。新复核模型在 32 条称呼及日常干扰中误唤 8 条，原姓名对比双速为 2 条。从语音起点直接搜两种发音、跳过神经网络复核时为 9 条。三个配置对同批 4 条 Hey Willow 均无通知。
+
+复核后仍误唤 Hey Nick 3/4、Hi Nick 2/4、Hey Mick 2/4，以及 1/8 日常句。此前那批 Piper 的两个姓名误唤和既有 96 条日常短句的两次误唤均消失，Bot 普通回复仍有 2/48。两批均只作开发对照，新增路径当前只在主机验证；普通语音的实机验证使用冻结 C161，固定音使用 v5。[新音频与输入清单](../results/4090-c161-vad-word-check-fresh-plan.json) · [逐匹配得分、误唤及首句转写](../results/4090-c161-vad-word-check-evaluation.json)
