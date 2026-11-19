@@ -138,3 +138,18 @@ RTX 4090 从相同的五类后验蒸馏权重开始，分别微调 450 步，两
 在 melo-US 连续对话的 “Hey Max, can you carry the other bag upstairs?” 窗口，P4 实测有符号输出依次为 37、−128、−127、−127、−39。Nyx 达到接受门槛 0，Invoke 用时 24.914 ms。从样本 3,180,960 窗口就绪到串行输出为样本 3,181,359。该词落在可用语音起点后，起点规则同样接受。整机音频流水线及实板运行时间待 Mac 实测。
 
 复现使用 `midlevel_p4_selftest` 的 ESP-IDF 逐通道全连接配置，把 `NYX_ONSET_MODEL` 指向 `4090-c161-positive-readout-trigger.tflite` 后构建。在研究 Python 环境运行 `python3 research/wakeword_p4/first_command_p4/mac_listener/check_positive_readout_p4.py <构建目录>`。[复现代码](../first_command_p4/mac_listener/check_positive_readout_p4.py)
+
+### 把日常称呼和后接命令分开回放
+
+选取三个既有合成声音各读的同一句 “Hey Max, can you carry the other bag upstairs?”，并用各自流中最近的前一条目标 “Hey Nicks, cancel the reminder about the laundry.” 对照。在六条原句上，4090 的无提示 Whisper small.en 均能区分 Max 与 Nix。PocketSphinx 用整句文本估计每个词和音素的 10 ms 边界。在每次独立编辑中仅静音一个区间，区间两端各做 4 ms 过渡，然后从该段原始对话的开头重跑实际 INT8 前级、五类复核、C161 及通知冷却。六条原音复现已有的全部提议、五类码和通知。
+
+| Melo-US 的处理 | Max 是否开麦 | 真目标是否开麦 | 原提议时刻 Max／真目标的 Nyx 码 |
+| --- | --- | --- | --- |
+| 原音 | 是 | 是 | 37／48 |
+| 静音 Hey | 否 | 否 | 43／−31 |
+| 静音名字的起始辅音和元音 | 否 | 否 | −96／−95 |
+| 静音名字末尾 /ks/ | 否 | 否 | −108／−107 |
+| 静音整个称呼，保留后半句 | 否 | 否 | −86／−118 |
+| 保留称呼，静音后半句 | 否 | 否 | −79／−21 |
+
+在 Melo-US 的两条原句中，静音后半句都保住前级原提议时刻，但复核码跌过门槛 0。只静音 Max 前的 Hey，前级已经没有提议；若强制在原时刻检查，复核仍给 43。另两个声音的 Max 原音都有提议，复核码分别为 −109、−96，两条真目标原音均没有前级提议。这六条来自已消费的开发语料，静音也会改变语音连接，以上用于定位模型对声音的依赖。[逐样本编辑边界、完整转写、原时钟及真实运行的通知](../results/4090-c161-readout-name-parts.json)
