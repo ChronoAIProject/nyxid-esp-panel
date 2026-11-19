@@ -311,3 +311,20 @@ nice -n 10 taskset -c 2,3 /usr/bin/python3 "$scripts/check_spelling_p4.py" colle
 nice -n 10 taskset -c 2,3 /usr/bin/python3 "$scripts/check_spelling_p4.py" run "$work"
 nice -n 10 taskset -c 2,3 /usr/bin/python3 "$scripts/score_spelling_p4_commands.py"
 ```
+
+### 提前训练五帧触发对连读、房间和日常词的影响
+
+用 RTX 4090 从同一个 960 ms 前级训练两个对照。918 条原训练语音提供 373 个正例和 1,152 个负例干声或房间版本，另用原训练库的 1,346 组困难负窗。优化目标是让每条正例中连续五帧的最高均值过线。两组均训练 300 步，目标窗分别截至标注词尾和词尾前 180 ms。两版 INT8 均为 18,088 字节，256 个训练校准窗的单帧判定均与浮点一致。下表使用实际 INT8 流式输出、相同的 360 ms 等待、拼写和词间空白条件，两种新前级按音频到达时间统计。[训练来源](../results/4090-c161-proposal-deadline-sources.json) · [词尾模型](../results/4090-c161-proposal-deadline-tail-v1.tflite) · [提前模型](../results/4090-c161-proposal-deadline-early-v1.tflite)
+
+| 路线 | 两声线对话目标 / 18 | 96 条日常句误唤 | 28.001 小时背景误唤次数 | 配对房间命令前通知 / 16 | 配对房间完整首句 / 16 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 冻结 C161 | 6 | 0 | 0 | 1 | 1 |
+| C161 加原前级和拼写 | 11 | 0 | 16 | 9 | 8 |
+| C161 加词尾前级和拼写 | 9 | 1 | 6 | 5 | 5 |
+| C161 加提前前级和拼写 | 17 | 13 | 106 | 4 | 4 |
+| 词尾版再加五类复核 | 8 | 0 | 0 | 2 | 2 |
+| 提前版再加五类复核 | 15 | 1 | 4 | 2 | 2 |
+
+提前版在仅有房间反射时有 14/16 条首句完整，原前级为 10/16。该收益在反射加噪声时消失，分别为 4/16 与 6/16。五类复核将提前版的日常误唤从 13 条降至 1 条，剩下 “We need six cups of water.”。Joe 目标上，原前级拼写、词尾版、提前版依次命中 35/72、24/72、21/72，五类复核后的两个新前级分别为 14/72、6/72。官方 Hey Willow 在对应普通配对房间条件下及时 11/16、完整 8/16。[房间逐句](../results/4090-c161-proposal-deadline-acoustics.json) · [配对回放](../results/4090-c161-proposal-deadline-matched.json) · [Joe](../results/4090-c161-proposal-deadline-joe.json) · [日常五类复核](../results/4090-c161-proposal-deadline-five-daily.json) · [背景](../results/4090-c161-proposal-deadline-background.json) · [同批背景五类复核](../results/4090-c161-proposal-deadline-five-background.json)
+
+在六段新对话中，用实际 Piper 发音做 10 ms 强制对齐。提前版命中的 17 条均在命令首词开始后才通知，中位差 206 ms。两秒回看在 17 次捕获中都覆盖了命令起点，6 条转写的命令末尾逐词完整。官方 Willow 的六句中命中三句，这三次也都晚于命令起点，两条转写完整。只取通知时已到达的 PCM，用紧凑字符模型估计姓名末帧，再前留既有的 120 ms，提前版的完整转写从 6 增至 8；同一裁切在原前级从 3 降至 2。用强制对齐后的命令起点前留 120 ms 给 ASR，18 条 Nyx 中有 10 条转写完整。时间边界来自离线对齐，判断需考虑其 10 ms 分辨率及合成语音本身的可辨识度。[逐词起点及通知](../results/4090-c161-proposal-deadline-dialogue-commands.json) · [逐句裁切与转写](../results/4090-c161-proposal-deadline-dialogue-trim.json)

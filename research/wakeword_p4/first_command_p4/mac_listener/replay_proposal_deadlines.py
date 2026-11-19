@@ -18,7 +18,7 @@ def sources(group):
         old = read(RESULTS/f"{prior.STEM}-{group}.json")["records"]
         for (meta,pcm,c161,_,_), r in zip(base.sources(group),old,strict=True):
             assert base.poll.digest(pcm) == r["pcm_sha256"] and r["c161"] == c161
-            spans = r["spans"] if group == "fresh" else (r["source"] or {}).get("spans")
+            spans = r["source"]["spans"] if group in ("context","daily","bot") else r["spans"]
             yield r["index"], pcm, c161, meta if group in ("matched","acoustics") else {}, spans
     else:
         joe = group == "joe"
