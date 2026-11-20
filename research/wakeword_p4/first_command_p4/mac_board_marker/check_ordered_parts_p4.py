@@ -21,7 +21,7 @@ RESULT = fit.RESULTS / (fit.STEM + "-p4.json")
 HERE = Path(__file__).resolve().parent
 
 
-def build(work, models, python):
+def build(work, models, python, confirmation=False):
     board = fixture.PRIMARY
     runtime = board / "components/panel_wake_runtime"
     service = board / "components/panel_services"
@@ -40,13 +40,19 @@ def build(work, models, python):
     text = text.replace(anchor,anchor+"\n    ordered_parts::Probe probe;")
     text = text.replace(check,check+"\n            probe.frame(features.values,feature_count);")
     instrumented = work/"part_runtime.cpp"
-    instrumented.write_text('#include "ordered_parts_probe.h"\n'+text)
+    prelude = '#include "ordered_parts_probe.h"\n'
+    if confirmation:
+        prelude += '#include "parts_confirmation_probe.h"\n'
+    instrumented.write_text(prelude+text)
     write_feeders(service,work)
     guest = (HERE/"guest.c").read_text()
     anchor = "        if (result>0) printf("
     assert guest.count(anchor) == 1
-    guest = guest.replace(anchor, "        report_ordered_parts();\n" + anchor)
-    (work/"guest.c").write_text("extern void report_ordered_parts(void);\n" + guest)
+    calls = ["report_ordered_parts"]
+    if confirmation:
+        calls.insert(0, "report_confirmation")
+    guest = guest.replace(anchor, "".join("        "+name+"();\n" for name in calls) + anchor)
+    (work/"guest.c").write_text("".join("extern void "+name+"(void);\n" for name in calls) + guest)
     link_guest(fixture.SIM,work,"nyx_mac_listener.elf",[
         ("panel_voice_audio.c", work/"guest.c"), ("listener.cpp",service/"fixed_marker/board_marker.cpp"),
         ("panel_wake_runtime.cpp", instrumented)], [work,HERE,runtime,service],python.absolute())

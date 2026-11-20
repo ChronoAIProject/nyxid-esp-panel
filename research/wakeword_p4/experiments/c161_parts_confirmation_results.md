@@ -1,0 +1,19 @@
+# Ordinary connected wake words with bounded confirmation
+
+Two frozen variable-spacing detectors share the C161 frontend. One uses the original synthetic training pool and the other adds 40 Piper training and calibration voices. Of 312 fit targets, 195 reached both thresholds within the supervised word-end region. For 170 of those the two detectors agreed on a frame, and the upper 90th-percentile minimum separation was two frames (60 ms). The separate five-frame rule permits 150 ms between positive frames. Both request the microphone only when the later detector responds. [Protocol](c161_parts_confirmation_protocol.md) · [Training-only duration calibration](../results/4090-c161-parts-confirmation-calibration.json) · [Training comparison](c161_piper_parts_results.md)
+
+| Consumed development with C161 active | C161 | Original variable head | Same frame | Within 60 ms | Within 150 ms |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Ordinary Nyx opened / 12 | 5 | 11 | 9 | 9 | 9 |
+| Ordinary Nyx before first command / 12 | 0 | 11 | 6 | 7 | 7 |
+| Nicks before first command / 12 | 0 | 11 | 6 | 7 | 8 |
+| Daily sayings opened / 96 | 0 | 1 | 0 | 0 | 0 |
+| Events on 7.903 / 10.484 / 9.614 hours | 0 / 0 / 0 | 16 / 12 / 1 | 1 / 0 / 0 | 2 / 0 / 0 | 2 / 0 / 0 |
+| Joe target opened / 72 | 0 | 0 | 0 | 0 | 0 |
+| Jenny target opened / 36 | 33 | 33 | 33 | 33 | 33 |
+
+The 150 ms policy also opened before the command in all 12 fixed-v5 presentations. It inherited C161's false opening on the shifted “six cups” input. Both remaining background openings matched the exact sample in a previously transcribed neighborhood. One discusses canker sores and cold sores. The two ASR readings diverge in the other, with Whisper reading “And that took him a different way”. The new head by itself reached eight Joe targets but produced 517 background openings under its expanded calibration rule. [913 speech records](../results/4090-c161-parts-confirmation-speech.json) · [66 complete backgrounds](../results/4090-c161-parts-confirmation-background.json) · [Two ASR readings at the event clocks](../results/4090-c161-ordered-acoustic-parts-background-context.json)
+
+For 12 ordinary utterances, 150 ms confirmation delivered eight complete immediate first commands by Qwen3-ASR and nine by Whisper turbo. Delayed sender service gave eight by each reader. Frozen C161 delivered four and five in either schedule. The official Willow address delivered eight and eight in either schedule on the paired Willow utterances. All 20 distinct waveform/opening combinations across these three routes had already traversed capture, Opus and sender with the exact microphone PCM, silent reference and open sample. All 60 referenced UART members were rechecked by digest. [Per-command clocks and transcripts](../results/4090-c161-parts-confirmation-first-commands.json) · [Download sender evidence](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/4090-c161-ordered-acoustic-parts-first-commands-uart.zip)
+
+On a P4 QEMU guest, 41 selected inputs comprised all 12 Nyx, 12 paired Willow, eight flagged daily cases, the shifted six-cups stream, and eight Joe positives found by the broader head alone. Both integer scores matched on every one of 6,481 complete live frames. Every guest 150 ms confirmation and C161 sample matched the independently scored host events. The ZIP and all 41 UART members passed anonymous download verification, SHA256 `60bcc57a6c5cd758f7793a9f3317d7a53b7f3a920fd274b45df71f221f6accc5`. The P4 results use digital injection. Physical recognition, minimum internal heap and real received audio remain pending with Mac. [Per-input guest results](../results/4090-c161-parts-confirmation-p4.json) · [Download guest UARTs](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/4090-c161-parts-confirmation-p4.zip)
