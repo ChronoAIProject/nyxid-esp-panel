@@ -51,3 +51,15 @@ At 0 dB address-to-background RMS, both receivers were given the exact same comm
 Among the three rooms where both opened, at the lower level Qwen recovered the complete command 3/3 for both receivers on each schedule. Whisper turbo recovered 2/3 for immediate Nyx and 3/3 for immediate Willow. Both reached 3/3 on the waited schedule. At the higher level both readers recovered 3/3 for both receivers on each schedule. The restaurant Nyx microphone has the same prefix and opens at the same read in both conditions. Increasing only the command level took active command SNR from +0.68 to +9.32 dB and restored “turn down the hall light” on all four reader/schedule combinations. These observations use one sentence and the same six previously measured backgrounds.
 
 The archive contains the twelve new WAVs, 27 native UART logs and one manifest. The anonymous download and all 40 members matched their SHA256 records. Archive SHA256 is `207087871f5e14fc6889fc2ca6984cc35f6775c2d80ad3e9b0ad2f8267d5f235`. [Playback and raw evidence](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/4090-demand-common-command.zip)
+
+## Recorded speech and music without an address
+
+The standalone rearm receiver, C161 plus marker, and official Hey Willow each completed 22 source streams with zero idle wake decisions. The fixtures and their positive and erased controls match the indoor 0 dB trial. Every eligible 30–300 s file from the two specified development manifests was played from start to finish. We added one five-minute excerpt around an earlier false trigger. Zero electrical reference and the original microphone level were used throughout. [Registered selection](fixed_rearm_speech_music.md) · [Source and runtime hashes](../results/4090-fixed-rearm-speech-music-plan.json) · [Per-file events](../results/4090-fixed-rearm-speech-music.json)
+
+| Recorded input | Files | Original audio | Standalone Nyx | C161 plus marker | Willow DEFAULT |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| VoxConverse speech | 14 | 36 min 29.824 s | 0 | 0 | 0 |
+| MUSAN western art music | 7 | 22 min 15.771 s | 0 | 0 | 0 |
+| Earnings-22 conference call | 1 excerpt | 5 min | 0 | 0 | 0 |
+
+The conference call includes the sentence about major tenants “across the portfolio.” An earlier wide-window marker fired at 540.0405 s of that file. All three current receivers stayed closed throughout seconds 390–690. The three receiver passes cover the same 61,209,526 samples. All 63 min 45.595 s were previously used in development and add zero independent background exposure. The archive contains 44 P4 UARTs and the official reference's 22 UARTs, 22 reports and 22 raw-return files. [110 raw evidence files](../results/4090-fixed-rearm-speech-music.zip) · [Earlier event and word timestamps](../results/4090-c161-final-marker-background-event.json)
