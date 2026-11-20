@@ -90,15 +90,15 @@ def p4_cases():
             (stage/name).replace(gain.WORK/name)
 
 
-def willow_cases():
-    plan = room.read(gain.PLAN)
+def willow_cases(plan_path=gain.PLAN, work_root=gain.WORK, runner=gain.SCRIPT):
+    plan = room.read(plan_path)
     for path, sha in plan["files"].items():
         assert digest(Path(path).read_bytes())==sha,path
     old = room.read(room.OUT)
     assert digest(room.TRACE.read_bytes())==old["archive_sha256"]
     previous = {r["mic_sha256"]:r for r in old["records"]}
-    sha_plan = digest(gain.PLAN.read_bytes())
-    with ZipFile(room.TRACE) as history, TemporaryDirectory(dir=gain.WORK) as tmp:
+    sha_plan = digest(plan_path.read_bytes())
+    with ZipFile(room.TRACE) as history, TemporaryDirectory(dir=work_root) as tmp:
         stage = Path(tmp)
         feeder = room.build_feeder(WILLOW_BOARD,stage)
         rows = []
@@ -110,11 +110,11 @@ def willow_cases():
                 if old_row:
                     data = {name:history.read(old_row["label"]+"/"+name) for name in names}
                 else:
-                    run = gain.WORK/"willow"/sha_plan/str(n)
+                    run = work_root/"willow"/sha_plan/str(n)
                     if not run.exists():
                         with TemporaryDirectory(prefix="address-gain-") as tmp_run:
                             output = Path(tmp_run)/"run"
-                            cmd = [sys.executable,gain.SCRIPT,"case","--record-index",str(n),"--model","willow",
+                            cmd = [sys.executable,runner,"case","--record-index",str(n),"--model","willow",
                                    "--threshold","DEFAULT","--output",output,"--timeout-seconds","70"]
                             for name,path in plan["runtime"].items():
                                 cmd.extend(["--"+name,path])
@@ -148,7 +148,7 @@ def willow_cases():
         room.save(stage/"willow.json",dict(records=rows,archive_sha256=digest((stage/"willow.zip").read_bytes()),
                   plan_sha256=sha_plan,prior_trace_sha256=old["archive_sha256"]))
         for name in ("willow.json","willow.zip"):
-            (stage/name).replace(gain.WORK/name)
+            (stage/name).replace(work_root/name)
 
 
 def combine():
