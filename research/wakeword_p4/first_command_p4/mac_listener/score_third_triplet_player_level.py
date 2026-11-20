@@ -19,10 +19,11 @@ def read_words(readers, segment, target):
                 turbo=scoring.prior.recognition(whisper, segment, target)["text"])
 
 
-def cropped_readings(record, index, uplink, shard, readers, work, cue):
+def cropped_readings(record, index, uplink, shard, readers, work, cue, *,
+                     locate=anchor.alignment_tool.locate_end, previous_readings=None):
     mic, rate = sf.read(record["path"], dtype="int16")
     assert rate == 16000 and P.digest(mic) == record["pcm_sha256"]
-    end, similarity = anchor.alignment_tool.locate_end(mic, uplink["opened"], cue)
+    end, similarity = locate(mic, uplink["opened"], cue)
     name = record["label"]
     with ZipFile(shard) as saved:
         codec = saved.read(name+"/opus.log")
@@ -38,8 +39,13 @@ def cropped_readings(record, index, uplink, shard, readers, work, cue):
         assert P.digest(pcm) == uplink["readings"][schedule]["qwen"]["pcm_sha256"]
         cut = max(0, end - 1600 - uplink["first"] + 320 * meta["sent_silence"])
         assert cut < len(pcm)
-        readings[schedule] = dict(text=read_words(readers, pcm[cut:], record["command"]),
-                                  cut_sample=cut, pcm_sha256=P.digest(pcm[cut:]))
+        digest = P.digest(pcm[cut:])
+        previous = (previous_readings or {}).get(schedule)
+        if previous and previous["pcm_sha256"] == digest:
+            text = previous["text"]
+        else:
+            text = read_words(readers, pcm[cut:], record["command"])
+        readings[schedule] = dict(text=text, cut_sample=cut, pcm_sha256=digest)
     return dict(estimated_end=end, error_samples=end-record["end"], similarity=similarity, readings=readings)
 
 
