@@ -1,0 +1,5 @@
+# Gain margin at small external player rate errors
+
+Use the same three consumed weak rooms and the published +3, +4 and +5 dB address-only sources. Keep the original speech, music, panel and electrical reference. Replay each source at nominal speed, ±100 ppm and ±1% with the same external-player time warp as the +2 dB sweep. Compare paired Nyx and Willow, retaining the erased controls from the same rate. Classify success by each receiver's own first read before the projected command start. Check every nominal observation against the previously archived gain sweep.
+
+Identify the lowest measured Nyx address gain timely in every scene at nominal and ±100 ppm. Report ±1% separately. If a candidate qualifies, replay all 96 original historical interruptions, erased controls and panel-only paths at that source gain, retaining the original acoustic gains and playback reference. Compare to the existing +2 dB result at normal speed. The three cases used for selection remain marked. These tests measure digital playback and reuse the original rooms.
