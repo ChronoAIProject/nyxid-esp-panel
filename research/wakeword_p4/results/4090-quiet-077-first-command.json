@@ -1,0 +1,409 @@
+{
+  "sources": {
+    "score_quiet_077_sender.py": "9d03280cbbd200cb5ff30ebdda092fab9b94b4abb558ea1d562562b16d5b356e",
+    "score_bella_weak_speaker_gain.py": "c7cf635e2b83735913f42c4f7fd9a9b7a347c3186e7b7fb4d348c59b56e84af6",
+    "4090-hey-willow-p4-rev1-quiet.json": "af6ca80305d46cdb57cac034821f57c5c1aa2e6938ebfc460dd8868d8a823c70",
+    "c161-willow-077-quiet-pair.zip": "7f5efeb9995d7edb1b08a4de7019627efb8b2afff566f9554e1b3ff562600641",
+    "4090-c161-bella-weak-speaker-gain.json": "7d991b2e587727fe97729ee76d9794bc4af1bf9c890a16450e4cf4ba2f252810",
+    "board.bin": "1de2bbec84c0f4880ed4c30b3ff39e8c37e94253440d091e1340cbae211df9cd",
+    "nyx_mac_listener.bin": "6ba3be77c847e1890e44471cf83edb096226b62206cb3d7609255da8ed7b1f14",
+    "nyx_first_command.bin": "407e9647a4ee6bb402a0d50a96cea1518acac9730e5717c87bc75180fe1e8d4f"
+  },
+  "qwen": {
+    "repo": "Qwen/Qwen3-ASR-1.7B-hf",
+    "revision": "bcd2b5b7f32b480ab5790554cfa8347f246a14f3",
+    "files": {
+      "chat_template.jinja": "f50e6b694fbf4a683206e37869990d68333fe95d285730f084c838a34b0d98c2",
+      "config.json": "117ac8e63e2af7cae3665e5a632d6eb03f5f384915519ceb6403c15ec6533f63",
+      "generation_config.json": "9939fc9388b79bd70757f938b87381e817173d6a6158f5af6506c0b73e775c3c",
+      "model.safetensors": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+      "processor_config.json": "bc0b230081b44e629dd5b9045b78495615c1831b4b9f4cffe97bd37e82a6156a",
+      "tokenizer.json": "fe1fad59be22a41ee293363fcf95fdedbc7c93f3b49270b1d2e18bd1399a7a05",
+      "tokenizer_config.json": "945e980986de2ca7768f3326bfdbb4fbea3406f972b8ae0be233089f2b253c11"
+    },
+    "dtype": "bfloat16",
+    "torch": "2.15.0+cu132",
+    "transformers": "5.23.0",
+    "device": "NVIDIA GeForce RTX 4090"
+  },
+  "turbo": {
+    "repo": "mobiuslabsgmbh/faster-whisper-large-v3-turbo",
+    "revision": "0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf",
+    "files": {
+      "config.json": "b0253ea6c0d3bea6b1e19e91a02acfd3b53f4467362efcb5a3e6b16c9b3a9b7e",
+      "preprocessor_config.json": "7ccc62c6f2765af1f3b46c00c9b5894426835a05021c8b9c01eecb6dfb542711",
+      "tokenizer.json": "297b13372ac43916285644fb9687add3cc62ee2a1adb60da3dc25cc94c1871fd",
+      "vocabulary.json": "c69260f2ab26d659b7c398f9a2b2b48ed0df16c3b47d7326782fd9cba71690c1",
+      "model.bin": "e76620f83d5f5b69efd3d87e3dc180c1bd21df9fbebacfd4335e5e1efcc018da"
+    }
+  },
+  "decoder": "libopus 1.3.1",
+  "qemu_sha256": "053a4ad154c61fb3bb5d545b9c4411eb89ea12448e675b1d2abe6b1f7b1c1308",
+  "records": [
+    {
+      "role": "nyx",
+      "input": {
+        "sha256": "865b06b8ed4ecb921de71091193b614ebe8e4b4453a018b06b072772294a5961",
+        "pcm_sha256": "660228f17895453db9f0fd0f83f9d59e999b3932ed130290b993156ed0a80e31"
+      },
+      "ref_sha256": "a910c3873ceb9ab393154b5706d717b0ad5662dd7f1e8d2b276bd41ee45af3a2",
+      "samples": 85200,
+      "nyx_open": [
+        43520
+      ],
+      "willow_open": [],
+      "uplink": {
+        "opened": 43520,
+        "first": 11520,
+        "stop": 85120,
+        "samples": 73600,
+        "fifo_sha256": "baa84f620de95e6f84db228ea7a3fa01d7a8538412bc1b7ec999819945528d54",
+        "capture_uart_sha256": "529f86a6a664245ee010febc9738631892f34baf938fe93523ab4a092488e730",
+        "capture_watchdog": 0,
+        "opus_uart_sha256": "9bb9e3a743b2bc294164b9e9df49ff9192eec7e2ed27e638dd9d656ee7235d50",
+        "opus_watchdog": 0,
+        "packets": 230,
+        "bytes": 7904,
+        "decoded_sha256": "fbdd6806bc674d48c9bfcb591d1cb652879e730b964707ac5624a271ba8e1bbe",
+        "sender_uart_sha256": "e3749fda4f9df11cf1c2f62be8753d5db7d964ddcbef0c3bfd55cddbe85f3707",
+        "sender_watchdog": 0,
+        "sender": {
+          "unsent": 25,
+          "sent_silence": 50,
+          "captured": 230,
+          "first_pcm_sample": 11520,
+          "first_send_pts": 500,
+          "first_captured_pts": 1500,
+          "replayed_samples": 73600,
+          "terminal_padding": 0,
+          "peak_fifo_samples": 55680
+        },
+        "readings": {
+          "immediate": {
+            "qwen": {
+              "text": "Hey, Nick. Turn down the hall light.",
+              "complete": true,
+              "pcm_sha256": "fbdd6806bc674d48c9bfcb591d1cb652879e730b964707ac5624a271ba8e1bbe",
+              "samples": 73600
+            },
+            "turbo": {
+              "text": "Hey, Nick, turn down the hall light.",
+              "words": [
+                {
+                  "word": " Hey,",
+                  "start": 0.9399999999999997,
+                  "end": 1.38
+                },
+                {
+                  "word": " Nick,",
+                  "start": 1.44,
+                  "end": 1.68
+                },
+                {
+                  "word": " turn",
+                  "start": 1.84,
+                  "end": 2.3
+                },
+                {
+                  "word": " down",
+                  "start": 2.3,
+                  "end": 2.5
+                },
+                {
+                  "word": " the",
+                  "start": 2.5,
+                  "end": 2.64
+                },
+                {
+                  "word": " hall",
+                  "start": 2.64,
+                  "end": 2.84
+                },
+                {
+                  "word": " light.",
+                  "start": 2.84,
+                  "end": 3.18
+                }
+              ],
+              "first": false,
+              "exact": false,
+              "complete_suffix": true
+            }
+          },
+          "waited": {
+            "qwen": {
+              "text": "Hey, Nick. Turn down the hall light.",
+              "complete": true,
+              "pcm_sha256": "a28eda968dc8df616d5f1875e26c57d5f624d9238828e594e8ee5c449e994505",
+              "samples": 89600
+            },
+            "turbo": {
+              "text": "Hey Nick, turn down the hall light.",
+              "words": [
+                {
+                  "word": " Hey",
+                  "start": 1.8399999999999985,
+                  "end": 2.36
+                },
+                {
+                  "word": " Nick,",
+                  "start": 2.36,
+                  "end": 2.7
+                },
+                {
+                  "word": " turn",
+                  "start": 3.1,
+                  "end": 3.32
+                },
+                {
+                  "word": " down",
+                  "start": 3.32,
+                  "end": 3.5
+                },
+                {
+                  "word": " the",
+                  "start": 3.5,
+                  "end": 3.64
+                },
+                {
+                  "word": " hall",
+                  "start": 3.64,
+                  "end": 3.82
+                },
+                {
+                  "word": " light.",
+                  "start": 3.82,
+                  "end": 4.18
+                }
+              ],
+              "first": false,
+              "exact": false,
+              "complete_suffix": true
+            }
+          }
+        },
+        "pcm_sha256": "660228f17895453db9f0fd0f83f9d59e999b3932ed130290b993156ed0a80e31",
+        "reference_sha256": "a910c3873ceb9ab393154b5706d717b0ad5662dd7f1e8d2b276bd41ee45af3a2"
+      },
+      "received": {
+        "immediate": {
+          "file": "nyx/immediate.wav",
+          "wav_sha256": "640c3d864eb8f3ef5be5121585e7a28fefb54f2f9831ebcd9df75849f708c22c",
+          "unsent": 0,
+          "sent_silence": 0,
+          "captured": 230,
+          "first_pcm_sample": 11520,
+          "first_send_pts": 0,
+          "first_captured_pts": 0,
+          "replayed_samples": 73600,
+          "terminal_padding": 0,
+          "peak_fifo_samples": 32000
+        },
+        "waited": {
+          "file": "nyx/waited.wav",
+          "wav_sha256": "cbac98de8570aa10fad3adc2a3af6a368b9eba6096e7af8ac55b88ed9efa542a",
+          "unsent": 25,
+          "sent_silence": 50,
+          "captured": 230,
+          "first_pcm_sample": 11520,
+          "first_send_pts": 500,
+          "first_captured_pts": 1500,
+          "replayed_samples": 73600,
+          "terminal_padding": 0,
+          "peak_fifo_samples": 55680
+        }
+      }
+    },
+    {
+      "role": "willow",
+      "input": {
+        "sha256": "2124bf94a008c6841bdb683f3ff0aa2bccd57ff132b4a3c721143e0af2a2b61b",
+        "pcm_sha256": "e5f1329fffa988bee820bf7c9e5da29938635a10a2abdb2dac806e969c4c1eda"
+      },
+      "ref_sha256": "a910c3873ceb9ab393154b5706d717b0ad5662dd7f1e8d2b276bd41ee45af3a2",
+      "samples": 85200,
+      "nyx_open": [],
+      "willow_open": [
+        39936
+      ],
+      "uplink": {
+        "opened": 39936,
+        "first": 7840,
+        "stop": 85120,
+        "samples": 77280,
+        "fifo_sha256": "3d4bb746dcc06a17e5da249894f834cd450bf749d5cc8cbc1950d66f516d1e7f",
+        "capture_uart_sha256": "e99f82d6ac0d4c827804bbc406a4999a8f51d9f8c82ac4ed2a8fdb042d8a840d",
+        "capture_watchdog": 0,
+        "opus_uart_sha256": "80bfff5235b6366a056ca59063b1070f553fbdb17f46d986d8c1b75309cdaec8",
+        "opus_watchdog": 0,
+        "packets": 242,
+        "bytes": 8274,
+        "decoded_sha256": "d8ec99641c8fbfc962c5cca02c6cfdfd225328c1b5b1ce5317fa419807f89e8e",
+        "sender_uart_sha256": "481415a4ef8a74a423b0bee620442ad8aa55cdddbb643fb288dd9f44a8325cfa",
+        "sender_watchdog": 0,
+        "sender": {
+          "unsent": 25,
+          "sent_silence": 50,
+          "captured": 242,
+          "first_pcm_sample": 7840,
+          "first_send_pts": 500,
+          "first_captured_pts": 1500,
+          "replayed_samples": 77440,
+          "terminal_padding": 160,
+          "peak_fifo_samples": 55840
+        },
+        "readings": {
+          "immediate": {
+            "qwen": {
+              "text": "Hey, Willow. Turn down the hall light.",
+              "complete": true,
+              "pcm_sha256": "d8ec99641c8fbfc962c5cca02c6cfdfd225328c1b5b1ce5317fa419807f89e8e",
+              "samples": 77440
+            },
+            "turbo": {
+              "text": "Hey Willow, turn down the hall light.",
+              "words": [
+                {
+                  "word": " Hey",
+                  "start": 1.0799999999999992,
+                  "end": 1.5199999999999996
+                },
+                {
+                  "word": " Willow,",
+                  "start": 1.5199999999999996,
+                  "end": 1.96
+                },
+                {
+                  "word": " turn",
+                  "start": 2.3,
+                  "end": 2.52
+                },
+                {
+                  "word": " down",
+                  "start": 2.52,
+                  "end": 2.74
+                },
+                {
+                  "word": " the",
+                  "start": 2.74,
+                  "end": 2.86
+                },
+                {
+                  "word": " hall",
+                  "start": 2.86,
+                  "end": 3.06
+                },
+                {
+                  "word": " light.",
+                  "start": 3.06,
+                  "end": 3.4
+                }
+              ],
+              "first": false,
+              "exact": false,
+              "complete_suffix": true
+            }
+          },
+          "waited": {
+            "qwen": {
+              "text": "Hey, Willow. Turn down the hall light.",
+              "complete": true,
+              "pcm_sha256": "27dce26450f650b0e06983231db9bf129cb027d8d905b748603cc549f50bed75",
+              "samples": 93440
+            },
+            "turbo": {
+              "text": "Hey Willow, turn down the hall light.",
+              "words": [
+                {
+                  "word": " Hey",
+                  "start": 2.099999999999999,
+                  "end": 2.5399999999999996
+                },
+                {
+                  "word": " Willow,",
+                  "start": 2.5399999999999996,
+                  "end": 2.98
+                },
+                {
+                  "word": " turn",
+                  "start": 3.32,
+                  "end": 3.52
+                },
+                {
+                  "word": " down",
+                  "start": 3.52,
+                  "end": 3.74
+                },
+                {
+                  "word": " the",
+                  "start": 3.74,
+                  "end": 3.86
+                },
+                {
+                  "word": " hall",
+                  "start": 3.86,
+                  "end": 4.06
+                },
+                {
+                  "word": " light.",
+                  "start": 4.06,
+                  "end": 4.4
+                }
+              ],
+              "first": false,
+              "exact": false,
+              "complete_suffix": true
+            }
+          }
+        },
+        "pcm_sha256": "e5f1329fffa988bee820bf7c9e5da29938635a10a2abdb2dac806e969c4c1eda",
+        "reference_sha256": "a910c3873ceb9ab393154b5706d717b0ad5662dd7f1e8d2b276bd41ee45af3a2"
+      },
+      "received": {
+        "immediate": {
+          "file": "willow/immediate.wav",
+          "wav_sha256": "1092116eab0d12aa50acc958dd605bff44cb3f299515096f1f0f8359e7d9771f",
+          "unsent": 0,
+          "sent_silence": 0,
+          "captured": 242,
+          "first_pcm_sample": 7840,
+          "first_send_pts": 0,
+          "first_captured_pts": 0,
+          "replayed_samples": 77440,
+          "terminal_padding": 160,
+          "peak_fifo_samples": 32000
+        },
+        "waited": {
+          "file": "willow/waited.wav",
+          "wav_sha256": "0529b815b824bb77b40e5588497238ba620657bf72160d5d18d93b5283b36215",
+          "unsent": 25,
+          "sent_silence": 50,
+          "captured": 242,
+          "first_pcm_sample": 7840,
+          "first_send_pts": 500,
+          "first_captured_pts": 1500,
+          "replayed_samples": 77440,
+          "terminal_padding": 160,
+          "peak_fifo_samples": 55840
+        }
+      }
+    },
+    {
+      "role": "erased",
+      "input": {
+        "sha256": "0469cdc984cbe4e95be91fe179a512edfcc0a7bbd4e6440fc3aa959bc84aa6a2",
+        "pcm_sha256": "fe9a69ce10a0cc2ce016a95af0e690584d3aad1c33610b4dec2360c5f1a33b7a"
+      },
+      "ref_sha256": "a910c3873ceb9ab393154b5706d717b0ad5662dd7f1e8d2b276bd41ee45af3a2",
+      "samples": 85200,
+      "nyx_open": [],
+      "willow_open": []
+    }
+  ],
+  "scope": "One consumed synthetic quiet command, three address variants, zero playback reference. Nyx wake on P4 QEMU, Willow on classic ESP32 QEMU with the host-compiled rev1 feeder. Capture and both local sender readiness conditions on P4 QEMU. GPU ASR of full sent streams.",
+  "command": "turn down the hall light",
+  "command_at": 44800,
+  "archive": "4090-quiet-077-first-command.zip",
+  "archive_sha256": "f28967aafbea56e16838b07e48e12cc9f4e673993952ff6ef9d52624b791e119",
+  "command_pcm_sha256": "08ff3c8ef479245e7e8c992c033e55097355a442f3d42799b50bade30d0c6f88"
+}

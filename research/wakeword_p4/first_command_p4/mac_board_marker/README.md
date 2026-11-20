@@ -207,3 +207,17 @@ git -C "$trial/board" apply --index "$fixture/fixed-sound-runtime.patch"
 python3 "$fixture/build_fixed_sound_rev1.py" "$trial/board" "$trial/build" \
     --primary-app "$primary_app" > "$trial/fixed-sound-identity.json"
 ```
+
+The standalone receiver and the primary dual detector replayed six identical digital inputs through two full create/listen/destroy cycles each in P4 QEMU. The second creation consumed the following heap in every pair. Both heaps returned to their pre-creation values after destruction.
+
+| Second listening cycle | Standalone fixed sound | C161 plus fixed marker |
+| --- | ---: | ---: |
+| Marker state, bytes | 9,488 | 13,304 |
+| Additional internal heap, bytes | 0 | 94,136 |
+| Additional external heap, bytes | 9,492 | 13,308 |
+| Initialization, guest µs | 22–634 | 42,653–45,100 |
+| Mean feed time per 256 samples, guest µs, range across inputs | 62–117 | 271–435 |
+
+The standalone receiver completed 64 digital inputs. It rejected the “six cups” sentence, all eight source combinations for case 072, and the panel-only self-play examples. It missed all three original weak addresses 077, 079 and 090. Doubling the target alone recovered all three. In an additional incomplete run on “six cups”, the simulated CPU took an interrupt watchdog in the fixture's flash read during the second cycle. The same guest and input completed both cycles on retry. The archive includes the faulting UART. Physical I2S uses a different input path. The board supplies the timing, call heap and stability measurements for the production path. [Per-input heap and clocks](../../results/4090-fixed-sound-runtime-replay.json) · [71 UART logs including the interrupted run](../../results/4090-fixed-sound-runtime-replay.zip)
+
+On quiet 077 the first retained PCM samples were 11,520 for Nyx and 7,840 for Willow. With immediate local readiness the first captured packet was accepted at 0 ms. With the connection ready at 500 ms and the provider ready at 1,500 ms, the sender emitted 50 fill packets followed by all 230 Nyx or 242 Willow capture packets. Both GPU recognizers transcribed the full command “turn down the hall light” on all four decoded streams. Both rendered the Nyx address as “Hey Nick”. The erased address produced no request. The four 16 kHz receiver WAVs come from the simulated sender's accepted Opus packets. [Clocks and full transcriptions](../../results/4090-quiet-077-first-command.json) · [Receiver WAVs and six UART logs](../../results/4090-quiet-077-first-command.zip)
