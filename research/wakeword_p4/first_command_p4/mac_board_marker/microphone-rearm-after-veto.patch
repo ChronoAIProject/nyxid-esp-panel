@@ -1,0 +1,22 @@
+--- a/components/panel_services/fixed_marker/board_marker.cpp
++++ b/components/panel_services/fixed_marker/board_marker.cpp
+@@ -37,6 +37,7 @@
+     using State = nyx::ReferencePrefix::State;
+     const auto prefix = s->prefix.update(ref, [&] { return s->signature.matches(); });
+     const bool ref_clear = full_clear && prefix != State::confirmed;
++    if (matched && !ref_clear) s->cue.rearm_after_playback_veto();
+     const bool waiting = prefix == State::awaiting_third;
+     const bool cue = s->cue_route.update_active(active, ref_clear, matched, waiting);
+     const bool model = s->model_route.update_active(active, ref_clear && panel_clear, model_hit, waiting);
+--- a/components/panel_services/fixed_marker/c161_timed_final_marker.h
++++ b/components/panel_services/fixed_marker/c161_timed_final_marker.h
+@@ -6,6 +6,9 @@
+ // Feed consecutive mono PCM16 at 16 kHz. Only the distributed v5 cue carries the three patterns.
+ class TimedFinalMarker {
+ public:
++    // A confirmed playback echo may precede a genuine external call.
++    void rearm_after_playback_veto() { cooldown_ = 320; }
++
+     bool update(std::int16_t pcm) {
+         sum_ += pcm;
+         if (++phase_ < 4) return false;
