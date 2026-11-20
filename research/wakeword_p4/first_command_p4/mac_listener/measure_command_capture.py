@@ -2,6 +2,7 @@
 import argparse
 import hashlib
 import json
+from math import gcd
 from pathlib import Path
 import wave
 
@@ -14,17 +15,33 @@ FRAME = 80  # 20 ms on the 4 kHz analysis clock.
 WIDTH = 8*FRAME
 
 
-def channel(path, index):
+def read_channel(path, index):
     with wave.open(str(path), "rb") as w:
-        if (w.getframerate(), w.getsampwidth(), w.getcomptype()) != (RATE, 2, "NONE"):
-            raise ValueError("Expected 16 kHz PCM16 WAV")
+        rate, width = w.getframerate(), w.getsampwidth()
         channels, n = w.getnchannels(), w.getnframes()
+        if width not in (2, 3) or w.getcomptype() != "NONE":
+            raise ValueError("Expected a PCM16 or PCM24 WAV")
         if not 0 <= index < channels:
             raise ValueError("Channel index outside WAV")
         data = w.readframes(n)
-        if len(data) != n*channels*2:
+        if len(data) != n*channels*width:
             raise ValueError("Truncated WAV")
-    return np.frombuffer(data, dtype="<i2").reshape(n,channels)[:,index]
+    raw = np.frombuffer(data, dtype=f"V{width}").reshape(n, channels)[:,index].tobytes()
+    if width == 2:
+        pcm = np.frombuffer(raw, dtype="<i2")
+    else:
+        # Sign-extend packed little-endian PCM24 and retain fractional PCM16 units.
+        lo, mid, hi = np.frombuffer(raw, dtype=np.uint8).reshape(-1,3).T.astype(np.int32)
+        signed = lo + (mid << 8) + ((hi - 256*(hi >= 128)) << 16)
+        pcm = signed / 256.0
+    return pcm, raw, width, rate
+
+
+def channel(path, index):
+    pcm, _, _, rate = read_channel(path, index)
+    if rate != RATE:
+        raise ValueError("Expected a 16 kHz source")
+    return pcm
 
 
 def anchor(source, capture, offset, energies):
@@ -34,7 +51,9 @@ def anchor(source, capture, offset, energies):
     if energy < 1 or len(capture)<WIDTH:
         return dict(source_sample=offset*DECIMATION, status="insufficient_signal")
     corr = correlate(capture, x, mode="valid", method="fft")
-    scores = np.abs(corr)/np.sqrt(np.maximum(energy*energies,1))
+    scores = np.zeros_like(energies)
+    active = energies >= 1
+    scores[active] = np.abs(corr[active]) / np.sqrt(energy*energies[active])
     k = int(np.argmax(scores))
     # Nearby room reflections may have the same origin; mark distant competing matches.
     other = scores.copy()
@@ -58,9 +77,13 @@ def locate(command, recorded):
     a, b = int(active[0])*FRAME, min(len(x),(int(active[-1])+1)*FRAME)
     if b-a < 3*WIDTH:
         return dict(status="inconclusive_short_source")
-    power = np.r_[0., np.cumsum(y*y)]
-    sums = np.r_[0., np.cumsum(y)]
-    energies = np.maximum(0., power[WIDTH:]-power[:-WIDTH]-(sums[WIDTH:]-sums[:-WIDTH])**2/WIDTH)
+    if len(y) < WIDTH:
+        return dict(status="inconclusive_short_capture")
+    # Local sums retain the variance of a quiet tail after a loud passage.
+    box = np.ones(WIDTH)
+    sums = np.convolve(y, box, mode="valid")
+    powers = np.convolve(y*y, box, mode="valid")
+    energies = np.maximum(0., powers - sums*sums/WIDTH)
     positions = (a, (a+b-WIDTH)//2, b-WIDTH)
     marks = {label:anchor(x,y,p,energies) for label,p in zip(("begin","middle","end"),positions)}
     good = [v for v in marks.values() if v["status"]=="matched"]
@@ -94,15 +117,23 @@ def main():
     parser.add_argument("--command-end", type=int, help="Exclusive last command sample in playback; defaults to EOF")
     parser.add_argument("--channel", type=int, default=0, help="Zero-based recording channel (MIC1 or mono defaults to 0)")
     args = parser.parse_args()
-    source, mic = channel(args.playback,0), channel(args.recording,args.channel)
+    source, source_bytes, width, source_rate = read_channel(args.playback,0)
+    mic, mic_bytes, mic_width, mic_rate = read_channel(args.recording,args.channel)
+    if source_rate != RATE:
+        parser.error("Playback command boundaries use a 16 kHz source")
+    if mic_rate != RATE:
+        divisor = gcd(RATE, mic_rate)
+        mic = resample_poly(mic.astype(float), RATE//divisor, mic_rate//divisor)
     end = len(source) if args.command_end is None else args.command_end
     if not 0<=args.command_at<end<=len(source):
         parser.error("Command interval outside playback")
     command = source[args.command_at:end]
     result = locate(command,mic)
     print(json.dumps(dict(playback=args.playback.name, recording=args.recording.name, command_at=args.command_at,
-        command_end=end, channel=args.channel, command_pcm_sha256=hashlib.sha256(command.tobytes()).hexdigest(),
-        channel_pcm_sha256=hashlib.sha256(mic.tobytes()).hexdigest(), **result),indent=2))
+        command_end=end, channel=args.channel, analysis_rate=RATE, playback_bits=8*width,
+        recording_rate=mic_rate, recording_bits=8*mic_width,
+        command_pcm_sha256=hashlib.sha256(source_bytes[args.command_at*width:end*width]).hexdigest(),
+        channel_pcm_sha256=hashlib.sha256(mic_bytes).hexdigest(), **result),indent=2))
 
 
 if __name__ == "__main__":

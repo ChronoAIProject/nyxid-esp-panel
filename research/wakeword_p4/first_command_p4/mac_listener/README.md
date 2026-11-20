@@ -306,7 +306,7 @@ python3 measure_cue_clock.py measure capture.wav > capture-clock.json
 
 ### 检查编码前后能否找到同一条命令的开头、中段和结尾
 
-在本目录运行下面的命令。第一个 WAV 可用交接包内已知命令起点的干声，或同一次实采的原麦。第二个 WAV 用实际接收的解码上行。两个文件均为 16 kHz PCM16，工具需要 Python 3、NumPy 和 SciPy。第一路取第一个 WAV 的通道 0，可直接读取原麦在首槽的双声道或 LCD-X8 四槽。第二个 WAV 默认取通道 0，其他通道用 `--channel` 指定。把示例的 17,600 替换为第一个 WAV 中命令起点的样本数；该值适用于交接的八条“固定 v5 加紧接命令”干声。连续录音可用 `--command-end` 指定命令末尾的排他边界。
+在本目录运行下面的命令。第一个 WAV 可用交接包内已知命令起点的干声，或同一次实采的原麦。第二个 WAV 用实际接收的解码上行。两个 WAV 均支持 PCM16 或 PCM24，工具需要 Python 3、NumPy 和 SciPy。参考文件使用 16 kHz。接收端录音可以使用原采样率，例如 48 kHz。程序先选通道，然后重采样到 16 kHz 作定位。输出样本位置均按 16 kHz 计，SHA256 对应各自文件中的原始通道字节。第一路取第一个 WAV 的通道 0，可直接读取原麦在首槽的双声道或 LCD-X8 四槽。第二个 WAV 默认取通道 0，其他通道用 `--channel` 指定。把示例的 17,600 替换为第一个 WAV 中命令起点的样本数；该值适用于交接的八条“固定 v5 加紧接命令”干声。连续录音可用 `--command-end` 指定命令末尾的排他边界。
 
 ```bash
 python3 measure_command_capture.py playback.wav uplink-decoded.wav --command-at 17600

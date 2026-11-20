@@ -93,3 +93,20 @@ TOKENIZERS_PARALLELISM=false taskset -c 2,4 nice -n 10 /usr/bin/python3 "$p4/mac
 ```
 
 All 7,396 immediate-ready captured packets matched the archived bytes. In the wait condition the board branch encoded 25 unsent silence frames, sent 50 silence frames, then sent the same 7,396 captured PCM frames across the 24 calls. Qwen and Whisper turbo recovered 12/24 and 9/24 full commands in the immediate condition, and 11/24 and 6/24 with the wait. For physical runs correlate both board `peer_send` markers with the first packet at the receiver and its first decoded command. [Paired transcripts and packet counts](../../results/4090-c161-bella-sender.json) · [Original packet UARTs](../../results/4090-c161-bella-sender.zip)
+
+The three weak-level playback triplets include speech overlapping the first 0.40–0.62 s of the command. For a physical waveform comparison, use the clean command from the original playback pack as the reference. Map each triplet to the pack's relative file and pass the listed 16 kHz command boundary to the reader. It accepts 16- or 24-bit PCM WAVs and projects the selected receiver channel onto a 16 kHz clock. The 24-bit triplet itself can also serve as a reference when locating the combined speaker output. [Weak playback triplets](../../results/c161-bella-daily-missed-playback.zip) · [Clean commands](../../results/c161-bella-command-playback.zip) · [Capture reader](../mac_listener/measure_command_capture.py)
+
+| Triplet | Clean playback file | Command start in samples | Command |
+|---|---|---:|---|
+| 077 | first/025.wav | 44800 | turn down the hall light |
+| 079 | first/035.wav | 48400 | could you check the time for me |
+| 090 | second/007.wav | 46000 | please turn on the porch lights |
+
+For example, with the clean Nyx pack extracted and the Opus receive stream exported as a WAV, run the following from the research checkout.
+
+```sh
+python3 research/wakeword_p4/first_command_p4/mac_listener/measure_command_capture.py \
+    first/025.wav uplink-decoded.wav --command-at 44800
+```
+
+In P4 replay, retaining the panel reference and the enhanced full-mixture open, both recognizers missed all three full commands with music playing, even after removing the competing voice. With music off and the competing voice present, Qwen recovered 2/3 with immediate readiness and 3/3 with delayed readiness. Whisper turbo recovered 0/3 in both cases. Both sources muted gave 2/3 and 3/3 for the immediately ready readers, and 2/3 and 1/3 for the delayed readers. These counts use exact normalized command suffixes on the three selected development cases. [Source mutes, waveform matches and transcripts](../../results/4090-c161-bella-weak-interference.json)
