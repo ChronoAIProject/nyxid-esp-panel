@@ -58,3 +58,14 @@ The same two GPU readers processed a second view of the +2 dB sends beginning 10
 | Willow, competing voice | 0 / 0 → 4 / 4 | 0 / 0 → 4 / 4 |
 
 Some complete commands disappeared after cropping. In quiet Nyx, immediate complete suffixes fell from 11 / 11 to 10 / 10, and delayed suffixes fell from 11 / 11 to 9 / 10. In competing voice, immediate Nyx ended at 11 / 10 complete suffixes, with one previously complete case lost by each reader. These measurements concern an offline view of a decoded send. The physical service's packet and readiness clocks still need measurement.
+
+On the 96 previously used interruptions with music and panel playback, the same +2 dB Nyx crop increased the number of transcripts containing only the command. It also lost some complete commands, particularly at low external levels. In the 32 cases at −6 dB, delayed Qwen complete suffixes went from 7 to 3 and delayed Whisper went from 2 to 0. Of the three earlier weak misses, room case 079 recovered its full command with immediate Whisper only. These counts use the previously captured sends and the same 100 ms offset for all 96 inputs. [Historical per-case results, paired gains and losses](../results/4090-bella-plus2-commands-wake-crop.json)
+
+| Metric out of 96, Qwen / Whisper | Full send | Cropped send |
+| --- | ---: | ---: |
+| Only the command, immediate | 22 / 9 | 35 / 16 |
+| Complete command suffix, immediate | 38 / 23 | 35 / 18 |
+| Only the command, delayed | 18 / 7 | 37 / 13 |
+| Complete command suffix, delayed | 37 / 17 | 37 / 15 |
+
+For the Mac listening comparison, the room 00 bundle contains both full decoded sends and their two cropped counterparts, with WAV and PCM digests. The standalone Python tool uses the physical recording's first open, first FIFO sample, and number of decoded samples preceding the first captured packet. For the simulated immediate example, run `python3 crop_received_command.py immediate-full.wav check.wav --opened 46848 --first 14720 --prefix 0`. The output matches `immediate-crop.wav` byte for byte. For the delayed example the measured prefix is 16000 samples. Keep the original received stream alongside the listening comparison. [Four received WAVs and manifest](../results/bella-room00-received-crop-example.zip) · [Python listening tool](../first_command_p4/mac_board_marker/crop_received_command.py)

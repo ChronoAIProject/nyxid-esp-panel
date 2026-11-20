@@ -1,10 +1,12 @@
 """Compare full and wake-clock-cropped decoded sends for all +2 dB room pairs."""
 from collections import Counter, defaultdict
 from pathlib import Path
+import re
 from tempfile import TemporaryDirectory
 from zipfile import ZipFile
 
 from check_c161_v5_far_command_noise import normalized
+from crop_received_command import sample_offset
 import score_prospective_bella_commands as baseline
 
 scoring = baseline.scoring
@@ -23,6 +25,37 @@ def metrics(readings, command):
         result[reader + "_suffix"] = reading[key]
         result[reader + "_exact"] = words == expected
     return result
+
+
+def score_opened(work, logs, row, readers, counts, conditions, expected_index):
+    proc, model, turbo, decoder = readers
+    opus_log = row["label"] + "/opus.log"
+    opus = scoring.sender.archived(logs, opus_log, row["uart"][opus_log])
+    n, = {int(k) for k in re.findall(r"^UPLINK (\d+) [01] ", opus, re.M)}
+    if expected_index is not None:
+        assert n == expected_index
+    original = scoring.prior.packets(opus, n, row["samples"], 0)
+    sender_log = row["label"] + "/sender.log"
+    log = work / "sender.log"
+    log.write_text(scoring.sender.archived(logs, sender_log, row["uart"][sender_log]))
+    lanes = scoring.sender.compare(log, n, row["opened"], row["first"], row["samples"], original)
+    for condition, (packets, timing) in zip(("immediate", "waited"), lanes, strict=True):
+        pcm = scoring.prior.decode(decoder, packets)
+        full = row["readings"][condition]
+        assert P.digest(pcm) == full["qwen"]["pcm_sha256"]
+        offset = sample_offset(row["opened"], row["first"], timing["sent_silence"] * 320)
+        assert 0 <= offset < len(pcm)
+        crop = pcm[offset:]
+        readings = dict(qwen=scoring.prior.evaluate(proc, model, crop, row["command"]),
+                        turbo=scoring.prior.recognition(turbo, crop, row["command"]))
+        before, after = metrics(full, row["command"]), metrics(readings, row["command"])
+        for metric in before:
+            prefix = condition + "_" + metric
+            counts.update({prefix + "_full": before[metric], prefix + "_crop": after[metric],
+                                  prefix + "_gained": after[metric] and not before[metric],
+                                  prefix + "_lost": before[metric] and not after[metric]})
+        conditions[condition] = dict(offset=offset, full_pcm_sha256=P.digest(pcm),
+                                              full=before, crop=after, readings=readings)
 
 
 def main():
@@ -48,31 +81,8 @@ def main():
             if row["opened"] is None:
                 continue
             counts[group]["opened"] += 1
-            n = row["index"]
-            opus_log = row["label"] + "/opus.log"
-            opus = scoring.sender.archived(logs, opus_log, row["uart"][opus_log])
-            original = scoring.prior.packets(opus, n, row["samples"], 0)
-            sender_log = row["label"] + "/sender.log"
-            log = work / "sender.log"
-            log.write_text(scoring.sender.archived(logs, sender_log, row["uart"][sender_log]))
-            lanes = scoring.sender.compare(log, n, row["opened"], row["first"], row["samples"], original)
-            for condition, (packets, timing) in zip(("immediate", "waited"), lanes, strict=True):
-                pcm = scoring.prior.decode(decoder, packets)
-                full = row["readings"][condition]
-                assert P.digest(pcm) == full["qwen"]["pcm_sha256"]
-                offset = timing["sent_silence"] * 320 + max(0, row["opened"] - row["first"] - 1600)
-                assert 0 <= offset < len(pcm)
-                crop = pcm[offset:]
-                readings = dict(qwen=scoring.prior.evaluate(proc, model, crop, row["command"]),
-                                turbo=scoring.prior.recognition(turbo, crop, row["command"]))
-                before, after = metrics(full, row["command"]), metrics(readings, row["command"])
-                for metric in before:
-                    prefix = condition + "_" + metric
-                    counts[group].update({prefix + "_full": before[metric], prefix + "_crop": after[metric],
-                                          prefix + "_gained": after[metric] and not before[metric],
-                                          prefix + "_lost": before[metric] and not after[metric]})
-                item["conditions"][condition] = dict(offset=offset, full_pcm_sha256=P.digest(pcm),
-                                                      full=before, crop=after, readings=readings)
+            score_opened(work, logs, row, (proc, model, turbo, decoder), counts[group],
+                         item["conditions"], expected_index=row["index"])
         assert len(records) == 48 and len(counts) == 4 and all(v["cases"] == 12 for v in counts.values())
         paths = (Path(__file__), baseline.OUT, PROTOCOL)
         P.save(work / OUT.name, dict(records=records, counts=counts, qwen=qwen, turbo=source["turbo"],
