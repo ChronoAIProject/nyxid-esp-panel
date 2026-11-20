@@ -74,7 +74,12 @@ def history(name):
     from unittest.mock import patch
     folder=WORK/name
     receipt=folder/"history-cue.json"
-    P.save(receipt,dict(fit=dict(cue_sha256=P.read(OUT)["voices"][name])))
+    expected = {"fit": {"cue_sha256": P.read(OUT)["voices"][name]}}
+    if receipt.exists():
+        if P.read(receipt) != expected:
+            raise ValueError(f"History replay cue differs from {receipt}")
+    else:
+        P.save(receipt, expected)
     history_out=OUT.with_name(f"4090-bella-third-triplet-{name}-history.json")
     with patch.multiple(fit,WAV=wave(name),WORK=folder,OUT=receipt), patch.object(historical,"OUT",history_out):
         historical.main()
