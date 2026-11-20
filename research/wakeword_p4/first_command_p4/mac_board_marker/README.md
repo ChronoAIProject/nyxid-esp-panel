@@ -24,6 +24,19 @@ cmake --build "$build" --parallel 2
 
 The marker switch defaults to OFF. Enabling it selects single C161 and disables update checks in this research build. Each listening epoch allocates 13,304 bytes of marker state in PSRAM. A wake releases that allocation before call startup. Firmware initialization primes C161 in full 480-sample blocks, rounding 81,440 requested silent samples to 81,600 processed samples.
 
+### External-screen rev1 with the existing development call profile
+
+The published rev1 app uses the public voice and agent environment. The external-screen board's previous 6.04 s muted call used its locally configured development environment. To inherit that environment, activate ESP-IDF v5.5.4 in the patched board checkout and run the following with the original app from that call. Choose a new local build directory. The command builds the app and writes a shareable verification report.
+
+```sh
+build="$PWD/build/fixed-marker-rev1-dev"
+python3 "$handoff/build_rev1_dev.py" "$PWD" "$build" --old-app "$historical_app" > rev1-dev.json
+```
+
+The tool verifies the historical whole-app SHA256 (`d4055558…`), byte length and descriptor ELF SHA256 (`b427b14a…`). It recovers the API and login URLs by matching the two derived service namespaces in the app. Node WebSocket, verification URL and both node namespaces identify the separate node mode. Alternatively, pass `--old-cache "$historical_build/CMakeCache.txt"` to use the cache retained from that call. The cache report identifies the operator-selected file by SHA256. The app option also binds the source to the recorded historical image.
+
+The verifier compares the inherited service settings with the new cache, the compiler definitions and the linked app. It also checks the board revision, the patched sources, single C161 runtime, model bytes, descriptor ELF identity and space in both OTA slots. The JSON contains the ten-character service fingerprint and node mode. The build directory and app contain the local endpoints. To check a finished build again, repeat the command with `--verify-only`. [Example host verification with development node](../../results/4090-c161-rev1-example-dev-profile.json)
+
 ## Clocks to collect over UART
 
 - `panel.wake.marker begin` gives the listening epoch. The physical reference uses the second slot of normalized microphone/reference PCM. LCD-X8 takes these from slots 0 and 1 of four-slot input. This build has no synchronized TX event. It logs `tx=unavailable`.
