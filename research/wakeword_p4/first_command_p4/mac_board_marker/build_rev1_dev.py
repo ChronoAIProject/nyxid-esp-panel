@@ -18,6 +18,7 @@ LOGIN = "NYX_PANEL_AGENT_DEV_LOGIN_URL"
 NODE = "NYX_PANEL_NODE_DEV_MODE"
 MAC_RECORD = Path(__file__).resolve().parents[2] / "results/mac-c161-rev1-dev-marker-build.json"
 PATCH = Path(__file__).resolve().with_name("c161-fixed-marker.patch")
+PLAYBACK_ONLY = PATCH.with_name("fixed-playback-only.patch")
 
 
 def require(condition, message):
@@ -87,12 +88,14 @@ def from_image(app):
     return Services(candidate.api, candidate.login, dev)
 
 
-def check_sources(board):
+def check_sources(board, playback_only=False):
     rev = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=board, text=True).strip()
     require(rev == check_builds.BOARD_COMMIT, "Unexpected board source commit")
     with TemporaryDirectory() as directory:
         env = dict(os.environ, GIT_INDEX_FILE=str(Path(directory) / "index"))
-        for args in (["read-tree", rev], ["apply", "--cached", str(PATCH)], ["diff", "--quiet", "--"]):
+        patches = (PATCH, PLAYBACK_ONLY) if playback_only else (PATCH,)
+        commands = [["read-tree", rev], *(["apply", "--cached", str(p)] for p in patches), ["diff", "--quiet", "--"]]
+        for args in commands:
             subprocess.run(["git", *args], cwd=board, env=env, check=True)
 
 
@@ -112,10 +115,12 @@ def historical_profile(app):
                           bytes=len(app), descriptor_elf_sha256=descriptor)
 
 
-def check_build(board, build, services, source, gdb):
+def check_build(board, build, services, source, gdb, playback_only=False):
     desc = json.loads((build / "project_description.json").read_text())
     require(Path(desc["project_path"]).resolve() == board, "Build belongs to a different board checkout")
     app = (build / desc["app_bin"]).read_bytes()
+    require((b"ref=physical tx=unavailable policy=fixed-playback-only" in app) == playback_only,
+            "Linked app wake policy does not match the requested source profile")
     require(from_cache(build / "CMakeCache.txt") == services == from_image(app),
             "Source, effective cache and linked service profiles disagree")
     key = services.fingerprint
@@ -151,6 +156,7 @@ def main():
     group.add_argument("--old-app", type=Path, help="an archived rev1 app listed in the Mac handoff record")
     group.add_argument("--old-cache", type=Path, help="CMakeCache.txt retained from the known rev1 build")
     group.add_argument("--example", action="store_true", help="synthetic profile for a host build check")
+    p.add_argument("--fixed-playback-only", action="store_true", help="verify the separate fixed-playback-only patch on the board sources")
     p.add_argument("--verify-only", action="store_true")
     p.add_argument("--gdb", default="riscv32-esp-elf-gdb")
     args = p.parse_args()
@@ -164,7 +170,7 @@ def main():
     else:
         services = Services("http://192.168.254.251:8100", "http://192.168.254.251:8200/login/agent-key", True)
         source = dict(kind="example-only")
-    check_sources(board)
+    check_sources(board, args.fixed_playback_only)
     if not args.verify_only:
         build.mkdir(parents=True, exist_ok=True)
         require(not any(build.iterdir()), "Use an empty output directory for a new build")
@@ -175,7 +181,10 @@ def main():
             for command in (["idf.py", "-B", build, *options, "reconfigure"], ["cmake", "--build", build, "--parallel", "2"]):
                 code = subprocess.run(command, cwd=board, stdout=log, stderr=subprocess.STDOUT).returncode
                 require(code == 0, "Build failed. Inspect dev-build.log locally")
-    print(json.dumps(check_build(board, build, services, source, args.gdb), indent=2))
+    report = check_build(board, build, services, source, args.gdb, args.fixed_playback_only)
+    if args.fixed_playback_only:
+        report["playback_only_patch_sha256"] = sha256(PLAYBACK_ONLY.read_bytes()).hexdigest()
+    print(json.dumps(report, indent=2))
 
 
 if __name__ == "__main__":

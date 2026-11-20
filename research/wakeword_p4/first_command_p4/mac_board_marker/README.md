@@ -39,6 +39,18 @@ The tool matches the entire historical app and its descriptor against the Mac re
 
 The verifier compares the inherited service settings with the new cache, the compiler definitions and the linked app. It also checks the board revision, the patched sources, single C161 runtime, model bytes, descriptor ELF identity and space in both OTA slots. The JSON contains the ten-character service fingerprint and node mode. The build directory and app contain the local endpoints. To check a finished build again, repeat the command with `--verify-only`. [Example host verification with development node](../../results/4090-c161-rev1-example-dev-profile.json) · [Example cache inheritance with public node](../../results/4090-c161-rev1-example-public-node.json)
 
+### Trial for externally played generated calls
+
+The playback-only option opens a call when the receiver recognizes the timed marker in the generated Hye Nyx WAV. The original C161 still processes the microphone stream. Its speech detections alone can open the primary diagnostic app. Ordinary unmarked “Hey Nyx” and “Hey Nicks” each opened that receiver on 5 of 12 connected synthetic phrases, and opened the playback-only receiver on 0 of 12. All 12 marked calls opened before the command with either receiver. The ordinary six-cups sentence opened the primary receiver on 6 of 36 placements and the playback-only receiver on 0 of 36. [Original-level playback WAV](../../results/hye-nyx-af-bella-marker-rms-v1.wav) · [Per-input decisions and protocol](../../results/4090-c161-fixed-playback-only.json) · [65 P4 simulator UARTs](../../results/4090-c161-fixed-playback-only.zip)
+
+For a separate rev1 playback-only build, start in a board checkout with the base fixed-marker patch applied. The second patch changes the call decision and adds `policy=fixed-playback-only` to the UART listening-epoch message. The verifier checks the selected source and linked policy tag. Use the retained Mac development cache to reproduce the service configuration.
+
+```sh
+git apply "$handoff/fixed-playback-only.patch"
+python3 "$handoff/build_rev1_dev.py" "$PWD" "$PWD/build/fixed-playback-only-rev1" \
+    --old-cache "$historical_build/CMakeCache.txt" --fixed-playback-only > playback-only-rev1.json
+```
+
 ## Clocks to collect over UART
 
 - `panel.wake.marker begin` gives the listening epoch. The physical reference uses the second slot of normalized microphone/reference PCM. LCD-X8 takes these from slots 0 and 1 of four-slot input. This build has no synchronized TX event. It logs `tx=unavailable`.

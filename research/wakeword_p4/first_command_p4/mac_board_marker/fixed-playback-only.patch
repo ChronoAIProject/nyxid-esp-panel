@@ -1,0 +1,16 @@
+--- a/components/panel_services/panel_voice.c
++++ b/components/panel_services/panel_voice.c
+@@ -988,5 +988,5 @@
+         }
+     }
+-    return decision->model_end || decision->cue_end;
++    return decision->cue_end != 0;
+ }
+ #endif
+@@ -1141,5 +1141,5 @@
+         ++marker_epoch;
+         xSemaphoreGive(wake_lock);
+-        ESP_LOGI("panel.wake.marker","begin epoch=%u bytes=%u ref=physical tx=unavailable",
++        ESP_LOGI("panel.wake.marker","begin epoch=%u bytes=%u ref=physical tx=unavailable policy=fixed-playback-only",
+                  marker_epoch,(unsigned)board_marker_bytes());
+ #endif
