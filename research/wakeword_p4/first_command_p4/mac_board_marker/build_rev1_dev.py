@@ -19,6 +19,8 @@ NODE = "NYX_PANEL_NODE_DEV_MODE"
 MAC_RECORD = Path(__file__).resolve().parents[2] / "results/mac-c161-rev1-dev-marker-build.json"
 PATCH = Path(__file__).resolve().with_name("c161-fixed-marker.patch")
 PLAYBACK_ONLY = PATCH.with_name("fixed-playback-only.patch")
+REFERENCE_BARGE = (PATCH.with_name("reference-rearm-80ms.patch"),
+                   PATCH.with_name("microphone-rearm-after-veto.patch"))
 
 
 def require(condition, message):
@@ -156,7 +158,9 @@ def main():
     group.add_argument("--old-app", type=Path, help="an archived rev1 app listed in the Mac handoff record")
     group.add_argument("--old-cache", type=Path, help="CMakeCache.txt retained from the known rev1 build")
     group.add_argument("--example", action="store_true", help="synthetic profile for a host build check")
-    p.add_argument("--fixed-playback-only", action="store_true", help="verify the separate fixed-playback-only patch on the board sources")
+    receiver = p.add_mutually_exclusive_group()
+    receiver.add_argument("--fixed-playback-only", action="store_true", help="verify the separate fixed-playback-only patch on the board sources")
+    receiver.add_argument("--reference-barge", action="store_true", help="verify both 80 ms receiver recovery patches")
     p.add_argument("--verify-only", action="store_true")
     p.add_argument("--gdb", default="riscv32-esp-elf-gdb")
     args = p.parse_args()
@@ -170,7 +174,8 @@ def main():
     else:
         services = Services("http://192.168.254.251:8100", "http://192.168.254.251:8200/login/agent-key", True)
         source = dict(kind="example-only")
-    check_sources(board, args.fixed_playback_only)
+    patches = REFERENCE_BARGE if args.reference_barge else ()
+    check_sources(board, args.fixed_playback_only, extra_patches=patches)
     if not args.verify_only:
         build.mkdir(parents=True, exist_ok=True)
         require(not any(build.iterdir()), "Use an empty output directory for a new build")
@@ -184,6 +189,8 @@ def main():
     report = check_build(board, build, services, source, args.gdb, args.fixed_playback_only)
     if args.fixed_playback_only:
         report["playback_only_patch_sha256"] = sha256(PLAYBACK_ONLY.read_bytes()).hexdigest()
+    if patches:
+        report["receiver_patches"] = {p.name: sha256(p.read_bytes()).hexdigest() for p in patches}
     print(json.dumps(report, indent=2))
 
 

@@ -1,0 +1,106 @@
+{
+  "url": "https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/hye-nyx-reference-rearm-p4-public-v1.zip",
+  "archive_sha256": "fdcc9498e7344464a11a31f03e7ae4c764b0d9f59f1ba15bc7beee8e37402057",
+  "bytes": 6743412,
+  "verification": "Anonymous HTTPS GET. Both app files and the manifest matched the locally verified build archive byte for byte.",
+  "members": {
+    "c161-reference-rearm-p4-rev1-16mb-36a42a92.bin": {
+      "bytes": 6623920,
+      "sha256": "36a42a9284de10eee294ac91a50ffce46e4f2bb400ebb2070caf406e004035ec"
+    },
+    "c161-reference-rearm-p4-rev3-lcd-x8-16mb-6af9fc50.bin": {
+      "bytes": 6650720,
+      "sha256": "6af9fc50d6671fd16e01a210d73ccc7d3ca6fe126a7c7e5ae2a9aa02e255206c"
+    },
+    "manifest.json": {
+      "bytes": 3195,
+      "sha256": "b326958c6ff7e88f1a4ad30473eccb71efcd72514fa88744e2dd350b842630fa"
+    }
+  },
+  "manifest": {
+    "board_commit": "0d8e1935702a561b535a8c1a0921fd8034943d2c",
+    "patches": [
+      {
+        "file": "c161-fixed-marker.patch",
+        "source_commit": "7f520737cd2b3a2442f1fbe90f368bbb31c5037c",
+        "sha256": "19a8dde32100d332f92d21c04575af24b3ece424556b64a383822ebd1543b536"
+      },
+      {
+        "file": "reference-rearm-80ms.patch",
+        "source_commit": "1634b03afda2f66b20a0561a9894ab2ee456def3",
+        "sha256": "5431798bf1bda5d09c56e8dfd2c6ed38d5b372f8511f7e918d4f115b368ba5c3"
+      },
+      {
+        "file": "microphone-rearm-after-veto.patch",
+        "source_commit": "9be2782061967778a8f87403e1229f58d9ef066b",
+        "sha256": "9db796410bb6cd2e732b9b2f58c228b8f6fee579d40fa04bf2a0c1a873c714a9"
+      }
+    ],
+    "idf": "v5.5.4",
+    "service_profile": "public",
+    "model_bytes": 60952,
+    "model_sha256": "c16154040378b8acccdb57c19917c46cea0a9ea6a39f105004b964ddd093ab81",
+    "threshold": 0.91796875,
+    "smoothing_steps": 5,
+    "artifacts": [
+      {
+        "file": "c161-reference-rearm-p4-rev1-16mb-36a42a92.bin",
+        "profile": "p4-rev1-16mb",
+        "board": "Waveshare ESP32-P4-Platform / external 10.1-inch JD9365",
+        "backend": "platform",
+        "min_rev": "100",
+        "max_rev": "199",
+        "app_bytes": 6623920,
+        "app_sha256": "36a42a9284de10eee294ac91a50ffce46e4f2bb400ebb2070caf406e004035ec",
+        "elf_sha256": "c13ca857d7e4e6d90b3491204bb4aae4230c494a72f9aa7345a3cde1824192cc",
+        "model_start_in_image": 2167612,
+        "model_copies": 1,
+        "marker_state_bytes": 13304,
+        "partition_table_sha256": "62f42bb102ea630060ff184c20b072a679fe90a623b38fdc271225bdd334768a",
+        "app_slots": {
+          "ota_0": {
+            "offset": 917504,
+            "bytes": 6881280
+          },
+          "ota_1": {
+            "offset": 7798784,
+            "bytes": 6881280
+          }
+        },
+        "slot_free_bytes": 257360,
+        "descriptor_elf_sha256": "c13ca857d7e4e6d90b3491204bb4aae4230c494a72f9aa7345a3cde1824192cc",
+        "appended_sha256": "b29b7d0e110d1298e63d04763a09d20b167e8da67200c0589857de6680725cbc",
+        "psram_enabled": true
+      },
+      {
+        "file": "c161-reference-rearm-p4-rev3-lcd-x8-16mb-6af9fc50.bin",
+        "profile": "p4-rev3-lcd-x8-16mb",
+        "board": "Waveshare ESP32-P4-WIFI6-Touch-LCD-X / integrated 8-inch JD9365",
+        "backend": "lcd_x8",
+        "min_rev": "300",
+        "max_rev": "399",
+        "app_bytes": 6650720,
+        "app_sha256": "6af9fc50d6671fd16e01a210d73ccc7d3ca6fe126a7c7e5ae2a9aa02e255206c",
+        "elf_sha256": "5bbf96689535d7ffba919320059943e97bee49c3c1b9c220f3709c0d9bbda7b3",
+        "model_start_in_image": 2171588,
+        "model_copies": 1,
+        "marker_state_bytes": 13304,
+        "partition_table_sha256": "62f42bb102ea630060ff184c20b072a679fe90a623b38fdc271225bdd334768a",
+        "app_slots": {
+          "ota_0": {
+            "offset": 917504,
+            "bytes": 6881280
+          },
+          "ota_1": {
+            "offset": 7798784,
+            "bytes": 6881280
+          }
+        },
+        "slot_free_bytes": 230560,
+        "descriptor_elf_sha256": "5bbf96689535d7ffba919320059943e97bee49c3c1b9c220f3709c0d9bbda7b3",
+        "appended_sha256": "4d0deb45cb27567ed26ab2793cc7adc279a446f62bb3186ff6ddd60f7f1bf7e1",
+        "psram_enabled": true
+      }
+    ]
+  }
+}

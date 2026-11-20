@@ -24,6 +24,23 @@ cmake --build "$build" --parallel 2
 
 The marker switch defaults to OFF. Enabling it selects single C161 and disables update checks in this research build. Each listening epoch allocates 13,304 bytes of marker state in PSRAM. A wake releases that allocation before call startup. Firmware initialization primes C161 in full 480-sample blocks, rounding 81,440 requested silent samples to 81,600 processed samples.
 
+### Two-marker 400 ms playback trial
+
+The public app archive contains one application image for external-screen rev1 (chip revisions 1.00–1.99) and one for integrated LCD-X8 (3.00–3.99). The manifest identifies each image, descriptor ELF and source patch. Each image contains one frozen C161 model. Both images use the 80 ms electrical reference recovery and the shortened microphone recovery after a playback veto. Use the 400 ms dual-marker WAV with these apps. [Public applications and manifest](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/hye-nyx-reference-rearm-p4-public-v1.zip) · [Verified archive and member hashes](../../results/4090-bella-reference-rearm-app-download.json) · [Playback WAV](../../results/hye-nyx-af-bella-early-marker-experiment.wav) · [Simulator results](../../experiments/bella_reference_rearm_results.md)
+
+For the external-screen comparison on the Mac development service, set `historical_build` to that rev1 build directory. From the research checkout with ESP-IDF v5.5.4 active, use its retained CMake cache. Record the resulting local app and ELF identities with the UART and receiver audio.
+
+```sh
+handoff="$PWD/research/wakeword_p4/first_command_p4/mac_board_marker"
+trial=$(mktemp -d)
+git worktree add --detach "$trial/board" 0d8e1935702a561b535a8c1a0921fd8034943d2c
+git -C "$trial/board" apply --index "$handoff/c161-fixed-marker.patch"
+git -C "$trial/board" apply --index "$handoff/reference-rearm-80ms.patch"
+git -C "$trial/board" apply --index "$handoff/microphone-rearm-after-veto.patch"
+python3 "$handoff/build_rev1_dev.py" "$trial/board" "$trial/build" \
+    --old-cache "$historical_build/CMakeCache.txt" --reference-barge > "$trial/identity.json"
+```
+
 ### External-screen rev1 with the existing development call profile
 
 Mac built the external-screen diagnostic app from the last identity-matched rev1 configuration. Its app SHA256 starts with `dd8af8a0`, its descriptor ELF SHA256 starts with `f022d9c8`, and it uses service fingerprint `6f3d3f8368` for voice, agent and node in development. Mac reports 6,623,392 bytes, 257,888 bytes free per OTA slot, one C161 model and 13,304 bytes of marker state. These figures describe the linked app. The published rev1 Release app uses the public service environment. [Mac build receipt and full identities](../../results/mac-c161-rev1-dev-marker-build.json) · [Mac report](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/18#issuecomment-7027599185)
