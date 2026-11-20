@@ -123,7 +123,7 @@ if __name__=="__main__":
     if action=="case":
         sys.path.insert(0,str(ROOT/"qemu_hey_reference_v2"))
         import run_willow_mac_matched_prime_v1 as official
-        official.PLAN = PLAN
+        official.PLAN = PLAN.relative_to(Path.cwd())
         official.__file__ = str(SCRIPT)
         official.case()
     elif action=="prepare":
