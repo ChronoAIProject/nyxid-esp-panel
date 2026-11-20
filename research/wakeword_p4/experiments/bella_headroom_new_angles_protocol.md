@@ -1,0 +1,3 @@
+# Additional orientations for the frozen headroom candidate
+
+Freeze WAV SHA256 `a62dfff9d2e1beaf9dbb63f54ac88f33665082884ecf67f64150606a69f1a9c2` before opening two additional IoSR right-ear measurements at 120° and 240°. Use the same front/rear speakers, 0° left-ear normalization, opposite-speaker interruption, common ADC gain, three commands, and first-arrival clock convention as the 30°/300° study. Use new PCG64 noise seed 927463, with standard deviation 12 ADC counts. All 12 overlapping-speech configurations receive the delivered cue, headroom candidate, Willow and erased controls. Compare native event clocks and paired gains/losses on the same microphones. This tests transfer to additional orientations in the same building.
