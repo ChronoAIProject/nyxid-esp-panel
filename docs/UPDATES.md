@@ -87,6 +87,25 @@ Normal updates use only the app binary. Existing v0.6.23 and earlier boards need
 one explicit OTA or USB installation of this updater; subsequent releases update
 without the development machine.
 
+## v1.0.0
+
+All three hardware profiles ship the C161 “Hey Nyx” wake word. This release
+includes a fix for low-memory startup of the audio frontend. If its filterbank
+work buffer cannot be allocated, initialization returns an error so the caller
+can release partially allocated memory.
+
+The C161 model and settings match v0.6.29. On the 10.1-inch rev1 development
+panel, a speaker woke the device and gave a Mandarin command in one utterance.
+The voice service received the full command and the panel repeated the requested
+phrase. In separate speaker playback across three synthetic voices, the panel
+woke on 5 of 12 attempts and preserved the complete command on all five.
+A separate streaming test found a false wake on “Hey Nicole”.
+[Rev1 voice results](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/18#issuecomment-7041028477)
+· [False-wake results](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/18#issuecomment-7041138575)
+
+Production panels running v0.6.29 can receive v1.0.0 through the stable OTA
+channel. For a manual upgrade, use the app image matching the hardware profile.
+
 ## v0.6.29
 
 The stable channel uses Hey Nyx C161 on all three hardware profiles and includes

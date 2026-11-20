@@ -1,0 +1,10 @@
+diff --git a/esphome__esp-micro-speech-features/src/filterbank_util.c b/esphome__esp-micro-speech-features/src/filterbank_util.c
+--- a/esphome__esp-micro-speech-features/src/filterbank_util.c
++++ b/esphome__esp-micro-speech-features/src/filterbank_util.c
+@@ -134,5 +134,5 @@ int FilterbankPopulateState(const struct FilterbankConfig *config, struct Filterban
+   if (state->channel_frequency_starts == NULL || state->channel_weight_starts == NULL ||
+-      state->channel_widths == NULL || center_mel_freqs == NULL || actual_channel_starts == NULL ||
++      state->channel_widths == NULL || state->work == NULL || center_mel_freqs == NULL || actual_channel_starts == NULL ||
+       actual_channel_widths == NULL)
+   {
+     free(center_mel_freqs);
