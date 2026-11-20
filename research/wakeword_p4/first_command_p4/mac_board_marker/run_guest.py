@@ -43,13 +43,13 @@ def payload(mic, ref):
     return struct.pack("<I", count) + mr.tobytes()
 
 
-def boot(qemu, image, log):
+def boot(qemu, image, log, timeout=70):
     command = [qemu, "-machine", "esp32p4", "-display", "none", "-monitor", "stdio",
                "-serial", f"file:{log}", "-snapshot", "-drive", f"file={image},if=mtd,format=raw"]
     with subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.DEVNULL,
                           stderr=subprocess.PIPE) as proc:
         try:
-            until = time.monotonic()+70
+            until = time.monotonic()+timeout
             while time.monotonic() < until:
                 uart = log.read_bytes() if log.exists() else b""
                 if b"BOARD PASS\r\n" in uart or b"Rebooting..." in uart or proc.poll() is not None:
