@@ -45,12 +45,12 @@ def check_container(container, source):
     return records
 
 
-def verify(board, build, services):
+def reference_image(board, build, services, engine):
     desc = json.loads((build / "project_description.json").read_text())
     settings = cache_values(build / "CMakeCache.txt")
     assert Path(desc["project_path"]).resolve() == board and desc["target"] == "esp32p4"
     assert desc["git_revision"] == "v5.5.4" and (int(desc["min_rev"]), int(desc["max_rev"])) == (100, 199)
-    assert settings["PANEL_BOARD_PROFILE"] == PROFILE and settings["NYX_PANEL_WAKE_ENGINE"] == "hey-willow"
+    assert settings["PANEL_BOARD_PROFILE"] == PROFILE and settings["NYX_PANEL_WAKE_ENGINE"] == engine
     assert settings["NYX_PANEL_RESEARCH_FIXED_MARKER"] == "OFF"
     app = (build / desc["app_bin"]).read_bytes()
     elf = build / desc["app_elf"]
@@ -64,6 +64,21 @@ def verify(board, build, services):
         assert settings[API] == settings[LOGIN] == "" and settings[NODE] == "OFF"
         assert b"wss://nyx-api.chrono-ai.fun/api/v1/nodes/ws\0" in app and b"https://nyxid.ai/login/device\0" in app
 
+    table = (build / "partition_table/partition-table.bin").read_bytes()
+    slots = app_slots(table)
+    for slot in slots.values():
+        slot["free_bytes"] = slot["bytes"] - len(app)
+        assert slot["free_bytes"] >= 0
+    metadata = dict(board_commit=BOARD_COMMIT, board_profile=PROFILE, idf=desc["git_revision"],
+                chip="esp32p4", min_revision=100, max_revision=199,
+                services="development" if services else "public", service_fingerprint=services.fingerprint if services else None,
+                app_bytes=len(app), app_sha256=digest(app), descriptor_elf_sha256=elf_id(app),
+                ota_slots=slots, partition_table_sha256=digest(table), marker_patch_sha256=digest(PATCH.read_bytes()))
+    return desc, app, elf, metadata
+
+
+def verify(board, build, services):
+    desc, app, elf, metadata = reference_image(board, build, services, "hey-willow")
     sr = board / "managed_components/espressif__esp-sr"
     models = sr / "model/wakenet_model"
     container = (build / "esp-idf/panel_services/panel-hey-willow.bin").read_bytes()
@@ -89,24 +104,15 @@ def verify(board, build, services):
     for name in ("panel_voice.c", "panel_update.c"):
         cmd, = [entry["command"] for entry in commands if Path(entry["file"]).name == name]
         assert "-DNYX_PANEL_RESEARCH_WILLOW=1" in cmd and "-DNYX_PANEL_UPDATE_DISABLED=1" in cmd
-    table = (build / "partition_table/partition-table.bin").read_bytes()
-    slots = app_slots(table)
-    for slot in slots.values():
-        slot["free_bytes"] = slot["bytes"] - len(app)
-        assert slot["free_bytes"] >= 0
-    return dict(board_commit=BOARD_COMMIT, board_profile=PROFILE, idf=desc["git_revision"],
-                chip="esp32p4", min_revision=100, max_revision=199,
-                services="development" if services else "public", service_fingerprint=services.fingerprint if services else None,
-                app_bytes=len(app), app_sha256=digest(app), descriptor_elf_sha256=elf_id(app),
-                ota_slots=slots, partition_table_sha256=digest(table), esp_sr_component=(sr / ".component_hash").read_text().strip(),
+    return dict(**metadata, esp_sr_component=(sr / ".component_hash").read_text().strip(),
                 board_wakenet_library_sha256=digest((sr / "lib/esp32p4_less_v3/libwakenet.a").read_bytes()),
                 model=NAME, members=members, container_sha256=digest(container), container_bytes=len(container),
                 container_start_in_image=app.index(container), container_copies=1, mode="DET_MODE_95, DEFAULT",
-                prime_samples=81600, marker_patch_sha256=digest(PATCH.read_bytes()), willow_patch_sha256=digest(WILLOW.read_bytes()))
+                prime_samples=81600, willow_patch_sha256=digest(WILLOW.read_bytes()))
 
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
+def run_build(engine, patch, verifier, description):
+    parser = argparse.ArgumentParser(description=description)
     parser.add_argument("board", type=Path)
     parser.add_argument("build", type=Path)
     env = parser.add_mutually_exclusive_group(required=True)
@@ -127,20 +133,21 @@ def main():
     if services:
         require(services.fingerprint == "6f3d3f8368" and services.node_dev,
                 "Expected the development service profile of the Mac primary C161 comparison")
-    check_sources(board, extra_patches=(WILLOW,))
+    check_sources(board, extra_patches=(patch,))
     if not args.verify_only:
         build.mkdir(parents=True, exist_ok=True)
         require(not any(build.iterdir()), "Use an empty directory for a new build")
         service_settings = services.cmake() if services else {API: "", LOGIN: "", NODE: "OFF"}
         settings = dict(PANEL_BOARD_PROFILE=PROFILE, SDKCONFIG=str(build / "sdkconfig"),
-                        NYX_PANEL_RESEARCH_FIXED_MARKER="OFF", NYX_PANEL_WAKE_ENGINE="hey-willow", **service_settings)
+                        NYX_PANEL_RESEARCH_FIXED_MARKER="OFF", NYX_PANEL_WAKE_ENGINE=engine, **service_settings)
         options = [word for k, v in settings.items() for word in ("-D", f"{k}={v}")]
-        with (build / "willow-build.log").open("w") as log:
+        logfile = "willow-build.log" if engine == "hey-willow" else f"{engine}-build.log"
+        with (build / logfile).open("w") as log:
             for command in (["idf.py", "-B", build, *options, "reconfigure"], ["cmake", "--build", build, "--parallel", "2"]):
                 require(subprocess.run(command, cwd=board, stdout=log, stderr=subprocess.STDOUT).returncode == 0,
-                        "Inspect the local willow-build.log for the build error")
-    print(json.dumps(verify(board, build, services), indent=2))
+                        f"Inspect the local {logfile} for the build error")
+    print(json.dumps(verifier(board, build, services), indent=2))
 
 
 if __name__ == "__main__":
-    main()
+    run_build("hey-willow", WILLOW, verify, __doc__)

@@ -1,0 +1,385 @@
+diff --git a/cmake/panel_wake.cmake b/cmake/panel_wake.cmake
+index ac75afc6..06a9ca40 100644
+--- a/cmake/panel_wake.cmake
++++ b/cmake/panel_wake.cmake
+@@ -1,8 +1,9 @@
+ # Wake selection is independent of hardware and server environment.
+-set(NYX_PANEL_WAKE_ENGINE "hey-nyx" CACHE STRING "Wake detector: hey-nyx or hi-esp")
+-set_property(CACHE NYX_PANEL_WAKE_ENGINE PROPERTY STRINGS hey-nyx hi-esp)
++set(NYX_PANEL_WAKE_ENGINE "hey-nyx" CACHE STRING "Wake detector: hey-nyx, hi-esp or fixed-nyx")
++set_property(CACHE NYX_PANEL_WAKE_ENGINE PROPERTY STRINGS hey-nyx hi-esp fixed-nyx)
+ if(NOT NYX_PANEL_WAKE_ENGINE STREQUAL "hey-nyx" AND
+-        NOT NYX_PANEL_WAKE_ENGINE STREQUAL "hi-esp")
++        NOT NYX_PANEL_WAKE_ENGINE STREQUAL "hi-esp" AND
++        NOT NYX_PANEL_WAKE_ENGINE STREQUAL "fixed-nyx")
+     message(FATAL_ERROR "Unknown NYX_PANEL_WAKE_ENGINE: ${NYX_PANEL_WAKE_ENGINE}")
+ endif()
+ option(NYX_PANEL_RESEARCH_FIXED_MARKER "Enable the fixed playback receiver with single C161" OFF)
+diff --git a/components/panel_services/CMakeLists.txt b/components/panel_services/CMakeLists.txt
+index f21da0f7..2ebe2120 100644
+--- a/components/panel_services/CMakeLists.txt
++++ b/components/panel_services/CMakeLists.txt
+@@ -61,6 +61,10 @@ if(_wake_engine STREQUAL "hey-nyx")
+     if(NYX_PANEL_WAKE_RESEARCH_HANDOFF)
+         target_compile_definitions(${COMPONENT_LIB} PRIVATE NYX_PANEL_UPDATE_DISABLED=1)
+     endif()
++elseif(_wake_engine STREQUAL "fixed-nyx")
++    target_sources(${COMPONENT_LIB} PRIVATE "fixed_marker/board_marker.cpp")
++    target_compile_definitions(${COMPONENT_LIB} PRIVATE NYX_PANEL_RESEARCH_FIXED_MARKER=1
++        NYX_PANEL_FIXED_SOUND=1 NYX_PANEL_UPDATE_DISABLED=1)
+ else()
+ 
+ # Embed weights in each app slot: an OTA update must not depend on a separately
+diff --git a/components/panel_services/fixed_marker/board_marker.cpp b/components/panel_services/fixed_marker/board_marker.cpp
+index 91fb9559..0b999638 100644
+--- a/components/panel_services/fixed_marker/board_marker.cpp
++++ b/components/panel_services/fixed_marker/board_marker.cpp
+@@ -13,14 +13,19 @@
+ 
+ struct board_marker {
+     nyx::TimedFinalMarker cue;
++#ifndef NYX_PANEL_FIXED_SOUND
+     nyx::PanelMiddleMarker mic_middle;
+     nyx::PanelMarkerPair ref_pair;
+     nyx::PanelEchoConfirmation echo;
++#endif
+     nyx::CodedCueReferenceV5 full;
+     nyx::ReferenceActivity activity;
+     nyx::ReferenceSignature signature;
+     nyx::ReferencePrefix prefix;
+-    nyx::ReferenceWake model_route, cue_route;
++#ifndef NYX_PANEL_FIXED_SOUND
++    nyx::ReferenceWake model_route;
++#endif
++    nyx::ReferenceWake cue_route;
+ };
+ 
+ static_assert(alignof(board_marker) <= 8 && std::is_trivially_destructible_v<board_marker>);
+@@ -31,7 +36,9 @@ board_marker_t *board_marker_begin(void *storage) { return new (storage) board_m
+ unsigned board_marker_step(board_marker_t *s, int16_t mic, int16_t ref, bool model_hit, bool tx_pair) {
+     const bool matched = s->cue.update(mic);
+     const bool active = s->activity.update(ref);
++#ifndef NYX_PANEL_FIXED_SOUND
+     const bool panel_clear = s->echo.allow_model(s->ref_pair.update(ref), tx_pair, s->mic_middle.update(mic));
++#endif
+     const bool full_clear = s->full.allow(ref, true);
+     s->signature.update(ref);
+     using State = nyx::ReferencePrefix::State;
+@@ -39,6 +46,21 @@ unsigned board_marker_step(board_marker_t *s, int16_t mic, int16_t ref, bool mod
+     const bool ref_clear = full_clear && prefix != State::confirmed;
+     const bool waiting = prefix == State::awaiting_third;
+     const bool cue = s->cue_route.update_active(active, ref_clear, matched, waiting);
++#ifdef NYX_PANEL_FIXED_SOUND
++    return cue ? BOARD_MARKER_CUE : 0;
++#else
+     const bool model = s->model_route.update_active(active, ref_clear && panel_clear, model_hit, waiting);
+     return (model ? BOARD_MARKER_C161 : 0) | (cue ? BOARD_MARKER_CUE : 0);
++#endif
+ }
++
++#ifdef NYX_PANEL_FIXED_SOUND
++uint64_t board_marker_feed_fixed(board_marker_t *s, const int16_t *mr, size_t count, uint64_t before) {
++    uint64_t first = 0;
++    for (size_t i = 0; i < count; ++i) {
++        unsigned hit = board_marker_step(s, mr[2*i], mr[2*i+1], false, false);
++        if (hit && !first) first = before+i+1;
++    }
++    return first;
++}
++#endif
+diff --git a/components/panel_services/fixed_marker/board_marker.h b/components/panel_services/fixed_marker/board_marker.h
+index 664c0a91..0fec3000 100644
+--- a/components/panel_services/fixed_marker/board_marker.h
++++ b/components/panel_services/fixed_marker/board_marker.h
+@@ -16,6 +16,11 @@ board_marker_t *board_marker_begin(void *storage);
+ unsigned board_marker_step(board_marker_t *state, int16_t mic, int16_t reference,
+                            bool c161_hit, bool tx_pair);
+ 
++#ifdef NYX_PANEL_FIXED_SOUND
++// First allowed fixed-sound end in a read of interleaved microphone/reference samples.
++uint64_t board_marker_feed_fixed(board_marker_t *state, const int16_t *mr, size_t count, uint64_t before);
++#endif
++
+ #ifdef __cplusplus
+ }
+ #endif
+diff --git a/components/panel_services/panel_voice.c b/components/panel_services/panel_voice.c
+index 648b50db..fbc9a7f9 100644
+--- a/components/panel_services/panel_voice.c
++++ b/components/panel_services/panel_voice.c
+@@ -46,7 +46,7 @@
+ #include <stdio.h>
+ #include <math.h>
+ 
+-#ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
++#if defined(NYX_PANEL_RESEARCH_WAKE_TIMING) && !defined(NYX_PANEL_FIXED_SOUND)
+ extern void nyx_wake_capture_counters(uint32_t *bytes, uint32_t *overflows);
+ #endif
+ 
+@@ -888,6 +888,7 @@ static bool wake_available(void)
+     xSemaphoreTake(state_lock,portMAX_DELAY);bool configured=valid_config(&configuration);xSemaphoreGive(state_lock);
+     return configured;
+ }
++#ifndef NYX_PANEL_FIXED_SOUND
+ static bool prime_wake_model(const esp_wn_iface_t *wn,model_iface_data_t *model,int16_t *scratch,int chunk)
+ {
+     // Initialize the model's rolling feature history before advertising a new
+@@ -902,7 +903,8 @@ static bool prime_wake_model(const esp_wn_iface_t *wn,model_iface_data_t *model,
+     return true;
+ }
+ 
+-#ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
++#endif
++#if defined(NYX_PANEL_RESEARCH_WAKE_TIMING) && !defined(NYX_PANEL_FIXED_SOUND)
+ typedef struct {
+     unsigned calls,pcm_samples,max_us,total_us;
+     int64_t start_us;
+@@ -916,6 +918,7 @@ typedef struct {
+ } wake_clock_event_t;
+ #endif
+ 
++#ifndef NYX_PANEL_FIXED_SOUND
+ static inline int feed_wake_model(const esp_wn_iface_t *wn,model_iface_data_t *model,
+     int16_t *scratch,size_t *used,int chunk,const int16_t *pcm,size_t count,bool *dirty
+ #ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
+@@ -1027,9 +1030,11 @@ static void probe_wake_clock(const esp_wn_iface_t *wn,model_iface_data_t *model,
+ }
+ #endif
+ 
++#endif
++
+ const char *panel_voice_wake_word(void)
+ {
+-#ifdef NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME
++#if defined(NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME) || defined(NYX_PANEL_FIXED_SOUND)
+     return "Hey Nyx";
+ #else
+     return "Hi ESP";
+@@ -1039,6 +1044,7 @@ static void wake_task(void *arg)
+ {
+     (void)arg;
+     if(!wake_tail.samples){wake_status("unavailable");vTaskDelete(NULL);return;}
++#ifndef NYX_PANEL_FIXED_SOUND
+ #ifndef NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME
+     extern const uint8_t wake_model_start[] asm("_binary_panel_hi_esp_bin_start");
+     extern const uint8_t wake_model_end[] asm("_binary_panel_hi_esp_bin_end");
+@@ -1049,17 +1055,22 @@ static void wake_task(void *arg)
+     const esp_wn_iface_t *wn=NULL;model_iface_data_t *model=NULL;
+     const char *model_name=NULL;bool model_dirty=false;
+     void *root=NULL;srmodel_list_t *models=NULL;
++    int16_t *detect=NULL;
++    size_t wn_used=0;
++    int wn_chunk=0;
++#endif
+     aec_handle_t *aec=NULL;void *agc=NULL;
+-    int16_t *capture=NULL,*mic=NULL,*ref=NULL,*clean=NULL,*adjusted=NULL,*detect=NULL;
+-    size_t wn_used=0,agc_used=0;int chunk=0,wn_chunk=0;
++    int16_t *capture=NULL,*mic=NULL,*ref=NULL,*clean=NULL,*adjusted=NULL;
++    size_t agc_used=0;
++    int chunk=0;
+ #ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
+     board_marker_t *marker=NULL;
+ #endif
+     int16_t agc_input[160],agc_output[160];
+-#ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
++#if defined(NYX_PANEL_RESEARCH_WAKE_TIMING) && !defined(NYX_PANEL_FIXED_SOUND)
+     unsigned wake_epoch=0;
+ #endif
+-#ifdef NYX_PANEL_RESEARCH_WAKE_CLOCK_FIXTURE
++#if defined(NYX_PANEL_RESEARCH_WAKE_CLOCK_FIXTURE) && !defined(NYX_PANEL_FIXED_SOUND)
+     bool fixture_tested=false;
+ #endif
+     for (;;) {
+@@ -1071,6 +1082,9 @@ static void wake_task(void *arg)
+         if (product_audio_claim_background(wake_yield)!=ESP_OK) {
+             wake_status("audio_busy");vTaskDelay(pdMS_TO_TICKS(100));continue;
+         }
++#ifdef NYX_PANEL_FIXED_SOUND
++        if (!capture) {
++#else
+         if (!model) {
+ #ifdef NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME
+             model_name="hey_nyx";
+@@ -1091,29 +1105,36 @@ static void wake_task(void *arg)
+             model=wn?wn->create(name,DET_MODE_95):NULL;
+ #endif
+             wn_chunk=model?wn->get_samp_chunksize(model):0;
++            if(wn_chunk<=0 || wn_chunk>2048)goto unavailable;
++#endif
+             if(!aec)aec=create_voice_aec();
+             chunk=aec?aec_get_chunksize(aec):0;
+             if(!agc)agc=esp_agc_open(AGC_MODE_2,16000);
+             if(agc)set_agc_config(agc,15,1,3);
+-            if(!capture && chunk>0 && chunk<=1024 && wn_chunk>0 && wn_chunk<=2048) {
++            if(!capture && chunk>0 && chunk<=1024) {
+                 capture=heap_caps_aligned_alloc(16,chunk*4,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
+                 mic=heap_caps_aligned_alloc(16,chunk*2,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
+                 ref=heap_caps_aligned_alloc(16,chunk*2,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
+                 clean=heap_caps_aligned_alloc(16,chunk*2,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
+                 adjusted=heap_caps_aligned_alloc(16,(chunk+160)*2,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
++#ifndef NYX_PANEL_FIXED_SOUND
+                 detect=heap_caps_aligned_alloc(16,wn_chunk*2,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
++#endif
+             }
+-            if(!model || !aec || !agc || !capture || !mic || !ref || !clean || !adjusted || !detect ||
++            if(!aec || !agc || !capture || !mic || !ref || !clean || !adjusted)goto unavailable;
++#ifndef NYX_PANEL_FIXED_SOUND
++            if(!model || !detect ||
+                 wn->get_samp_rate(model)!=16000 || wn->get_channel_num(model)!=1 ||
+                 !prime_wake_model(wn,model,detect,wn_chunk)) {
+                 goto unavailable;
+             }
+             ESP_LOGI("panel.wake","%s ready: detector chunk=%d AEC chunk=%d",panel_voice_wake_word(),wn_chunk,chunk);
++#endif
+ #ifdef NYX_PANEL_RESEARCH_RAW_HIESP
+             ESP_LOGW("panel.wake","Research Hi ESP baseline: raw idle mic; call and preroll remain AEC/AGC");
+ #endif
+         }
+-#ifdef NYX_PANEL_RESEARCH_WAKE_CLOCK_FIXTURE
++#if defined(NYX_PANEL_RESEARCH_WAKE_CLOCK_FIXTURE) && !defined(NYX_PANEL_FIXED_SOUND)
+         if(!fixture_tested) {
+             fixture_tested=true;
+             probe_wake_clock(wn,model,detect,wn_chunk,chunk,&model_dirty);
+@@ -1124,13 +1145,16 @@ static void wake_task(void *arg)
+         // The pinned WakeNet9 clean() dereferences unallocated lazy queues on
+         // P4. Recreate at rearm boundaries using the supported create/destroy
+         // lifecycle; never reset the microphone or active-call audio FIFO.
++#ifndef NYX_PANEL_FIXED_SOUND
+         if(model_dirty) {
+             wn->destroy(model);model=wn->create(model_name,DET_MODE_95);model_dirty=false;
+             if(!model || !prime_wake_model(wn,model,detect,wn_chunk)) {
+                 goto unavailable;
+             }
+         }
+-        wn_used=agc_used=0;
++        wn_used=0;
++#endif
++        agc_used=0;
+ #ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
+         void *storage=heap_caps_aligned_alloc(8,board_marker_bytes(),MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
+         if(!storage)goto unavailable;
+@@ -1140,7 +1164,11 @@ static void wake_task(void *arg)
+         marker_pcm_end=0;
+         ++marker_epoch;
+         xSemaphoreGive(wake_lock);
++#ifdef NYX_PANEL_FIXED_SOUND
++        ESP_LOGI("panel.wake.marker","begin epoch=%u bytes=%u policy=fixed-sound ref=physical tx=unavailable",
++#else
+         ESP_LOGI("panel.wake.marker","begin epoch=%u bytes=%u ref=physical tx=unavailable",
++#endif
+                  marker_epoch,(unsigned)board_marker_bytes());
+ #endif
+         // Idle listening and each call have separate adaptive filter state,
+@@ -1149,7 +1177,7 @@ static void wake_task(void *arg)
+         if(!aec){goto unavailable;}
+         xSemaphoreTake(wake_lock,portMAX_DELAY);panel_voice_pcm_clear(&wake_tail);xSemaphoreGive(wake_lock);
+         wake_status("listening");
+-#ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
++#if defined(NYX_PANEL_RESEARCH_WAKE_TIMING) && !defined(NYX_PANEL_FIXED_SOUND)
+         wake_clock_t clock={.start_us=esp_timer_get_time()};
+         unsigned wake_read_bytes=0;
+         uint64_t epoch_read_samples=0;
+@@ -1161,7 +1189,7 @@ static void wake_task(void *arg)
+ #endif
+         while(err==ESP_OK) {
+             size_t got=0;err=product_i2s_read(capture,chunk*4,&got,1000);
+-#ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
++#if defined(NYX_PANEL_RESEARCH_WAKE_TIMING) && !defined(NYX_PANEL_FIXED_SOUND)
+             const int64_t read_done_us=esp_timer_get_time();
+             wake_clock_event_t event={0};
+ #endif
+@@ -1169,7 +1197,11 @@ static void wake_task(void *arg)
+             voice_call_t *c=wake_call;
+ #ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
+             if(!c && !marker){xSemaphoreGive(wake_lock);break;}
++#ifdef NYX_PANEL_FIXED_SOUND
++            uint64_t cue_end=0;
++#else
+             marker_decision_t decision={0};
++#endif
+ #endif
+             if(!c && !wake_available()) {
+                 xSemaphoreGive(wake_lock);break;
+@@ -1212,10 +1244,18 @@ static void wake_task(void *arg)
+                 }
+                 xSemaphoreTake(state_lock,portMAX_DELAY);status.buffered_ms=c->capture.count/16;xSemaphoreGive(state_lock);
+             } else if(err==ESP_OK) {
+-#ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
++#if defined(NYX_PANEL_RESEARCH_WAKE_TIMING) && !defined(NYX_PANEL_FIXED_SOUND)
+                 epoch_read_samples+=(unsigned)chunk;
+ #endif
+                 panel_voice_pcm_preroll_push(&wake_tail,adjusted,produced);
++#ifdef NYX_PANEL_FIXED_SOUND
++                cue_end=board_marker_feed_fixed(marker,capture,chunk,marker_samples);
++                // Maintain the existing 30 ms unit of the wake progress counter.
++                unsigned frames=(marker_samples+chunk)/480-marker_samples/480;
++                atomic_fetch_add_explicit(&wake_processed_frames,frames,memory_order_relaxed);
++                marker_samples+=chunk;
++                triggered=cue_end!=0;
++#else
+                 const int16_t *wake_pcm=adjusted;
+                 size_t wake_samples=produced;
+ #if defined(NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME) || defined(NYX_PANEL_RESEARCH_RAW_HIESP)
+@@ -1230,23 +1270,24 @@ static void wake_task(void *arg)
+ #ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
+                 int detected=feed_marked_read(wn,model,detect,&wn_used,wn_chunk,wake_pcm,capture,wake_samples,
+                     &model_dirty,marker,marker_samples,&decision
+-#ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
++#if defined(NYX_PANEL_RESEARCH_WAKE_TIMING) && !defined(NYX_PANEL_FIXED_SOUND)
+                     ,&clock,&event
+ #endif
+                 );
+                 marker_samples+=wake_samples;
+ #else
+                 int detected=feed_wake_model(wn,model,detect,&wn_used,wn_chunk,wake_pcm,wake_samples,&model_dirty
+-#ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
++#if defined(NYX_PANEL_RESEARCH_WAKE_TIMING) && !defined(NYX_PANEL_FIXED_SOUND)
+                     ,&clock,&event,true
+ #endif
+                     );
+ #endif
+                 if(detected<0){err=ESP_FAIL;wake_status("error");}
+                 triggered=detected>0;
++#endif
+             }
+             xSemaphoreGive(wake_lock);
+-#ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
++#if defined(NYX_PANEL_RESEARCH_WAKE_TIMING) && !defined(NYX_PANEL_FIXED_SOUND)
+             // Both engines use the same measurement boundary. Report outside
+             // the audio lock and never during a call, warmup, or failed read.
+             if(c || triggered) {
+@@ -1289,11 +1330,15 @@ static void wake_task(void *arg)
+                 esp_err_t call_result=start_call(NULL,true);
+ #ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
+                 ESP_LOGI("panel.wake.marker","decision epoch=%u c161_end=%llu cue_end=%llu read_end=%llu decision_us=%lld start_call=%s min_internal_boot=%u",
++#ifdef NYX_PANEL_FIXED_SOUND
++                    marker_epoch,0ULL,(unsigned long long)cue_end,
++#else
+                     marker_epoch,(unsigned long long)decision.model_end,(unsigned long long)decision.cue_end,
++#endif
+                     (unsigned long long)marker_samples,(long long)decision_us,esp_err_to_name(call_result),
+                     (unsigned)heap_caps_get_minimum_free_size(MALLOC_CAP_INTERNAL|MALLOC_CAP_8BIT));
+ #endif
+-#ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
++#if defined(NYX_PANEL_RESEARCH_WAKE_TIMING) && !defined(NYX_PANEL_FIXED_SOUND)
+                 // Use timestamps captured at the detector, not the time of
+                 // UART delivery, HTTP polling or connection setup.
+                 if(event.sample_end) ESP_LOGI("panel.wake.clock",
+@@ -1333,12 +1378,14 @@ unavailable:
+     // The model borrows names/weights from models/root across rearm cycles.
+     // Keep those owners reachable until every fatal exit has destroyed it.
+     atomic_store(&wake_listening,false);
++#ifndef NYX_PANEL_FIXED_SOUND
+     if(model)wn->destroy(model);
++    if(models)srmodel_host_deinit(models);
++    free(root);free(detect);
++#endif
+     if(aec)aec_destroy(aec);
+     if(agc)esp_agc_close(agc);
+-    if(models)srmodel_host_deinit(models);
+-    free(root);
+-    free(capture);free(mic);free(ref);free(clean);free(adjusted);free(detect);
++    free(capture);free(mic);free(ref);free(clean);free(adjusted);
+     wake_status("unavailable");product_audio_release();
+     ESP_LOGE("panel.wake","%s listener initialization or rearm failed",panel_voice_wake_word());
+     vTaskDelete(NULL);
