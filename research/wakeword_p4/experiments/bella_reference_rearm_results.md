@@ -15,3 +15,7 @@ The second change lets the microphone begin reacquiring after 80 ms when its raw
 | +800 ms | 2 | 0 | 4 | External marker |
 
 At −400 ms and at simultaneous starts the external template lands near one of the panel sequences and the receiver stays closed. Both sources use one monaural path in this construction. The two suppressed overlaps are measurable limitations for a user speaking during a panel wake demonstration. The eight recoveries at positive offsets concern wake requests. These collision inputs end with the calls and contain no spoken command.
+
+## First command after an accepted wake
+
+On the RTX 4090, a 16 kHz WHAMR SepFormer processed the decoded Opus streams from 15 weak-room presentations, eight quiet two-sentence presentations and one unaddressed opening, each under two service schedules. Both Qwen3-ASR and Whisper turbo scored 0/15 complete weak commands on each schedule, including when either separated track could supply the answer. On the eight quiet immediate sends the original Qwen and Whisper results were 6/8 and 8/8. Selecting one separated track by the preregistered energy ratio yielded 1/8 and 2/8. For waited sends the same comparison was 6/8 and 8/8 before separation and 2/8 and 1/8 after selection. Both readers still recovered the full unaddressed command in case 072 on both schedules. The board images use the original uplink. [Procedure and conversion identity](bella_sepformer_commands_protocol.md) · [CUDA operators and transcripts from both tracks](../results/4090-bella-sepformer-commands.json)

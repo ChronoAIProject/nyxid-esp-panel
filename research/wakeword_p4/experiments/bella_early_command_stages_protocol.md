@@ -1,0 +1,5 @@
+# Locate first-command losses with the 400 ms cue
+
+Use all 15 previously measured sends from scenes 077, 079 and 090 at their five registered external player speeds. Use the actual first and stop sample from each P4 capture for every upstream view. Keep the target, cue, concurrent speech, room, clock and original player levels fixed. At the player compare the intended speaker alone and the released external player mix, both at their published quarter scale. Compare these with the full simulated microphone, the UART's AEC/AGC FIFO before encoding and the archived immediately delivered Opus decode. Score the full capture window with the same unprompted Qwen and Whisper turbo complete-command rules. Report individual paired changes because the same command can reappear at a later stage.
+
+The earlier 32-case study doubled the entire target speaker. These 15 sends boosted the address alone and varied the external clock. The five renditions per room reuse the same command and interruption. [Earlier target-level study](../results/4090-c161-bella-weak-signal-path.json) · [15 native sends](../results/4090-bella-early-marker-commands.json)
