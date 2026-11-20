@@ -16,7 +16,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "mac_listener"))
 from measure_connected_command_clock import channel, locate
 
-# Both registered PRESTO trials use the same 16 kHz address and command starts.
+# The issued PRESTO trials use the same 16 kHz address and command starts.
 ADDRESS = 21600
 COMMAND = 44800
 PLAYBACKS = {
@@ -25,6 +25,7 @@ PLAYBACKS = {
     "3f9b05a1706b17e517dfc7aa925dd37405c6c680b220acb922cc91cf06612736":
         ("hye-nyx-willow-indoor-whole-speaker-v1.zip", "PRESTO-zero-snr-nyx-whole.wav"),
 }
+CROSSOVER = "94e18544f69c1e24b4f2e70a9a4acd64360e16c1e870453ff55b9aa7105219f5"
 DECISION = re.compile(
     rb"panel\.wake\.marker: decision epoch=(\d+) c161_end=(\d+) cue_end=(\d+) read_end=(\d+) "
     rb"decision_us=(\d+) start_call=(\w+) min_internal_boot=(\d+)"
@@ -39,18 +40,26 @@ def alignment(mic, source, origin):
                          for window in fit.get("windows", [])])
 
 
-def report(trial):
+def report(trial, playback_path=None):
     capture = json.loads((trial / "capture.json").read_text())
     lines = (trial / "uart.log").read_bytes().splitlines()
     pcm, snapshot = decode(lines, capture["descriptor_elf_sha256"])
     if any(capture.get(k) != value for k, value in snapshot.items()):
         raise ValueError("Capture JSON differs from the UART snapshot")
     digest = capture["playback_sha256"]
-    if digest not in PLAYBACKS:
+    if digest == CROSSOVER:
+        member = "PRESTO-nyx-higher.wav"
+        if playback_path is None:
+            raise ValueError(f"Pass --playback with the extracted {member}")
+    elif digest in PLAYBACKS:
+        archive, member = PLAYBACKS[digest]
+    else:
         raise ValueError("Expected an issued PRESTO Nyx playback")
-    archive, member = PLAYBACKS[digest]
-    with ZipFile(HERE.parents[1] / "results" / archive) as source:
-        data = source.read(member)
+    if playback_path is not None:
+        data = playback_path.read_bytes()
+    else:
+        with ZipFile(HERE.parents[1] / "results" / archive) as source:
+            data = source.read(member)
     if sha256(data).hexdigest() != digest:
         raise ValueError("Playback bytes differ from the recording receipt")
     with wave.open(BytesIO(data)) as wav:
@@ -95,4 +104,6 @@ def report(trial):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("trial", type=Path, help="Output directory from mr_console.py record")
-    print(json.dumps(report(parser.parse_args().trial), indent=2))
+    parser.add_argument("--playback", type=Path, help="Extracted playback WAV for the recorded take")
+    args = parser.parse_args()
+    print(json.dumps(report(args.trial, args.playback), indent=2))

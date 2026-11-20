@@ -88,6 +88,13 @@ python3 "$handoff/report_presto_timing.py" presto-original > presto-original/tim
 python3 "$handoff/report_presto_timing.py" presto-whole > presto-whole/timing.json
 ```
 
+For the higher restaurant command from the equal-command comparison, record `PRESTO-nyx-higher.wav` with the same settings and pass the extracted WAV to the timing report. Its exact file digest is checked against the capture. [Equal-command playback files](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/4090-demand-common-command.zip)
+
+```sh
+python3 "$handoff/mr_console.py" record PRESTO-nyx-higher.wav presto-higher --port "$PANEL_PORT" --elf "$elf"
+python3 "$handoff/report_presto_timing.py" presto-higher --playback PRESTO-nyx-higher.wav > presto-higher/timing.json
+```
+
 ### Two-marker 400 ms playback trial
 
 The public app archive contains one application image for external-screen rev1 (chip revisions 1.00–1.99) and one for integrated LCD-X8 (3.00–3.99). The manifest identifies each image, descriptor ELF and source patch. Each image contains one frozen C161 model. Both images use the 80 ms electrical reference recovery and the shortened microphone recovery after a playback veto. Use the 400 ms dual-marker WAV with these apps. [Public applications and manifest](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/hye-nyx-reference-rearm-p4-public-v1.zip) · [Verified archive and member hashes](../../results/4090-bella-reference-rearm-app-download.json) · [Playback WAV](../../results/hye-nyx-af-bella-early-marker-experiment.wav) · [Simulator results](../../experiments/bella_reference_rearm_results.md)
