@@ -11,6 +11,16 @@ BOARD_COMMIT = "0d8e1935702a561b535a8c1a0921fd8034943d2c"
 MODEL = "c16154040378b8acccdb57c19917c46cea0a9ea6a39f105004b964ddd093ab81"
 
 
+def app_slots(table):
+    slots = {}
+    for offset in range(0, len(table), 32):
+        magic, kind, subtype, start, size, label, _ = struct.unpack_from("<HBBII16sI", table, offset)
+        if magic == 0x50aa and kind == 0:
+            slots[label.rstrip(b"\0").decode()] = dict(offset=start, bytes=size)
+    assert set(slots) == {"ota_0", "ota_1"}
+    return slots
+
+
 def image(build, gdb):
     desc = json.loads((build / "project_description.json").read_text())
     board = Path(desc["project_path"])
@@ -54,12 +64,7 @@ def image(build, gdb):
     state = int(re.search(r"\$1 = (\d+)", debug)[1])
 
     table = (build / "partition_table/partition-table.bin").read_bytes()
-    slots = {}
-    for offset in range(0, len(table), 32):
-        magic, kind, subtype, start, size, label, _ = struct.unpack_from("<HBBII16sI", table, offset)
-        if magic == 0x50aa and kind == 0:
-            slots[label.rstrip(b"\0").decode()] = dict(offset=start, bytes=size)
-    assert set(slots) == {"ota_0", "ota_1"}
+    slots = app_slots(table)
     smallest = min(row["bytes"] for row in slots.values())
     assert len(binary) <= smallest
     return dict(profile=profile, board=catalog["boards"][expected["board"]]["name"], backend=backend,

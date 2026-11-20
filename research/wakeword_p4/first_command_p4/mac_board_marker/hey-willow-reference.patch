@@ -1,0 +1,390 @@
+diff --git a/cmake/panel_wake.cmake b/cmake/panel_wake.cmake
+index ac75afc6..ecdaebcc 100644
+--- a/cmake/panel_wake.cmake
++++ b/cmake/panel_wake.cmake
+@@ -1,8 +1,9 @@
+ # Wake selection is independent of hardware and server environment.
+-set(NYX_PANEL_WAKE_ENGINE "hey-nyx" CACHE STRING "Wake detector: hey-nyx or hi-esp")
+-set_property(CACHE NYX_PANEL_WAKE_ENGINE PROPERTY STRINGS hey-nyx hi-esp)
++set(NYX_PANEL_WAKE_ENGINE "hey-nyx" CACHE STRING "Wake detector: hey-nyx, hi-esp or hey-willow")
++set_property(CACHE NYX_PANEL_WAKE_ENGINE PROPERTY STRINGS hey-nyx hi-esp hey-willow)
+ if(NOT NYX_PANEL_WAKE_ENGINE STREQUAL "hey-nyx" AND
+-        NOT NYX_PANEL_WAKE_ENGINE STREQUAL "hi-esp")
++        NOT NYX_PANEL_WAKE_ENGINE STREQUAL "hi-esp" AND
++        NOT NYX_PANEL_WAKE_ENGINE STREQUAL "hey-willow")
+     message(FATAL_ERROR "Unknown NYX_PANEL_WAKE_ENGINE: ${NYX_PANEL_WAKE_ENGINE}")
+ endif()
+ option(NYX_PANEL_RESEARCH_FIXED_MARKER "Enable the fixed playback receiver with single C161" OFF)
+diff --git a/components/panel_services/CMakeLists.txt b/components/panel_services/CMakeLists.txt
+index f21da0f7..ef0cbab7 100644
+--- a/components/panel_services/CMakeLists.txt
++++ b/components/panel_services/CMakeLists.txt
+@@ -66,10 +66,16 @@ else()
+ # Embed weights in each app slot: an OTA update must not depend on a separately
+ # flashed model partition, or change any existing board's partition layout.
+ idf_component_get_property(_sr_dir espressif__esp-sr COMPONENT_DIR)
+-set(_wake_source "${_sr_dir}/model/wakenet_model/wn9_hiesp")
+-set(_wake_binary "${CMAKE_CURRENT_BINARY_DIR}/panel-hi-esp.bin")
++if(_wake_engine STREQUAL "hey-willow")
++    set(_wake_model wn9_heywillow_tts)
++    target_compile_definitions(${COMPONENT_LIB} PRIVATE NYX_PANEL_RESEARCH_WILLOW=1 NYX_PANEL_UPDATE_DISABLED=1)
++else()
++    set(_wake_model wn9_hiesp)
++endif()
++set(_wake_source "${_sr_dir}/model/wakenet_model/${_wake_model}")
++set(_wake_binary "${CMAKE_CURRENT_BINARY_DIR}/panel-${_wake_engine}.bin")
+ add_custom_command(OUTPUT "${_wake_binary}"
+-    COMMAND ${PYTHON} "${CMAKE_CURRENT_SOURCE_DIR}/../../tools/embed_wake_model.py" "${_wake_source}" "${_wake_binary}"
++    COMMAND ${PYTHON} "${CMAKE_CURRENT_SOURCE_DIR}/../../tools/embed_wake_model.py" "${_wake_source}" "${_wake_binary}" --model "${_wake_model}"
+     DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/../../tools/embed_wake_model.py"
+         "${_wake_source}/_MODEL_INFO_" "${_wake_source}/wn9_index" "${_wake_source}/wn9_data"
+     VERBATIM)
+diff --git a/components/panel_services/panel_voice.c b/components/panel_services/panel_voice.c
+index 648b50db..9b8c6df2 100644
+--- a/components/panel_services/panel_voice.c
++++ b/components/panel_services/panel_voice.c
+@@ -127,11 +127,16 @@ static remote_record_t remote_records[8];
+ static SemaphoreHandle_t wake_lock;
+ static voice_call_t *wake_call;
+ static panel_voice_pcm_t wake_tail;
+-#ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
++#if defined(NYX_PANEL_RESEARCH_FIXED_MARKER) || defined(NYX_PANEL_RESEARCH_WILLOW)
++#ifdef NYX_PANEL_RESEARCH_WILLOW
++#define WAKE_CAPTURE_TAG "panel.wake.willow"
++#else
++#define WAKE_CAPTURE_TAG "panel.wake.marker"
++#endif
+ // Protected by wake_lock. PCM end counts completed 160-sample AGC hops in
+ // the current listening epoch, including the wake-initiated call that follows.
+-static uint64_t marker_pcm_end;
+-static unsigned marker_epoch;
++static uint64_t wake_pcm_end;
++static unsigned wake_capture_epoch;
+ #endif
+ static atomic_bool wake_enabled=true, wake_listening;
+ // Progress counters are independent of UI state: a stuck audio task can leave
+@@ -735,7 +740,7 @@ static void mic_task(void *arg)
+         if (esp_opus_enc_open(&cfg,sizeof(cfg),&encoder)!=ESP_AUDIO_ERR_OK) {
+             state("error","Voice microphone encoding could not start");atomic_store(&c->running,false);
+         }
+-#ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
++#ifdef WAKE_CAPTURE_TAG
+         bool logged_pcm=false,logged_send=false,logged_audio_send=false;
+ #endif
+         while (atomic_load(&c->running)) {
+@@ -754,27 +759,27 @@ static void mic_task(void *arg)
+                 ready=connected && !muted;
+                 if (ready) have=panel_voice_pcm_pop(&c->capture,mono,FRAME_SAMPLES);
+                 remaining=c->capture.count;
+-#ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
+-                const unsigned epoch=marker_epoch;
++#ifdef WAKE_CAPTURE_TAG
++                const unsigned epoch=wake_capture_epoch;
+                 // A successful pop returns the oldest frame. Mute/disconnect
+                 // can clear the FIFO, so derive its origin from the actual tail.
+-                const int64_t pcm_start=have?(int64_t)(marker_pcm_end-remaining-FRAME_SAMPLES):-1;
++                const int64_t pcm_start=have?(int64_t)(wake_pcm_end-remaining-FRAME_SAMPLES):-1;
+ #endif
+                 xSemaphoreGive(wake_lock);
+                 if (ready && !have) break;
+                 if (!have) memset(mono,0,sizeof(mono));
+                 esp_audio_enc_in_frame_t input={.buffer=(uint8_t *)mono,.len=sizeof(mono)};
+                 esp_audio_enc_out_frame_t output={.buffer=encoded,.len=sizeof(encoded)};
+-#ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
++#ifdef WAKE_CAPTURE_TAG
+                 int64_t input_us=(have && !logged_pcm)?esp_timer_get_time():0;
+ #endif
+                 if (esp_opus_enc_process(encoder,&input,&output)!=ESP_AUDIO_ERR_OK) {
+                     state("error","Voice microphone encoding failed");atomic_store(&c->running,false);break;
+                 }
+-#ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
++#ifdef WAKE_CAPTURE_TAG
+                 if(have && !logged_pcm) {
+                     logged_pcm=true;
+-                    ESP_LOGI("panel.wake.marker","first_pcm epoch=%u start=%lld samples=%u input_us=%lld",
++                    ESP_LOGI(WAKE_CAPTURE_TAG,"first_pcm epoch=%u start=%lld samples=%u input_us=%lld",
+                         epoch,(long long)pcm_start,(unsigned)FRAME_SAMPLES,(long long)input_us);
+                 }
+ #endif
+@@ -784,9 +789,9 @@ static void mic_task(void *arg)
+                     int err=esp_peer_send_audio(c->peer,&frame);
+                     xSemaphoreGive(c->peer_lock);
+                     if (err) {state("error","Voice microphone send failed");atomic_store(&c->running,false);break;}
+-#ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
++#ifdef WAKE_CAPTURE_TAG
+                     if(!logged_send || (have && !logged_audio_send)) {
+-                        ESP_LOGI("panel.wake.marker","peer_send epoch=%u first=%d captured=%d start=%lld pts=%u bytes=%d accepted_us=%lld",
++                        ESP_LOGI(WAKE_CAPTURE_TAG,"peer_send epoch=%u first=%d captured=%d start=%lld pts=%u bytes=%d accepted_us=%lld",
+                             epoch,!logged_send,have,(long long)pcm_start,pts,(int)output.encoded_bytes,(long long)esp_timer_get_time());
+                         logged_send=true;
+                         if(have)logged_audio_send=true;
+@@ -888,11 +893,23 @@ static bool wake_available(void)
+     xSemaphoreTake(state_lock,portMAX_DELAY);bool configured=valid_config(&configuration);xSemaphoreGive(state_lock);
+     return configured;
+ }
++#ifdef NYX_PANEL_RESEARCH_WILLOW
++enum { WILLOW_PRIME_SAMPLES = 81600, WILLOW_CHUNK = 512 };
++#endif
++
+ static bool prime_wake_model(const esp_wn_iface_t *wn,model_iface_data_t *model,int16_t *scratch,int chunk)
+ {
+     // Initialize the model's rolling feature history before advertising a new
+     // listener. A keyword can then begin with the first actual microphone frame.
+     memset(scratch,0,chunk*sizeof(*scratch));
++#ifdef NYX_PANEL_RESEARCH_WILLOW
++    if(chunk != WILLOW_CHUNK) return false;
++    for(int i=0; i<WILLOW_PRIME_SAMPLES/WILLOW_CHUNK; ++i) {
++        int result=wn->detect(model,scratch);
++        if(result<WAKENET_CHANNEL_VERIFIED || result>WAKENET_DETECTED) return false;
++    }
++    return true;
++#else
+     int prime_samples=2*wn->get_samp_rate(model);
+ #ifdef NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME
+     prime_samples=panel_wake_runtime_prime_samples();
+@@ -900,6 +917,7 @@ static bool prime_wake_model(const esp_wn_iface_t *wn,model_iface_data_t *model,
+     for(int samples=0;samples<prime_samples;samples+=chunk)
+         if(wn->detect(model,scratch)<0)return false;
+     return true;
++#endif
+ }
+ 
+ #ifdef NYX_PANEL_RESEARCH_WAKE_TIMING
+@@ -923,7 +941,7 @@ static inline int feed_wake_model(const esp_wn_iface_t *wn,model_iface_data_t *m
+ #endif
+     )
+ {
+-    bool hit=false;
++    int first_hit=0;
+     for(size_t at=0;at<count;++at) {
+         scratch[(*used)++]=pcm[at];
+         if(*used!=(size_t)chunk)continue;
+@@ -939,17 +957,22 @@ static inline int feed_wake_model(const esp_wn_iface_t *wn,model_iface_data_t *m
+         clock->calls++;clock->pcm_samples+=(unsigned)chunk;
+         clock->samples+=(unsigned)chunk;clock->total_us+=elapsed;
+         if(elapsed>clock->max_us)clock->max_us=elapsed;
+-        if(detected>0 && !hit) {
++        if(detected>0 && !first_hit) {
+             // One past the first returning detector block, after priming.
+             event->sample_end=clock->samples;event->start_us=start;event->end_us=end;
+             if(measure_dma)nyx_wake_capture_counters(&event->rx_bytes,&event->rx_overflows);
+         }
+ #endif
++#ifdef NYX_PANEL_RESEARCH_WILLOW
++        if(detected<WAKENET_CHANNEL_VERIFIED || detected>WAKENET_DETECTED)return -1;
++#else
+         if(detected<0)return -1;
++#endif
+         atomic_fetch_add_explicit(&wake_processed_frames,1,memory_order_relaxed);
+-        if(detected>0)hit=true;
++        if(detected>0 && !first_hit)first_hit=(int)at+1;
+     }
+-    return hit;
++    // One-based sample offset of the first returning block in this read.
++    return first_hit;
+ }
+ 
+ #ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
+@@ -1031,6 +1054,8 @@ const char *panel_voice_wake_word(void)
+ {
+ #ifdef NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME
+     return "Hey Nyx";
++#elif defined(NYX_PANEL_RESEARCH_WILLOW)
++    return "Hey Willow";
+ #else
+     return "Hi ESP";
+ #endif
+@@ -1040,8 +1065,13 @@ static void wake_task(void *arg)
+     (void)arg;
+     if(!wake_tail.samples){wake_status("unavailable");vTaskDelete(NULL);return;}
+ #ifndef NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME
++#ifdef NYX_PANEL_RESEARCH_WILLOW
++    extern const uint8_t wake_model_start[] asm("_binary_panel_hey_willow_bin_start");
++    extern const uint8_t wake_model_end[] asm("_binary_panel_hey_willow_bin_end");
++#else
+     extern const uint8_t wake_model_start[] asm("_binary_panel_hi_esp_bin_start");
+     extern const uint8_t wake_model_end[] asm("_binary_panel_hi_esp_bin_end");
++#endif
+     // ESP-SR's generic name dispatcher links every WakeNet generation, including
+     // WakeNet10's DL runtime. This firmware ships only pinned WakeNet9 weights.
+     extern const esp_wn_iface_t esp_sr_wakenet9_quantized;
+@@ -1079,16 +1109,22 @@ static void wake_task(void *arg)
+ #else
+             // Weights travel in the app's OTA image, compressed in flash and
+             // expanded once into PSRAM. Both existing OTA slots keep their size.
+-            uint32_t size=(uint32_t)wake_model_start[0] | (uint32_t)wake_model_start[1]<<8 |
+-                (uint32_t)wake_model_start[2]<<16 | (uint32_t)wake_model_start[3]<<24;
+-            root=size>=1024 && size<=512*1024 ? heap_caps_malloc(size,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT) : NULL;
+-            uLongf expanded=size;
+-            bool unpacked=root && uncompress(root,&expanded,wake_model_start+4,wake_model_end-wake_model_start-4)==Z_OK && expanded==size;
+-            models=unpacked?srmodel_load(root):NULL;
+-            char *name=esp_srmodel_filter(models,ESP_WN_PREFIX,"hiesp");
+-            model_name=name;
+-            wn=name?&esp_sr_wakenet9_quantized:NULL;
+-            model=wn?wn->create(name,DET_MODE_95):NULL;
++            if(!models) {
++                uint32_t size=(uint32_t)wake_model_start[0] | (uint32_t)wake_model_start[1]<<8 |
++                    (uint32_t)wake_model_start[2]<<16 | (uint32_t)wake_model_start[3]<<24;
++                root=size>=1024 && size<=512*1024 ? heap_caps_malloc(size,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT) : NULL;
++                uLongf expanded=size;
++                bool unpacked=root && uncompress(root,&expanded,wake_model_start+4,wake_model_end-wake_model_start-4)==Z_OK && expanded==size;
++                models=unpacked?srmodel_load(root):NULL;
++#ifdef NYX_PANEL_RESEARCH_WILLOW
++                char *name=models?esp_srmodel_filter(models,ESP_WN_PREFIX,"heywillow_tts"):NULL;
++#else
++                char *name=esp_srmodel_filter(models,ESP_WN_PREFIX,"hiesp");
++#endif
++                model_name=name;
++                wn=name?&esp_sr_wakenet9_quantized:NULL;
++            }
++            model=wn?wn->create(model_name,DET_MODE_95):NULL;
+ #endif
+             wn_chunk=model?wn->get_samp_chunksize(model):0;
+             if(!aec)aec=create_voice_aec();
+@@ -1131,17 +1167,32 @@ static void wake_task(void *arg)
+             }
+         }
+         wn_used=agc_used=0;
++#ifdef NYX_PANEL_RESEARCH_WILLOW
++        // 159 complete zero blocks plus the leading zeros of the first live block.
++        wn_used=WILLOW_PRIME_SAMPLES%WILLOW_CHUNK;
++        memset(detect,0,wn_used*sizeof(*detect));
++        uint64_t willow_read_end=0,willow_hit_end=0;
++#endif
+ #ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
+         void *storage=heap_caps_aligned_alloc(8,board_marker_bytes(),MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
+         if(!storage)goto unavailable;
+         marker=board_marker_begin(storage);
+         uint64_t marker_samples=0;
++#endif
++#ifdef WAKE_CAPTURE_TAG
+         xSemaphoreTake(wake_lock,portMAX_DELAY);
+-        marker_pcm_end=0;
+-        ++marker_epoch;
++        wake_pcm_end=0;
++        ++wake_capture_epoch;
+         xSemaphoreGive(wake_lock);
++#endif
++#ifdef NYX_PANEL_RESEARCH_WILLOW
++        ESP_LOGI(WAKE_CAPTURE_TAG,"begin epoch=%u model=%s DEFAULT threshold_ppm=%ld chunk=%d prime=%d pending=%u",
++                 wake_capture_epoch,model_name,(long)(wn->get_det_threshold(model,1)*1000000.0f+0.5f),
++                 wn_chunk,WILLOW_PRIME_SAMPLES,(unsigned)wn_used);
++#endif
++#ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
+         ESP_LOGI("panel.wake.marker","begin epoch=%u bytes=%u ref=physical tx=unavailable",
+-                 marker_epoch,(unsigned)board_marker_bytes());
++                 wake_capture_epoch,(unsigned)board_marker_bytes());
+ #endif
+         // Idle listening and each call have separate adaptive filter state,
+         // just as the original microphone task constructs a fresh AEC per call.
+@@ -1167,6 +1218,10 @@ static void wake_task(void *arg)
+ #endif
+             xSemaphoreTake(wake_lock,portMAX_DELAY);
+             voice_call_t *c=wake_call;
++#ifdef NYX_PANEL_RESEARCH_WILLOW
++            // After the call detaches, recreate and prime before consuming new speech.
++            if(!c && willow_hit_end){xSemaphoreGive(wake_lock);break;}
++#endif
+ #ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
+             if(!c && !marker){xSemaphoreGive(wake_lock);break;}
+             marker_decision_t decision={0};
+@@ -1197,8 +1252,8 @@ static void wake_task(void *arg)
+                     memcpy(adjusted+produced,agc_output,sizeof(agc_output));produced+=160;
+                 }
+             }
+-#ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
+-            marker_pcm_end+=produced;
++#ifdef WAKE_CAPTURE_TAG
++            wake_pcm_end+=produced;
+ #endif
+             bool triggered=false;
+             if(c) {
+@@ -1218,7 +1273,7 @@ static void wake_task(void *arg)
+                 panel_voice_pcm_preroll_push(&wake_tail,adjusted,produced);
+                 const int16_t *wake_pcm=adjusted;
+                 size_t wake_samples=produced;
+-#if defined(NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME) || defined(NYX_PANEL_RESEARCH_RAW_HIESP)
++#if defined(NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME) || defined(NYX_PANEL_RESEARCH_RAW_HIESP) || defined(NYX_PANEL_RESEARCH_WILLOW)
+                 // Keep each experimental detector's training frontend. The
+                 // communication AEC can suppress its wake cues even with a
+                 // silent reference. Use the same I2S producer's raw mic only
+@@ -1241,6 +1296,10 @@ static void wake_task(void *arg)
+                     ,&clock,&event,true
+ #endif
+                     );
++#ifdef NYX_PANEL_RESEARCH_WILLOW
++                if(detected>0)willow_hit_end=willow_read_end+(unsigned)detected;
++                willow_read_end+=wake_samples;
++#endif
+ #endif
+                 if(detected<0){err=ESP_FAIL;wake_status("error");}
+                 triggered=detected>0;
+@@ -1271,11 +1330,14 @@ static void wake_task(void *arg)
+ #endif
+             if(triggered) {
+                 if(!wake_available())break;
++#ifdef NYX_PANEL_RESEARCH_WILLOW
++                const int64_t willow_decision_us=esp_timer_get_time();
++#endif
+ #ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
+                 const int64_t decision_us=esp_timer_get_time();
+                 heap_caps_free(marker);marker=NULL;
+ #endif
+-#ifdef NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME
++#if defined(NYX_PANEL_EXPERIMENTAL_WAKE_RUNTIME) || defined(NYX_PANEL_RESEARCH_WILLOW)
+                 // Idle inference and a call never overlap. Release only the
+                 // experimental classifier and join its consumer before the
+                 // call needs internal task stacks. Keep the sole I2S reader,
+@@ -1287,9 +1349,15 @@ static void wake_task(void *arg)
+                 ESP_LOGI("panel.wake","%s detected; recording while connecting",panel_voice_wake_word());
+                 xSemaphoreTake(state_lock,portMAX_DELAY);status.wake_detections++;xSemaphoreGive(state_lock);
+                 esp_err_t call_result=start_call(NULL,true);
++#ifdef NYX_PANEL_RESEARCH_WILLOW
++                ESP_LOGI("panel.wake.willow","event epoch=%u model_end=%llu read_end=%llu decision_us=%lld call=%s min_internal=%u",
++                         wake_capture_epoch,(unsigned long long)willow_hit_end,(unsigned long long)willow_read_end,
++                         (long long)willow_decision_us,esp_err_to_name(call_result),
++                         (unsigned)heap_caps_get_minimum_free_size(MALLOC_CAP_INTERNAL|MALLOC_CAP_8BIT));
++#endif
+ #ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
+                 ESP_LOGI("panel.wake.marker","decision epoch=%u c161_end=%llu cue_end=%llu read_end=%llu decision_us=%lld start_call=%s min_internal_boot=%u",
+-                    marker_epoch,(unsigned long long)decision.model_end,(unsigned long long)decision.cue_end,
++                    wake_capture_epoch,(unsigned long long)decision.model_end,(unsigned long long)decision.cue_end,
+                     (unsigned long long)marker_samples,(long long)decision_us,esp_err_to_name(call_result),
+                     (unsigned)heap_caps_get_minimum_free_size(MALLOC_CAP_INTERNAL|MALLOC_CAP_8BIT));
+ #endif
+diff --git a/tools/embed_wake_model.py b/tools/embed_wake_model.py
+index 20ec7b44..f95ee23c 100644
+--- a/tools/embed_wake_model.py
++++ b/tools/embed_wake_model.py
+@@ -1,17 +1,19 @@
+ #!/usr/bin/env python3
+-"""Pack the pinned ESP-SR Hi ESP model into the application OTA image."""
++"""Pack the selected ESP-SR WakeNet9 model into the application OTA image."""
+ import argparse
+ from pathlib import Path
+ import struct
+ import zlib
+ 
+ 
+-def pack(source: Path, output: Path):
++def pack(source: Path, output: Path, model="wn9_hiesp"):
++    if model not in {"wn9_hiesp", "wn9_heywillow_tts"}:
++        raise ValueError(f"Unknown WakeNet9 model {model}")
+     files = sorted(p for p in source.iterdir() if p.is_file())
+     if {p.name for p in files} != {"_MODEL_INFO_", "wn9_index", "wn9_data"}:
+-        raise ValueError("Unexpected Hi ESP model files")
++        raise ValueError("Unexpected WakeNet9 model files")
+     offset = 4 + 36 + 40 * len(files)
+-    header = struct.pack("<I32sI", 1, b"wn9_hiesp", len(files))
++    header = struct.pack("<I32sI", 1, model.encode("ascii"), len(files))
+     payload = b""
+     for file in files:
+         data = file.read_bytes()
+@@ -26,5 +28,6 @@ if __name__ == "__main__":
+     parser = argparse.ArgumentParser(description=__doc__)
+     parser.add_argument("source", type=Path)
+     parser.add_argument("output", type=Path)
++    parser.add_argument("--model", choices=("wn9_hiesp", "wn9_heywillow_tts"), default="wn9_hiesp")
+     args = parser.parse_args()
+-    pack(args.source, args.output)
++    pack(args.source, args.output, args.model)

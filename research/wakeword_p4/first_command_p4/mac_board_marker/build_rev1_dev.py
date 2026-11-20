@@ -88,13 +88,13 @@ def from_image(app):
     return Services(candidate.api, candidate.login, dev)
 
 
-def check_sources(board, playback_only=False):
+def check_sources(board, playback_only=False, extra_patches=()):
     rev = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=board, text=True).strip()
     require(rev == check_builds.BOARD_COMMIT, "Unexpected board source commit")
     with TemporaryDirectory() as directory:
         env = dict(os.environ, GIT_INDEX_FILE=str(Path(directory) / "index"))
         patches = (PATCH, PLAYBACK_ONLY) if playback_only else (PATCH,)
-        commands = [["read-tree", rev], *(["apply", "--cached", str(p)] for p in patches), ["diff", "--quiet", "--"]]
+        commands = [["read-tree", rev], *(["apply", "--cached", str(p)] for p in (*patches, *extra_patches)), ["diff", "--quiet", "--"]]
         for args in commands:
             subprocess.run(["git", *args], cwd=board, env=env, check=True)
 
