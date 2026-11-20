@@ -53,6 +53,34 @@ python3 "$handoff/build_fixed_sound_rev1.py" "$trial/board" "$trial/build" \
     --reference-rearm --primary-app "$primary_app" > "$trial/rev1-identity.json"
 ```
 
+### Capture the rev1 microphone and electrical reference for the restaurant A/B
+
+The dedicated diagnostic adds a local UART command to the standalone receiver above. It copies the panel's successful interleaved 16 kHz PCM16 reads before idle reference masking and before AEC. The same producer continues through a wake-initiated call. Each armed trial reserves 512,000 bytes of PSRAM for up to eight seconds. Use the ordinary rearm build for the reference heap and long-run measurements.
+
+The public-service app-slot image supports external-screen rev1 (chip revisions 1.00–1.99). For that image set `elf=3810d0e4d17b52ea4c3f978afc6d11f478b5ba13bd61dc59da9e559ee01eb816`. [Download the public diagnostic app](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/fixed-nyx-mr-console-rev1-public-dd7b6389.bin)
+
+Apply the extra patch in the board checkout prepared above, then build with the same Mac development services and ESP-IDF v5.5.4. The JSON gives the identity to check against the board during transfer.
+
+```sh
+git -C "$trial/board" apply --index "$handoff/mr-console.patch"
+python3 "$handoff/build_fixed_sound_rev1.py" "$trial/board" "$trial/build-mr" \
+    --reference-rearm --mr-console --primary-app "$primary_app" > "$trial/mr-image.json"
+elf=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["descriptor_elf_sha256"])' "$trial/mr-image.json")
+```
+
+With that diagnostic running on the external-screen rev1, wait for idle listening. Close other serial monitors. Use the Mac's usual speaker, gain and position for both files. Run each command in the directory containing the extracted WAVs and let the panel return to idle between trials. The ESP-IDF Python environment supplies pyserial. [Original command WAVs](../../results/hye-nyx-willow-six-indoor-equal-levels.zip) · [Whole-speaker WAVs](../../results/hye-nyx-willow-indoor-whole-speaker-v1.zip)
+
+```sh
+python3 "$handoff/mr_console.py" record PRESTO-zero-snr-nyx.wav presto-original \
+    --port "$PANEL_PORT" --elf "$elf"
+python3 "$handoff/mr_console.py" record PRESTO-zero-snr-nyx-whole.wav presto-whole \
+    --port "$PANEL_PORT" --elf "$elf"
+```
+
+Each new private directory holds `mr.wav` (left microphone, right electrical reference), `uart.log` and `capture.json`. The panel buffers during playback and exports on request. The host checks length, chunk offsets, device CRC32 and the supplied ELF identity. The JSON records the playback and PCM hashes. A full window has 128,000 frames. An early end preserves the available prefix and its reason. Transfer errors leave the snapshot available for another `nyx-mr dump` during the same boot. Save one dump to a fresh UART file, recover it with `mr_console.py decode uart.log mr.wav --elf "$elf"` and issue `nyx-mr clear` before the next take.
+
+Pair the UART decision and WAV by listening epoch. Subtract `first_epoch_sample` from `cue_end` or `read_end` to locate that one-past sample in the WAV. The command begins at sample 44,800 **of the playback file**. Locate the playback acoustically on the microphone before calculating a physical lead time. A host `afplay` timestamp uses a different clock. The snapshot counts accepted software reads. Report driver overflow observations separately when available. Save the independently decoded peer audio for the same call. Keep raw audio and UART private and post the build identity, hashes, clocks, transcript and resource readings to #18. [Build and digital checks](../../results/rev1-mr-console-verification.json)
+
 ### Two-marker 400 ms playback trial
 
 The public app archive contains one application image for external-screen rev1 (chip revisions 1.00–1.99) and one for integrated LCD-X8 (3.00–3.99). The manifest identifies each image, descriptor ELF and source patch. Each image contains one frozen C161 model. Both images use the 80 ms electrical reference recovery and the shortened microphone recovery after a playback veto. Use the 400 ms dual-marker WAV with these apps. [Public applications and manifest](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/hye-nyx-reference-rearm-p4-public-v1.zip) · [Verified archive and member hashes](../../results/4090-bella-reference-rearm-app-download.json) · [Playback WAV](../../results/hye-nyx-af-bella-early-marker-experiment.wav) · [Simulator results](../../experiments/bella_reference_rearm_results.md)

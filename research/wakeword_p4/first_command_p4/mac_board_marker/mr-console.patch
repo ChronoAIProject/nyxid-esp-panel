@@ -1,0 +1,178 @@
+diff --git a/components/panel_services/panel_runtime.c b/components/panel_services/panel_runtime.c
+index 8a31592c..83b8230e 100644
+--- a/components/panel_services/panel_runtime.c
++++ b/components/panel_services/panel_runtime.c
+@@ -498,6 +498,9 @@ static int init_console(void)
+         { .command = "screen",        .help = "Open a native screen", .func = screen_cli },
+         { .command = "app", .help = "USB diagnostics: inspect/open/close installed apps or show active app", .func = app_cli },
+         { .command = "nyx-login",     .help = "Panel Agent Key login start/status/cancel; no secret tokens", .func = nyx_login_cli },
++#ifdef NYX_PANEL_FIXED_SOUND
++        { .command = "nyx-mr", .help = "Local diagnostic microphone/reference snapshot", .func = panel_voice_mr_cli },
++#endif
+         { .command = "nyx-voice",     .help = "Voice status or local SDP test; no provider call", .func = nyx_voice_cli },
+         { .command = "provision-mode", .help = "Enter provisioning mode",     .func = provision_mode_cli },
+         { .command = "exit-provision", .help = "Exit provisioning mode",      .func = exit_provision_cli },
+diff --git a/components/panel_services/panel_voice.c b/components/panel_services/panel_voice.c
+index fbc9a7f9..b55fa192 100644
+--- a/components/panel_services/panel_voice.c
++++ b/components/panel_services/panel_voice.c
+@@ -2,6 +2,9 @@
+ #include "panel_voice.h"
+ #include "panel_ota.h"
+ #include "panel_voice_audio.h"
++#ifdef NYX_PANEL_FIXED_SOUND
++#include "b64.h"
++#endif
+ #ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
+ #include "fixed_marker/board_marker.h"
+ #endif
+@@ -142,6 +145,103 @@ static void wake_task(void *arg);
+ static esp_err_t open_peer(voice_call_t *c);
+ static esp_err_t start_call(const panel_voice_remote_t *remote, bool wake);
+ 
++
++#ifdef NYX_PANEL_FIXED_SOUND
++// The console owns allocation and export. The wake task only copies successful
++// interleaved reads under the existing wake_lock. Slot 1 is the physical R.
++enum { MR_FRAMES = 8 * 16000, MR_BYTES_PER_FRAME = 4 };
++static struct {
++    uint8_t *data;
++    unsigned epoch, frames;
++    uint64_t first;
++    const char *end;
++} mr;
++
++static void mr_finish(const char *reason)
++{
++    if (mr.data && !mr.end) mr.end = reason;
++}
++
++static void mr_feed(const int16_t *input, unsigned frames, uint64_t before, bool in_call)
++{
++    if (!mr.data || mr.end) return;
++    if (!mr.frames) {
++        if (in_call || mr.epoch != marker_epoch) {
++            mr_finish("listener_changed");
++            return;
++        }
++        mr.first = before;
++    }
++    if (frames > MR_FRAMES - mr.frames) frames = MR_FRAMES - mr.frames;
++    memcpy(mr.data + mr.frames * MR_BYTES_PER_FRAME, input, frames * MR_BYTES_PER_FRAME);
++    mr.frames += frames;
++    if (mr.frames == MR_FRAMES) mr_finish("full");
++}
++
++int panel_voice_mr_cli(int argc, char **argv)
++{
++    if (argc != 2 || !wake_lock) {
++        puts("nyx-mr arm|dump|clear (wake task required)");
++        return 1;
++    }
++    if (!strcmp(argv[1], "arm")) {
++        uint8_t *fresh = heap_caps_malloc(MR_FRAMES * MR_BYTES_PER_FRAME,
++                                         MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
++        if (!fresh) { puts("MR_ERROR psram"); return 1; }
++        xSemaphoreTake(wake_lock, portMAX_DELAY);
++        bool idle = !mr.data && atomic_load(&wake_listening) && !wake_call &&
++                    !atomic_load(&microphone_muted) && marker_epoch;
++        if (idle) {
++            mr.data = fresh;
++            mr.epoch = marker_epoch;
++        }
++        xSemaphoreGive(wake_lock);
++        if (!idle) {
++            heap_caps_free(fresh);
++            puts("MR_ERROR wait_for_listening_or_clear_previous");
++            return 1;
++        }
++        puts("MR_ARMED");
++        return 0;
++    }
++    if (!strcmp(argv[1], "clear")) {
++        xSemaphoreTake(wake_lock, portMAX_DELAY);
++        uint8_t *old = mr.data;
++        memset(&mr, 0, sizeof(mr));
++        xSemaphoreGive(wake_lock);
++        heap_caps_free(old);
++        puts("MR_CLEARED");
++        return 0;
++    }
++    if (strcmp(argv[1], "dump")) { puts("nyx-mr arm|dump|clear"); return 1; }
++    xSemaphoreTake(wake_lock, portMAX_DELAY);
++    mr_finish("manual");
++    bool available = mr.frames > 0;
++    xSemaphoreGive(wake_lock);
++    if (!available) { puts("MR_ERROR no_samples"); return 1; }
++
++    // One serial REPL executes commands. The producer leaves a sealed buffer
++    // untouched until clear, so slow UART output never takes the audio lock.
++    char elf[65];
++    const uint8_t *hash = esp_app_get_description()->app_elf_sha256;
++    for (unsigned i = 0; i < 32; ++i) snprintf(elf + 2*i, 3, "%02x", hash[i]);
++    printf("\nMR_BEGIN epoch=%u first=%llu frames=%u end=%s elf=%s\n",
++           mr.epoch, (unsigned long long)mr.first, mr.frames, mr.end, elf);
++    unsigned bytes = mr.frames * MR_BYTES_PER_FRAME;
++    for (unsigned offset = 0; offset < bytes; offset += 192) {
++        unsigned count = bytes - offset;
++        if (count > 192) count = 192;
++        char encoded[257];
++        size_t encoded_len;
++        if (b64_encode(mr.data + offset, count, encoded, sizeof(encoded), &encoded_len)) return 1;
++        printf("MR_DATA %u %s\n", offset, encoded);
++        if (!(offset % (32 * 192))) vTaskDelay(1);
++    }
++    printf("MR_END crc32=%08lx\n", (unsigned long)crc32(0, mr.data, bytes));
++    return 0;
++}
++#endif
++
+ static aec_handle_t *create_voice_aec(void)
+ {
+     aec_config_t cfg={.mic_num=1,.ref_num=1,.out_num=1,.filter_length=8,.sample_rate=16000,
+@@ -1208,6 +1308,9 @@ static void wake_task(void *arg)
+             }
+             // Keep audio ownership until the call's speaker/tone tasks join.
+             if(c && (!atomic_load(&c->running) || atomic_load(&stopping))) {
++#ifdef NYX_PANEL_FIXED_SOUND
++                mr_finish("call_stopped");
++#endif
+                 xSemaphoreGive(wake_lock);continue;
+             }
+             atomic_store(&wake_listening,c==NULL);
+@@ -1216,6 +1319,10 @@ static void wake_task(void *arg)
+                 xSemaphoreGive(wake_lock);break;
+             }
+             atomic_fetch_add_explicit(&capture_frames,1,memory_order_relaxed);
++#ifdef NYX_PANEL_FIXED_SOUND
++            if (atomic_load(&microphone_muted) || (c && atomic_load(&c->muted))) mr_finish("muted");
++            mr_feed(capture, chunk, marker_samples, c != NULL);
++#endif
+             // M/R are sampled by the same I2S clock, as in the factory MR
+             // input format. Queued outgoing PCM is not a playback clock.
+             for(int i=0;i<chunk;++i){mic[i]=capture[2*i];ref[i]=c?capture[2*i+1]:0;}
+@@ -1354,6 +1461,11 @@ static void wake_task(void *arg)
+             }
+         }
+         atomic_store(&wake_listening,false);
++#ifdef NYX_PANEL_FIXED_SOUND
++        xSemaphoreTake(wake_lock, portMAX_DELAY);
++        mr_finish("epoch_ended");
++        xSemaphoreGive(wake_lock);
++#endif
+ #ifdef NYX_PANEL_RESEARCH_FIXED_MARKER
+         heap_caps_free(marker);marker=NULL;
+ #endif
+diff --git a/components/panel_services/panel_voice.h b/components/panel_services/panel_voice.h
+index a3ee6c61..09a6797c 100644
+--- a/components/panel_services/panel_voice.h
++++ b/components/panel_services/panel_voice.h
+@@ -1,4 +1,8 @@
+ #pragma once
++
++#ifdef NYX_PANEL_FIXED_SOUND
++int panel_voice_mr_cli(int argc, char **argv);
++#endif
+ #include "esp_err.h"
+ #include <stdbool.h>
+ #include <stddef.h>

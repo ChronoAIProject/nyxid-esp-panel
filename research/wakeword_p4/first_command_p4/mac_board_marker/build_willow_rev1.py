@@ -111,7 +111,7 @@ def verify(board, build, services):
                 prime_samples=81600, willow_patch_sha256=digest(WILLOW.read_bytes()))
 
 
-def run_build(engine, patch, verifier, description, recovery_patches=()):
+def run_build(engine, patch, verifier, description, recovery_patches=(), mr_console_patch=None):
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument("board", type=Path)
     parser.add_argument("build", type=Path)
@@ -122,6 +122,8 @@ def run_build(engine, patch, verifier, description, recovery_patches=()):
     parser.add_argument("--verify-only", action="store_true")
     if recovery_patches:
         parser.add_argument("--reference-rearm", action="store_true", help="verify both playback recovery patches")
+    if mr_console_patch:
+        parser.add_argument("--mr-console", action="store_true", help="verify the local serial M/R capture build")
     args = parser.parse_args()
     require(__debug__, "Use normal Python for linked-image checks")
     board, build = args.board.resolve(), args.build.resolve()
@@ -136,7 +138,9 @@ def run_build(engine, patch, verifier, description, recovery_patches=()):
         require(services.fingerprint == "6f3d3f8368" and services.node_dev,
                 "Expected the development service profile of the Mac primary C161 comparison")
     recovery = recovery_patches if getattr(args, "reference_rearm", False) else ()
-    check_sources(board, extra_patches=(patch, *recovery))
+    capture = getattr(args, "mr_console", False)
+    extra = (mr_console_patch,) if capture else ()
+    check_sources(board, extra_patches=(patch, *recovery, *extra))
     if not args.verify_only:
         build.mkdir(parents=True, exist_ok=True)
         require(not any(build.iterdir()), "Use an empty directory for a new build")
@@ -150,6 +154,13 @@ def run_build(engine, patch, verifier, description, recovery_patches=()):
                 require(subprocess.run(command, cwd=board, stdout=log, stderr=subprocess.STDOUT).returncode == 0,
                         f"Inspect the local {logfile} for the build error")
     report = verifier(board, build, services)
+    if mr_console_patch:
+        desc = json.loads((build / "project_description.json").read_text())
+        app = (build / desc["app_bin"]).read_bytes()
+        for marker in (b"nyx-mr\0", b"MR_ARMED\0", b"MR_END crc32="):
+            require((marker in app) == capture, "Linked image and requested M/R console differ")
+        if capture:
+            report["mr_console_patch_sha256"] = digest(mr_console_patch.read_bytes())
     if recovery:
         report["recovery_patches"] = {p.name: digest(p.read_bytes()) for p in recovery}
     print(json.dumps(report, indent=2))

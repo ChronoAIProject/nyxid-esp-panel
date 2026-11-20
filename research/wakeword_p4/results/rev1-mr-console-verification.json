@@ -1,0 +1,70 @@
+{
+  "build": {
+    "board_commit": "0d8e1935702a561b535a8c1a0921fd8034943d2c",
+    "board_profile": "p4-rev1-16mb",
+    "idf": "v5.5.4",
+    "chip": "esp32p4",
+    "min_revision": 100,
+    "max_revision": 199,
+    "services": "public",
+    "service_fingerprint": null,
+    "app_bytes": 6436848,
+    "app_sha256": "dd7b638925eca316695473add8a3ef26177411b588fab54070e917b2ea500a8a",
+    "descriptor_elf_sha256": "3810d0e4d17b52ea4c3f978afc6d11f478b5ba13bd61dc59da9e559ee01eb816",
+    "ota_slots": {
+      "ota_0": {
+        "offset": 917504,
+        "bytes": 6881280,
+        "free_bytes": 444432
+      },
+      "ota_1": {
+        "offset": 7798784,
+        "bytes": 6881280,
+        "free_bytes": 444432
+      }
+    },
+    "partition_table_sha256": "62f42bb102ea630060ff184c20b072a679fe90a623b38fdc271225bdd334768a",
+    "marker_patch_sha256": "19a8dde32100d332f92d21c04575af24b3ece424556b64a383822ebd1543b536",
+    "engine": "fixed-nyx",
+    "fixed_sound_patch_sha256": "d77873d9ae343813bb7e9e70dc71bf99ba7b6fd53a24f7d77bc977218d5893d8",
+    "reference_model_sha256": "c16154040378b8acccdb57c19917c46cea0a9ea6a39f105004b964ddd093ab81",
+    "embedded_c161_copies": 0,
+    "neural_prime_samples": 0,
+    "mr_console_patch_sha256": "12f5911452bb68b0fb7af27dc71e5527007b5925ed54cd8433a38a02c6258703",
+    "recovery_patches": {
+      "reference-rearm-80ms.patch": "5431798bf1bda5d09c56e8dfd2c6ed38d5b372f8511f7e918d4f115b368ba5c3",
+      "microphone-rearm-after-veto.patch": "9db796410bb6cd2e732b9b2f58c228b8f6fee579d40fa04bf2a0c1a873c714a9"
+    }
+  },
+  "release_url": "https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/fixed-nyx-mr-console-rev1-public-dd7b6389.bin",
+  "anonymous_download": {
+    "bytes": 6436848,
+    "sha256": "dd7b638925eca316695473add8a3ef26177411b588fab54070e917b2ea500a8a"
+  },
+  "ordinary_receiver_app_sha256": "f902203265eb3ddac057b81dba988128ec5823d842290bcc303c0e51f6a61298",
+  "serial_collector_sha256": "367119782f75fcaa55503a77d36036847b2d14555e9cd3750c9b65166ae45c6a",
+  "host_round_trips": [
+    {
+      "microphone": "PRESTO-zero-snr-nyx.wav",
+      "reference": "PRESTO-zero-snr-nyx-whole.wav",
+      "end": "full",
+      "frames": 128000,
+      "pcm_sha256": "de19e65f77e864f1ded537d0ca6344bd48b374be3b0a9a37434506e1382c3aba"
+    },
+    {
+      "microphone": "PRESTO-zero-snr-nyx-whole.wav",
+      "reference": "PRESTO-zero-snr-nyx.wav",
+      "end": "epoch_ended",
+      "frames": 85200,
+      "pcm_sha256": "fce31ac80070cf156f26ec15179984cdf0a139cbd20e6ff6192200b58833bd81"
+    }
+  ],
+  "rejected": [
+    "duplicate_offset",
+    "missing_chunk",
+    "corrupt_pcm",
+    "missing_trailer",
+    "wrong_elf"
+  ],
+  "validation": "The production snapshot functions and base64 encoder ran on the host with stubbed RTOS and heap calls. The stereo inputs place the two issued PRESTO files on different lanes. The full test pads with zeros to 8 s and offers excess frames. The second ends the epoch at EOF. Both WAVs match the interleaved input byte for byte. A separate pyserial pseudo-terminal run exercised arm, a stub player, dump, ELF and CRC verification, WAV output and clear. No physical P4, speaker, UART adapter or receiver was used for these observations."
+}

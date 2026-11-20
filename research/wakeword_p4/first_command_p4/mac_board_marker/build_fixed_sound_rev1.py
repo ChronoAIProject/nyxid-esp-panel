@@ -34,4 +34,4 @@ def verify(board, build, services):
 
 
 if __name__ == "__main__":
-    run_build("fixed-nyx", FIXED, verify, __doc__, REFERENCE_BARGE)
+    run_build("fixed-nyx", FIXED, verify, __doc__, REFERENCE_BARGE, PATCH.with_name("mr-console.patch"))
