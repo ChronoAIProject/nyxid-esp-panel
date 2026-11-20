@@ -1,0 +1,5 @@
+# Three triplets in the existing 1.45 s source
+
+Both nominal-first variants recovered four original-level misses and the stronger two-triplet variant missed one of the 15 player-rate cases. Try both orders of the two early triplets, using the immutable delivered A and the frozen nominal-first nominal-late source. At a further 400 ms advance, add the quantized increment of one to the other, with its three segments moved together. Fit only the new increment's common sign, ±4 ms shift and PCM16 headroom using the source-only rule. Preserve the late nominal triplet, full source duration, spoken carrier, firmware and thresholds. Freeze both WAVs before replay.
+
+Compare all 59 previous room, speed and self-play presentations. For either order with recovered misses, no lost timely cases and no synchronous panel opens, check all 96 historical interruptions plus their erased controls. Transcribe the complete isolated WAV with both registered readers. Check the received commands for the recovered original-level cases and compare simultaneous self/external playback with the same cue before handing a new physical candidate to Mac.
