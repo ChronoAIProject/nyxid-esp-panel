@@ -35,3 +35,23 @@ Five of the 24 calls opened at sample 31,488, before two seconds of input existe
 ## Two orientations selected after freezing the playback pack
 
 The original-level pack was replayed at Surrey 60° and 210°, with the target on each side. The selected three-group WAV opened before the command in 12/12 trials, the delivered two-group baseline in 10/12 and official Hey Willow in 7/12 on its paired address. Both additional recoveries were case 077, at 60° rear and 210° front. The candidate opened 465–880 ms before command onset. Both receivers stayed closed on the 12 erased controls and on the other address. None of the 48 simulated microphones clipped. All 12 candidate opens used the fixed marker. The two orientations reuse the same room and three commands as the earlier 24 trials. [Registered plan](bella_third_triplet_new_angles_protocol.md) · [Per-file clocks](../results/4090-bella-third-triplet-new-angles.json) · [192 native evidence files](../results/4090-bella-third-triplet-new-angles.zip)
+
+## Finding the command after a fixed playback sound
+
+Matching the first 400 ms of the known cue against the raw microphone samples available at open located the cue end within −3 to +57 samples of the annotated command start in the original 24 calls. On the 12 additional placements the error was −4 to 0 samples. The pack places the command immediately after the cue. This timing measurement applies to that playback format and nominal speed.
+
+On the 24 available peer recordings, ASR also read the audio starting 100 ms before the estimated command start. The whole-transcript score requires precisely the target words, including no introductory words. The suffix score also accepts a transcript with extra words before the complete target. Both use the same decoded original send and reader. [Registered procedure](bella_third_triplet_command_start_protocol.md) · [Per-call words, scores and timing](../results/4090-bella-third-triplet-command-start.json)
+
+| GPU reader and service readiness | Whole transcript, full send → cropped | Complete suffix, full send → cropped |
+| --- | ---: | ---: |
+| Qwen, immediate | 8 → 24 | 24 → 24 |
+| Qwen, delayed | 10 → 24 | 24 → 24 |
+| Whisper turbo, immediate | 12 → 16 | 21 → 16 |
+| Whisper turbo, delayed | 11 → 19 | 17 → 19 |
+
+In 30° rear 077 the cropped immediate Qwen transcript was “Turn down the hall light.” Whisper returned “down the hall line.” The clipping experiment was performed on ASR input after decoding. The Mac can save the full peer stream and estimate the boundary separately from its raw M. With NumPy and SciPy, run the following from the research checkout, using the first-open position relative to the start of the 16 kHz microphone file. The output includes the estimated end sample and correlation. [Mac reader](../first_command_p4/mac_listener/locate_bella_command_start.py)
+
+```sh
+python3 research/wakeword_p4/first_command_p4/mac_listener/locate_bella_command_start.py \
+    wake/three-triplets.wav mic.wav --channel 0 --open-sample "$open_sample"
+```
