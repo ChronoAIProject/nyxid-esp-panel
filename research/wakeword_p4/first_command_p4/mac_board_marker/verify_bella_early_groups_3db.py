@@ -39,7 +39,9 @@ def compare():
     panels = defaultdict(Counter)
     for row in report["records"]:
         old = base.pop(row["label"])
-        assert all(row[k]==old[k] for k in ("group","start","end","ref_sha256"))
+        assert all(row[k]==old[k] for k in ("group","start","end"))
+        # Synchronous playback feeds each cue back as its own reference.
+        assert (row["ref_sha256"] != old["ref_sha256"]) == (row["group"] == "synchronous")
         a,b = (classify(r["events"],r["start"],r["end"]) for r in (old,row))
         panels[row["group"]].update(cases=1,old=int(a),new=int(b),gained=int(b and not a),lost=int(a and not b))
     assert not base and len(report["records"]) == 59
