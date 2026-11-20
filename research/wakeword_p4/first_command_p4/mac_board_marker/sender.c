@@ -117,8 +117,11 @@ static void replay(void *unused)
     opened = header[1];
     first = header[2];
     samples = header[3];
-    if (opened % 256 || first + WAKE_LOOKBACK_SAMPLES != opened/160*160 ||
-        samples < WAKE_LOOKBACK_SAMPLES || samples > 160000) abort();
+    const unsigned produced_at_open = opened / 160 * 160;
+    const unsigned available_history = produced_at_open < WAKE_LOOKBACK_SAMPLES
+        ? produced_at_open : WAKE_LOOKBACK_SAMPLES;
+    if (!opened || opened % 256 || first != produced_at_open - available_history ||
+        samples < available_history || samples > 160000) abort();
     padded = (samples + FRAME_SAMPLES-1) / FRAME_SAMPLES * FRAME_SAMPLES;
     const unsigned caps = MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT;
     pcm = heap_caps_calloc(padded, sizeof(*pcm), caps);
