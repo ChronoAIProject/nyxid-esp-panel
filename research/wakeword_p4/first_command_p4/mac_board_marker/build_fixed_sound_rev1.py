@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 import subprocess
 
+from build_rev1_dev import REFERENCE_BARGE
 from build_willow_rev1 import MODEL, PATCH, digest, reference_image, run_build
 
 FIXED = PATCH.with_name("fixed-sound-runtime.patch")
@@ -33,4 +34,4 @@ def verify(board, build, services):
 
 
 if __name__ == "__main__":
-    run_build("fixed-nyx", FIXED, verify, __doc__)
+    run_build("fixed-nyx", FIXED, verify, __doc__, REFERENCE_BARGE)

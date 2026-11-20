@@ -1,0 +1,71 @@
+{
+  "url": "https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/hye-nyx-fixed-sound-rearm-p4-rev1-public-v1.zip",
+  "archive_sha256": "ab767fd6f0e749ac4acfe2cbccb16dc790083706fdfed66176576b83c14656a4",
+  "bytes": 3245508,
+  "members": {
+    "fixed-nyx-rearm-rev1-f9022032.bin": {
+      "bytes": 6429184,
+      "sha256": "f902203265eb3ddac057b81dba988128ec5823d842290bcc303c0e51f6a61298"
+    },
+    "manifest.json": {
+      "bytes": 2121,
+      "sha256": "979f30a8995b88a5c6f41d8229b7a207a5b4c179c50dac734bd18f3a2d6e90e7"
+    }
+  },
+  "manifest": {
+    "file": "fixed-nyx-rearm-rev1-f9022032.bin",
+    "board_commit": "0d8e1935702a561b535a8c1a0921fd8034943d2c",
+    "board_profile": "p4-rev1-16mb",
+    "idf": "v5.5.4",
+    "chip": "esp32p4",
+    "min_revision": 100,
+    "max_revision": 199,
+    "services": "public",
+    "service_fingerprint": null,
+    "app_bytes": 6429184,
+    "app_sha256": "f902203265eb3ddac057b81dba988128ec5823d842290bcc303c0e51f6a61298",
+    "descriptor_elf_sha256": "a88e6a85ae4934fbd486cadf63bd9a463385785e5e59724d543f51c22feafed4",
+    "ota_slots": {
+      "ota_0": {
+        "offset": 917504,
+        "bytes": 6881280,
+        "free_bytes": 452096
+      },
+      "ota_1": {
+        "offset": 7798784,
+        "bytes": 6881280,
+        "free_bytes": 452096
+      }
+    },
+    "partition_table_sha256": "62f42bb102ea630060ff184c20b072a679fe90a623b38fdc271225bdd334768a",
+    "marker_patch_sha256": "19a8dde32100d332f92d21c04575af24b3ece424556b64a383822ebd1543b536",
+    "engine": "fixed-nyx",
+    "fixed_sound_patch_sha256": "d77873d9ae343813bb7e9e70dc71bf99ba7b6fd53a24f7d77bc977218d5893d8",
+    "reference_model_sha256": "c16154040378b8acccdb57c19917c46cea0a9ea6a39f105004b964ddd093ab81",
+    "embedded_c161_copies": 0,
+    "neural_prime_samples": 0,
+    "patches": [
+      {
+        "file": "c161-fixed-marker.patch",
+        "sha256": "19a8dde32100d332f92d21c04575af24b3ece424556b64a383822ebd1543b536",
+        "source_commit": "7f520737cd2b3a2442f1fbe90f368bbb31c5037c"
+      },
+      {
+        "file": "fixed-sound-runtime.patch",
+        "sha256": "d77873d9ae343813bb7e9e70dc71bf99ba7b6fd53a24f7d77bc977218d5893d8",
+        "source_commit": "7efdd6b4751832647e002c7a8c82178a018c66d5"
+      },
+      {
+        "file": "reference-rearm-80ms.patch",
+        "sha256": "5431798bf1bda5d09c56e8dfd2c6ed38d5b372f8511f7e918d4f115b368ba5c3",
+        "source_commit": "1634b03afda2f66b20a0561a9894ab2ee456def3"
+      },
+      {
+        "file": "microphone-rearm-after-veto.patch",
+        "sha256": "9db796410bb6cd2e732b9b2f58c228b8f6fee579d40fa04bf2a0c1a873c714a9",
+        "source_commit": "9be2782061967778a8f87403e1229f58d9ef066b"
+      }
+    ],
+    "simulation_report_sha256": "b4c39fff81b662968c14883354f5767fcbed468cf04737e0ba301c9ffd5219ec"
+  }
+}

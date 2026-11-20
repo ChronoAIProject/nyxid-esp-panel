@@ -96,7 +96,12 @@ def check_sources(board, playback_only=False, extra_patches=()):
     with TemporaryDirectory() as directory:
         env = dict(os.environ, GIT_INDEX_FILE=str(Path(directory) / "index"))
         patches = (PATCH, PLAYBACK_ONLY) if playback_only else (PATCH,)
-        commands = [["read-tree", rev], *(["apply", "--cached", str(p)] for p in (*patches, *extra_patches)), ["diff", "--quiet", "--"]]
+        commands = [["read-tree", rev]]
+        for patch in (*patches, *extra_patches):
+            # fixed-nyx places an ifdef immediately after the shared cue-routing line.
+            context = ["-C2"] if patch == REFERENCE_BARGE[1] and PATCH.with_name("fixed-sound-runtime.patch") in extra_patches else []
+            commands.append(["apply", "--cached", *context, str(patch)])
+        commands.append(["diff", "--quiet", "--"])
         for args in commands:
             subprocess.run(["git", *args], cwd=board, env=env, check=True)
 

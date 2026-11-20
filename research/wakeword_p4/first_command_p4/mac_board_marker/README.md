@@ -35,6 +35,24 @@ python3 "$research/research/wakeword_p4/first_command_p4/mac_listener/measure_co
     079/new.wav uplink-decoded.wav --command-at 48400 > 079-command-windows.json
 ```
 
+### External-screen rev1 with only the generated wake sound
+
+Use the standalone reference-rearm application to test the issued 1.45-second sounds with a smaller listener and to compare daily false openings with C161. Use the same 079 player files and the same board, speaker positions and volume for both receivers. For the self-play check, play the new Bella WAV through the panel and capture its physical electrical reference alongside the microphone. Record the event source and first-open sample, minimum internal heap through the call, first decoded sentence, dropped reads and resets. The companion control is a run with the same Bella WAV played by an external speaker. The public image is an app-slot payload for chip revisions 1.00–1.99. [Public firmware and manifest](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/hye-nyx-fixed-sound-rearm-p4-rev1-public-v1.zip) · [Per-input simulation results](../../experiments/eight_local_fixed_rearm_results.md)
+
+For the same development services as the Mac C161 build, set `primary_app` to the retained C161 development app beginning `dd8af8a0` and activate ESP-IDF v5.5.4. From the research checkout run the following commands.
+
+```sh
+handoff="$PWD/research/wakeword_p4/first_command_p4/mac_board_marker"
+trial=$(mktemp -d)
+git worktree add --detach "$trial/board" 0d8e1935702a561b535a8c1a0921fd8034943d2c
+git -C "$trial/board" apply --index "$handoff/c161-fixed-marker.patch"
+git -C "$trial/board" apply --index "$handoff/fixed-sound-runtime.patch"
+git -C "$trial/board" apply --index "$handoff/reference-rearm-80ms.patch"
+git -C "$trial/board" apply --index -C2 "$handoff/microphone-rearm-after-veto.patch"
+python3 "$handoff/build_fixed_sound_rev1.py" "$trial/board" "$trial/build" \
+    --reference-rearm --primary-app "$primary_app" > "$trial/rev1-identity.json"
+```
+
 ### Two-marker 400 ms playback trial
 
 The public app archive contains one application image for external-screen rev1 (chip revisions 1.00–1.99) and one for integrated LCD-X8 (3.00–3.99). The manifest identifies each image, descriptor ELF and source patch. Each image contains one frozen C161 model. Both images use the 80 ms electrical reference recovery and the shortened microphone recovery after a playback veto. Use the 400 ms dual-marker WAV with these apps. [Public applications and manifest](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/hye-nyx-reference-rearm-p4-public-v1.zip) · [Verified archive and member hashes](../../results/4090-bella-reference-rearm-app-download.json) · [Playback WAV](../../results/hye-nyx-af-bella-early-marker-experiment.wav) · [Simulator results](../../experiments/bella_reference_rearm_results.md)
