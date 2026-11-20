@@ -81,6 +81,13 @@ Each new private directory holds `mr.wav` (left microphone, right electrical ref
 
 Pair the UART decision and WAV by listening epoch. Subtract `first_epoch_sample` from `cue_end` or `read_end` to locate that one-past sample in the WAV. The command begins at sample 44,800 **of the playback file**. Locate the playback acoustically on the microphone before calculating a physical lead time. A host `afplay` timestamp uses a different clock. The snapshot counts accepted software reads. Report driver overflow observations separately when available. Save the independently decoded peer audio for the same call. Keep raw audio and UART private and post the build identity, hashes, clocks, transcript and resource readings to #18. [Build and digital checks](../../results/rev1-mr-console-verification.json)
 
+For the two issued restaurant files, run the following in a Python environment with NumPy. The report verifies the playback file and UART snapshot, aligns two windows before and two after the file's command boundary on the microphone channel, and pairs the matching listening epoch. The prefix and suffix estimates must agree within 192 samples (12 ms). `cue_lead_ms` uses the marker sample and `read_end_lead_ms` uses the end of the read delivered to the listener. A positive lead places the event before the acoustic command boundary. Both refer to the local receiver. The independently decoded peer recording supplies the first sentence. [Digital timing controls](../../results/rev1-presto-timing-controls.json)
+
+```sh
+python3 "$handoff/report_presto_timing.py" presto-original > presto-original/timing.json
+python3 "$handoff/report_presto_timing.py" presto-whole > presto-whole/timing.json
+```
+
 ### Two-marker 400 ms playback trial
 
 The public app archive contains one application image for external-screen rev1 (chip revisions 1.00–1.99) and one for integrated LCD-X8 (3.00–3.99). The manifest identifies each image, descriptor ELF and source patch. Each image contains one frozen C161 model. Both images use the 80 ms electrical reference recovery and the shortened microphone recovery after a playback veto. Use the 400 ms dual-marker WAV with these apps. [Public applications and manifest](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/hye-nyx-reference-rearm-p4-public-v1.zip) · [Verified archive and member hashes](../../results/4090-bella-reference-rearm-app-download.json) · [Playback WAV](../../results/hye-nyx-af-bella-early-marker-experiment.wav) · [Simulator results](../../experiments/bella_reference_rearm_results.md)
