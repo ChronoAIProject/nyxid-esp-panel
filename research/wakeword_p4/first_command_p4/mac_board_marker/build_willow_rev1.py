@@ -149,5 +149,9 @@ def run_build(engine, patch, verifier, description):
     print(json.dumps(verifier(board, build, services), indent=2))
 
 
-if __name__ == "__main__":
+def main():
     run_build("hey-willow", WILLOW, verify, __doc__)
+
+
+if __name__ == "__main__":
+    main()

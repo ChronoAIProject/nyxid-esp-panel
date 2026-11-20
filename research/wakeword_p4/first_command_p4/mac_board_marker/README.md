@@ -189,3 +189,21 @@ In the 12 existing Mac synthetic fixtures the official classic ESP32 reference r
 Start with quiet case 077. Its three files have the identical command starting at sample 44,800. With zero playback reference and the frozen digital inputs, Nyx opened at 43,520 through the fixed marker and Willow at 39,936 on its own address. Both rejected the other address and the address-erased command. Keep the same speaker gain while switching files. The physical request clocks can be compared against these digital references after aligning the microphone recording. [Three quiet playback WAVs](../../results/c161-willow-077-quiet-pair.zip) · [Quiet clocks](../../results/4090-hey-willow-p4-rev1-quiet.json)
 
 For the weak room triplets, the Nyx receiver opened on 0/3 original addresses, 3/3 with the intended speaker doubled, and 2/3 with both external voices doubled. Official Willow gave zero wakes on its nine matched weak addresses. On case 072 the Nyx model opened when unaddressed speech, interruption and music coincided, and Willow gave zero wakes in all eight source combinations. These are selected digital examples. Twenty-five Willow return sequences were reused by exact microphone hash and ten were newly measured in classic ESP32 QEMU. [35 paired clocks](../../results/4090-hey-willow-p4-rev1-room.json) · [Original UART and return sequences](../../results/4090-hey-willow-p4-rev1-room.zip)
+
+## Standalone receiver for the generated Hye Nyx sound
+
+The `fixed-nyx` research engine listens for the three markers in the original 1.45 s Bella WAV. It reads the panel's synchronous microphone and playback reference, retains the self-play guards used for the cue, and sends a call through the panel's existing preroll, AEC, AGC and Opus path. The neural detector and its 60,952-byte model are absent from this app. Use the primary C161 diagnostic for ordinary speech. In host replay the standalone receiver opened before the command on all 12 marked connected clips and gave zero openings on the other 48. The primary C161 model also opened on 5/12 unmarked Hey Nyx and 5/12 unmarked Hey Nicks clips, after their command boundaries. [60 connected inputs](../../results/4090-fixed-sound-connected.json)
+
+The external-screen rev1 public app occupies 6,429,056 bytes. Each OTA slot has 452,224 bytes free. With the same example development services as the earlier playback-only app which kept C161 resident, the new app saved 194,608 bytes. The release includes the public app, its image identity, and the original Bella WAV. [Public app and playback sound](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/hye-nyx-fixed-sound-p4-rev1-public-v1.zip) · [Build and download hashes](../../results/4090-fixed-sound-rev1-build.json)
+
+For a development build matched to the Mac primary, start from the research checkout with ESP-IDF v5.5.4 active and set `primary_app` to the retained C161 image beginning `dd8af8a0`. The verifier checks the source patches, service profile, chip revision, descriptor ELF hash, OTA slots and linked receiver. The fixed-sound epoch log includes `policy=fixed-sound`. Replay the three quiet 077 files with the same speaker position and gain, then 072 and the three weak rooms. Compare the minimum internal heap and the actual received command at the same service settings. [Quiet 077 playback](../../results/c161-willow-077-quiet-pair.zip)
+
+```sh
+fixture="$(pwd -P)/research/wakeword_p4/first_command_p4/mac_board_marker"
+trial=$(mktemp -d)
+git worktree add --detach "$trial/board" 0d8e1935702a561b535a8c1a0921fd8034943d2c
+git -C "$trial/board" apply --index "$fixture/c161-fixed-marker.patch"
+git -C "$trial/board" apply --index "$fixture/fixed-sound-runtime.patch"
+python3 "$fixture/build_fixed_sound_rev1.py" "$trial/board" "$trial/build" \
+    --primary-app "$primary_app" > "$trial/fixed-sound-identity.json"
+```
