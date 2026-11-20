@@ -1,6 +1,5 @@
 """Replay a whole mono recording through the unchanged P4 listeners, with zero reference."""
 from pathlib import Path
-import json
 import re
 import struct
 import subprocess
@@ -47,7 +46,7 @@ def replay(name, row, folder):
             log.rename(folder / (stamp + ".failed-" + P.sha(log) + ".log"))
         payload = folder / "input.bin"
         payload.write_bytes(content)
-        command = [fixed.QEMU, "-machine", "esp32p4", "-display", "none", "-monitor", "stdio",
+        command = [fixed.QEMU, "-machine", "esp32p4", "-m", "16M", "-display", "none", "-monitor", "stdio",
                    "-serial", f"file:{log}", "-snapshot", "-drive", f"file={flash},if=mtd,format=raw",
                    "-device", f"loader,file={payload},addr=0x48400000,force-raw=on"]
         with subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE) as proc:
@@ -59,7 +58,9 @@ def replay(name, row, folder):
                         break
                     time.sleep(.25)
                 _, err = proc.communicate(b"quit\n", timeout=8)
-                assert proc.returncode == 0 and b"BOARD PASS\r\n" in log.read_bytes(), (err, log)
+                if proc.returncode or b"BOARD PASS\r\n" not in log.read_bytes():
+                    (folder / (stamp + ".failed-" + fixed.digest(err) + ".stderr.log")).write_bytes(err)
+                    raise AssertionError((err, log))
             finally:
                 if proc.poll() is None:
                     proc.kill()
