@@ -5,3 +5,17 @@ All three receivers stayed closed throughout the six full DEMAND recordings, one
 The six complete background segments total 28,800,384 samples or 30 minutes and 24 ms. Receiver repeats and the tail overlays count once. Each simulation used zero electrical reference and monitored continuously through both calls. A physical panel enters the call state after waking. The real listening intervals, call audio and minimum heap must come from the board. The issued Nyx playback was louder than the Willow address. The original test preserves both playback levels. An initial long-input transport attempt exceeded the default QEMU loader size before any PCM was scored. The archived failure records accompany the successful runs with 16 MiB of loader memory and a guest-verified input CRC for every recording.
 
 The Mac playback ZIP contains six complete, single-channel WAVs, a readme and a manifest with original archive checksums and address/command boundaries. All eight members and the ZIP were anonymously downloaded and verified. The archive SHA256 is `cf12d3b051a322106e53fd082af1ae1ec8029c3986c8d7a0fdbae40af72311ee`. The audio license follows the authors’ CC BY-SA 3.0 Unported statement in the record description. [Playback files](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/hye-nyx-willow-six-indoor-recordings-v1.zip) · [Download verification](../results/4090-fixed-rearm-demand-mac-download.json) · [DEMAND by Thiemann, Ito and Vincent](https://doi.org/10.5281/zenodo.1227121)
+
+## Equal cue levels on the same six noise windows
+
+The two addresses were measured over the same 1.45 seconds before the same spoken command. The original Nyx address had 8.64 dB more RMS level in this window. Both were scaled to the original Willow level for one comparison, and both were scaled to the level of the local noise for the second. All 24 addresses achieved their target within 0.01 dB, with zero clipped samples. Each short file starts a fresh listener against the known background tail. The short files contribute zero further background hours. [Level-matching protocol](fixed_rearm_demand_levels_protocol.md) · [Per-file levels, events and first-open clocks](../results/4090-fixed-rearm-demand-levels.json) · [150 evidence files](../results/4090-fixed-rearm-demand-levels.zip)
+
+| Timely response to the receiver's own address | Standalone Nyx | C161 plus marker | Official Hey Willow |
+| --- | ---: | ---: | ---: |
+| Both at the original Willow level | 6/6 | 6/6 | 6/6 |
+| Both at 0 dB cue-to-background RMS | 6/6 | 6/6 | 3/6 |
+| Erased address, openings | 0/6 | 0/6 | 0/6 |
+
+At 0 dB Willow opened in the living room, kitchen and washing recordings. It stayed closed in the meeting, cafeteria and restaurant recordings. All Nyx openings were marker decisions, 880 ms before the command. Willow successful openings were 304 ms before the command. Neither receiver opened on the other address. The six comparisons use one Bella cue and one Willow cue in digitally mixed background. Physical speaker and board microphone responses remain to be measured.
+
+The short-play ZIP contains 30 WAVs and a manifest with level and sample boundaries. Its anonymous download matched all 30 registered WAV hashes and the manifest. SHA256 is `867657cdcd6a04c4afafffde000c1edffe15b619a27491d33af46498036190b5`. [Download matched short clips](https://raw.githubusercontent.com/ChronoAIProject/nyxid-esp-panel/a61d078d/research/wakeword_p4/results/hye-nyx-willow-six-indoor-equal-levels.zip)
