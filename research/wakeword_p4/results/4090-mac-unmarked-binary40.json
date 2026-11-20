@@ -1,0 +1,530 @@
+{
+  "source_sha256": "751c3e63a941d86bd9363a5f1d90671983e3d4ba2d4ca81e80492723179c697f",
+  "parent_audio_sha256": "f24bb596dd4d5de56272718e7d7c531127cd2359b516c14ac98d468558579eae",
+  "models": {
+    "c161": "c16154040378b8acccdb57c19917c46cea0a9ea6a39f105004b964ddd093ab81",
+    "binary40": "454058039dd41e729ce82ac7f33a84edec4af9554615a632e3b33d47de38009c"
+  },
+  "images": {
+    ".local/wakeword/c161-external-clock/build/nyx_mac_listener.bin": "6ba3be77c847e1890e44471cf83edb096226b62206cb3d7609255da8ed7b1f14",
+    ".local/wakeword/c161-first-command-v5/build/nyx_first_command.bin": "407e9647a4ee6bb402a0d50a96cea1518acac9730e5717c87bc75180fe1e8d4f",
+    ".local/wakeword/bella-third-triplet/sender/board.bin": "8a08b15a71b72de811d393732f974d713d305ef407fb2b32641036acb485175b"
+  },
+  "qwen": {
+    "repo": "Qwen/Qwen3-ASR-1.7B-hf",
+    "revision": "bcd2b5b7f32b480ab5790554cfa8347f246a14f3",
+    "files": {
+      "chat_template.jinja": "f50e6b694fbf4a683206e37869990d68333fe95d285730f084c838a34b0d98c2",
+      "config.json": "117ac8e63e2af7cae3665e5a632d6eb03f5f384915519ceb6403c15ec6533f63",
+      "generation_config.json": "9939fc9388b79bd70757f938b87381e817173d6a6158f5af6506c0b73e775c3c",
+      "model.safetensors": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+      "processor_config.json": "bc0b230081b44e629dd5b9045b78495615c1831b4b9f4cffe97bd37e82a6156a",
+      "tokenizer.json": "fe1fad59be22a41ee293363fcf95fdedbc7c93f3b49270b1d2e18bd1399a7a05",
+      "tokenizer_config.json": "945e980986de2ca7768f3326bfdbb4fbea3406f972b8ae0be233089f2b253c11"
+    },
+    "dtype": "bfloat16",
+    "torch": "2.15.0+cu132",
+    "transformers": "5.23.0",
+    "device": "NVIDIA GeForce RTX 4090"
+  },
+  "turbo": {
+    "repo": "mobiuslabsgmbh/faster-whisper-large-v3-turbo",
+    "revision": "0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf",
+    "files": {
+      "config.json": "b0253ea6c0d3bea6b1e19e91a02acfd3b53f4467362efcb5a3e6b16c9b3a9b7e",
+      "preprocessor_config.json": "7ccc62c6f2765af1f3b46c00c9b5894426835a05021c8b9c01eecb6dfb542711",
+      "tokenizer.json": "297b13372ac43916285644fb9687add3cc62ee2a1adb60da3dc25cc94c1871fd",
+      "vocabulary.json": "c69260f2ab26d659b7c398f9a2b2b48ed0df16c3b47d7326782fd9cba71690c1",
+      "model.bin": "e76620f83d5f5b69efd3d87e3dc180c1bd21df9fbebacfd4335e5e1efcc018da"
+    }
+  },
+  "decoder": "libopus 1.3.1",
+  "command": "please repeat exactly purple elephant",
+  "records": [
+    {
+      "model_events": {
+        "c161": [
+          {
+            "step": 261,
+            "relative_sample": 44160
+          }
+        ],
+        "binary40": []
+      },
+      "emitted": [
+        {
+          "step": 261,
+          "relative_sample": 44160,
+          "model": "c161"
+        }
+      ],
+      "suppressed": [],
+      "label": "marin-hey-nyx",
+      "pcm_sha256": "9530605aa1d7998c65355703cce48b7f3bf3ccf974c57c9b54d91cdf5f2a13ba",
+      "probe_start": 0,
+      "sends": {
+        "c161": {
+          "opened": 44288,
+          "first": 12160,
+          "stop": 99200,
+          "samples": 87040,
+          "fifo_sha256": "1b2a657c81a3dc1ca551fcfe960fc858eb18fe5829c82596fde29059bfd0fea8",
+          "capture_uart_sha256": "6a6877cef5c439c422c75c8cf2ef22848789069fe6cd837387a71e9b85788e9c",
+          "capture_watchdog": 0,
+          "opus_uart_sha256": "21fd80931b48d61ebf670f6c03fb716617e68c0a71da433c7f58ef166ec34b20",
+          "opus_watchdog": 0,
+          "packets": 272,
+          "bytes": 11096,
+          "decoded_sha256": "05fef4b7f947aae7316fe0ed889db2ad69a72c3464f9f4b39fbdf8051826d0bc",
+          "sender_uart_sha256": "baed4ebb0e8392190b30919233e5498c60b97254a0bd6ec96810560623e2c3ed",
+          "sender_watchdog": 0,
+          "sender": {
+            "unsent": 25,
+            "sent_silence": 50,
+            "captured": 272,
+            "first_pcm_sample": 12160,
+            "first_send_pts": 500,
+            "first_captured_pts": 1500,
+            "replayed_samples": 87040,
+            "terminal_padding": 0,
+            "peak_fifo_samples": 55840
+          },
+          "readings": {
+            "immediate": {
+              "qwen": {
+                "text": "Hey, Mix. Please repeat exactly: purple elephant.",
+                "complete": true,
+                "pcm_sha256": "05fef4b7f947aae7316fe0ed889db2ad69a72c3464f9f4b39fbdf8051826d0bc",
+                "samples": 87040
+              },
+              "turbo": {
+                "text": "Hey Nyx, please repeat exactly, Purple Elephant.",
+                "words": [
+                  {
+                    "word": " Hey",
+                    "start": 0.0,
+                    "end": 1.34
+                  },
+                  {
+                    "word": " Nyx,",
+                    "start": 1.34,
+                    "end": 1.74
+                  },
+                  {
+                    "word": " please",
+                    "start": 2.12,
+                    "end": 2.3
+                  },
+                  {
+                    "word": " repeat",
+                    "start": 2.3,
+                    "end": 2.64
+                  },
+                  {
+                    "word": " exactly,",
+                    "start": 2.64,
+                    "end": 3.12
+                  },
+                  {
+                    "word": " Purple",
+                    "start": 3.34,
+                    "end": 3.72
+                  },
+                  {
+                    "word": " Elephant.",
+                    "start": 3.72,
+                    "end": 4.32
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": true
+              }
+            },
+            "waited": {
+              "qwen": {
+                "text": "Hey, Mix. Please repeat exactly: purple elephant.",
+                "complete": true,
+                "pcm_sha256": "0d43de08cd6e2644672ce82ded47ed23b21b9be89c4abe7259c2cb5cf980005c",
+                "samples": 103040
+              },
+              "turbo": {
+                "text": "Hey Mix, please repeat exactly, Purple Elephant.",
+                "words": [
+                  {
+                    "word": " Hey",
+                    "start": 1.6199999999999997,
+                    "end": 2.34
+                  },
+                  {
+                    "word": " Mix,",
+                    "start": 2.34,
+                    "end": 2.68
+                  },
+                  {
+                    "word": " please",
+                    "start": 3.12,
+                    "end": 3.3
+                  },
+                  {
+                    "word": " repeat",
+                    "start": 3.3,
+                    "end": 3.64
+                  },
+                  {
+                    "word": " exactly,",
+                    "start": 3.64,
+                    "end": 4.12
+                  },
+                  {
+                    "word": " Purple",
+                    "start": 4.5,
+                    "end": 4.7
+                  },
+                  {
+                    "word": " Elephant.",
+                    "start": 4.7,
+                    "end": 5.32
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": true
+              }
+            }
+          },
+          "pcm_sha256": "9530605aa1d7998c65355703cce48b7f3bf3ccf974c57c9b54d91cdf5f2a13ba",
+          "reference_sha256": "a515959304caf9651b7d2b8b22368d869e2a763eb6061b4ff4b2493711a06129"
+        }
+      }
+    },
+    {
+      "model_events": {
+        "c161": [],
+        "binary40": []
+      },
+      "emitted": [],
+      "suppressed": [],
+      "label": "echo-hey-nyx",
+      "pcm_sha256": "2e9539efe24cf62bdb5c6b02bf9a6de60f8cb03aafcc1ab6b885c6243bc78b9c",
+      "probe_start": 0,
+      "sends": {}
+    },
+    {
+      "model_events": {
+        "c161": [
+          {
+            "step": 281,
+            "relative_sample": 53760
+          }
+        ],
+        "binary40": [
+          {
+            "step": 277,
+            "relative_sample": 51840
+          }
+        ]
+      },
+      "emitted": [
+        {
+          "step": 277,
+          "relative_sample": 51840,
+          "model": "binary40"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 281,
+          "relative_sample": 53760,
+          "model": "c161"
+        }
+      ],
+      "label": "sage-hey-nyx",
+      "pcm_sha256": "e791e2de442e46d8a2af1c3f0a2cefb6713130ef28f831a104569770b1bc8b67",
+      "probe_start": 0,
+      "sends": {
+        "c161": {
+          "opened": 53760,
+          "first": 21760,
+          "stop": 130560,
+          "samples": 108800,
+          "fifo_sha256": "d87b4eb525fc900e66728817d70491016e881eacd5d36be9a82a206b42401de4",
+          "capture_uart_sha256": "885dc86428c0c619968e9f5cfc32c34efbf4a5c25ad8b1394965e45d96a6923b",
+          "capture_watchdog": 0,
+          "opus_uart_sha256": "dee287690657623d35530edf19182531317478fda2549650242333c5b5d0ff04",
+          "opus_watchdog": 0,
+          "packets": 340,
+          "bytes": 14478,
+          "decoded_sha256": "514a5725ce382b913c39fa2acef57ffe3f80440992422d3de6e4f24f8e42a2ab",
+          "sender_uart_sha256": "7a319b21af2b88b2e06173e1a1955daee067749504c5b74018bd656f8cc566cb",
+          "sender_watchdog": 0,
+          "sender": {
+            "unsent": 25,
+            "sent_silence": 50,
+            "captured": 340,
+            "first_pcm_sample": 21760,
+            "first_send_pts": 500,
+            "first_captured_pts": 1500,
+            "replayed_samples": 108800,
+            "terminal_padding": 0,
+            "peak_fifo_samples": 55680
+          },
+          "readings": {
+            "immediate": {
+              "qwen": {
+                "text": "Hey, Nick. Please repeat exactly: purple elephant.",
+                "complete": true,
+                "pcm_sha256": "514a5725ce382b913c39fa2acef57ffe3f80440992422d3de6e4f24f8e42a2ab",
+                "samples": 108800
+              },
+              "turbo": {
+                "text": "Hey Nyx, please repeat exactly. Purple elephant.",
+                "words": [
+                  {
+                    "word": " Hey",
+                    "start": 0.0,
+                    "end": 1.1
+                  },
+                  {
+                    "word": " Nyx,",
+                    "start": 1.1,
+                    "end": 1.62
+                  },
+                  {
+                    "word": " please",
+                    "start": 2.0,
+                    "end": 2.38
+                  },
+                  {
+                    "word": " repeat",
+                    "start": 2.38,
+                    "end": 2.86
+                  },
+                  {
+                    "word": " exactly.",
+                    "start": 2.86,
+                    "end": 3.56
+                  },
+                  {
+                    "word": " Purple",
+                    "start": 3.94,
+                    "end": 4.62
+                  },
+                  {
+                    "word": " elephant.",
+                    "start": 4.62,
+                    "end": 5.3
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": true
+              }
+            },
+            "waited": {
+              "qwen": {
+                "text": "Hey, Nick. Please repeat exactly: purple elephant.",
+                "complete": true,
+                "pcm_sha256": "e6c64e9b497e7b8412d9392b820044c63663f1ff336d24a6217a43da6c8a1766",
+                "samples": 124800
+              },
+              "turbo": {
+                "text": "Hey, Nyx. Please repeat exactly. Purple elephant.",
+                "words": [
+                  {
+                    "word": " Hey,",
+                    "start": 1.2200000000000002,
+                    "end": 2.1
+                  },
+                  {
+                    "word": " Nyx.",
+                    "start": 2.32,
+                    "end": 2.62
+                  },
+                  {
+                    "word": " Please",
+                    "start": 2.84,
+                    "end": 3.4
+                  },
+                  {
+                    "word": " repeat",
+                    "start": 3.4,
+                    "end": 3.84
+                  },
+                  {
+                    "word": " exactly.",
+                    "start": 3.84,
+                    "end": 4.56
+                  },
+                  {
+                    "word": " Purple",
+                    "start": 4.94,
+                    "end": 5.62
+                  },
+                  {
+                    "word": " elephant.",
+                    "start": 5.62,
+                    "end": 6.26
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": true
+              }
+            }
+          },
+          "pcm_sha256": "e791e2de442e46d8a2af1c3f0a2cefb6713130ef28f831a104569770b1bc8b67",
+          "reference_sha256": "1d2dff4d3dceb2a9352bda634e538bb2d8c0e76c03bb21e16517e541c9702662"
+        },
+        "binary40": {
+          "opened": 51968,
+          "first": 19840,
+          "stop": 130560,
+          "samples": 110720,
+          "fifo_sha256": "fc5972ca21bbc1011a6d4b387b45a9b269ccd6152d8eeebf11e1ffa1bfbfbe89",
+          "capture_uart_sha256": "d809fe86a77238f1af098b7aa49b70b9a275b88b3d207c9fb4b1c77f461abef6",
+          "capture_watchdog": 0,
+          "opus_uart_sha256": "58c734a1377b1a6bec623f1d3b016f6d0d06e6413536fddc82de78a745f77b78",
+          "opus_watchdog": 0,
+          "packets": 346,
+          "bytes": 14549,
+          "decoded_sha256": "3249fc675b1a2882f054ae7584651d230f8e44c1b10fc0cc738cafe93b3deb86",
+          "sender_uart_sha256": "7de3882e52e18e3c69e59d4d7315ef62ca398e20601839e917eb2d66ba5590ca",
+          "sender_watchdog": 0,
+          "sender": {
+            "unsent": 25,
+            "sent_silence": 50,
+            "captured": 346,
+            "first_pcm_sample": 19840,
+            "first_send_pts": 500,
+            "first_captured_pts": 1500,
+            "replayed_samples": 110720,
+            "terminal_padding": 0,
+            "peak_fifo_samples": 55840
+          },
+          "readings": {
+            "immediate": {
+              "qwen": {
+                "text": "Hey, Nick. Please repeat exactly: purple elephant.",
+                "complete": true,
+                "pcm_sha256": "3249fc675b1a2882f054ae7584651d230f8e44c1b10fc0cc738cafe93b3deb86",
+                "samples": 110720
+              },
+              "turbo": {
+                "text": "Hey, Nyx. Please repeat exactly. Purple elephant.",
+                "words": [
+                  {
+                    "word": " Hey,",
+                    "start": 0.0,
+                    "end": 1.2
+                  },
+                  {
+                    "word": " Nyx.",
+                    "start": 1.42,
+                    "end": 1.74
+                  },
+                  {
+                    "word": " Please",
+                    "start": 1.96,
+                    "end": 2.52
+                  },
+                  {
+                    "word": " repeat",
+                    "start": 2.52,
+                    "end": 2.96
+                  },
+                  {
+                    "word": " exactly.",
+                    "start": 2.96,
+                    "end": 3.68
+                  },
+                  {
+                    "word": " Purple",
+                    "start": 4.06,
+                    "end": 4.74
+                  },
+                  {
+                    "word": " elephant.",
+                    "start": 4.74,
+                    "end": 5.42
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": true
+              }
+            },
+            "waited": {
+              "qwen": {
+                "text": "Hey, Nix. Please repeat exactly: purple elephant.",
+                "complete": true,
+                "pcm_sha256": "1c85a7c61bd46806ca9349654e7c11294b0e252d1534219859df6e2c780a4dc6",
+                "samples": 126720
+              },
+              "turbo": {
+                "text": "Hey, Nyx. Please repeat exactly. Purple elephant.",
+                "words": [
+                  {
+                    "word": " Hey,",
+                    "start": 1.3400000000000003,
+                    "end": 2.22
+                  },
+                  {
+                    "word": " Nyx.",
+                    "start": 2.42,
+                    "end": 2.72
+                  },
+                  {
+                    "word": " Please",
+                    "start": 2.96,
+                    "end": 3.52
+                  },
+                  {
+                    "word": " repeat",
+                    "start": 3.52,
+                    "end": 3.96
+                  },
+                  {
+                    "word": " exactly.",
+                    "start": 3.96,
+                    "end": 4.68
+                  },
+                  {
+                    "word": " Purple",
+                    "start": 5.06,
+                    "end": 5.74
+                  },
+                  {
+                    "word": " elephant.",
+                    "start": 5.74,
+                    "end": 6.42
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": true
+              }
+            }
+          },
+          "pcm_sha256": "e791e2de442e46d8a2af1c3f0a2cefb6713130ef28f831a104569770b1bc8b67",
+          "reference_sha256": "1d2dff4d3dceb2a9352bda634e538bb2d8c0e76c03bb21e16517e541c9702662"
+        }
+      }
+    }
+  ],
+  "files": {
+    "marin-hey-nyx/scores.npz": "c6fbb6d1dfa04b1c43d8ae74f618c845b7091620d6d9bbdd42875af506736522",
+    "marin-hey-nyx/c161/capture.log": "6a6877cef5c439c422c75c8cf2ef22848789069fe6cd837387a71e9b85788e9c",
+    "marin-hey-nyx/c161/opus.log": "21fd80931b48d61ebf670f6c03fb716617e68c0a71da433c7f58ef166ec34b20",
+    "marin-hey-nyx/c161/sender.log": "baed4ebb0e8392190b30919233e5498c60b97254a0bd6ec96810560623e2c3ed",
+    "echo-hey-nyx/scores.npz": "7a5a7da6af981c8f4772dd6c87b5a9fb69b737dcf789f7599607232ae9548eea",
+    "sage-hey-nyx/scores.npz": "8e71f731bf58428ccea39dfb5f24bc42fe877343dfdef4993ef0f3b0909907e7",
+    "sage-hey-nyx/c161/capture.log": "885dc86428c0c619968e9f5cfc32c34efbf4a5c25ad8b1394965e45d96a6923b",
+    "sage-hey-nyx/c161/opus.log": "dee287690657623d35530edf19182531317478fda2549650242333c5b5d0ff04",
+    "sage-hey-nyx/c161/sender.log": "7a319b21af2b88b2e06173e1a1955daee067749504c5b74018bd656f8cc566cb",
+    "sage-hey-nyx/binary40/capture.log": "d809fe86a77238f1af098b7aa49b70b9a275b88b3d207c9fb4b1c77f461abef6",
+    "sage-hey-nyx/binary40/opus.log": "58c734a1377b1a6bec623f1d3b016f6d0d06e6413536fddc82de78a745f77b78",
+    "sage-hey-nyx/binary40/sender.log": "7de3882e52e18e3c69e59d4d7315ef62ca398e20601839e917eb2d66ba5590ca"
+  },
+  "archive_sha256": "c4505a25817dfeab5afb550c47305902f5802c1ed1166c212543a21bfe4e88eb"
+}

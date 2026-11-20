@@ -37,10 +37,9 @@ def decisions(mic, board):
     return dict(model_events=events, emitted=emitted, suppressed=suppressed), codes, clock
 
 
-def main():
-    WORK.mkdir(exist_ok=True, parents=True)
-    source = P.read(SOURCE)
-    inputs = SOURCE.with_suffix(".zip")
+def run(source_file, inputs, out, work, command, target_labels):
+    work.mkdir(exist_ok=True, parents=True)
+    source = P.read(source_file)
     assert P.sha(inputs) == source["archive_sha256"]
     model_files = P.read(RESULTS / "4090-c161-binary40-parallel-runtime-plan-v1.json")["files"]
     model_hashes = {name: P.sha(Path(path)) for name, path in MODELS.items()}
@@ -55,13 +54,13 @@ def main():
     decoder = scoring.prior.decoder_api()
     assert decoder.opus_get_version_string().decode() == history["decoder"]
     readers = proc, model, scoring.prior.reader(history["turbo"]), decoder
-    cache = WORK / source["archive_sha256"][:16]
+    cache = work / source["archive_sha256"][:16]
     cache.mkdir(exist_ok=True)
     scoring.clock.reference.WORK = cache
     rows, hashes = [], {}
-    with TemporaryDirectory(dir=WORK) as tmp:
+    with TemporaryDirectory(dir=work) as tmp:
         tmp = Path(tmp)
-        archive = tmp / OUT.with_suffix(".zip").name
+        archive = tmp / out.with_suffix(".zip").name
         with ZipFile(inputs) as original, ZipFile(archive, "w", ZIP_DEFLATED) as logs:
             for number, source_row in enumerate(source["records"]):
                 label = source_row["label"]
@@ -77,18 +76,17 @@ def main():
                 logs.writestr(member, buf.getvalue())
                 hashes[member] = sha256(buf.getvalue()).hexdigest()
                 row["sends"] = {}
-                if label.startswith("bread-"):
+                if label in target_labels:
                     zeros = np.zeros_like(mic)
                     path, reference = tmp/"mic.wav", tmp/"ref.wav"
                     path.write_bytes(data)
                     sf.write(reference, zeros, rate, subtype="PCM_16")
-                    record = dict(label=label, path=path, pcm_sha256=P.digest(mic), command=COMMAND,
+                    record = dict(label=label, path=path, pcm_sha256=P.digest(mic), command=command,
                                   reference_path=reference, reference_sha256=P.digest(zeros))
                     for name, events in row["model_events"].items():
                         if not events:
                             continue
-                        event, = events
-                        opened = (event["relative_sample"]+255)//256*256
+                        opened = (events[0]["relative_sample"]+255)//256*256
                         item, shard = scoring.score_case(record, number, opened, readers, tmp, cache)
                         row["sends"][name] = item
                         with ZipFile(shard) as trace:
@@ -102,13 +100,14 @@ def main():
                 print(label, [(n, s["readings"]["immediate"]["qwen"]["text"]) for n,s in row["sends"].items()], flush=True)
         with ZipFile(archive) as z:
             assert len(z.namelist()) == len(hashes) and all(sha256(z.read(k)).hexdigest() == v for k,v in hashes.items())
-        result = dict(source_sha256=P.sha(SOURCE), parent_audio_sha256=P.sha(inputs), models=model_hashes,
+        result = dict(source_sha256=P.sha(source_file), parent_audio_sha256=P.sha(inputs), models=model_hashes,
                       images={str(p):P.sha(p) for p in images}, qwen=identity, turbo=history["turbo"],
-                      decoder=history["decoder"], command=COMMAND, records=rows, files=hashes, archive_sha256=P.sha(archive))
-        P.save(tmp/OUT.name, result)
-        archive.replace(OUT.with_suffix(".zip"))
-        (tmp/OUT.name).replace(OUT)
+                      decoder=history["decoder"], command=command, records=rows, files=hashes, archive_sha256=P.sha(archive))
+        P.save(tmp/out.name, result)
+        archive.replace(out.with_suffix(".zip"))
+        (tmp/out.name).replace(out)
 
 
 if __name__ == "__main__":
-    main()
+    labels = {row["label"] for row in P.read(SOURCE)["records"] if row["label"].startswith("bread-")}
+    run(SOURCE, SOURCE.with_suffix(".zip"), OUT, WORK, COMMAND, labels)
