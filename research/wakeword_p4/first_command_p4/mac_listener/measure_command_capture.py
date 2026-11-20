@@ -131,14 +131,12 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("playback", type=Path)
     parser.add_argument("recording", type=Path)
-    parser.add_argument("--command-at", type=int, required=True, help="Zero-based first command sample in playback")
-    parser.add_argument("--command-end", type=int, help="Exclusive last command sample in playback; defaults to EOF")
+    parser.add_argument("--command-at", type=int, required=True, help="Zero-based first command sample at the playback WAV rate")
+    parser.add_argument("--command-end", type=int, help="Exclusive last command sample at the playback WAV rate; defaults to EOF")
     parser.add_argument("--channel", type=int, default=0, help="Zero-based recording channel (MIC1 or mono defaults to 0)")
     args = parser.parse_args()
     source, source_bytes, width, source_rate = read_channel(args.playback,0)
     mic, mic_bytes, mic_width, mic_rate = read_channel(args.recording,args.channel)
-    if source_rate != RATE:
-        parser.error("Playback command boundaries use a 16 kHz source")
     if mic_rate != RATE:
         divisor = gcd(RATE, mic_rate)
         mic = resample_poly(mic.astype(float), RATE//divisor, mic_rate//divisor)
@@ -146,9 +144,12 @@ def main():
     if not 0<=args.command_at<end<=len(source):
         parser.error("Command interval outside playback")
     command = source[args.command_at:end]
+    if source_rate != RATE:
+        divisor = gcd(RATE, source_rate)
+        command = resample_poly(command.astype(float), RATE//divisor, source_rate//divisor)
     result = locate(command,mic)
     print(json.dumps(dict(playback=args.playback.name, recording=args.recording.name, command_at=args.command_at,
-        command_end=end, channel=args.channel, analysis_rate=RATE, playback_bits=8*width,
+        command_end=end, channel=args.channel, analysis_rate=RATE, playback_rate=source_rate, playback_bits=8*width,
         recording_rate=mic_rate, recording_bits=8*mic_width,
         command_pcm_sha256=hashlib.sha256(source_bytes[args.command_at*width:end*width]).hexdigest(),
         channel_pcm_sha256=hashlib.sha256(mic_bytes).hexdigest(), **result),indent=2))
