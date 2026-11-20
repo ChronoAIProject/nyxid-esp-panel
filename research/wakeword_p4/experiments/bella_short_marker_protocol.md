@@ -1,0 +1,5 @@
+# Shorter distance between the two generated marker sequences
+
+The existing electrical-reference veto lasts 3,488 samples (218 ms) after its own template fires. The two self-opens with the 400 ms file occurred near the original late marker. Test earlier additions at 100, 150 and 200 ms ahead of the original rather than 400 ms. Use the exact signed difference between the frozen 400 ms and +5 dB WAVs. Shift those added samples and apply a single downward scale if PCM16 headroom requires it. Preserve rate, duration, voice and the original code contribution.
+
+Freeze all three WAVs and microphone inputs first. For each distance test the same 15 addressed weak-room rate conditions, plus four panel paths each with synchronous and silent reference on the primary P4 guest. Preselect only a file that is timely in all 15, self-opens in zero synchronous paths and still opens in all four silent-reference paths. If multiple files qualify, use the shortest advance. Confirm a selected file on all 96 historical interruptions and erased controls. These inputs reuse the same development rooms.
