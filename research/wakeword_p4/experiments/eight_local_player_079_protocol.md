@@ -1,0 +1,5 @@
+# The issued eight voices on weak-target 079 through a 48 kHz player
+
+Use the previously consumed Surrey 210° front 079 scene, target −6 dB, with the published two-channel source clock and microphone noise. Keep the eight issued local-gain WAVs and their previous three-group counterparts. Also replay the official Willow and erased stereo programs from the same Mac package. Before changing the player, require each of these 18 sources to reproduce its original native microphone by SHA256.
+
+Apply the two existing stereo player paths to the complete source. Both use 16→48 kHz polyphase conversion, signed PCM24 quantization and conversion back to 16 kHz. One inserts stereo AAC-LC at 128 kbit/s on the 48 kHz leg. Check a two-channel impulse and preserve codec tail/presentation-clock evidence. Run all 36 converted microphones through the frozen C161 plus fixed marker receiver and the official primed Willow DEFAULT runner. Report per-voice gains and losses, model/marker clocks, cross-address responses, erased controls and clipping. These 36 inputs reuse one command, eight generated Nyx voices and one issued Willow address.
