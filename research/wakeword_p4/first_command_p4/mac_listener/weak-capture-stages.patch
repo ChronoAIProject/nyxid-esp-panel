@@ -1,0 +1,64 @@
+--- a/listener.cpp
++++ b/listener.cpp
+@@ -107,6 +107,7 @@
+     model_iface_data_t* model;
+     aec_handle_t* aec;
+     void* agc;
++    void* mic_agc;
+     {
+         DspSection lock;
+         model=wn.create(nullptr,DET_MODE_95);
+@@ -117,6 +118,9 @@
+         agc=esp_agc_open(AGC_MODE_2,16000);
+         if (!model || !aec || !agc) abort();
+         set_agc_config(agc,15,1,3);
++        mic_agc = esp_agc_open(AGC_MODE_2, 16000);
++        if (!mic_agc) abort();
++        set_agc_config(mic_agc, 15, 1, 3);
+     }
+ #ifdef NYX_SPEEX_CAPTURE
+     SpeexEchoState* speex = nullptr;
+@@ -146,6 +150,8 @@
+     panel_voice_pcm_t history{buffer(kLookback),kLookback,0,0};
+     panel_voice_pcm_t call{buffer(60*16000),60*16000,0,0};
+     auto* processed=buffer(length+2048);
++    auto* aec_only = buffer(length+2048);
++    auto* agc_only = buffer(length+2048);
+     auto* selected = stereo ? buffer(length+2048) : processed;
+     nyx::ReferenceWake model_route, cue_route;
+     nyx::ReferenceCapture capture;
+@@ -184,7 +190,10 @@
+             fill=0;
+             {
+                 DspSection lock;
++                std::memcpy(aec_only + emitted, frame, sizeof(frame));
+                 if (esp_agc_process(agc,frame,adjusted,kHop,16000)!=ESP_AGC_SUCCESS) abort();
++                if (esp_agc_process(mic_agc, pcm + emitted, agc_only + emitted, kHop, 16000) != ESP_AGC_SUCCESS)
++                    abort();
+             }
+             std::memcpy(processed+emitted,adjusted,sizeof(adjusted));
+             if (external_clock) {
+@@ -279,19 +288,21 @@
+                 (long long)sum_us,peak_us,overruns,(unsigned)heap_caps_get_minimum_free_size(MALLOC_CAP_INTERNAL));
+ #ifndef NYX_CAPTURE_OPUS
+     if (first>=0) {
+-        dump("AUDIO",call.samples,call.count);
++        dump("AEC", aec_only + first, call.count);
++        dump("AGC", agc_only + first, call.count);
+         if (stereo) dump("PROCESSED",processed+first,call.count);
+     }
+ #endif
+ #ifdef NYX_SPEEX_CAPTURE
+     if (speex) speex_echo_state_destroy(speex);
+ #endif
++    esp_agc_close(mic_agc);
+     wn.destroy(model); aec_destroy(aec); esp_agc_close(agc);
+     std::puts("LISTENER PASS");
+     vTaskDelete(nullptr);
+ }
+ }
+-extern "C" void app_main() {
++extern "C" void __wrap_app_main() {
+     const uint32_t caps[]={MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT|MALLOC_CAP_32BIT,0,0};
+     ESP_ERROR_CHECK(heap_caps_add_region_with_caps(caps,0x48000000,0x49000000));
+     if (xTaskCreate(worker,"listener",48*1024,nullptr,3,nullptr)!=pdPASS) abort();
