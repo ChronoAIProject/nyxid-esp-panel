@@ -39,3 +39,14 @@ A 4090 fit changed 3,930 samples in the three code windows while preserving the 
 | +100 ppm | 3/3 | 0/3 |
 | −1% | 0/3 | 3/3 |
 | +1% | 0/3 | 2/3 |
+
+## Received first commands with the +5 dB handoff
+
+Across the 96 historical interruptions at nominal speed, Qwen3-ASR and Whisper turbo read fewer complete commands with +5 dB despite the identical open samples. Under immediate readiness Qwen gained 3 and lost 9 previously complete cases, and Whisper gained 1 and lost 7. Under delayed readiness the corresponding changes were 8 gained and 9 lost, and 3 gained and 4 lost. The address-erased cases were evaluated for openings in the wake replay. [Predeclared received-command procedure](bella_gain_candidate_commands_protocol.md) · [108 addressed cases, both reads and clocks](../results/4090-bella-gain-candidate-commands.json)
+
+| Address level | Timely / 96 | Immediate, Qwen / Whisper | Delayed, Qwen / Whisper |
+| --- | ---: | ---: | ---: |
+| +2 dB | 96 | 38 / 23 | 37 / 17 |
+| +5 dB | 96 | 32 / 17 | 36 / 16 |
+
+For the three weak rooms, neither reader recovered a complete first command under either readiness condition at either 100 ppm offset, including the six +5 dB opens. The 105 successful sends across the historical and clock-offset inputs have 315 capture, Opus and sender UARTs. The anonymous Release download matched all members and the ZIP SHA256 `4e89bb2cc5502635237c69474afa97e98d6f290b4d32df8183f6d28413d4d9e8`. [Download sender evidence](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/4090-bella-gain-candidate-commands-uart.zip)
