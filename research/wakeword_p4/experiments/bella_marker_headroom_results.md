@@ -12,3 +12,22 @@ The candidate recovered rear-speaker case 077 at 30°. Case 079 still missed in 
 Both Nyx files reached 12/12 in the first quiet group and 15/15 in the five-speed weak group. With synchronous electrical reference the panel self-opened 0/4, and with a silent reference it opened 4/4. Across all 96 legacy interruptions the candidate and control opened before the command on 96/96. Twelve candidate opens moved forward 400 ms, two moved forward 16 ms, 81 had the same clock and one moved back 400 ms. The erased waveforms and receiver were byte-identical, so all 96 original negative traces were reused with verified input and log hashes. [47 primary UARTs](../results/4090-bella-marker-headroom.zip) · [96 historical positives and 96 matched erased controls](../results/4090-bella-headroom-history.json) · [Historical UARTs](../results/4090-bella-headroom-history.zip)
 
 The Mac A/B pack contains both standalone WAVs, the three target commands for each address variant, the isolated interruptions, erased controls and a manifest. Use the same recovery-patched C161 app when swapping the two Nyx WAVs. All 21 ZIP members matched an anonymous download, and the candidate source tracks reproduced all 12 additional-angle digital microphones. Archive SHA256 `7f54eac1de62c2135152f04e2d64e635b3c259ce996bbd1901d5cfecc42cdfd0`. [Mac A/B playback pack](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/hye-nyx-headroom-mac-ab-v1.zip) · [Member hashes](../results/4090-bella-headroom-mac-download.json) · [P4 firmware handoff](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/18#issuecomment-7032582923)
+
+## Received commands with competing speech
+
+Each cell below uses all 12 presentations, including missed wakes. The decoder and two readers process the whole actual send at the first opening of each address. The immediate service was ready at the open. The delayed service became ready at 1,500 ms.
+
+| Orientations | Address | Qwen / Whisper turbo immediate | Qwen / Whisper turbo delayed |
+| --- | --- | --- | --- |
+| 30°, 300° | Delivered Nyx | 10 / 9 | 10 / 9 |
+| 30°, 300° | Candidate Nyx | 10 / 11 | 11 / 8 |
+| 30°, 300° | Official Willow | 7 / 6 | 7 / 5 |
+| 120°, 240° | Delivered Nyx | 10 / 8 | 10 / 9 |
+| 120°, 240° | Candidate Nyx | 10 / 9 | 9 / 7 |
+| 120°, 240° | Official Willow | 6 / 3 | 6 / 4 |
+
+For the recovered 30° rear case 077, both readers returned the complete “turn down the hall light” suffix on the immediate send. Under the delayed schedule Qwen retained the complete suffix and Whisper transcribed “I'm turning down the hall light.” The four orientation groups reuse three commands and one listening room. A higher wake count or earlier opening did not consistently improve the received command. Retain the delivered WAV as the board comparison baseline, with the candidate as a paired test on the same firmware. The additional 37 successful calls produced 111 zero-watchdog capture, Opus and sender logs, all anonymously downloaded and verified. [Per-case receive words and clocks](../results/4090-bella-headroom-commands.json) · [111 UARTs](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/4090-bella-headroom-commands-uart.zip)
+
+## When both loudspeakers play the identical address
+
+Both WAVs gave the same open counts across the four simulated panel paths at each external source offset. At −800, −400, 0, +400 and +800 ms they gave 4/4, 2/4, 0/4, 4/4 and 4/4 openings. For each WAV only four first matches equaled the external-alone sample exactly, two at −800 ms and two at +800 ms. The other ten open cases had a mixture-specific clock. A positive offset alone cannot identify the triggering source when both speakers play the double marker. The earlier eight exact recoveries at positive offsets used a different external waveform. [Source controls and protocol](bella_headroom_same_cue_collision_protocol.md) · [40 paired clocks and reference traces](../results/4090-bella-headroom-same-cue-collisions.json) · [40 native UARTs](../results/4090-bella-headroom-same-cue-collisions.zip)
