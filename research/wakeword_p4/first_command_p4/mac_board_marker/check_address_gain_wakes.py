@@ -90,7 +90,7 @@ def p4_cases():
             (stage/name).replace(gain.WORK/name)
 
 
-def willow_cases(plan_path=gain.PLAN, work_root=gain.WORK, runner=gain.SCRIPT):
+def willow_cases(plan_path=gain.PLAN, work_root=gain.WORK, runner=gain.SCRIPT, *, timeout_seconds=70):
     plan = room.read(plan_path)
     for path, sha in plan["files"].items():
         assert digest(Path(path).read_bytes())==sha,path
@@ -115,7 +115,7 @@ def willow_cases(plan_path=gain.PLAN, work_root=gain.WORK, runner=gain.SCRIPT):
                         with TemporaryDirectory(prefix="address-gain-") as tmp_run:
                             output = Path(tmp_run)/"run"
                             cmd = [sys.executable,runner,"case","--record-index",str(n),"--model","willow",
-                                   "--threshold","DEFAULT","--output",output,"--timeout-seconds","70"]
+                                   "--threshold","DEFAULT","--output",output,"--timeout-seconds",str(timeout_seconds)]
                             for name,path in plan["runtime"].items():
                                 cmd.extend(["--"+name,path])
                             subprocess.run(cmd,check=True,stdout=subprocess.DEVNULL)

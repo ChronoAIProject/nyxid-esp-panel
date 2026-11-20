@@ -25,14 +25,14 @@ def digest(data):
     return sha256(data).hexdigest()
 
 
-def build(board, work, audio_only, idf_python, profile_source=HERE / "profile_fixed_sound.c"):
+def build(board, work, audio_only, idf_python, profile_source=HERE / "profile_fixed_sound.c", *, resident_mono=False):
     work.mkdir(parents=True, exist_ok=True)
     service = board / "components/panel_services"
     runtime = board / "components/panel_wake_runtime"
     guest = work / "profile.c"
     marker = work / "marker.cpp"
     define = "#define NYX_PANEL_FIXED_SOUND 1\n" if audio_only else ""
-    guest.write_text(define + profile_source.read_text())
+    guest.write_text(define + ("#define NYX_PROFILE_RESIDENT_MONO 1\n" if resident_mono else "") + profile_source.read_text())
     marker.write_text(define + '#include "fixed_marker/board_marker.cpp"\n')
     sources = [("panel_voice_audio.c",guest), ("listener.cpp",marker)]
     if not audio_only:

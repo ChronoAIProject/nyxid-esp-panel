@@ -15,6 +15,12 @@ static atomic_uint wake_processed_frames;
 #include "panel_feeders.inc"
 #endif
 
+#ifdef NYX_PROFILE_RESIDENT_MONO
+#include "esp_rom_crc.h"
+// The QEMU loader places a count, CRC32 and mono PCM here, outside the fixture heap.
+static const uint32_t *const recording = (const uint32_t *)0x48400000;
+#endif
+
 static void memory(const char *stage, unsigned epoch)
 {
     printf("PROFILE heap %u %s %u %u\n",epoch,stage,
@@ -53,7 +59,15 @@ static void run_epoch(unsigned count, unsigned epoch)
     unsigned max_us=0,over_16ms=0;
     uint64_t total_us=0;
     for(unsigned at=0;at<count;at+=256) {
+#ifdef NYX_PROFILE_RESIDENT_MONO
+        const int16_t *pcm = (const int16_t *)(recording + 2) + at;
+        for (unsigned j = 0; j < 256; ++j) {
+            mr[2*j] = pcm[j];
+            mr[2*j+1] = 0;
+        }
+#else
         ESP_ERROR_CHECK(esp_flash_read(NULL,mr,(2u<<20)+8+4*at,sizeof(mr)));
+#endif
         // Guard the QEMU floating point context for both paths.
         UBaseType_t mask=portSET_INTERRUPT_MASK_FROM_ISR();
         asm volatile("fmv.w.x ft0, zero" ::: "ft0");
@@ -89,10 +103,19 @@ static void run_epoch(unsigned count, unsigned epoch)
 
 static void replay(void *arg)
 {
+#ifdef NYX_PROFILE_RESIDENT_MONO
+    unsigned count = recording[0];
+    if (!count || count > 6*1024*1024-256) abort();
+    uint32_t crc = esp_rom_crc32_le(0,(const uint8_t *)(recording+2),count*2);
+    printf("PROFILE input %u %08lx\n",count,(unsigned long)crc);
+    if (crc != recording[1]) abort();
+    run_epoch((count+255u)&~255u,0);
+#else
     uint32_t header[2];
     ESP_ERROR_CHECK(esp_flash_read(NULL,header,2u<<20,sizeof(header)));
     if(!header[0] || header[0]%256 || header[0]>160000 || !header[1] || header[1]>2)abort();
     for(unsigned epoch=0;epoch<header[1];++epoch) run_epoch(header[0],epoch);
+#endif
     puts("BOARD PASS");
     vTaskDelete(NULL);
 }
@@ -100,7 +123,11 @@ static void replay(void *arg)
 void __wrap_app_main(void)
 {
     const uint32_t caps[]={MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT|MALLOC_CAP_32BIT,0,0};
+#ifdef NYX_PROFILE_RESIDENT_MONO
+    ESP_ERROR_CHECK(heap_caps_add_region_with_caps(caps,0x48000000,(intptr_t)recording));
+#else
     ESP_ERROR_CHECK(heap_caps_add_region_with_caps(caps,0x48000000,0x49000000));
+#endif
     if(xTaskCreate(replay,"profile",48*1024,NULL,3,NULL)!=pdPASS)abort();
 }
 
