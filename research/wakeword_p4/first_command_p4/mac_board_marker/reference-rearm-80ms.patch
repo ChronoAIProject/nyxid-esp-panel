@@ -1,0 +1,33 @@
+--- a/components/panel_services/fixed_marker/c161_coded_cue_v5.h
++++ b/components/panel_services/fixed_marker/c161_coded_cue_v5.h
+@@ -6,7 +6,7 @@
+ // Feed consecutive mono PCM16 at 16 kHz. Only the distributed v5 cue carries the three patterns.
+ class CodedCueV5 {
+ public:
+-    bool update(std::int16_t pcm) {
++    bool update(std::int16_t pcm, int refractory_ticks = 8039) {
+         sum_ += pcm;
+         if (++phase_ < 4) return false;
+         const int block = sum_ / 16;
+@@ -44,7 +44,7 @@
+         }
+         if (!positive_[1] && !negative_[1]) return false;
+         if (!consistent(1, sign(2))) return false;
+-        cooldown_ = 8039;
++        cooldown_ = refractory_ticks;
+         return true;
+     }
+ 
+--- a/components/panel_services/fixed_marker/c161_coded_cue_reference_v5.h
++++ b/components/panel_services/fixed_marker/c161_coded_cue_reference_v5.h
+@@ -7,7 +7,9 @@
+ class CodedCueReferenceV5 {
+ public:
+     bool allow(std::int16_t reference, bool mic_hit) {
+-        if (reference_detector_.update(reference)) {
++        // One 80 ms code spans 320 detector ticks. The next panel code sequence
++        // can begin within the microphone detector's normal refractory period.
++        if (reference_detector_.update(reference, 320)) {
+             remaining_ = kWindowSamples + 1;
+         }
+         const bool suppress = remaining_ > 0;
