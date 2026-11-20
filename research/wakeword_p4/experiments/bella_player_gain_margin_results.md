@@ -27,3 +27,15 @@ After SoX high-quality conversion from 16 kHz through a 24-bit 44.1 or 48 kHz pl
 The three-part correlation calculation on the 4090 reproduced all 60 raw marker decisions and their sample clocks against the compiled portable matcher. All 31 positive reports reached the guest's reference gate output 480 samples (30 ms) after the raw match. The original diagnostic windows used the gated timestamp, which excluded the true peaks. The corrected analysis uses the raw nominal +5 dB match as its anchor.
 
 At ±1%, correcting only the expected spacing for the known speed recovered 0/24 missed presentations. Even permitting any same-polarity spacing inside the three local ±25 ms windows recovered only 2/24, both in slow case 079 at +4 and +5 dB. At +5 dB, five of six misses had a peak absolute correlation below 0.30 on the first or middle code. Stronger playback and spacing correction therefore leave limited individual-pattern correlation on these inputs. [Diagnostic procedure and clock correction](bella_player_marker_timing_protocol.md) · [Correlations, event clocks and firmware coefficients](../results/4090-bella-player-marker-timing.json)
+
+## GPU fit of the isolated marker codes
+
+A 4090 fit changed 3,930 samples in the three code windows while preserving the vocal samples outside them and the original code energies. In the weak rooms, the experiment recovered five of the six ±1% misses. It lost six of the nine timely openings at nominal and ±100 ppm. The original +5 dB file stays the hardware handoff candidate. [Fitting protocol](bella_multirate_stems_protocol.md) · [GPU weights, before and after similarities](../results/4090-bella-multirate-stems.json) · [15 measured clocks](../results/4090-bella-multirate-stems-wake.json) · [Native UARTs](../results/4090-bella-multirate-stems-wake.zip)
+
+| Player speed | +5 dB | Three fitted codes |
+| --- | ---: | ---: |
+| Nominal | 3/3 | 2/3 |
+| −100 ppm | 3/3 | 1/3 |
+| +100 ppm | 3/3 | 0/3 |
+| −1% | 0/3 | 3/3 |
+| +1% | 0/3 | 2/3 |
