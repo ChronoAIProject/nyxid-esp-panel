@@ -1,0 +1,3 @@
+# Both speakers play the same generated call
+
+Test the delivered and headroom files on the combined P4 receiver when the panel and external speaker play identical copies of the respective WAV. Use the same four historical panel response paths, path gain, electrical reference and external source offsets of −800, −400, 0, +400 and +800 ms as the earlier overlap study. The earlier paired study played a different single-triplet +5 dB file externally. Keep both sources on the same acoustic path within a geometry. Trace the external-alone and panel-alone microphone matches, then compare the combined first allowed match with those clocks. Report panel-only or ambiguous matches, vetoed external calls, and changed latency for each file. The samples contain the addresses alone.
