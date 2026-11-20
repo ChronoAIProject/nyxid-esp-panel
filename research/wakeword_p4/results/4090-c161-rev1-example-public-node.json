@@ -1,0 +1,50 @@
+{
+  "purpose": "Example-only rev1 cross-build with a synthetic voice/agent development cache and public node. Host verification.",
+  "example_cache": [
+    "NYX_PANEL_AGENT_DEV_API_URL:STRING=http://192.168.254.251:8100",
+    "NYX_PANEL_AGENT_DEV_LOGIN_URL:STRING=http://192.168.254.251:8200/login/agent-key",
+    "NYX_PANEL_NODE_DEV_MODE:BOOL=OFF",
+    "PANEL_BOARD_PROFILE:STRING=p4-rev1-16mb"
+  ],
+  "verification": {
+    "source": {
+      "kind": "operator-selected-cache",
+      "sha256": "293d57f3710b5472c1dad9fbf26d0501f7819614e997f535491fab24712345a0"
+    },
+    "service_fingerprint": "4109a24179",
+    "node_environment": "public",
+    "board_commit": "0d8e1935702a561b535a8c1a0921fd8034943d2c",
+    "patch_sha256": "19a8dde32100d332f92d21c04575af24b3ece424556b64a383822ebd1543b536",
+    "idf": "v5.5.4",
+    "model_sha256": "c16154040378b8acccdb57c19917c46cea0a9ea6a39f105004b964ddd093ab81",
+    "model_bytes": 60952,
+    "threshold": 0.91796875,
+    "smoothing_steps": 5,
+    "descriptor_elf_sha256": "ccb9dce9ffb5a6d46c16a77ae1d6afcf2d8036d83b0b91871c035290a37c4269",
+    "image": {
+      "profile": "p4-rev1-16mb",
+      "board": "Waveshare ESP32-P4-Platform / external 10.1-inch JD9365",
+      "backend": "platform",
+      "min_rev": "100",
+      "max_rev": "199",
+      "app_bytes": 6623856,
+      "app_sha256": "9e9839c9715134ce54a2466fa968b73c8908a1fb670c40699160444ae1cc8850",
+      "elf_sha256": "ccb9dce9ffb5a6d46c16a77ae1d6afcf2d8036d83b0b91871c035290a37c4269",
+      "model_start_in_image": 2167692,
+      "model_copies": 1,
+      "marker_state_bytes": 13304,
+      "partition_table_sha256": "62f42bb102ea630060ff184c20b072a679fe90a623b38fdc271225bdd334768a",
+      "app_slots": {
+        "ota_0": {
+          "offset": 917504,
+          "bytes": 6881280
+        },
+        "ota_1": {
+          "offset": 7798784,
+          "bytes": 6881280
+        }
+      },
+      "slot_free_bytes": 257424
+    }
+  }
+}
