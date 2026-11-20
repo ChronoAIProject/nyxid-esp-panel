@@ -1,0 +1,2743 @@
+{
+  "source_sha256": "bfda6952ede4554b727cbe28aa2ae85e4b709f9085847e1130c63d0669b1e683",
+  "parent_audio_sha256": "8bc67c9be2f5c1d54b5e4d74fc0869b517286580ee8cbd456a8b2a3ee74a374a",
+  "models": {
+    "c161": "c16154040378b8acccdb57c19917c46cea0a9ea6a39f105004b964ddd093ab81",
+    "binary40": "454058039dd41e729ce82ac7f33a84edec4af9554615a632e3b33d47de38009c"
+  },
+  "images": {
+    ".local/wakeword/c161-external-clock/build/nyx_mac_listener.bin": "6ba3be77c847e1890e44471cf83edb096226b62206cb3d7609255da8ed7b1f14",
+    ".local/wakeword/c161-first-command-v5/build/nyx_first_command.bin": "407e9647a4ee6bb402a0d50a96cea1518acac9730e5717c87bc75180fe1e8d4f",
+    ".local/wakeword/bella-third-triplet/sender/board.bin": "8a08b15a71b72de811d393732f974d713d305ef407fb2b32641036acb485175b"
+  },
+  "qwen": {
+    "repo": "Qwen/Qwen3-ASR-1.7B-hf",
+    "revision": "bcd2b5b7f32b480ab5790554cfa8347f246a14f3",
+    "files": {
+      "chat_template.jinja": "f50e6b694fbf4a683206e37869990d68333fe95d285730f084c838a34b0d98c2",
+      "config.json": "117ac8e63e2af7cae3665e5a632d6eb03f5f384915519ceb6403c15ec6533f63",
+      "generation_config.json": "9939fc9388b79bd70757f938b87381e817173d6a6158f5af6506c0b73e775c3c",
+      "model.safetensors": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+      "processor_config.json": "bc0b230081b44e629dd5b9045b78495615c1831b4b9f4cffe97bd37e82a6156a",
+      "tokenizer.json": "fe1fad59be22a41ee293363fcf95fdedbc7c93f3b49270b1d2e18bd1399a7a05",
+      "tokenizer_config.json": "945e980986de2ca7768f3326bfdbb4fbea3406f972b8ae0be233089f2b253c11"
+    },
+    "dtype": "bfloat16",
+    "torch": "2.15.0+cu132",
+    "transformers": "5.23.0",
+    "device": "NVIDIA GeForce RTX 4090"
+  },
+  "turbo": {
+    "repo": "mobiuslabsgmbh/faster-whisper-large-v3-turbo",
+    "revision": "0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf",
+    "files": {
+      "config.json": "b0253ea6c0d3bea6b1e19e91a02acfd3b53f4467362efcb5a3e6b16c9b3a9b7e",
+      "preprocessor_config.json": "7ccc62c6f2765af1f3b46c00c9b5894426835a05021c8b9c01eecb6dfb542711",
+      "tokenizer.json": "297b13372ac43916285644fb9687add3cc62ee2a1adb60da3dc25cc94c1871fd",
+      "vocabulary.json": "c69260f2ab26d659b7c398f9a2b2b48ed0df16c3b47d7326782fd9cba71690c1",
+      "model.bin": "e76620f83d5f5b69efd3d87e3dc180c1bd21df9fbebacfd4335e5e1efcc018da"
+    }
+  },
+  "decoder": "libopus 1.3.1",
+  "command": "please remind me to take the bread out in twelve minutes",
+  "records": [
+    {
+      "model_events": {
+        "c161": [
+          {
+            "step": 196,
+            "relative_sample": 12960
+          }
+        ],
+        "binary40": []
+      },
+      "emitted": [
+        {
+          "step": 196,
+          "relative_sample": 12960,
+          "model": "c161"
+        }
+      ],
+      "suppressed": [],
+      "label": "nicole-isolated",
+      "pcm_sha256": "efba0b54a250747a8781a5a09a426fd68205af15c284d452a8309474af181a7b",
+      "probe_start": 0,
+      "sends": {}
+    },
+    {
+      "model_events": {
+        "c161": [],
+        "binary40": []
+      },
+      "emitted": [],
+      "suppressed": [],
+      "label": "nicole-short-phase",
+      "pcm_sha256": "ff05ac1e5c8ca01b9b20763194f42cd2255b2155708ccf910a65f6895ab6b871",
+      "probe_start": 2415,
+      "sends": {}
+    },
+    {
+      "model_events": {
+        "c161": [
+          {
+            "step": 412,
+            "relative_sample": 116640
+          }
+        ],
+        "binary40": []
+      },
+      "emitted": [
+        {
+          "step": 412,
+          "relative_sample": 116640,
+          "model": "c161"
+        }
+      ],
+      "suppressed": [],
+      "label": "nicole-long-aligned",
+      "pcm_sha256": "5a66675c140ca1b2e98b32ac3191148bf834607dbdc193981c8371972fae0668",
+      "probe_start": 103680,
+      "sends": {}
+    },
+    {
+      "model_events": {
+        "c161": [],
+        "binary40": []
+      },
+      "emitted": [],
+      "suppressed": [],
+      "label": "nicole-silent",
+      "pcm_sha256": "99fd61439f5f527cf231903509b387107adff7347ba9f7c1dfec36531d87aa81",
+      "probe_start": 106095,
+      "sends": {}
+    },
+    {
+      "model_events": {
+        "c161": [],
+        "binary40": []
+      },
+      "emitted": [],
+      "suppressed": [],
+      "label": "nicole-kettle",
+      "pcm_sha256": "be9cc7b61a9bf7351d2ed87bf01f932285c983c4977db70826de6ae132d01637",
+      "probe_start": 106095,
+      "sends": {}
+    },
+    {
+      "model_events": {
+        "c161": [],
+        "binary40": []
+      },
+      "emitted": [],
+      "suppressed": [],
+      "label": "nicole-remote",
+      "pcm_sha256": "df46c30f7f09ddfb6251760f78ba8dbe39b75ff9f474fb835b16f87575e9a66c",
+      "probe_start": 106095,
+      "sends": {}
+    },
+    {
+      "model_events": {
+        "c161": [],
+        "binary40": []
+      },
+      "emitted": [],
+      "suppressed": [],
+      "label": "nicole-both",
+      "pcm_sha256": "6a3b2d05467c539d2e544386cbf67bf356800d3cfb3d4d109d47bc105fee5f28",
+      "probe_start": 106095,
+      "sends": {}
+    },
+    {
+      "model_events": {
+        "c161": [
+          {
+            "step": 206,
+            "relative_sample": 17760
+          }
+        ],
+        "binary40": [
+          {
+            "step": 201,
+            "relative_sample": 15360
+          }
+        ]
+      },
+      "emitted": [
+        {
+          "step": 201,
+          "relative_sample": 15360,
+          "model": "binary40"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 206,
+          "relative_sample": 17760,
+          "model": "c161"
+        }
+      ],
+      "label": "bread-isolated",
+      "pcm_sha256": "402a00929319ef99e763bdb683cd2b79840df2115cfd09b6668057c28b4fcacf",
+      "probe_start": 0,
+      "sends": {
+        "c161": {
+          "opened": 17920,
+          "first": 0,
+          "stop": 64480,
+          "samples": 64480,
+          "fifo_sha256": "fd437f2d28cbb95c28e7c5a4c59aa2021adb421967104248530d1b8e99596acb",
+          "capture_uart_sha256": "ddd08ecab9717788e7956cbf531e680741a93940eaa7f2e8cc632c438842c9b8",
+          "capture_watchdog": 0,
+          "opus_uart_sha256": "02f53bff088321061bdcb895bce3340848c6e8d9b00a705a3fa3f3b85fc461f5",
+          "opus_watchdog": 0,
+          "packets": 202,
+          "bytes": 11736,
+          "decoded_sha256": "0cb4257b5349a5e938f5c9bfe3d3a81fe1a3f9b76603e65cb15ac60b545cd496",
+          "sender_uart_sha256": "4fcb58eb94175db32eddc9f240d898fdd8ec1598462efeae4db4aa702a04b39d",
+          "sender_watchdog": 0,
+          "sender": {
+            "unsent": 25,
+            "sent_silence": 50,
+            "captured": 202,
+            "first_pcm_sample": 0,
+            "first_send_pts": 500,
+            "first_captured_pts": 1500,
+            "replayed_samples": 64640,
+            "terminal_padding": 160,
+            "peak_fifo_samples": 41600
+          },
+          "readings": {
+            "immediate": {
+              "qwen": {
+                "text": "Hey Nick, please remind me to take the bread out in twelve minutes.",
+                "complete": true,
+                "pcm_sha256": "0cb4257b5349a5e938f5c9bfe3d3a81fe1a3f9b76603e65cb15ac60b545cd496",
+                "samples": 64640
+              },
+              "turbo": {
+                "text": "Hey Nyx, please remind me to take the bread out in 12 minutes.",
+                "words": [
+                  {
+                    "word": " Hey",
+                    "start": 0.0,
+                    "end": 0.46
+                  },
+                  {
+                    "word": " Nyx,",
+                    "start": 0.46,
+                    "end": 0.86
+                  },
+                  {
+                    "word": " please",
+                    "start": 1.18,
+                    "end": 1.34
+                  },
+                  {
+                    "word": " remind",
+                    "start": 1.34,
+                    "end": 1.66
+                  },
+                  {
+                    "word": " me",
+                    "start": 1.66,
+                    "end": 1.84
+                  },
+                  {
+                    "word": " to",
+                    "start": 1.84,
+                    "end": 2.0
+                  },
+                  {
+                    "word": " take",
+                    "start": 2.0,
+                    "end": 2.24
+                  },
+                  {
+                    "word": " the",
+                    "start": 2.24,
+                    "end": 2.36
+                  },
+                  {
+                    "word": " bread",
+                    "start": 2.36,
+                    "end": 2.58
+                  },
+                  {
+                    "word": " out",
+                    "start": 2.58,
+                    "end": 2.78
+                  },
+                  {
+                    "word": " in",
+                    "start": 2.78,
+                    "end": 3.02
+                  },
+                  {
+                    "word": " 12",
+                    "start": 3.02,
+                    "end": 3.22
+                  },
+                  {
+                    "word": " minutes.",
+                    "start": 3.22,
+                    "end": 3.54
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": false
+              }
+            },
+            "waited": {
+              "qwen": {
+                "text": "Hey, Nick. Please remind me to take the bread out in twelve minutes.",
+                "complete": true,
+                "pcm_sha256": "85ed6c82a10c4d92008c7bcb251d14efa60c0111b005cc211b67dd95dbef9103",
+                "samples": 80640
+              },
+              "turbo": {
+                "text": "Hey Nyx, please remind me to take the bread out in 12 minutes.",
+                "words": [
+                  {
+                    "word": " Hey",
+                    "start": 0.9800000000000004,
+                    "end": 1.46
+                  },
+                  {
+                    "word": " Nyx,",
+                    "start": 1.46,
+                    "end": 1.86
+                  },
+                  {
+                    "word": " please",
+                    "start": 2.18,
+                    "end": 2.3
+                  },
+                  {
+                    "word": " remind",
+                    "start": 2.3,
+                    "end": 2.66
+                  },
+                  {
+                    "word": " me",
+                    "start": 2.66,
+                    "end": 2.84
+                  },
+                  {
+                    "word": " to",
+                    "start": 2.84,
+                    "end": 3.0
+                  },
+                  {
+                    "word": " take",
+                    "start": 3.0,
+                    "end": 3.24
+                  },
+                  {
+                    "word": " the",
+                    "start": 3.24,
+                    "end": 3.36
+                  },
+                  {
+                    "word": " bread",
+                    "start": 3.36,
+                    "end": 3.58
+                  },
+                  {
+                    "word": " out",
+                    "start": 3.58,
+                    "end": 3.78
+                  },
+                  {
+                    "word": " in",
+                    "start": 3.78,
+                    "end": 4.02
+                  },
+                  {
+                    "word": " 12",
+                    "start": 4.02,
+                    "end": 4.22
+                  },
+                  {
+                    "word": " minutes.",
+                    "start": 4.22,
+                    "end": 4.54
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": false
+              }
+            }
+          },
+          "pcm_sha256": "402a00929319ef99e763bdb683cd2b79840df2115cfd09b6668057c28b4fcacf",
+          "reference_sha256": "8bcfe90451ebc4079d5fff903ac07d417e7c106680a17a98f595bc0d5544ff81"
+        },
+        "binary40": {
+          "opened": 15360,
+          "first": 0,
+          "stop": 64480,
+          "samples": 64480,
+          "fifo_sha256": "fd437f2d28cbb95c28e7c5a4c59aa2021adb421967104248530d1b8e99596acb",
+          "capture_uart_sha256": "fd123b7e5c3c27233a045a44721fe23b847f2334c9be8bcb089330365f6bad12",
+          "capture_watchdog": 0,
+          "opus_uart_sha256": "02f53bff088321061bdcb895bce3340848c6e8d9b00a705a3fa3f3b85fc461f5",
+          "opus_watchdog": 0,
+          "packets": 202,
+          "bytes": 11736,
+          "decoded_sha256": "0cb4257b5349a5e938f5c9bfe3d3a81fe1a3f9b76603e65cb15ac60b545cd496",
+          "sender_uart_sha256": "8621fe94013677dbe81aeb6b72ca94687a71ddc2e348ee5686063e921dc3d284",
+          "sender_watchdog": 0,
+          "sender": {
+            "unsent": 25,
+            "sent_silence": 50,
+            "captured": 202,
+            "first_pcm_sample": 0,
+            "first_send_pts": 500,
+            "first_captured_pts": 1500,
+            "replayed_samples": 64640,
+            "terminal_padding": 160,
+            "peak_fifo_samples": 39040
+          },
+          "readings": {
+            "immediate": {
+              "qwen": {
+                "text": "Hey Nick, please remind me to take the bread out in twelve minutes.",
+                "complete": true,
+                "pcm_sha256": "0cb4257b5349a5e938f5c9bfe3d3a81fe1a3f9b76603e65cb15ac60b545cd496",
+                "samples": 64640
+              },
+              "turbo": {
+                "text": "Hey Nyx, please remind me to take the bread out in 12 minutes.",
+                "words": [
+                  {
+                    "word": " Hey",
+                    "start": 0.0,
+                    "end": 0.46
+                  },
+                  {
+                    "word": " Nyx,",
+                    "start": 0.46,
+                    "end": 0.86
+                  },
+                  {
+                    "word": " please",
+                    "start": 1.18,
+                    "end": 1.34
+                  },
+                  {
+                    "word": " remind",
+                    "start": 1.34,
+                    "end": 1.66
+                  },
+                  {
+                    "word": " me",
+                    "start": 1.66,
+                    "end": 1.84
+                  },
+                  {
+                    "word": " to",
+                    "start": 1.84,
+                    "end": 2.0
+                  },
+                  {
+                    "word": " take",
+                    "start": 2.0,
+                    "end": 2.24
+                  },
+                  {
+                    "word": " the",
+                    "start": 2.24,
+                    "end": 2.36
+                  },
+                  {
+                    "word": " bread",
+                    "start": 2.36,
+                    "end": 2.58
+                  },
+                  {
+                    "word": " out",
+                    "start": 2.58,
+                    "end": 2.78
+                  },
+                  {
+                    "word": " in",
+                    "start": 2.78,
+                    "end": 3.02
+                  },
+                  {
+                    "word": " 12",
+                    "start": 3.02,
+                    "end": 3.22
+                  },
+                  {
+                    "word": " minutes.",
+                    "start": 3.22,
+                    "end": 3.54
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": false
+              }
+            },
+            "waited": {
+              "qwen": {
+                "text": "Hey, Nick. Please remind me to take the bread out in twelve minutes.",
+                "complete": true,
+                "pcm_sha256": "85ed6c82a10c4d92008c7bcb251d14efa60c0111b005cc211b67dd95dbef9103",
+                "samples": 80640
+              },
+              "turbo": {
+                "text": "Hey Nyx, please remind me to take the bread out in 12 minutes.",
+                "words": [
+                  {
+                    "word": " Hey",
+                    "start": 0.9800000000000004,
+                    "end": 1.46
+                  },
+                  {
+                    "word": " Nyx,",
+                    "start": 1.46,
+                    "end": 1.86
+                  },
+                  {
+                    "word": " please",
+                    "start": 2.18,
+                    "end": 2.3
+                  },
+                  {
+                    "word": " remind",
+                    "start": 2.3,
+                    "end": 2.66
+                  },
+                  {
+                    "word": " me",
+                    "start": 2.66,
+                    "end": 2.84
+                  },
+                  {
+                    "word": " to",
+                    "start": 2.84,
+                    "end": 3.0
+                  },
+                  {
+                    "word": " take",
+                    "start": 3.0,
+                    "end": 3.24
+                  },
+                  {
+                    "word": " the",
+                    "start": 3.24,
+                    "end": 3.36
+                  },
+                  {
+                    "word": " bread",
+                    "start": 3.36,
+                    "end": 3.58
+                  },
+                  {
+                    "word": " out",
+                    "start": 3.58,
+                    "end": 3.78
+                  },
+                  {
+                    "word": " in",
+                    "start": 3.78,
+                    "end": 4.02
+                  },
+                  {
+                    "word": " 12",
+                    "start": 4.02,
+                    "end": 4.22
+                  },
+                  {
+                    "word": " minutes.",
+                    "start": 4.22,
+                    "end": 4.54
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": false
+              }
+            }
+          },
+          "pcm_sha256": "402a00929319ef99e763bdb683cd2b79840df2115cfd09b6668057c28b4fcacf",
+          "reference_sha256": "8bcfe90451ebc4079d5fff903ac07d417e7c106680a17a98f595bc0d5544ff81"
+        }
+      }
+    },
+    {
+      "model_events": {
+        "c161": [
+          {
+            "step": 210,
+            "relative_sample": 19680
+          }
+        ],
+        "binary40": [
+          {
+            "step": 206,
+            "relative_sample": 17760
+          }
+        ]
+      },
+      "emitted": [
+        {
+          "step": 206,
+          "relative_sample": 17760,
+          "model": "binary40"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 210,
+          "relative_sample": 19680,
+          "model": "c161"
+        }
+      ],
+      "label": "bread-short-phase",
+      "pcm_sha256": "eb5140ed76d3836db096b2398eb9a0c540182fd40b49e1c5e3d9ac81601377fc",
+      "probe_start": 2415,
+      "sends": {
+        "c161": {
+          "opened": 19712,
+          "first": 0,
+          "stop": 67040,
+          "samples": 67040,
+          "fifo_sha256": "5b248826ddd7db1921f487435cde7a2b40c9e674fca2a9be016b35a32106bf63",
+          "capture_uart_sha256": "b314341e30e7916b8ee4f2c3ebf1f8d84ed58e148d853c0ffd9208364e0c3da4",
+          "capture_watchdog": 0,
+          "opus_uart_sha256": "ac636765ceaffe2ea1d2b5de4f378d84af6131c8b162b6ff0168a38a70e1221d",
+          "opus_watchdog": 0,
+          "packets": 210,
+          "bytes": 11835,
+          "decoded_sha256": "7f76a41e23f463c7cd2736205c16d73e09d42a74fabca2d4ae0ceac1ec2ee33a",
+          "sender_uart_sha256": "f893ea0257bc1e0f84f18676f0f54dee34b40c3d554ea4b52f93adce36c6aac9",
+          "sender_watchdog": 0,
+          "sender": {
+            "unsent": 25,
+            "sent_silence": 50,
+            "captured": 210,
+            "first_pcm_sample": 0,
+            "first_send_pts": 500,
+            "first_captured_pts": 1500,
+            "replayed_samples": 67200,
+            "terminal_padding": 160,
+            "peak_fifo_samples": 43520
+          },
+          "readings": {
+            "immediate": {
+              "qwen": {
+                "text": "Hey Nick, please remind me to take the bread out in twelve minutes.",
+                "complete": true,
+                "pcm_sha256": "7f76a41e23f463c7cd2736205c16d73e09d42a74fabca2d4ae0ceac1ec2ee33a",
+                "samples": 67200
+              },
+              "turbo": {
+                "text": "Hey Nix, please remind me to take the bread out in 12 minutes.",
+                "words": [
+                  {
+                    "word": " Hey",
+                    "start": 0.0,
+                    "end": 0.58
+                  },
+                  {
+                    "word": " Nix,",
+                    "start": 0.58,
+                    "end": 0.98
+                  },
+                  {
+                    "word": " please",
+                    "start": 1.32,
+                    "end": 1.48
+                  },
+                  {
+                    "word": " remind",
+                    "start": 1.48,
+                    "end": 1.82
+                  },
+                  {
+                    "word": " me",
+                    "start": 1.82,
+                    "end": 2.0
+                  },
+                  {
+                    "word": " to",
+                    "start": 2.0,
+                    "end": 2.16
+                  },
+                  {
+                    "word": " take",
+                    "start": 2.16,
+                    "end": 2.38
+                  },
+                  {
+                    "word": " the",
+                    "start": 2.38,
+                    "end": 2.52
+                  },
+                  {
+                    "word": " bread",
+                    "start": 2.52,
+                    "end": 2.72
+                  },
+                  {
+                    "word": " out",
+                    "start": 2.72,
+                    "end": 2.92
+                  },
+                  {
+                    "word": " in",
+                    "start": 2.92,
+                    "end": 3.14
+                  },
+                  {
+                    "word": " 12",
+                    "start": 3.14,
+                    "end": 3.38
+                  },
+                  {
+                    "word": " minutes.",
+                    "start": 3.38,
+                    "end": 3.7
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": false
+              }
+            },
+            "waited": {
+              "qwen": {
+                "text": "Hey, Nick. Please remind me to take the bread out in 12 minutes.",
+                "complete": false,
+                "pcm_sha256": "03d059b26068e6b4b67a48bcbb457f77e8024cd9b32bbbf722683e55cd68c7e6",
+                "samples": 83200
+              },
+              "turbo": {
+                "text": "Hey Nyx, please remind me to take the bread out in 12 minutes.",
+                "words": [
+                  {
+                    "word": " Hey",
+                    "start": 1.140000000000001,
+                    "end": 1.5800000000000005
+                  },
+                  {
+                    "word": " Nyx,",
+                    "start": 1.5800000000000005,
+                    "end": 2.02
+                  },
+                  {
+                    "word": " please",
+                    "start": 2.34,
+                    "end": 2.46
+                  },
+                  {
+                    "word": " remind",
+                    "start": 2.46,
+                    "end": 2.8
+                  },
+                  {
+                    "word": " me",
+                    "start": 2.8,
+                    "end": 3.0
+                  },
+                  {
+                    "word": " to",
+                    "start": 3.0,
+                    "end": 3.16
+                  },
+                  {
+                    "word": " take",
+                    "start": 3.16,
+                    "end": 3.38
+                  },
+                  {
+                    "word": " the",
+                    "start": 3.38,
+                    "end": 3.52
+                  },
+                  {
+                    "word": " bread",
+                    "start": 3.52,
+                    "end": 3.72
+                  },
+                  {
+                    "word": " out",
+                    "start": 3.72,
+                    "end": 3.92
+                  },
+                  {
+                    "word": " in",
+                    "start": 3.92,
+                    "end": 4.16
+                  },
+                  {
+                    "word": " 12",
+                    "start": 4.16,
+                    "end": 4.38
+                  },
+                  {
+                    "word": " minutes.",
+                    "start": 4.38,
+                    "end": 4.7
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": false
+              }
+            }
+          },
+          "pcm_sha256": "eb5140ed76d3836db096b2398eb9a0c540182fd40b49e1c5e3d9ac81601377fc",
+          "reference_sha256": "ec2311227339cfcaffe14eda9463fd55064d1d667d7a63e1fbd63c4d201192b2"
+        },
+        "binary40": {
+          "opened": 17920,
+          "first": 0,
+          "stop": 67040,
+          "samples": 67040,
+          "fifo_sha256": "5b248826ddd7db1921f487435cde7a2b40c9e674fca2a9be016b35a32106bf63",
+          "capture_uart_sha256": "d83fe4d406ece771c6f50aa2a0e50214f6483c4b9a5ec4e5058f72e0b750b4d9",
+          "capture_watchdog": 0,
+          "opus_uart_sha256": "ac636765ceaffe2ea1d2b5de4f378d84af6131c8b162b6ff0168a38a70e1221d",
+          "opus_watchdog": 0,
+          "packets": 210,
+          "bytes": 11835,
+          "decoded_sha256": "7f76a41e23f463c7cd2736205c16d73e09d42a74fabca2d4ae0ceac1ec2ee33a",
+          "sender_uart_sha256": "82c30059f665ba520167d587d20edea9d4f2502981e256ba5f4099dca5d03111",
+          "sender_watchdog": 0,
+          "sender": {
+            "unsent": 25,
+            "sent_silence": 50,
+            "captured": 210,
+            "first_pcm_sample": 0,
+            "first_send_pts": 500,
+            "first_captured_pts": 1500,
+            "replayed_samples": 67200,
+            "terminal_padding": 160,
+            "peak_fifo_samples": 41600
+          },
+          "readings": {
+            "immediate": {
+              "qwen": {
+                "text": "Hey Nick, please remind me to take the bread out in twelve minutes.",
+                "complete": true,
+                "pcm_sha256": "7f76a41e23f463c7cd2736205c16d73e09d42a74fabca2d4ae0ceac1ec2ee33a",
+                "samples": 67200
+              },
+              "turbo": {
+                "text": "Hey Nix, please remind me to take the bread out in 12 minutes.",
+                "words": [
+                  {
+                    "word": " Hey",
+                    "start": 0.0,
+                    "end": 0.58
+                  },
+                  {
+                    "word": " Nix,",
+                    "start": 0.58,
+                    "end": 0.98
+                  },
+                  {
+                    "word": " please",
+                    "start": 1.32,
+                    "end": 1.48
+                  },
+                  {
+                    "word": " remind",
+                    "start": 1.48,
+                    "end": 1.82
+                  },
+                  {
+                    "word": " me",
+                    "start": 1.82,
+                    "end": 2.0
+                  },
+                  {
+                    "word": " to",
+                    "start": 2.0,
+                    "end": 2.16
+                  },
+                  {
+                    "word": " take",
+                    "start": 2.16,
+                    "end": 2.38
+                  },
+                  {
+                    "word": " the",
+                    "start": 2.38,
+                    "end": 2.52
+                  },
+                  {
+                    "word": " bread",
+                    "start": 2.52,
+                    "end": 2.72
+                  },
+                  {
+                    "word": " out",
+                    "start": 2.72,
+                    "end": 2.92
+                  },
+                  {
+                    "word": " in",
+                    "start": 2.92,
+                    "end": 3.14
+                  },
+                  {
+                    "word": " 12",
+                    "start": 3.14,
+                    "end": 3.38
+                  },
+                  {
+                    "word": " minutes.",
+                    "start": 3.38,
+                    "end": 3.7
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": false
+              }
+            },
+            "waited": {
+              "qwen": {
+                "text": "Hey, Nick. Please remind me to take the bread out in 12 minutes.",
+                "complete": false,
+                "pcm_sha256": "03d059b26068e6b4b67a48bcbb457f77e8024cd9b32bbbf722683e55cd68c7e6",
+                "samples": 83200
+              },
+              "turbo": {
+                "text": "Hey Nyx, please remind me to take the bread out in 12 minutes.",
+                "words": [
+                  {
+                    "word": " Hey",
+                    "start": 1.140000000000001,
+                    "end": 1.5800000000000005
+                  },
+                  {
+                    "word": " Nyx,",
+                    "start": 1.5800000000000005,
+                    "end": 2.02
+                  },
+                  {
+                    "word": " please",
+                    "start": 2.34,
+                    "end": 2.46
+                  },
+                  {
+                    "word": " remind",
+                    "start": 2.46,
+                    "end": 2.8
+                  },
+                  {
+                    "word": " me",
+                    "start": 2.8,
+                    "end": 3.0
+                  },
+                  {
+                    "word": " to",
+                    "start": 3.0,
+                    "end": 3.16
+                  },
+                  {
+                    "word": " take",
+                    "start": 3.16,
+                    "end": 3.38
+                  },
+                  {
+                    "word": " the",
+                    "start": 3.38,
+                    "end": 3.52
+                  },
+                  {
+                    "word": " bread",
+                    "start": 3.52,
+                    "end": 3.72
+                  },
+                  {
+                    "word": " out",
+                    "start": 3.72,
+                    "end": 3.92
+                  },
+                  {
+                    "word": " in",
+                    "start": 3.92,
+                    "end": 4.16
+                  },
+                  {
+                    "word": " 12",
+                    "start": 4.16,
+                    "end": 4.38
+                  },
+                  {
+                    "word": " minutes.",
+                    "start": 4.38,
+                    "end": 4.7
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": false
+              }
+            }
+          },
+          "pcm_sha256": "eb5140ed76d3836db096b2398eb9a0c540182fd40b49e1c5e3d9ac81601377fc",
+          "reference_sha256": "ec2311227339cfcaffe14eda9463fd55064d1d667d7a63e1fbd63c4d201192b2"
+        }
+      }
+    },
+    {
+      "model_events": {
+        "c161": [
+          {
+            "step": 422,
+            "relative_sample": 121440
+          }
+        ],
+        "binary40": [
+          {
+            "step": 417,
+            "relative_sample": 119040
+          }
+        ]
+      },
+      "emitted": [
+        {
+          "step": 417,
+          "relative_sample": 119040,
+          "model": "binary40"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 422,
+          "relative_sample": 121440,
+          "model": "c161"
+        }
+      ],
+      "label": "bread-long-aligned",
+      "pcm_sha256": "8ccae46056f2873514f2f88912e86b6ee170de21eb633c061e3aa7bd519033d2",
+      "probe_start": 103680,
+      "sends": {
+        "c161": {
+          "opened": 121600,
+          "first": 89600,
+          "stop": 168160,
+          "samples": 78560,
+          "fifo_sha256": "6523b3f4259b0f5eb3d65dea066e837e10d5f53d52f44a17335721b17eee2c88",
+          "capture_uart_sha256": "43cef3788d6d01e692001731eb15930661aed72638b70d1f821d1c7c45a4e8ef",
+          "capture_watchdog": 0,
+          "opus_uart_sha256": "749bfbbaac7828971b878605a12baccb48eabb35428e0cd9e2651e853449bf7b",
+          "opus_watchdog": 0,
+          "packets": 246,
+          "bytes": 12030,
+          "decoded_sha256": "b3a4028dcf5177e636ddf2b68ae64818389fe0ccca290f3048f68cf30511976b",
+          "sender_uart_sha256": "ca419b2ee6db4face9de6d22da70a31a34bfa4456d19dfe8e09f08a2d12efa44",
+          "sender_watchdog": 0,
+          "sender": {
+            "unsent": 25,
+            "sent_silence": 50,
+            "captured": 246,
+            "first_pcm_sample": 89600,
+            "first_send_pts": 500,
+            "first_captured_pts": 1500,
+            "replayed_samples": 78720,
+            "terminal_padding": 160,
+            "peak_fifo_samples": 55680
+          },
+          "readings": {
+            "immediate": {
+              "qwen": {
+                "text": "Hey, Nick. Please remind me to take the bread out in twelve minutes.",
+                "complete": true,
+                "pcm_sha256": "b3a4028dcf5177e636ddf2b68ae64818389fe0ccca290f3048f68cf30511976b",
+                "samples": 78720
+              },
+              "turbo": {
+                "text": "Hey Nyx, please remind me to take the bread out in 12 minutes.",
+                "words": [
+                  {
+                    "word": " Hey",
+                    "start": 0.9000000000000006,
+                    "end": 1.34
+                  },
+                  {
+                    "word": " Nyx,",
+                    "start": 1.34,
+                    "end": 1.76
+                  },
+                  {
+                    "word": " please",
+                    "start": 2.06,
+                    "end": 2.18
+                  },
+                  {
+                    "word": " remind",
+                    "start": 2.18,
+                    "end": 2.54
+                  },
+                  {
+                    "word": " me",
+                    "start": 2.54,
+                    "end": 2.72
+                  },
+                  {
+                    "word": " to",
+                    "start": 2.72,
+                    "end": 2.88
+                  },
+                  {
+                    "word": " take",
+                    "start": 2.88,
+                    "end": 3.12
+                  },
+                  {
+                    "word": " the",
+                    "start": 3.12,
+                    "end": 3.24
+                  },
+                  {
+                    "word": " bread",
+                    "start": 3.24,
+                    "end": 3.46
+                  },
+                  {
+                    "word": " out",
+                    "start": 3.46,
+                    "end": 3.66
+                  },
+                  {
+                    "word": " in",
+                    "start": 3.66,
+                    "end": 3.88
+                  },
+                  {
+                    "word": " 12",
+                    "start": 3.88,
+                    "end": 4.1
+                  },
+                  {
+                    "word": " minutes.",
+                    "start": 4.1,
+                    "end": 4.42
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": false
+              }
+            },
+            "waited": {
+              "qwen": {
+                "text": "Hey, Nick. Please remind me to take the bread out in 12 minutes.",
+                "complete": false,
+                "pcm_sha256": "59eb0279d381985d458ec6b6965e7788ee3722fda3507e17a992be3f5602f8f6",
+                "samples": 94720
+              },
+              "turbo": {
+                "text": "Hey Nyx, please remind me to take the bread out in 12 minutes.",
+                "words": [
+                  {
+                    "word": " Hey",
+                    "start": 1.8800000000000008,
+                    "end": 2.3200000000000003
+                  },
+                  {
+                    "word": " Nyx,",
+                    "start": 2.3200000000000003,
+                    "end": 2.76
+                  },
+                  {
+                    "word": " please",
+                    "start": 3.06,
+                    "end": 3.2
+                  },
+                  {
+                    "word": " remind",
+                    "start": 3.2,
+                    "end": 3.54
+                  },
+                  {
+                    "word": " me",
+                    "start": 3.54,
+                    "end": 3.72
+                  },
+                  {
+                    "word": " to",
+                    "start": 3.72,
+                    "end": 3.88
+                  },
+                  {
+                    "word": " take",
+                    "start": 3.88,
+                    "end": 4.12
+                  },
+                  {
+                    "word": " the",
+                    "start": 4.12,
+                    "end": 4.24
+                  },
+                  {
+                    "word": " bread",
+                    "start": 4.24,
+                    "end": 4.46
+                  },
+                  {
+                    "word": " out",
+                    "start": 4.46,
+                    "end": 4.66
+                  },
+                  {
+                    "word": " in",
+                    "start": 4.66,
+                    "end": 4.88
+                  },
+                  {
+                    "word": " 12",
+                    "start": 4.88,
+                    "end": 5.1
+                  },
+                  {
+                    "word": " minutes.",
+                    "start": 5.1,
+                    "end": 5.42
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": false
+              }
+            }
+          },
+          "pcm_sha256": "8ccae46056f2873514f2f88912e86b6ee170de21eb633c061e3aa7bd519033d2",
+          "reference_sha256": "bd779f480bc868697aa447328ffa576a856bae0bfb432ecbca662b5461623bc7"
+        },
+        "binary40": {
+          "opened": 119040,
+          "first": 87040,
+          "stop": 168160,
+          "samples": 81120,
+          "fifo_sha256": "e6ff655948ee5cff550d67b293ca3d10e4f6e20d3a87700a6fc5749d7fd211e9",
+          "capture_uart_sha256": "ef003330ee700ce65dfb6a70e72118e80adb47b2f224fcf1bb57cabae06e8b1b",
+          "capture_watchdog": 0,
+          "opus_uart_sha256": "bd03742ce52e877b568fd20fef9b88e2135ad84a26b62cc70d8cd9fd209772a0",
+          "opus_watchdog": 0,
+          "packets": 254,
+          "bytes": 12104,
+          "decoded_sha256": "70c2264852764be75fb68679c12070e97c8317b7feb2e9716847c7dabce63714",
+          "sender_uart_sha256": "5bf4527d512d22740764cdada6978c3b3e75db1d9eb3890476de5273151b7b00",
+          "sender_watchdog": 0,
+          "sender": {
+            "unsent": 25,
+            "sent_silence": 50,
+            "captured": 254,
+            "first_pcm_sample": 87040,
+            "first_send_pts": 500,
+            "first_captured_pts": 1500,
+            "replayed_samples": 81280,
+            "terminal_padding": 160,
+            "peak_fifo_samples": 55680
+          },
+          "readings": {
+            "immediate": {
+              "qwen": {
+                "text": "Hey, Nick. Please remind me to take the bread out in 12 minutes.",
+                "complete": false,
+                "pcm_sha256": "70c2264852764be75fb68679c12070e97c8317b7feb2e9716847c7dabce63714",
+                "samples": 81280
+              },
+              "turbo": {
+                "text": "Hey Nix, please remind me to take the bread out in 12 minutes.",
+                "words": [
+                  {
+                    "word": " Hey",
+                    "start": 1.0599999999999996,
+                    "end": 1.5
+                  },
+                  {
+                    "word": " Nix,",
+                    "start": 1.5,
+                    "end": 1.88
+                  },
+                  {
+                    "word": " please",
+                    "start": 2.22,
+                    "end": 2.34
+                  },
+                  {
+                    "word": " remind",
+                    "start": 2.34,
+                    "end": 2.7
+                  },
+                  {
+                    "word": " me",
+                    "start": 2.7,
+                    "end": 2.88
+                  },
+                  {
+                    "word": " to",
+                    "start": 2.88,
+                    "end": 3.04
+                  },
+                  {
+                    "word": " take",
+                    "start": 3.04,
+                    "end": 3.28
+                  },
+                  {
+                    "word": " the",
+                    "start": 3.28,
+                    "end": 3.4
+                  },
+                  {
+                    "word": " bread",
+                    "start": 3.4,
+                    "end": 3.62
+                  },
+                  {
+                    "word": " out",
+                    "start": 3.62,
+                    "end": 3.82
+                  },
+                  {
+                    "word": " in",
+                    "start": 3.82,
+                    "end": 4.04
+                  },
+                  {
+                    "word": " 12",
+                    "start": 4.04,
+                    "end": 4.26
+                  },
+                  {
+                    "word": " minutes.",
+                    "start": 4.26,
+                    "end": 4.58
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": false
+              }
+            },
+            "waited": {
+              "qwen": {
+                "text": "Hey, Nick. Please remind me to take the bread out in 12 minutes.",
+                "complete": false,
+                "pcm_sha256": "a050d05e658a421edcf27860ce1879513b05616688ec52e2d821a7d31315e462",
+                "samples": 97280
+              },
+              "turbo": {
+                "text": "Hey Nyx, please remind me to take the bread out in 12 minutes.",
+                "words": [
+                  {
+                    "word": " Hey",
+                    "start": 2.0200000000000014,
+                    "end": 2.5
+                  },
+                  {
+                    "word": " Nyx,",
+                    "start": 2.5,
+                    "end": 2.92
+                  },
+                  {
+                    "word": " please",
+                    "start": 3.22,
+                    "end": 3.36
+                  },
+                  {
+                    "word": " remind",
+                    "start": 3.36,
+                    "end": 3.7
+                  },
+                  {
+                    "word": " me",
+                    "start": 3.7,
+                    "end": 3.88
+                  },
+                  {
+                    "word": " to",
+                    "start": 3.88,
+                    "end": 4.04
+                  },
+                  {
+                    "word": " take",
+                    "start": 4.04,
+                    "end": 4.28
+                  },
+                  {
+                    "word": " the",
+                    "start": 4.28,
+                    "end": 4.4
+                  },
+                  {
+                    "word": " bread",
+                    "start": 4.4,
+                    "end": 4.62
+                  },
+                  {
+                    "word": " out",
+                    "start": 4.62,
+                    "end": 4.82
+                  },
+                  {
+                    "word": " in",
+                    "start": 4.82,
+                    "end": 5.06
+                  },
+                  {
+                    "word": " 12",
+                    "start": 5.06,
+                    "end": 5.26
+                  },
+                  {
+                    "word": " minutes.",
+                    "start": 5.26,
+                    "end": 5.58
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": false
+              }
+            }
+          },
+          "pcm_sha256": "8ccae46056f2873514f2f88912e86b6ee170de21eb633c061e3aa7bd519033d2",
+          "reference_sha256": "bd779f480bc868697aa447328ffa576a856bae0bfb432ecbca662b5461623bc7"
+        }
+      }
+    },
+    {
+      "model_events": {
+        "c161": [
+          {
+            "step": 426,
+            "relative_sample": 123360
+          }
+        ],
+        "binary40": [
+          {
+            "step": 422,
+            "relative_sample": 121440
+          }
+        ]
+      },
+      "emitted": [
+        {
+          "step": 422,
+          "relative_sample": 121440,
+          "model": "binary40"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 426,
+          "relative_sample": 123360,
+          "model": "c161"
+        }
+      ],
+      "label": "bread-silent",
+      "pcm_sha256": "3732df791223667964d033ad35d2375603d099d2944af8b7d64daac62b793466",
+      "probe_start": 106095,
+      "sends": {
+        "c161": {
+          "opened": 123392,
+          "first": 91360,
+          "stop": 170720,
+          "samples": 79360,
+          "fifo_sha256": "22e9c4ae21f414d146de586b175b5d421dc1ad224064fb7ce2db41f17a7fff1e",
+          "capture_uart_sha256": "8d3ab567d65c4caed21cde30a4d2c45589979721bb473300964024be90134349",
+          "capture_watchdog": 0,
+          "opus_uart_sha256": "b7d9b4065c5bf3b5b4602d98a69aee04eee0e3e5502412aac9b3feb8b2246f7c",
+          "opus_watchdog": 0,
+          "packets": 248,
+          "bytes": 12042,
+          "decoded_sha256": "c31bc7d34d80164a32c50dc6fa51413f16efcf78e09cad0cbd54f7d97fe0667d",
+          "sender_uart_sha256": "35ba3add45428df5611b8fccce06f5a76f2da4b2cba4d173ce8e9b50b46ff050",
+          "sender_watchdog": 0,
+          "sender": {
+            "unsent": 25,
+            "sent_silence": 50,
+            "captured": 248,
+            "first_pcm_sample": 91360,
+            "first_send_pts": 500,
+            "first_captured_pts": 1500,
+            "replayed_samples": 79360,
+            "terminal_padding": 0,
+            "peak_fifo_samples": 55840
+          },
+          "readings": {
+            "immediate": {
+              "qwen": {
+                "text": "Hey, Nick. Please remind me to take the bread out in 12 minutes.",
+                "complete": false,
+                "pcm_sha256": "c31bc7d34d80164a32c50dc6fa51413f16efcf78e09cad0cbd54f7d97fe0667d",
+                "samples": 79360
+              },
+              "turbo": {
+                "text": "Hey Nyx, please remind me to take the bread out in 12 minutes.",
+                "words": [
+                  {
+                    "word": " Hey",
+                    "start": 0.9399999999999995,
+                    "end": 1.38
+                  },
+                  {
+                    "word": " Nyx,",
+                    "start": 1.38,
+                    "end": 1.8
+                  },
+                  {
+                    "word": " please",
+                    "start": 2.1,
+                    "end": 2.24
+                  },
+                  {
+                    "word": " remind",
+                    "start": 2.24,
+                    "end": 2.58
+                  },
+                  {
+                    "word": " me",
+                    "start": 2.58,
+                    "end": 2.76
+                  },
+                  {
+                    "word": " to",
+                    "start": 2.76,
+                    "end": 2.92
+                  },
+                  {
+                    "word": " take",
+                    "start": 2.92,
+                    "end": 3.16
+                  },
+                  {
+                    "word": " the",
+                    "start": 3.16,
+                    "end": 3.28
+                  },
+                  {
+                    "word": " bread",
+                    "start": 3.28,
+                    "end": 3.5
+                  },
+                  {
+                    "word": " out",
+                    "start": 3.5,
+                    "end": 3.7
+                  },
+                  {
+                    "word": " in",
+                    "start": 3.7,
+                    "end": 3.92
+                  },
+                  {
+                    "word": " 12",
+                    "start": 3.92,
+                    "end": 4.14
+                  },
+                  {
+                    "word": " minutes.",
+                    "start": 4.14,
+                    "end": 4.46
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": false
+              }
+            },
+            "waited": {
+              "qwen": {
+                "text": "Hey, Nick. Please remind me to take the bread out in 12 minutes.",
+                "complete": false,
+                "pcm_sha256": "b51b2f5f1fcd81ac22a0d77b4704096a9ba6d527289d2feb5b3f20d35c91a07a",
+                "samples": 95360
+              },
+              "turbo": {
+                "text": "Hey Nyx, please remind me to take the bread out in 12 minutes.",
+                "words": [
+                  {
+                    "word": " Hey",
+                    "start": 1.9200000000000008,
+                    "end": 2.3600000000000003
+                  },
+                  {
+                    "word": " Nyx,",
+                    "start": 2.3600000000000003,
+                    "end": 2.8
+                  },
+                  {
+                    "word": " please",
+                    "start": 3.1,
+                    "end": 3.24
+                  },
+                  {
+                    "word": " remind",
+                    "start": 3.24,
+                    "end": 3.58
+                  },
+                  {
+                    "word": " me",
+                    "start": 3.58,
+                    "end": 3.76
+                  },
+                  {
+                    "word": " to",
+                    "start": 3.76,
+                    "end": 3.92
+                  },
+                  {
+                    "word": " take",
+                    "start": 3.92,
+                    "end": 4.16
+                  },
+                  {
+                    "word": " the",
+                    "start": 4.16,
+                    "end": 4.28
+                  },
+                  {
+                    "word": " bread",
+                    "start": 4.28,
+                    "end": 4.5
+                  },
+                  {
+                    "word": " out",
+                    "start": 4.5,
+                    "end": 4.7
+                  },
+                  {
+                    "word": " in",
+                    "start": 4.7,
+                    "end": 4.92
+                  },
+                  {
+                    "word": " 12",
+                    "start": 4.92,
+                    "end": 5.14
+                  },
+                  {
+                    "word": " minutes.",
+                    "start": 5.14,
+                    "end": 5.46
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": false
+              }
+            }
+          },
+          "pcm_sha256": "3732df791223667964d033ad35d2375603d099d2944af8b7d64daac62b793466",
+          "reference_sha256": "7e2627ac9c3f594346c0a8197645c5b4c599a6fa4815d0a657c7bc3247871850"
+        },
+        "binary40": {
+          "opened": 121600,
+          "first": 89600,
+          "stop": 170720,
+          "samples": 81120,
+          "fifo_sha256": "552acd422f9cbdb560dc3d7f5e11abb31753988fbd907b6e0a641f25c1a4cf1a",
+          "capture_uart_sha256": "faca3d07115a594e51525d8613ded0afdb1a031ceeebe1aa3355be4e8db93ac3",
+          "capture_watchdog": 0,
+          "opus_uart_sha256": "9b724ef0214f79f5b66e9af1d635cbb21e926d1e1976f7b669f7481e90b8b52f",
+          "opus_watchdog": 0,
+          "packets": 254,
+          "bytes": 12122,
+          "decoded_sha256": "022581b46773fea3dee171fe7aecb36d90228d0a590311a65e27c8966527e5e7",
+          "sender_uart_sha256": "7f230c2fe09b98dcfe1d079de0e445b66b58d55fe8003166eb1948112dd93394",
+          "sender_watchdog": 0,
+          "sender": {
+            "unsent": 25,
+            "sent_silence": 50,
+            "captured": 254,
+            "first_pcm_sample": 89600,
+            "first_send_pts": 500,
+            "first_captured_pts": 1500,
+            "replayed_samples": 81280,
+            "terminal_padding": 160,
+            "peak_fifo_samples": 55680
+          },
+          "readings": {
+            "immediate": {
+              "qwen": {
+                "text": "Hey, Nick. Please remind me to take the bread out in 12 minutes.",
+                "complete": false,
+                "pcm_sha256": "022581b46773fea3dee171fe7aecb36d90228d0a590311a65e27c8966527e5e7",
+                "samples": 81280
+              },
+              "turbo": {
+                "text": "Hey Nyx, please remind me to take the bread out in 12 minutes.",
+                "words": [
+                  {
+                    "word": " Hey",
+                    "start": 1.020000000000001,
+                    "end": 1.4600000000000004
+                  },
+                  {
+                    "word": " Nyx,",
+                    "start": 1.4600000000000004,
+                    "end": 1.9
+                  },
+                  {
+                    "word": " please",
+                    "start": 2.22,
+                    "end": 2.34
+                  },
+                  {
+                    "word": " remind",
+                    "start": 2.34,
+                    "end": 2.68
+                  },
+                  {
+                    "word": " me",
+                    "start": 2.68,
+                    "end": 2.88
+                  },
+                  {
+                    "word": " to",
+                    "start": 2.88,
+                    "end": 3.04
+                  },
+                  {
+                    "word": " take",
+                    "start": 3.04,
+                    "end": 3.26
+                  },
+                  {
+                    "word": " the",
+                    "start": 3.26,
+                    "end": 3.4
+                  },
+                  {
+                    "word": " bread",
+                    "start": 3.4,
+                    "end": 3.6
+                  },
+                  {
+                    "word": " out",
+                    "start": 3.6,
+                    "end": 3.8
+                  },
+                  {
+                    "word": " in",
+                    "start": 3.8,
+                    "end": 4.02
+                  },
+                  {
+                    "word": " 12",
+                    "start": 4.02,
+                    "end": 4.26
+                  },
+                  {
+                    "word": " minutes.",
+                    "start": 4.26,
+                    "end": 4.58
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": false
+              }
+            },
+            "waited": {
+              "qwen": {
+                "text": "Hey, Nick. Please remind me to take the bread out in 12 minutes.",
+                "complete": false,
+                "pcm_sha256": "35d2dbcd7ae7ce97c80946fd2cf2ef7957309b854494980f1630bd190e7d4825",
+                "samples": 97280
+              },
+              "turbo": {
+                "text": "Hey Nyx, please remind me to take the bread out in 12 minutes.",
+                "words": [
+                  {
+                    "word": " Hey",
+                    "start": 2.020000000000001,
+                    "end": 2.4600000000000004
+                  },
+                  {
+                    "word": " Nyx,",
+                    "start": 2.4600000000000004,
+                    "end": 2.9
+                  },
+                  {
+                    "word": " please",
+                    "start": 3.22,
+                    "end": 3.34
+                  },
+                  {
+                    "word": " remind",
+                    "start": 3.34,
+                    "end": 3.68
+                  },
+                  {
+                    "word": " me",
+                    "start": 3.68,
+                    "end": 3.88
+                  },
+                  {
+                    "word": " to",
+                    "start": 3.88,
+                    "end": 4.04
+                  },
+                  {
+                    "word": " take",
+                    "start": 4.04,
+                    "end": 4.26
+                  },
+                  {
+                    "word": " the",
+                    "start": 4.26,
+                    "end": 4.4
+                  },
+                  {
+                    "word": " bread",
+                    "start": 4.4,
+                    "end": 4.6
+                  },
+                  {
+                    "word": " out",
+                    "start": 4.6,
+                    "end": 4.8
+                  },
+                  {
+                    "word": " in",
+                    "start": 4.8,
+                    "end": 5.02
+                  },
+                  {
+                    "word": " 12",
+                    "start": 5.02,
+                    "end": 5.26
+                  },
+                  {
+                    "word": " minutes.",
+                    "start": 5.26,
+                    "end": 5.58
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": false
+              }
+            }
+          },
+          "pcm_sha256": "3732df791223667964d033ad35d2375603d099d2944af8b7d64daac62b793466",
+          "reference_sha256": "7e2627ac9c3f594346c0a8197645c5b4c599a6fa4815d0a657c7bc3247871850"
+        }
+      }
+    },
+    {
+      "model_events": {
+        "c161": [
+          {
+            "step": 426,
+            "relative_sample": 123360
+          }
+        ],
+        "binary40": [
+          {
+            "step": 422,
+            "relative_sample": 121440
+          }
+        ]
+      },
+      "emitted": [
+        {
+          "step": 422,
+          "relative_sample": 121440,
+          "model": "binary40"
+        }
+      ],
+      "suppressed": [
+        {
+          "step": 426,
+          "relative_sample": 123360,
+          "model": "c161"
+        }
+      ],
+      "label": "bread-kettle",
+      "pcm_sha256": "e91add7abe4a0e5a99f6e153f8eace837d6c65cab1f3c94c3e19176a36466504",
+      "probe_start": 106095,
+      "sends": {
+        "c161": {
+          "opened": 123392,
+          "first": 91360,
+          "stop": 170720,
+          "samples": 79360,
+          "fifo_sha256": "02e3202584879eef6cabd2990879f0427ee1980ab975714fb6d7234c6f199990",
+          "capture_uart_sha256": "70e14d420fa5ea27a9e83979e3c2ab82e7e90bd5c96cadc7e5f9b0f88282be20",
+          "capture_watchdog": 0,
+          "opus_uart_sha256": "fa5e75109b39ebe747b424d8864b1a1cc6396c8ea7f40363105553336b10b625",
+          "opus_watchdog": 0,
+          "packets": 248,
+          "bytes": 12020,
+          "decoded_sha256": "f2a5c36ff8f923681c34e142b4411745a387e2a619fba527420457772b4690a5",
+          "sender_uart_sha256": "ee78eab629ee2ef6daa5da19b64a4ae11b3b9c5b61806c9f6b659d20a599aa29",
+          "sender_watchdog": 0,
+          "sender": {
+            "unsent": 25,
+            "sent_silence": 50,
+            "captured": 248,
+            "first_pcm_sample": 91360,
+            "first_send_pts": 500,
+            "first_captured_pts": 1500,
+            "replayed_samples": 79360,
+            "terminal_padding": 0,
+            "peak_fifo_samples": 55840
+          },
+          "readings": {
+            "immediate": {
+              "qwen": {
+                "text": "Hey, Nick. Please remind me to take the bread out in twelve minutes.",
+                "complete": true,
+                "pcm_sha256": "f2a5c36ff8f923681c34e142b4411745a387e2a619fba527420457772b4690a5",
+                "samples": 79360
+              },
+              "turbo": {
+                "text": "Hey Nyx, please remind me to take the bread out in 12 minutes.",
+                "words": [
+                  {
+                    "word": " Hey",
+                    "start": 0.9399999999999995,
+                    "end": 1.38
+                  },
+                  {
+                    "word": " Nyx,",
+                    "start": 1.38,
+                    "end": 1.78
+                  },
+                  {
+                    "word": " please",
+                    "start": 2.1,
+                    "end": 2.24
+                  },
+                  {
+                    "word": " remind",
+                    "start": 2.24,
+                    "end": 2.58
+                  },
+                  {
+                    "word": " me",
+                    "start": 2.58,
+                    "end": 2.76
+                  },
+                  {
+                    "word": " to",
+                    "start": 2.76,
+                    "end": 2.92
+                  },
+                  {
+                    "word": " take",
+                    "start": 2.92,
+                    "end": 3.16
+                  },
+                  {
+                    "word": " the",
+                    "start": 3.16,
+                    "end": 3.28
+                  },
+                  {
+                    "word": " bread",
+                    "start": 3.28,
+                    "end": 3.5
+                  },
+                  {
+                    "word": " out",
+                    "start": 3.5,
+                    "end": 3.7
+                  },
+                  {
+                    "word": " in",
+                    "start": 3.7,
+                    "end": 3.92
+                  },
+                  {
+                    "word": " 12",
+                    "start": 3.92,
+                    "end": 4.14
+                  },
+                  {
+                    "word": " minutes.",
+                    "start": 4.14,
+                    "end": 4.46
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": false
+              }
+            },
+            "waited": {
+              "qwen": {
+                "text": "Hey, Nick. Please remind me to take the bread out in 12 minutes.",
+                "complete": false,
+                "pcm_sha256": "c8c6e78ad81484cdfbb921206b15ed469939ee52205a8206cf63acf515cc9fe6",
+                "samples": 95360
+              },
+              "turbo": {
+                "text": "Hey Nyx, please remind me to take the bread out in 12 minutes.",
+                "words": [
+                  {
+                    "word": " Hey",
+                    "start": 1.9200000000000008,
+                    "end": 2.3600000000000003
+                  },
+                  {
+                    "word": " Nyx,",
+                    "start": 2.3600000000000003,
+                    "end": 2.8
+                  },
+                  {
+                    "word": " please",
+                    "start": 3.12,
+                    "end": 3.24
+                  },
+                  {
+                    "word": " remind",
+                    "start": 3.24,
+                    "end": 3.58
+                  },
+                  {
+                    "word": " me",
+                    "start": 3.58,
+                    "end": 3.76
+                  },
+                  {
+                    "word": " to",
+                    "start": 3.76,
+                    "end": 3.92
+                  },
+                  {
+                    "word": " take",
+                    "start": 3.92,
+                    "end": 4.16
+                  },
+                  {
+                    "word": " the",
+                    "start": 4.16,
+                    "end": 4.3
+                  },
+                  {
+                    "word": " bread",
+                    "start": 4.3,
+                    "end": 4.5
+                  },
+                  {
+                    "word": " out",
+                    "start": 4.5,
+                    "end": 4.7
+                  },
+                  {
+                    "word": " in",
+                    "start": 4.7,
+                    "end": 4.92
+                  },
+                  {
+                    "word": " 12",
+                    "start": 4.92,
+                    "end": 5.14
+                  },
+                  {
+                    "word": " minutes.",
+                    "start": 5.14,
+                    "end": 5.46
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": false
+              }
+            }
+          },
+          "pcm_sha256": "e91add7abe4a0e5a99f6e153f8eace837d6c65cab1f3c94c3e19176a36466504",
+          "reference_sha256": "7e2627ac9c3f594346c0a8197645c5b4c599a6fa4815d0a657c7bc3247871850"
+        },
+        "binary40": {
+          "opened": 121600,
+          "first": 89600,
+          "stop": 170720,
+          "samples": 81120,
+          "fifo_sha256": "7058b7ea987dbb68bf921dfd5f1b031d58bc7790e7ef1b64ed270e338f74defe",
+          "capture_uart_sha256": "1486ed6fce6c7e72b0aa873e317429559708e82e7ebb037b9767ee548ea65d89",
+          "capture_watchdog": 0,
+          "opus_uart_sha256": "2e43d2c88b6ea6b9bd5ef99d50a3f7ab8de0fb2080b1081f75dd698f74420b04",
+          "opus_watchdog": 0,
+          "packets": 254,
+          "bytes": 12155,
+          "decoded_sha256": "c7cc774ac85f4890dedd3bcb6d60d42fa5266eb62cde1bea81f2aadb30c5a61d",
+          "sender_uart_sha256": "fdae74044a9cec3dfbe0a2b86c1e3c6d272d861dc5f5bae02e44abbc50f5bf4f",
+          "sender_watchdog": 0,
+          "sender": {
+            "unsent": 25,
+            "sent_silence": 50,
+            "captured": 254,
+            "first_pcm_sample": 89600,
+            "first_send_pts": 500,
+            "first_captured_pts": 1500,
+            "replayed_samples": 81280,
+            "terminal_padding": 160,
+            "peak_fifo_samples": 55680
+          },
+          "readings": {
+            "immediate": {
+              "qwen": {
+                "text": "Hey, Nick. Please remind me to take the bread out in 12 minutes.",
+                "complete": false,
+                "pcm_sha256": "c7cc774ac85f4890dedd3bcb6d60d42fa5266eb62cde1bea81f2aadb30c5a61d",
+                "samples": 81280
+              },
+              "turbo": {
+                "text": "Hey Nyx, please remind me to take the bread out in 12 minutes.",
+                "words": [
+                  {
+                    "word": " Hey",
+                    "start": 1.020000000000001,
+                    "end": 1.4600000000000004
+                  },
+                  {
+                    "word": " Nyx,",
+                    "start": 1.4600000000000004,
+                    "end": 1.9
+                  },
+                  {
+                    "word": " please",
+                    "start": 2.22,
+                    "end": 2.34
+                  },
+                  {
+                    "word": " remind",
+                    "start": 2.34,
+                    "end": 2.68
+                  },
+                  {
+                    "word": " me",
+                    "start": 2.68,
+                    "end": 2.88
+                  },
+                  {
+                    "word": " to",
+                    "start": 2.88,
+                    "end": 3.04
+                  },
+                  {
+                    "word": " take",
+                    "start": 3.04,
+                    "end": 3.26
+                  },
+                  {
+                    "word": " the",
+                    "start": 3.26,
+                    "end": 3.4
+                  },
+                  {
+                    "word": " bread",
+                    "start": 3.4,
+                    "end": 3.6
+                  },
+                  {
+                    "word": " out",
+                    "start": 3.6,
+                    "end": 3.82
+                  },
+                  {
+                    "word": " in",
+                    "start": 3.82,
+                    "end": 4.02
+                  },
+                  {
+                    "word": " 12",
+                    "start": 4.02,
+                    "end": 4.26
+                  },
+                  {
+                    "word": " minutes.",
+                    "start": 4.26,
+                    "end": 4.6
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": false
+              }
+            },
+            "waited": {
+              "qwen": {
+                "text": "Hey, Nick. Please remind me to take the bread out in 12 minutes.",
+                "complete": false,
+                "pcm_sha256": "943fb6c3ae91c3a8df977956beddd8f278dba41b646e1b3567429aa5e83f3eb8",
+                "samples": 97280
+              },
+              "turbo": {
+                "text": "Hey Nyx, please remind me to take the bread out in 12 minutes.",
+                "words": [
+                  {
+                    "word": " Hey",
+                    "start": 2.020000000000001,
+                    "end": 2.4600000000000004
+                  },
+                  {
+                    "word": " Nyx,",
+                    "start": 2.4600000000000004,
+                    "end": 2.9
+                  },
+                  {
+                    "word": " please",
+                    "start": 3.22,
+                    "end": 3.34
+                  },
+                  {
+                    "word": " remind",
+                    "start": 3.34,
+                    "end": 3.68
+                  },
+                  {
+                    "word": " me",
+                    "start": 3.68,
+                    "end": 3.88
+                  },
+                  {
+                    "word": " to",
+                    "start": 3.88,
+                    "end": 4.04
+                  },
+                  {
+                    "word": " take",
+                    "start": 4.04,
+                    "end": 4.26
+                  },
+                  {
+                    "word": " the",
+                    "start": 4.26,
+                    "end": 4.4
+                  },
+                  {
+                    "word": " bread",
+                    "start": 4.4,
+                    "end": 4.6
+                  },
+                  {
+                    "word": " out",
+                    "start": 4.6,
+                    "end": 4.8
+                  },
+                  {
+                    "word": " in",
+                    "start": 4.8,
+                    "end": 5.02
+                  },
+                  {
+                    "word": " 12",
+                    "start": 5.02,
+                    "end": 5.26
+                  },
+                  {
+                    "word": " minutes.",
+                    "start": 5.26,
+                    "end": 5.6
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": false
+              }
+            }
+          },
+          "pcm_sha256": "e91add7abe4a0e5a99f6e153f8eace837d6c65cab1f3c94c3e19176a36466504",
+          "reference_sha256": "7e2627ac9c3f594346c0a8197645c5b4c599a6fa4815d0a657c7bc3247871850"
+        }
+      }
+    },
+    {
+      "model_events": {
+        "c161": [],
+        "binary40": [
+          {
+            "step": 424,
+            "relative_sample": 122400
+          }
+        ]
+      },
+      "emitted": [
+        {
+          "step": 424,
+          "relative_sample": 122400,
+          "model": "binary40"
+        }
+      ],
+      "suppressed": [],
+      "label": "bread-remote",
+      "pcm_sha256": "da6e5580c38726144f93f0bcab175609c406edc1517cd6eda02b6cc22ffc7d0e",
+      "probe_start": 106095,
+      "sends": {
+        "binary40": {
+          "opened": 122624,
+          "first": 90560,
+          "stop": 170720,
+          "samples": 80160,
+          "fifo_sha256": "11da04c8a5059706e553b89f262263e76b7132af27024a986a3d7acffb561876",
+          "capture_uart_sha256": "e5ab25dd6d2a2576ed2d99d37a23cb0d6e3a86aa11ddc6f971b69d569bd95f66",
+          "capture_watchdog": 0,
+          "opus_uart_sha256": "c2b9ab10fef5c52eb72c7c109f02ebc2f3d6a680bfe51efffc740c9ad435b044",
+          "opus_watchdog": 0,
+          "packets": 251,
+          "bytes": 13407,
+          "decoded_sha256": "a792033cfe92631eaa46c0b3cf054f8dcd244cab282194a100178aa18ed7da56",
+          "sender_uart_sha256": "2ed5d53a10c7db78fc64836632dd946e7cc7c293ce0f2c239348b47ebef6643d",
+          "sender_watchdog": 0,
+          "sender": {
+            "unsent": 25,
+            "sent_silence": 50,
+            "captured": 251,
+            "first_pcm_sample": 90560,
+            "first_send_pts": 500,
+            "first_captured_pts": 1500,
+            "replayed_samples": 80320,
+            "terminal_padding": 160,
+            "peak_fifo_samples": 55840
+          },
+          "readings": {
+            "immediate": {
+              "qwen": {
+                "text": "Hey, Nick. Please remind me to take the bread out in 12 minutes.",
+                "complete": false,
+                "pcm_sha256": "a792033cfe92631eaa46c0b3cf054f8dcd244cab282194a100178aa18ed7da56",
+                "samples": 80320
+              },
+              "turbo": {
+                "text": "Hey Nyx, please remind me to take the bread out in 12 minutes.",
+                "words": [
+                  {
+                    "word": " Hey",
+                    "start": 0.9599999999999993,
+                    "end": 1.3999999999999997
+                  },
+                  {
+                    "word": " Nyx,",
+                    "start": 1.3999999999999997,
+                    "end": 1.84
+                  },
+                  {
+                    "word": " please",
+                    "start": 2.16,
+                    "end": 2.28
+                  },
+                  {
+                    "word": " remind",
+                    "start": 2.28,
+                    "end": 2.62
+                  },
+                  {
+                    "word": " me",
+                    "start": 2.62,
+                    "end": 2.82
+                  },
+                  {
+                    "word": " to",
+                    "start": 2.82,
+                    "end": 2.98
+                  },
+                  {
+                    "word": " take",
+                    "start": 2.98,
+                    "end": 3.2
+                  },
+                  {
+                    "word": " the",
+                    "start": 3.2,
+                    "end": 3.34
+                  },
+                  {
+                    "word": " bread",
+                    "start": 3.34,
+                    "end": 3.54
+                  },
+                  {
+                    "word": " out",
+                    "start": 3.54,
+                    "end": 3.74
+                  },
+                  {
+                    "word": " in",
+                    "start": 3.74,
+                    "end": 3.94
+                  },
+                  {
+                    "word": " 12",
+                    "start": 3.94,
+                    "end": 4.18
+                  },
+                  {
+                    "word": " minutes.",
+                    "start": 4.18,
+                    "end": 4.52
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": false
+              }
+            },
+            "waited": {
+              "qwen": {
+                "text": "Sir, hey, Nick. Please remind me to take the bread out in twelve minutes.",
+                "complete": true,
+                "pcm_sha256": "5e9cb59f3668e2d693aeede2732a4951e5f34d7e01a7f5575bc6e2e1f92c5e07",
+                "samples": 96320
+              },
+              "turbo": {
+                "text": "Hey Nix, please remind me to take the bread out in 12 minutes.",
+                "words": [
+                  {
+                    "word": " Hey",
+                    "start": 1.9399999999999995,
+                    "end": 2.38
+                  },
+                  {
+                    "word": " Nix,",
+                    "start": 2.38,
+                    "end": 2.8
+                  },
+                  {
+                    "word": " please",
+                    "start": 3.16,
+                    "end": 3.28
+                  },
+                  {
+                    "word": " remind",
+                    "start": 3.28,
+                    "end": 3.62
+                  },
+                  {
+                    "word": " me",
+                    "start": 3.62,
+                    "end": 3.82
+                  },
+                  {
+                    "word": " to",
+                    "start": 3.82,
+                    "end": 3.98
+                  },
+                  {
+                    "word": " take",
+                    "start": 3.98,
+                    "end": 4.2
+                  },
+                  {
+                    "word": " the",
+                    "start": 4.2,
+                    "end": 4.34
+                  },
+                  {
+                    "word": " bread",
+                    "start": 4.34,
+                    "end": 4.54
+                  },
+                  {
+                    "word": " out",
+                    "start": 4.54,
+                    "end": 4.74
+                  },
+                  {
+                    "word": " in",
+                    "start": 4.74,
+                    "end": 4.98
+                  },
+                  {
+                    "word": " 12",
+                    "start": 4.98,
+                    "end": 5.2
+                  },
+                  {
+                    "word": " minutes.",
+                    "start": 5.2,
+                    "end": 5.56
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": false
+              }
+            }
+          },
+          "pcm_sha256": "da6e5580c38726144f93f0bcab175609c406edc1517cd6eda02b6cc22ffc7d0e",
+          "reference_sha256": "7e2627ac9c3f594346c0a8197645c5b4c599a6fa4815d0a657c7bc3247871850"
+        }
+      }
+    },
+    {
+      "model_events": {
+        "c161": [],
+        "binary40": [
+          {
+            "step": 424,
+            "relative_sample": 122400
+          }
+        ]
+      },
+      "emitted": [
+        {
+          "step": 424,
+          "relative_sample": 122400,
+          "model": "binary40"
+        }
+      ],
+      "suppressed": [],
+      "label": "bread-both",
+      "pcm_sha256": "178e76c9f8c71928316405780577aca4bb3410c871fc52a36fff8406802ccc17",
+      "probe_start": 106095,
+      "sends": {
+        "binary40": {
+          "opened": 122624,
+          "first": 90560,
+          "stop": 170720,
+          "samples": 80160,
+          "fifo_sha256": "aef23d6d2cdaf5a0b76ec1182583efbec7601026c30c4e66ff4d4877de4b71a3",
+          "capture_uart_sha256": "6c5a7b028901a579c852d882c57a20c0f660b7d322a5548019ac49d3276a3f5e",
+          "capture_watchdog": 0,
+          "opus_uart_sha256": "342aec30ab2d0506a93dd7c3457d23a26ff8a6cf85ca24921287f9fa5935c64e",
+          "opus_watchdog": 0,
+          "packets": 251,
+          "bytes": 13349,
+          "decoded_sha256": "c1f01442a0ce353bada19c8ad67d368a4d9cbed7257338136facd7d7b95da9fa",
+          "sender_uart_sha256": "5edaf6a74883a0f90ac7c8fdbab8e0a2bf86ae4e0ae74df4eb5064465620ea0d",
+          "sender_watchdog": 0,
+          "sender": {
+            "unsent": 25,
+            "sent_silence": 50,
+            "captured": 251,
+            "first_pcm_sample": 90560,
+            "first_send_pts": 500,
+            "first_captured_pts": 1500,
+            "replayed_samples": 80320,
+            "terminal_padding": 160,
+            "peak_fifo_samples": 55840
+          },
+          "readings": {
+            "immediate": {
+              "qwen": {
+                "text": "Hey, Nick. Please remind me to take the bread out in 12 minutes.",
+                "complete": false,
+                "pcm_sha256": "c1f01442a0ce353bada19c8ad67d368a4d9cbed7257338136facd7d7b95da9fa",
+                "samples": 80320
+              },
+              "turbo": {
+                "text": "Hey Nyx, please remind me to take the bread out in 12 minutes.",
+                "words": [
+                  {
+                    "word": " Hey",
+                    "start": 0.9599999999999993,
+                    "end": 1.3999999999999997
+                  },
+                  {
+                    "word": " Nyx,",
+                    "start": 1.3999999999999997,
+                    "end": 1.84
+                  },
+                  {
+                    "word": " please",
+                    "start": 2.16,
+                    "end": 2.28
+                  },
+                  {
+                    "word": " remind",
+                    "start": 2.28,
+                    "end": 2.62
+                  },
+                  {
+                    "word": " me",
+                    "start": 2.62,
+                    "end": 2.82
+                  },
+                  {
+                    "word": " to",
+                    "start": 2.82,
+                    "end": 2.98
+                  },
+                  {
+                    "word": " take",
+                    "start": 2.98,
+                    "end": 3.2
+                  },
+                  {
+                    "word": " the",
+                    "start": 3.2,
+                    "end": 3.34
+                  },
+                  {
+                    "word": " bread",
+                    "start": 3.34,
+                    "end": 3.54
+                  },
+                  {
+                    "word": " out",
+                    "start": 3.54,
+                    "end": 3.74
+                  },
+                  {
+                    "word": " in",
+                    "start": 3.74,
+                    "end": 3.94
+                  },
+                  {
+                    "word": " 12",
+                    "start": 3.94,
+                    "end": 4.2
+                  },
+                  {
+                    "word": " minutes.",
+                    "start": 4.2,
+                    "end": 4.52
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": false
+              }
+            },
+            "waited": {
+              "qwen": {
+                "text": "Sir, hey, Nick. Please remind me to take the bread out in twelve minutes.",
+                "complete": true,
+                "pcm_sha256": "64fdb68c08e3b9172d484768f3e78e75dd3fcaae326343ec9a27ecd46ad8cedc",
+                "samples": 96320
+              },
+              "turbo": {
+                "text": "Hey Nix, please remind me to take the bread out in 12 minutes.",
+                "words": [
+                  {
+                    "word": " Hey",
+                    "start": 1.9399999999999995,
+                    "end": 2.38
+                  },
+                  {
+                    "word": " Nix,",
+                    "start": 2.38,
+                    "end": 2.8
+                  },
+                  {
+                    "word": " please",
+                    "start": 3.16,
+                    "end": 3.28
+                  },
+                  {
+                    "word": " remind",
+                    "start": 3.28,
+                    "end": 3.62
+                  },
+                  {
+                    "word": " me",
+                    "start": 3.62,
+                    "end": 3.82
+                  },
+                  {
+                    "word": " to",
+                    "start": 3.82,
+                    "end": 3.98
+                  },
+                  {
+                    "word": " take",
+                    "start": 3.98,
+                    "end": 4.2
+                  },
+                  {
+                    "word": " the",
+                    "start": 4.2,
+                    "end": 4.34
+                  },
+                  {
+                    "word": " bread",
+                    "start": 4.34,
+                    "end": 4.54
+                  },
+                  {
+                    "word": " out",
+                    "start": 4.54,
+                    "end": 4.74
+                  },
+                  {
+                    "word": " in",
+                    "start": 4.74,
+                    "end": 4.98
+                  },
+                  {
+                    "word": " 12",
+                    "start": 4.98,
+                    "end": 5.2
+                  },
+                  {
+                    "word": " minutes.",
+                    "start": 5.2,
+                    "end": 5.54
+                  }
+                ],
+                "first": false,
+                "exact": false,
+                "complete_suffix": false
+              }
+            }
+          },
+          "pcm_sha256": "178e76c9f8c71928316405780577aca4bb3410c871fc52a36fff8406802ccc17",
+          "reference_sha256": "7e2627ac9c3f594346c0a8197645c5b4c599a6fa4815d0a657c7bc3247871850"
+        }
+      }
+    }
+  ],
+  "files": {
+    "nicole-isolated/scores.npz": "214daf7c392c449751fdbe81c512d5fd852dcef371771f3e1a795fb6f5e265f4",
+    "nicole-short-phase/scores.npz": "fc007b710080041e07d91039e777cabf755ed6c9125a61c985a43eb578434e21",
+    "nicole-long-aligned/scores.npz": "04f7747b34ee514f3a189ec2eb3829e66b6c293401e9fb431ba8fd1817b6139d",
+    "nicole-silent/scores.npz": "023d82b647d6778f645b446f736fa7ee4de0acc0391ac10d633c70f54fb895e3",
+    "nicole-kettle/scores.npz": "4f211867e0b1e703f115da99a87cddabb793db69187767853188114691b7a9b3",
+    "nicole-remote/scores.npz": "5abeac3f3396196facd90e928477d0e8d74cf58ae4fa71e14413cfc17191459a",
+    "nicole-both/scores.npz": "2f61422e413e4b4cd6658350b22332ebc0cebe9dc4e2d8ee266ce64eff2c496f",
+    "bread-isolated/scores.npz": "cda3d7bd10750ff131351b4838b30ed5944bcff6440e70c0000c2d29d3be063e",
+    "bread-isolated/c161/capture.log": "ddd08ecab9717788e7956cbf531e680741a93940eaa7f2e8cc632c438842c9b8",
+    "bread-isolated/c161/opus.log": "02f53bff088321061bdcb895bce3340848c6e8d9b00a705a3fa3f3b85fc461f5",
+    "bread-isolated/c161/sender.log": "4fcb58eb94175db32eddc9f240d898fdd8ec1598462efeae4db4aa702a04b39d",
+    "bread-isolated/binary40/capture.log": "fd123b7e5c3c27233a045a44721fe23b847f2334c9be8bcb089330365f6bad12",
+    "bread-isolated/binary40/opus.log": "02f53bff088321061bdcb895bce3340848c6e8d9b00a705a3fa3f3b85fc461f5",
+    "bread-isolated/binary40/sender.log": "8621fe94013677dbe81aeb6b72ca94687a71ddc2e348ee5686063e921dc3d284",
+    "bread-short-phase/scores.npz": "cf7c1adf0ce190a1c77409da5bc93e67dfe6462d8d455021bc7bb98a7e4ea70d",
+    "bread-short-phase/c161/capture.log": "b314341e30e7916b8ee4f2c3ebf1f8d84ed58e148d853c0ffd9208364e0c3da4",
+    "bread-short-phase/c161/opus.log": "ac636765ceaffe2ea1d2b5de4f378d84af6131c8b162b6ff0168a38a70e1221d",
+    "bread-short-phase/c161/sender.log": "f893ea0257bc1e0f84f18676f0f54dee34b40c3d554ea4b52f93adce36c6aac9",
+    "bread-short-phase/binary40/capture.log": "d83fe4d406ece771c6f50aa2a0e50214f6483c4b9a5ec4e5058f72e0b750b4d9",
+    "bread-short-phase/binary40/opus.log": "ac636765ceaffe2ea1d2b5de4f378d84af6131c8b162b6ff0168a38a70e1221d",
+    "bread-short-phase/binary40/sender.log": "82c30059f665ba520167d587d20edea9d4f2502981e256ba5f4099dca5d03111",
+    "bread-long-aligned/scores.npz": "bee4b54c067b05eb45d5e2a20ee9b50403914c3187cee7c576a9ad4d30e807bd",
+    "bread-long-aligned/c161/capture.log": "43cef3788d6d01e692001731eb15930661aed72638b70d1f821d1c7c45a4e8ef",
+    "bread-long-aligned/c161/opus.log": "749bfbbaac7828971b878605a12baccb48eabb35428e0cd9e2651e853449bf7b",
+    "bread-long-aligned/c161/sender.log": "ca419b2ee6db4face9de6d22da70a31a34bfa4456d19dfe8e09f08a2d12efa44",
+    "bread-long-aligned/binary40/capture.log": "ef003330ee700ce65dfb6a70e72118e80adb47b2f224fcf1bb57cabae06e8b1b",
+    "bread-long-aligned/binary40/opus.log": "bd03742ce52e877b568fd20fef9b88e2135ad84a26b62cc70d8cd9fd209772a0",
+    "bread-long-aligned/binary40/sender.log": "5bf4527d512d22740764cdada6978c3b3e75db1d9eb3890476de5273151b7b00",
+    "bread-silent/scores.npz": "2592032b7741f7e380b40c9ad99883e565c97b25400a07463e8cf1bd57cc66cd",
+    "bread-silent/c161/capture.log": "8d3ab567d65c4caed21cde30a4d2c45589979721bb473300964024be90134349",
+    "bread-silent/c161/opus.log": "b7d9b4065c5bf3b5b4602d98a69aee04eee0e3e5502412aac9b3feb8b2246f7c",
+    "bread-silent/c161/sender.log": "35ba3add45428df5611b8fccce06f5a76f2da4b2cba4d173ce8e9b50b46ff050",
+    "bread-silent/binary40/capture.log": "faca3d07115a594e51525d8613ded0afdb1a031ceeebe1aa3355be4e8db93ac3",
+    "bread-silent/binary40/opus.log": "9b724ef0214f79f5b66e9af1d635cbb21e926d1e1976f7b669f7481e90b8b52f",
+    "bread-silent/binary40/sender.log": "7f230c2fe09b98dcfe1d079de0e445b66b58d55fe8003166eb1948112dd93394",
+    "bread-kettle/scores.npz": "7b2941fa6354e88ba67a034e9cffd3c6cc5d8003f41cf6cca5c1f001d0379471",
+    "bread-kettle/c161/capture.log": "70e14d420fa5ea27a9e83979e3c2ab82e7e90bd5c96cadc7e5f9b0f88282be20",
+    "bread-kettle/c161/opus.log": "fa5e75109b39ebe747b424d8864b1a1cc6396c8ea7f40363105553336b10b625",
+    "bread-kettle/c161/sender.log": "ee78eab629ee2ef6daa5da19b64a4ae11b3b9c5b61806c9f6b659d20a599aa29",
+    "bread-kettle/binary40/capture.log": "1486ed6fce6c7e72b0aa873e317429559708e82e7ebb037b9767ee548ea65d89",
+    "bread-kettle/binary40/opus.log": "2e43d2c88b6ea6b9bd5ef99d50a3f7ab8de0fb2080b1081f75dd698f74420b04",
+    "bread-kettle/binary40/sender.log": "fdae74044a9cec3dfbe0a2b86c1e3c6d272d861dc5f5bae02e44abbc50f5bf4f",
+    "bread-remote/scores.npz": "955adf83ced26ccf3265a36d2c9c1c6c244213c4399869580ac35d7445785548",
+    "bread-remote/binary40/capture.log": "e5ab25dd6d2a2576ed2d99d37a23cb0d6e3a86aa11ddc6f971b69d569bd95f66",
+    "bread-remote/binary40/opus.log": "c2b9ab10fef5c52eb72c7c109f02ebc2f3d6a680bfe51efffc740c9ad435b044",
+    "bread-remote/binary40/sender.log": "2ed5d53a10c7db78fc64836632dd946e7cc7c293ce0f2c239348b47ebef6643d",
+    "bread-both/scores.npz": "222ad500e78d2ed3d1e7ae365f6d1da4f1ec7627a4c094cfe10fa194e3790358",
+    "bread-both/binary40/capture.log": "6c5a7b028901a579c852d882c57a20c0f660b7d322a5548019ac49d3276a3f5e",
+    "bread-both/binary40/opus.log": "342aec30ab2d0506a93dd7c3457d23a26ff8a6cf85ca24921287f9fa5935c64e",
+    "bread-both/binary40/sender.log": "5edaf6a74883a0f90ac7c8fdbab8e0a2bf86ae4e0ae74df4eb5064465620ea0d"
+  },
+  "archive_sha256": "eb03ddcb77cdc244a89527edf5c713620df48c3b9b062b4461f0e6e6900090a0"
+}
