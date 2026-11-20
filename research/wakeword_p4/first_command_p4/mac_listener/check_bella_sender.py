@@ -46,11 +46,9 @@ def load_cases():
             yield row, struct.pack("<4I", i, opened, first, samples) + pcm.tobytes(), packets
 
 
-def compare(log, row, original):
+def compare(log, i, opened, first, count, original):
     text = log.read_text()
-    i, n = row["index"], len(original)
-    opened, = row["continuous"]["opened"]
-    _, first, count = row["continuous"]["finish"][:3]
+    n = len(original)
     assert text.count("SENDER PASS") == 1 and text.count("BEGIN ") == 2
     captures = []
     for lane in range(2):
@@ -83,17 +81,23 @@ def compare(log, row, original):
     return captures
 
 
+def run_case(work, payload, original):
+    index, opened, first, count = struct.unpack_from("<4I", payload)
+    key = sha256(bytes.fromhex(P.sha(BUILD/"board.bin")) + payload).hexdigest()
+    log = work / (key + ".log")
+    if not log.exists() or b"SENDER PASS\r\n" not in log.read_bytes():
+        if log.exists():
+            log.rename(work / (key + ".incomplete-" + P.sha(log)[:12] + ".log"))
+        P.boot(BUILD, log, work / "flash.bin", b"SENDER PASS", (2<<20,payload))
+    captures = compare(log, index, opened, first, count, original)
+    return log, captures
+
+
 def collect():
     base = P.read(reference.OUT)
     assert P.sha(P.QEMU) == base["codec"]["qemu_sha256"]
     for row, payload, cold in load_cases():
-        key = sha256(bytes.fromhex(P.sha(BUILD/"board.bin")) + payload).hexdigest()
-        log = WORK / (key + ".log")
-        if not log.exists() or b"SENDER PASS\r\n" not in log.read_bytes():
-            if log.exists():
-                log.rename(WORK / (key + ".incomplete-" + P.sha(log)[:12] + ".log"))
-            P.boot(BUILD, log, WORK / "flash.bin", b"SENDER PASS", (2<<20,payload))
-        captures = compare(log, row, cold)
+        log, captures = run_case(WORK, payload, cold)
         yield row, log, captures
 
 
