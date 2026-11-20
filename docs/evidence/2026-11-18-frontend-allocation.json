@@ -1,0 +1,44 @@
+{
+  "schema": "frontend-allocation-failure-evidence-v1",
+  "dependency": "esphome/esp-micro-speech-features 1.2.3",
+  "trigger": "Filterbank work allocation fails while the other filterbank allocations succeed",
+  "before": {
+    "fault_site_zero_based": 9,
+    "host_exit_code": -6,
+    "observed": "UBSan reports a null write in FrontendReset, called by FrontendPopulateState after the missing work allocation guard"
+  },
+  "after": {
+    "host_exit_code": 0,
+    "frontend_allocation_fault_sites": 17,
+    "tracked_frontend_allocations_outstanding_after_each_destroy": 0,
+    "fresh_detector_recovery": true,
+    "sanitizer": "undefined"
+  },
+  "method": "Actual pinned frontend C sources, with malloc/calloc/free intercepted only in frontend translation units; each allocation failed separately and the partially initialized detector destroyed",
+  "reproducer_source": {
+    "branch": "research/c161-parallel-runtime-20261118",
+    "commit": "9a3d4fff2326b70ec2bc9841ae634c3b2f6d26b2",
+    "runner": "tests/parallel_wake/run.py",
+    "entrypoint": "tests/parallel_wake/frontend_flow.cpp",
+    "mode": "--frontend"
+  },
+  "successful_processing_unchanged": true,
+  "new_model_training_tts_playback_or_recording": false,
+  "hardware_accessed": false,
+  "limits": [
+    "Host allocation-failure evidence, not a P4 memory-peak or recognition claim",
+    "The low-memory failure was deliberately injected; existing board stability logs do not show that it occurred on a device",
+    "The reproduced caller used the optional research detector; both detectors use the same patched FrontendPopulateState dependency"
+  ],
+  "patch_roundtrip": {
+    "applies_to_unpatched_dependency": true,
+    "already_applied_reverse_check_passed": true,
+    "reapplied_source_byte_identical": true,
+    "patch_sha256": "a2775343e7f333ce2017ce052780bd4af5fe6e36a138654ef91844900643e44e"
+  },
+  "independent_fix_branch_checks": {
+    "host_c_suites_passed": 25,
+    "python_tests_passed": 29,
+    "existing_model_profile_and_voice_sources_unchanged": true
+  }
+}
