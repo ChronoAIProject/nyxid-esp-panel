@@ -12,7 +12,7 @@ HERE = Path(__file__).resolve().parent
 ARCHIVE = HERE.parents[1] / "results/4090-willow-mac-matched-prime-evidence-v1.tar.gz"
 
 
-def replay(board, fixtures, work):
+def build_feeder(board, work):
     source = (board / "components/panel_services/panel_voice.c").read_text()
     first = source.index("enum { WILLOW_PRIME_SAMPLES")
     first = source.rindex("#ifdef NYX_PANEL_RESEARCH_WILLOW", 0, first)
@@ -23,6 +23,11 @@ def replay(board, fixtures, work):
     exe = work / "feeder"
     subprocess.run(["cc", "-std=c11", "-Wall", "-Werror", "-O2", "-DNYX_PANEL_RESEARCH_WILLOW=1",
                     "-I", work, HERE / "willow_feeder.c", "-o", exe], check=True)
+    return exe
+
+
+def replay(board, fixtures, work):
+    exe = build_feeder(board, work)
     rows = []
     with tarfile.open(ARCHIVE) as archive:
         for index in range(12):
