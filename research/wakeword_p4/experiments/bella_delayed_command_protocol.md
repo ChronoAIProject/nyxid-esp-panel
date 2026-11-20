@@ -1,0 +1,5 @@
+# Move the weak target command past the interfering speech
+
+Use the existing 400 ms cue, delivered receiver and all 15 player rates/room combinations. In the nominal source track, move only the target command 10,240 samples (640 ms) later within its trailing silence. The three dry interruptions continued 398–618 ms past the original command boundary. Keep the address, interfering speaker, panel reference, music, source and receiver gains, and the file length. Apply the same registered playback-rate conversion to the entire external track. First reproduce each existing microphone by hash. Replay the changed M/R in the combined receiver and record its first-open clock. Use the archived baseline opener, AEC/AGC configuration and both service schedules as paired controls. Read the full decoded sends on the 4090; a missed wake contributes a failed command.
+
+This is a timing diagnosis of three selected synthetic conversations with five rates each. A physical test can use the nominal paired WAVs at fixed gains if any complete commands return. The released wake WAV and receiver are common to both timing conditions.
