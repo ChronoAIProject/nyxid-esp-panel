@@ -1,0 +1,5 @@
+# Recover an external call after a suppressed panel marker
+
+The reference-only change recognizes both panel codes, but the microphone matcher still enters a two-second refractory period after a raw self-play match. In the simultaneous-source test the isolated external +5 dB cue matched in every room, yet the reference-only receiver opened in only the four trials where the external source started 800 ms before the panel.
+
+Starting from the 80 ms reference patch, shorten the microphone recovery to one 80 ms code only on a raw hit directly vetoed by the electrical reference. Keep normal microphone recovery on allowed hits. Repeat the same 215 historical and rate cases and the 20 paired collision cases. Check whether a returned opening corresponds to the external source by comparing the raw microphone clocks with the standalone panel and external clocks. Where the two coincide, mark the attribution ambiguous. Report any synchronous self-open, changed unaddressed opening or lost timely positive. Archive a board image for Mac only with the relevant behavioral findings.
