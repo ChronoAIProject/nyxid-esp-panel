@@ -1,0 +1,7 @@
+# External player rate on the final +2 dB pair
+
+Use the published +2 dB Nyx and matched Willow at normal speed, ±100 ppm, ±1%, ±5%, and at the rates 44100/48000 and 48000/44100. Define speed as source samples consumed per receiver sample. This varies pitch and duration together. The extreme ratios represent playing samples with the wrong rate declaration. Ordinary 44.1/48 kHz sample-rate conversion retains the original duration.
+
+Use the existing quiet two-sentence case 00 and weak cases 077, 079 and 090 with competing speech, music and panel playback. At every rate test Nyx, Willow and the same source with the address erased. Warp the whole external player timeline from sample zero, including on-player competing speech. Keep the music, panel acoustic path, electrical reference, receiver clock, original gains and thresholds. Use the original observation duration in the weak rooms, including audio after the command begins. At nominal rate require byte-identical microphones and playback references and the recorded first-open clocks. Track clipped samples and each detector's native response on every input.
+
+Score the first open between the projected source address start and projected source command boundary. Record the sample and lead in milliseconds. Report quiet and weak rooms separately. Repeat uses of the same room and phrase at different speeds add no independent exposure hours. [Baseline on the three weak rooms](bella_address_gain_results.md) · [Earlier clock experiment on the prior cue](../first_command_p4/mac_listener/handoff_clock_rates.py)
