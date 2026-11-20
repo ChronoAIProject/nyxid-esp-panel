@@ -5,8 +5,10 @@ import json
 from math import gcd
 from pathlib import Path
 import wave
+import warnings
 
 import numpy as np
+from scipy.io import wavfile
 from scipy.signal import correlate, resample_poly
 
 RATE = 16000
@@ -16,7 +18,23 @@ WIDTH = 8*FRAME
 
 
 def read_channel(path, index):
-    with wave.open(str(path), "rb") as w:
+    try:
+        reader = wave.open(str(path), "rb")
+    except wave.Error:
+        # The stereo handoff uses IEEE float WAV. Keep its original precision for hashes.
+        with warnings.catch_warnings():
+            warnings.filterwarnings("error", message="Reached EOF prematurely.*", category=wavfile.WavFileWarning)
+            rate, samples = wavfile.read(path)
+        if samples.dtype.kind != "f" or samples.dtype.itemsize not in (4, 8):
+            raise ValueError("Expected PCM16, PCM24, float32 or float64 WAV")
+        channels = samples.reshape(len(samples), 1) if samples.ndim == 1 else samples
+        if not 0 <= index < channels.shape[1]:
+            raise ValueError("Channel index outside WAV")
+        track = channels[:, index]
+        if not np.isfinite(track).all():
+            raise ValueError("Non-finite audio samples")
+        return track.astype(np.float64) * 32768, track.tobytes(), track.dtype.itemsize, rate
+    with reader as w:
         rate, width = w.getframerate(), w.getsampwidth()
         channels, n = w.getnchannels(), w.getnframes()
         if width not in (2, 3) or w.getcomptype() != "NONE":

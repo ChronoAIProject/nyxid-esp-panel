@@ -24,6 +24,17 @@ cmake --build "$build" --parallel 2
 
 The marker switch defaults to OFF. Enabling it selects single C161 and disables update checks in this research build. Each listening epoch allocates 13,304 bytes of marker state in PSRAM. A wake releases that allocation before call startup. Firmware initialization primes C161 in full 480-sample blocks, rounding 81,440 requested silent samples to 81,600 processed samples.
 
+### Eight-voice external playback and weak-target 079
+
+Use the reference-rearm apps below with the 1.45 s mono wake WAVs. For a paired first-command trial, use `079/old.wav`, `079/new.wav` and `079/erased.wav` from the stereo comparison. Route left to the target speaker and right to the competing speaker using one playback clock. Keep the player level and positions fixed. The left channel already includes the 6 dB reduction. Use the same arrangement with the official Hey Willow receiver and `079/willow.wav`. The target asks “Could you check the time for me?” and the competing voice asks to turn on the light. [Eight wake sounds](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/hye-nyx-eight-early-groups-local-3db.zip) · [Stereo comparison](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/hye-nyx-079-early-groups-3db-v1.zip)
+
+Run this from the extracted stereo archive with `research` set to the research checkout. Use the original WAV and the physical peer's decoded WAV. The first argument supplies the left playback channel and the command starts at sample 48,400 on that file. Save the JSON with the original recordings, UART, minimum internal heap and board identity in issue #18.
+
+```sh
+python3 "$research/research/wakeword_p4/first_command_p4/mac_listener/measure_command_capture.py" \
+    079/new.wav uplink-decoded.wav --command-at 48400 > 079-command-windows.json
+```
+
 ### Two-marker 400 ms playback trial
 
 The public app archive contains one application image for external-screen rev1 (chip revisions 1.00–1.99) and one for integrated LCD-X8 (3.00–3.99). The manifest identifies each image, descriptor ELF and source patch. Each image contains one frozen C161 model. Both images use the 80 ms electrical reference recovery and the shortened microphone recovery after a playback veto. Use the 400 ms dual-marker WAV with these apps. [Public applications and manifest](https://github.com/ChronoAIProject/nyxid-esp-panel/releases/download/research-hey-nyx-20261110/hye-nyx-reference-rearm-p4-public-v1.zip) · [Verified archive and member hashes](../../results/4090-bella-reference-rearm-app-download.json) · [Playback WAV](../../results/hye-nyx-af-bella-early-marker-experiment.wav) · [Simulator results](../../experiments/bella_reference_rearm_results.md)
