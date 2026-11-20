@@ -16,8 +16,7 @@ PROFILE = "p4-rev1-16mb"
 API = "NYX_PANEL_AGENT_DEV_API_URL"
 LOGIN = "NYX_PANEL_AGENT_DEV_LOGIN_URL"
 NODE = "NYX_PANEL_NODE_DEV_MODE"
-OLD_SHA = "d405555880cdcb47f6f31a4b6fb1f580b2725231e2535a43d641529199057fdc"
-OLD_ELF = "b427b14aa73b2db7d08d71eee0801c4572bc3f652ec3677146a710e4ba813ec9"
+MAC_RECORD = Path(__file__).resolve().parents[2] / "results/mac-c161-rev1-dev-marker-build.json"
 PATCH = Path(__file__).resolve().with_name("c161-fixed-marker.patch")
 
 
@@ -97,6 +96,22 @@ def check_sources(board):
             subprocess.run(["git", *args], cwd=board, env=env, check=True)
 
 
+def historical_profile(app):
+    digest = sha256(app).hexdigest()
+    records = json.loads(MAC_RECORD.read_text())["historical_apps"]
+    record = next((r for r in records if r["sha256"] == digest), None)
+    require(record is not None, "Unrecognized historical rev1 app SHA256")
+    descriptor = elf_id(app)
+    require(descriptor == record["descriptor_elf_sha256"] and len(app) == record.get("bytes", len(app)),
+            "Historical rev1 descriptor or length mismatch")
+    services = from_image(app)
+    require(services.fingerprint == record["service_fingerprint"], "Historical service fingerprint mismatch")
+    if "node_environment" in record:
+        require(services.node_dev == (record["node_environment"] == "development"), "Historical node mode mismatch")
+    return services, dict(kind="historical-app", observation=record["observation"], sha256=digest,
+                          bytes=len(app), descriptor_elf_sha256=descriptor)
+
+
 def check_build(board, build, services, source, gdb):
     desc = json.loads((build / "project_description.json").read_text())
     require(Path(desc["project_path"]).resolve() == board, "Build belongs to a different board checkout")
@@ -133,7 +148,7 @@ def main():
     p.add_argument("board", type=Path, help="patched board checkout")
     p.add_argument("build", type=Path, help="new build directory (existing for --verify-only)")
     group = p.add_mutually_exclusive_group(required=True)
-    group.add_argument("--old-app", type=Path, help="the original November rev1 muted-call app")
+    group.add_argument("--old-app", type=Path, help="an archived rev1 app listed in the Mac handoff record")
     group.add_argument("--old-cache", type=Path, help="CMakeCache.txt retained from the known rev1 build")
     group.add_argument("--example", action="store_true", help="synthetic profile for a host build check")
     p.add_argument("--verify-only", action="store_true")
@@ -142,10 +157,7 @@ def main():
     require(__debug__, "Use normal Python so that all linked-image checks run")
     board, build = args.board.resolve(), args.build.resolve()
     if args.old_app:
-        data = args.old_app.read_bytes()
-        require(len(data) == 5984448 and sha256(data).hexdigest() == OLD_SHA and elf_id(data) == OLD_ELF,
-                "Historical rev1 app identity mismatch")
-        services, source = from_image(data), dict(kind="historical-app", sha256=OLD_SHA, descriptor_elf_sha256=OLD_ELF)
+        services, source = historical_profile(args.old_app.read_bytes())
     elif args.old_cache:
         services = from_cache(args.old_cache)
         source = dict(kind="operator-selected-cache", sha256=sha256(args.old_cache.read_bytes()).hexdigest())

@@ -26,14 +26,16 @@ The marker switch defaults to OFF. Enabling it selects single C161 and disables 
 
 ### External-screen rev1 with the existing development call profile
 
-The published rev1 app uses the public voice and agent environment. The external-screen board's previous 6.04 s muted call used its locally configured development environment. To inherit that environment, activate ESP-IDF v5.5.4 in the patched board checkout and run the following with the original app from that call. Choose a new local build directory. The command builds the app and writes a shareable verification report.
+Mac built the external-screen diagnostic app from the last identity-matched rev1 configuration. Its app SHA256 starts with `dd8af8a0`, its descriptor ELF SHA256 starts with `f022d9c8`, and it uses service fingerprint `6f3d3f8368` for voice, agent and node in development. Mac reports 6,623,392 bytes, 257,888 bytes free per OTA slot, one C161 model and 13,304 bytes of marker state. These figures describe the linked app. The published rev1 Release app uses the public service environment. [Mac build receipt and full identities](../../results/mac-c161-rev1-dev-marker-build.json) · [Mac report](https://github.com/ChronoAIProject/nyxid-esp-panel/issues/18#issuecomment-7027599185)
+
+To reproduce the last observed development service configuration, activate ESP-IDF v5.5.4 in the patched board checkout and set `historical_app` to the archived rev1 app with SHA256 starting with `97c394aa` and descriptor ELF starting with `974260b7`. Choose a new local build directory. The command builds the app and writes a shareable verification report.
 
 ```sh
 build="$PWD/build/fixed-marker-rev1-dev"
 python3 "$handoff/build_rev1_dev.py" "$PWD" "$build" --old-app "$historical_app" > rev1-dev.json
 ```
 
-The tool verifies the historical whole-app SHA256 (`d4055558…`), byte length and descriptor ELF SHA256 (`b427b14a…`). It recovers the API and login URLs by matching the two derived service namespaces in the app. Node WebSocket, verification URL and both node namespaces identify the separate node mode. Alternatively, pass `--old-cache "$historical_build/CMakeCache.txt"` to use the cache retained from that call. The cache report identifies the operator-selected file by SHA256. The app option also binds the source to the recorded historical image.
+The tool matches the entire historical app and its descriptor against the Mac record. It recovers the API and login URLs from the two compiled service namespaces and verifies the recorded fingerprint. The node WebSocket, verification URL and both node namespaces identify the node environment. For historical reproduction it also recognizes the earlier muted-call app (`d4055558…`, descriptor `b427b14a…`, service fingerprint `a30fb6b4f6`). To use the actual retained build cache as Mac did, pass `--old-cache "$historical_build/CMakeCache.txt"`. The report includes that file's SHA256 and the effective service fingerprint.
 
 The verifier compares the inherited service settings with the new cache, the compiler definitions and the linked app. It also checks the board revision, the patched sources, single C161 runtime, model bytes, descriptor ELF identity and space in both OTA slots. The JSON contains the ten-character service fingerprint and node mode. The build directory and app contain the local endpoints. To check a finished build again, repeat the command with `--verify-only`. [Example host verification with development node](../../results/4090-c161-rev1-example-dev-profile.json) · [Example cache inheritance with public node](../../results/4090-c161-rev1-example-public-node.json)
 
