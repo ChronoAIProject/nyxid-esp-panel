@@ -1,0 +1,62 @@
+{
+  "records": [
+    {
+      "version": "original",
+      "file": "hye-nyx-af-bella-marker-rms-v1.wav",
+      "sha256": "3adea27b05e1f541b0c525cc3e5a2f18454ae839951c43bb50bbc771d5c0e30b",
+      "pcm_sha256": "e6b431114f25721ccfa3b007cb4ac9da2e59193c11f13d7c43b71cd58922a689",
+      "samples": 23200,
+      "qwen": "Hey, Nick.",
+      "turbo": "Hey Nicks, it's"
+    },
+    {
+      "version": "enhanced",
+      "file": "hye-nyx-af-bella-peak-minus1.wav",
+      "sha256": "69c7b8e474592f8d625d92f05d99545934f035a4f3b6158884afd2fabb563df2",
+      "pcm_sha256": "d625505c745cc4e44ec201689cbd2ee56c368c683407275e6b985b0061b5f26c",
+      "samples": 23200,
+      "qwen": "Hey, Nick.",
+      "turbo": "Hey Nicks, it's"
+    },
+    {
+      "version": "marker_only",
+      "file": "hye-nyx-af-bella-marker-only-v1.wav",
+      "sha256": "45433f7d226b3bb539574a5ff18c115a2c231c4c3c92da8e4da40d1ea98f6816",
+      "pcm_sha256": "462c2c926b3ef707a4b07b9a235fc909c029c350a5d6f29388a495d880e1b577",
+      "samples": 23200,
+      "qwen": "Hey, Nick.",
+      "turbo": "Hey, Nick."
+    }
+  ],
+  "source_sha256": "8b67845f40a5b1e7fef70cd696b5ffd93c4e184a7535e209f56f182141d566d4",
+  "script_sha256": "26117319ca2d7b6910fd158e7468f6da638f4b7d525aab6e072112ca7d76335e",
+  "qwen": {
+    "repo": "Qwen/Qwen3-ASR-1.7B-hf",
+    "revision": "bcd2b5b7f32b480ab5790554cfa8347f246a14f3",
+    "files": {
+      "chat_template.jinja": "f50e6b694fbf4a683206e37869990d68333fe95d285730f084c838a34b0d98c2",
+      "config.json": "117ac8e63e2af7cae3665e5a632d6eb03f5f384915519ceb6403c15ec6533f63",
+      "generation_config.json": "9939fc9388b79bd70757f938b87381e817173d6a6158f5af6506c0b73e775c3c",
+      "model.safetensors": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+      "processor_config.json": "bc0b230081b44e629dd5b9045b78495615c1831b4b9f4cffe97bd37e82a6156a",
+      "tokenizer.json": "fe1fad59be22a41ee293363fcf95fdedbc7c93f3b49270b1d2e18bd1399a7a05",
+      "tokenizer_config.json": "945e980986de2ca7768f3326bfdbb4fbea3406f972b8ae0be233089f2b253c11"
+    },
+    "dtype": "bfloat16",
+    "torch": "2.15.0+cu132",
+    "transformers": "5.23.0",
+    "device": "NVIDIA GeForce RTX 4090"
+  },
+  "turbo": {
+    "repo": "mobiuslabsgmbh/faster-whisper-large-v3-turbo",
+    "revision": "0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf",
+    "files": {
+      "config.json": "b0253ea6c0d3bea6b1e19e91a02acfd3b53f4467362efcb5a3e6b16c9b3a9b7e",
+      "preprocessor_config.json": "7ccc62c6f2765af1f3b46c00c9b5894426835a05021c8b9c01eecb6dfb542711",
+      "tokenizer.json": "297b13372ac43916285644fb9687add3cc62ee2a1adb60da3dc25cc94c1871fd",
+      "vocabulary.json": "c69260f2ab26d659b7c398f9a2b2b48ed0df16c3b47d7326782fd9cba71690c1",
+      "model.bin": "e76620f83d5f5b69efd3d87e3dc180c1bd21df9fbebacfd4335e5e1efcc018da"
+    }
+  },
+  "policy": "Complete 16 kHz dry isolated handoff WAVs at the encoded gain. Report both unprompted English transcripts verbatim. No denoising, cropping or spelling substitution."
+}
