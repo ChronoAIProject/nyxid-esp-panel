@@ -1,0 +1,17 @@
+# Recovering real external calls after panel self-play
+
+On the same 400 ms two-marker WAV, the combined receiver variant eliminated the two panel self-opens in the P4 simulation and kept the first-open clocks of all 96 external historical interruptions and all 15 weak player-rate cases. All 96 erased inputs stayed closed. Silent-reference playback still opened on all four panel paths. Frozen C161 supplied zero accepted events in these tests. The marker state occupied 13,304 bytes in each guest epoch. Simulator heap readings are recorded separately from minimum internal heap on a physical board. [215 primary receiver trials and original clocks](../results/4090-bella-reference-barge-historical.json) · [Native UARTs](../results/4090-bella-reference-barge-historical.zip) · [400 ms WAV](../results/hye-nyx-af-bella-early-marker-experiment.wav)
+
+The original complete reference matcher recognized the first panel code at sample 47,512. The veto ended at 51,001. After a match this detector skipped 8,039 subsequent 4 kHz ticks. In rooms 1 and 3 the raw microphone matched the late code at 54,268 and 54,020. The firmware requested a call at the end of the corresponding 256-sample reads. An 80 ms recovery on the electrical reference registered the second code at 53,908 and held the veto through sample 57,396. Both late microphone matches then stayed suppressed. The microphones, reference signals, C161 model bytes and detection thresholds were identical in the comparisons. [Reference-only P4 results](../results/4090-bella-reference-rearm-historical.json) · [Reference and microphone clocks](../results/4090-bella-reference-rearm-collisions.json)
+
+The second change lets the microphone begin reacquiring after 80 ms when its raw hit is immediately vetoed by confirmed playback. For each of four room paths we played the 400 ms panel cue and the external original +5 dB cue through the same room transfer and gain, with only the panel in the electrical reference. External-alone inputs produced a raw match in all 20 comparisons. At +400 and +800 ms all eight recovered raw match samples equaled the external-alone clock exactly. The old receiver opened on late panel echoes in rooms 1 and 3 before the subsequent external marker arrived. [Collision design](bella_reference_rearm_protocol.md) · [Microphone recovery procedure](bella_reference_barge_protocol.md) · [20 paired native observations](../results/4090-bella-reference-barge-collisions.json) · [Original and reference-only UARTs](../results/4090-bella-reference-rearm-collisions.zip) · [Combined receiver UARTs](../results/4090-bella-reference-barge-collisions.zip)
+
+| External source start relative to panel | Old receiver opens / 4 | Reference change only | Both changes | Source of combined receiver's first open |
+| --- | ---: | ---: | ---: | --- |
+| −800 ms | 4 | 4 | 4 | External marker |
+| −400 ms | 0 | 0 | 0 | Veto active |
+| Simultaneous | 2 | 0 | 0 | Veto active |
+| +400 ms | 2 | 0 | 4 | External marker |
+| +800 ms | 2 | 0 | 4 | External marker |
+
+At −400 ms and at simultaneous starts the external template lands near one of the panel sequences and the receiver stays closed. Both sources use one monaural path in this construction. The two suppressed overlaps are measurable limitations for a user speaking during a panel wake demonstration. The eight recoveries at positive offsets concern wake requests. These collision inputs end with the calls and contain no spoken command.
