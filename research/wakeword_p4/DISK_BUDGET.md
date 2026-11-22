@@ -10,6 +10,10 @@ Completed temporary PCM replicas may share a hardlink only after SHA256 and byte
 
 For future experiments, store compact per-update schedule descriptors and batch digests instead of full batch tensors; retain only predeclared necessary snapshots. Review disk usage before each stage and after each long job, include scratch space on /tmp in the same budget, and check remaining space during long jobs. Do not launch new allocation stages below the 100 GiB reserve.
 
+For new QEMU replay grids, budget scratch for the number of streams in flight. After each completed stream, verify the saved report, UART log, raw returns and stage monitor against the retained files. Once the transport header and PCM payload match the recorded settings and source WAV, the worker can release that stream's scratch directory. Preserve diagnostics from incomplete runs.
+
+The November 22 cleanup recovered 63.37 GiB. The receipt identifies the retained model hashes and the source for each group of removed files. Its compressed index includes the archive offsets and hashes needed to recover individual ESP-IDF objects. [Cleanup receipt](results/4090-disk-cleanup-v3.json) · [File index](results/4090-disk-cleanup-v3-files.json.gz)
+
 ## Random training-feature reads
 
 For a new Linux source-balanced trial, use the positional reader in `experiments/causal_source_balanced_pread.py` when its sampling protocol applies. It uses the same original feature files and sample schedule. Use `with Sampler(seed) as sampler` to close all handles. Frozen experiments keep their recorded implementation.

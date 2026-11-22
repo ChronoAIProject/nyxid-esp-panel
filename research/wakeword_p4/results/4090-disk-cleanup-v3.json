@@ -1,0 +1,142 @@
+{
+  "date_utc": "2026-11-22",
+  "branch": "research-hye-nyx-voice-gpu",
+  "research_commit": "e92dc70ce6469604e4708232c9d0014a0494fa4b",
+  "allocated_bytes_reclaimed": 68040552448,
+  "allocated_gib_reclaimed": 63.37,
+  "accounting": "Sum of unlinked file and grid directory blocks, plus the before/after block difference for byte-identical sparse files. Shared filesystem free space also reflects other processes.",
+  "free_bytes_before": 513527734272,
+  "free_bytes_at_receipt": 618726813696,
+  "reserve_gib": 100,
+  "official_reference_grid": {
+    "streams": 9672,
+    "canonical_wavs": 372,
+    "directories_allocated": 39616512,
+    "files_allocated": {
+      "report.json": 79233024,
+      "serial.log": 2049855488,
+      "host.log": 39616512,
+      "input.pcm": 32746569728,
+      "stage-monitor.txt": 39616512,
+      "raw-returns.bin": 69648384
+    },
+    "host_log_contents": [
+      "Adding SPI flash device\n"
+    ],
+    "execution_sha256": "889e6333cc86aaf6e559c71cd423701ab458ab0b69841c008b4f1a168a6d9060",
+    "allocated_bytes_reclaimed": 35064156160,
+    "plan": "research/wakeword_p4/results/4090-hey-official-development-execution-v1.json",
+    "scratch_pattern": "/tmp/hy-dev1-{model}-{configuration:02d}-{record_index:03d}",
+    "canonical_directory": ".local/wakeword/hey-official-development-v1",
+    "verification": "Verified every completed report, serial log, raw return and stage monitor against its retained copy. The four files are prefixed with the run stem in the canonical directory. Each input matched the plan WAV PCM digest and the exact 16-byte header from the frozen runner. Each host.log contained the single line recorded here."
+  },
+  "other_files": {
+    "anonymous-release-copy": {
+      "files": 8,
+      "allocated_bytes_reclaimed": 292626432
+    },
+    "installer": {
+      "files": 296,
+      "allocated_bytes_reclaimed": 1122246656
+    },
+    "old-installer-download": {
+      "files": 5,
+      "allocated_bytes_reclaimed": 959672320
+    },
+    "replay-input": {
+      "files": 2018,
+      "allocated_bytes_reclaimed": 6804377600
+    },
+    "unpacked-report": {
+      "files": 2,
+      "allocated_bytes_reclaimed": 2744320
+    }
+  },
+  "other_replay_recovery": "Keep report.json beside the former input.pcm. Join wav_root to record.path, verify the WAV and PCM hashes, then prepend the 16-byte little-endian header from qemu_esp32_replay/run_replay.py using threshold_requested and input_samples.",
+  "esp_idf_component_objects": {
+    "build_directories": 76,
+    "objects": 24945,
+    "allocated_bytes_reclaimed": 2377854976,
+    "archive_count": 2110,
+    "verification": "Each loose object matched the retained static archive member byte for byte before unlinking. Re-read all indexed ranges and verified their SHA256 after cleanup. Ninja can compile the loose intermediates on demand."
+  },
+  "sparse_padding": [
+    {
+      "manifest": ".local/wakeword/balanced-rendering-factorial-v1/controls.json",
+      "manifest_sha256": "fb3f71531d3ad15cbb90f23636c5ac8b113b1ae8103c79df68163c5b55b078ab",
+      "files": 40320,
+      "allocated_bytes_reclaimed": 13506355200
+    },
+    {
+      "manifest": ".local/wakeword/piper-balanced-training-features-v1/report.json",
+      "manifest_sha256": "93733755fec50b41cf71fcc8e2efa9fdfc14956a61e8b50e98e4bd110d5248b3",
+      "files": 16128,
+      "allocated_bytes_reclaimed": 3702411264
+    },
+    {
+      "manifest": ".local/wakeword/hey-broad-training-rendered-v1/records.jsonl",
+      "manifest_sha256": "3fff60e5f9496ac6b488e6106275cfa8f41db90aa71fd5b432da36b2c2128456",
+      "files": 35652,
+      "allocated_bytes_reclaimed": 4208107520
+    }
+  ],
+  "sparse_verification": "Only full 4 KiB zero blocks were omitted from the replacement files. Each temporary file matched the original bytes and the historical manifest SHA256 before atomic replacement at the original path.",
+  "retained": {
+    "c161": {
+      "path": ".local/wakeword/c161-mac-board-marker/src/models/hey-nyx-c161/model.tflite",
+      "bytes": 60952,
+      "sha256": "c16154040378b8acccdb57c19917c46cea0a9ea6a39f105004b964ddd093ab81"
+    },
+    "v30": {
+      "path": ".local/wakeword/model-gpu-v30-ami-extra/hey_nyx.tflite",
+      "bytes": 54440,
+      "sha256": "04aa45646610f0e3a866a17d4098263adf5da912bb6ddfe03c44807a295baa0c"
+    },
+    "v30_handoff": {
+      "path": ".local/wakeword/gpu-v30-p4-handoff-v1.tar.gz",
+      "bytes": 55854,
+      "sha256": "60000e37f1b01c408f48f6310bfa7c6d0e837fe6d808127aab9de9a88e1e3cb5"
+    },
+    "mac_unmarked_original": {
+      "path": ".local/wakeword/mac-unmarked/mac.zip",
+      "bytes": 294465,
+      "sha256": "f24bb596dd4d5de56272718e7d7c531127cd2359b516c14ac98d468558579eae"
+    }
+  },
+  "detached_board_worktrees": {
+    "base": "0d8e1935702a561b535a8c1a0921fd8034943d2c",
+    "patch_directory": "research/wakeword_p4/first_command_p4/mac_board_marker",
+    "worktree_paths_relative_to": ".local/wakeword",
+    "matched_source_patches": {
+      "c161-mac-board-marker/apply-check": [
+        "c161-fixed-marker"
+      ],
+      "c161-mac-board-marker/src": [
+        "c161-fixed-marker"
+      ],
+      "c161-willow-board/src": [
+        "c161-fixed-marker",
+        "hey-willow-reference"
+      ],
+      "c161-fixed-sound-runtime/src": [
+        "c161-fixed-marker",
+        "fixed-sound-runtime"
+      ],
+      "bella-reference-barge/boards-src": [
+        "c161-fixed-marker",
+        "reference-rearm-80ms",
+        "microphone-rearm-after-veto"
+      ],
+      "eight-local-fixed-only/rearm/src": [
+        "c161-fixed-marker",
+        "fixed-sound-runtime",
+        "reference-rearm-80ms",
+        "microphone-rearm-after-veto"
+      ]
+    }
+  },
+  "file_index": {
+    "path": "research/wakeword_p4/results/4090-disk-cleanup-v3-files.json.gz",
+    "sha256": "c6750805e76ccc5cfde71a5cd5e67741f54f677b7d725fa575a70a1ebcdb8480"
+  }
+}
